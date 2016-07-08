@@ -1,0 +1,53 @@
+//
+//  NSString+ShaString.m
+//  SecondCartonMovie
+//
+//  Created by dzh on 15/4/28.
+//  Copyright (c) 2015年 tpy. All rights reserved.
+//
+
+#import "NSString+ShaString.h"
+#import <CommonCrypto/CommonDigest.h>
+#import <CommonCrypto/CommonCryptor.h>
+#import "GTMBase64.h"
+
+
+@implementation NSString (ShaString)
+- (NSString*) sha1
+{
+    
+    const char *cstr = [self cStringUsingEncoding:NSUTF8StringEncoding];
+    NSData *data = [NSData dataWithBytes:cstr length:self.length];
+    uint8_t digest[CC_SHA1_DIGEST_LENGTH];
+    CC_SHA1(data.bytes, (unsigned int)data.length, digest);
+    NSMutableString *outputStr = [NSMutableString stringWithCapacity:CC_SHA1_DIGEST_LENGTH * 2];
+    for(int i=0; i<CC_SHA1_DIGEST_LENGTH; i++) {
+        [outputStr appendFormat:@"%02x", digest[i]];
+    }
+    return outputStr;
+}
+
+
+
+- (NSString *)sha1_base64
+{
+    const char *cstr = [self cStringUsingEncoding:NSUTF8StringEncoding];
+    NSData *data = [NSData dataWithBytes:cstr length:self.length];
+    
+    uint8_t digest[CC_SHA1_DIGEST_LENGTH];
+    
+    CC_SHA1(data.bytes, data.length, digest);
+    
+    NSData * base64 = [[NSData alloc]initWithBytes:digest length:CC_SHA1_DIGEST_LENGTH];
+    base64 = [GTMBase64 encodeData:base64];
+    
+    NSString * output = [[NSString alloc] initWithData:base64 encoding:NSUTF8StringEncoding];
+    return output;
+}
+
+- (NSString *)utf8_String{
+    
+    NSString *utf8String = [self stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    return utf8String;
+}
+@end

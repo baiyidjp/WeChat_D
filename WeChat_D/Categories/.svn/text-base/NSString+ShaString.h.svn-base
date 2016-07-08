@@ -1,0 +1,15 @@
+//
+//  NSString+ShaString.h
+//  SecondCartonMovie
+//
+//  Created by dzh on 15/4/28.
+//  Copyright (c) 2015年 tpy. All rights reserved.
+//
+
+#import <Foundation/Foundation.h>
+
+@interface NSString (ShaString)
+- (NSString *) sha1;
+- (NSString *)sha1_base64;
+- (NSString *)utf8_String;
+@end

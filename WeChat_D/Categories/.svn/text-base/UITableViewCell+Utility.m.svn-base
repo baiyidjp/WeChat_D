@@ -1,0 +1,23 @@
+//
+//  UITableViewCell+Utility.m
+//  PRESCHOOL
+//
+//  Created by way on 16/4/26.
+//  Copyright © 2016年 INFORGENCE. All rights reserved.
+//
+
+#import "UITableViewCell+Utility.h"
+
+@implementation UITableViewCell (Utility)
+
++ (UITableViewCell *)cellWithTableView:(UITableView *)tableView reuseIdentifier:(NSString *)reuseIdentifier
+{
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifier];
+    if (!cell) {
+        cell = [[self alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifier];
+    }
+    return cell;
+}
+@end
+
+

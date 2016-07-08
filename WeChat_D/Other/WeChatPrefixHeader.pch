@@ -1,0 +1,20 @@
+//
+//  WeChatPrefixHeader.pch
+//  WeChat_Djp
+//
+//  Created by tztddong on 16/7/8.
+//  Copyright © 2016年 dongjiangpeng. All rights reserved.
+//
+
+#ifndef WeChatPrefixHeader_pch
+#define WeChatPrefixHeader_pch
+
+#warning 更新pods pod install --verbose --no-repo-update
+
+// Include any system framework and library headers here that should be included in all compilation units.
+// You will also need to set the Prefix Header build setting of one or more of your targets to reference this file.
+
+#import "UIColor+Extension.h"
+#import "UIView+Toast.h"
+
+#endif /* WeChatPrefixHeader_pch */

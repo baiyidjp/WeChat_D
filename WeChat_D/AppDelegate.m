@@ -1,12 +1,13 @@
 //
 //  AppDelegate.m
-//  WeChat_D
+//  WeChat_Djp
 //
 //  Created by tztddong on 16/7/8.
 //  Copyright © 2016年 dongjiangpeng. All rights reserved.
 //
 
 #import "AppDelegate.h"
+#import "MainTabbarController.h"
 
 @interface AppDelegate ()
 
@@ -17,7 +18,27 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    self.window = [[UIWindow alloc]initWithFrame:[UIScreen mainScreen].bounds];
+    MainTabbarController *mainController = [[MainTabbarController alloc]init];
+    self.window.rootViewController = mainController;
+    [self.window makeKeyAndVisible];
+    [self changeNav];
     return YES;
+}
+
+/**
+ *  全局改变Nav
+ */
+- (void)changeNav{
+    
+    //设置NavigationBar背景颜色
+    [[UINavigationBar appearance] setBarTintColor:[UIColor colorWithRed:54/255.0 green:53/255.0 blue:58/255.0 alpha:1]];
+    //@{}代表Dictionary
+    [[UINavigationBar appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]}];
+    //设置item字体的颜色
+    [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
+    //不设置这个无法修改状态栏字体颜色
+    [[UINavigationBar appearance] setBarStyle:UIBarStyleBlack];
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {
