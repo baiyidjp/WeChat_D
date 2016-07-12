@@ -32,7 +32,7 @@
 - (void)viewWillDisappear:(BOOL)animated{
     
     [super viewWillDisappear:animated];
-    self.tabBarController.tabBar.hidden = YES;
+    
 }
 
 - (void)viewDidLoad {
@@ -200,6 +200,7 @@
     
     ChatDetailViewController *chatVC = [[ChatDetailViewController alloc]init];
     chatVC.title = [NSString stringWithFormat:@"%zd",indexPath.row];
+    self.tabBarController.tabBar.hidden = YES;
     [self.navigationController pushViewController:chatVC animated:YES];
 }
 

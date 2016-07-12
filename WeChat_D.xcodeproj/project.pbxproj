@@ -487,6 +487,7 @@
 				TargetAttributes = {
 					A297B7011D2F8E14003C9276 = {
 						CreatedOnToolsVersion = 7.3;
+						DevelopmentTeam = U37X4645WQ;
 					};
 					A297B71A1D2F8E15003C9276 = {
 						CreatedOnToolsVersion = 7.3;
@@ -757,6 +758,7 @@
 			baseConfigurationReference = A9B6923DCF73CFE0F0DA477B /* Pods-WeChat_D.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/WeChat_D/PrefixHeader.pch";
 				INFOPLIST_FILE = WeChat_D/Info.plist;
@@ -771,6 +773,7 @@
 			baseConfigurationReference = CC02DEDA828486EE35A2D3B8 /* Pods-WeChat_D.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/WeChat_D/PrefixHeader.pch";
 				INFOPLIST_FILE = WeChat_D/Info.plist;
