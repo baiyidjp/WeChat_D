@@ -20,6 +20,7 @@
     // Override point for customization after application launch.
     self.window = [[UIWindow alloc]initWithFrame:[UIScreen mainScreen].bounds];
     MainTabbarController *mainController = [[MainTabbarController alloc]init];
+//    UINavigationController *navCtrl = [[UINavigationController alloc]initWithRootViewController:mainController];
     self.window.rootViewController = mainController;
     [self.window makeKeyAndVisible];
     [self changeNav];

@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A24695301D34E77D00E32C30 /* ChatDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A246952F1D34E77D00E32C30 /* ChatDetailViewController.m */; };
+		A24695331D34EA7600E32C30 /* JPKeyBoardToolView.m in Sources */ = {isa = PBXBuildFile; fileRef = A24695321D34EA7600E32C30 /* JPKeyBoardToolView.m */; };
 		A297B7071D2F8E14003C9276 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A297B7061D2F8E14003C9276 /* main.m */; };
 		A297B70A1D2F8E14003C9276 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A297B7091D2F8E14003C9276 /* AppDelegate.m */; };
 		A297B7121D2F8E14003C9276 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A297B7111D2F8E14003C9276 /* Assets.xcassets */; };
@@ -55,6 +57,10 @@
 
 /* Begin PBXFileReference section */
 		77912E4F30617DE482F6A3C6 /* libPods-WeChat_D.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-WeChat_D.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A246952E1D34E77D00E32C30 /* ChatDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatDetailViewController.h; sourceTree = "<group>"; };
+		A246952F1D34E77D00E32C30 /* ChatDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatDetailViewController.m; sourceTree = "<group>"; };
+		A24695311D34EA7600E32C30 /* JPKeyBoardToolView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JPKeyBoardToolView.h; sourceTree = "<group>"; };
+		A24695321D34EA7600E32C30 /* JPKeyBoardToolView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JPKeyBoardToolView.m; sourceTree = "<group>"; };
 		A297B7021D2F8E14003C9276 /* WeChat_D.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WeChat_D.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A297B7061D2F8E14003C9276 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		A297B7081D2F8E14003C9276 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -341,6 +347,8 @@
 			children = (
 				A297B7541D2F8E5A003C9276 /* WeChatViewController.h */,
 				A297B7551D2F8E5A003C9276 /* WeChatViewController.m */,
+				A246952E1D34E77D00E32C30 /* ChatDetailViewController.h */,
+				A246952F1D34E77D00E32C30 /* ChatDetailViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -355,6 +363,8 @@
 		A297B7571D2F8E5A003C9276 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				A24695311D34EA7600E32C30 /* JPKeyBoardToolView.h */,
+				A24695321D34EA7600E32C30 /* JPKeyBoardToolView.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -602,9 +612,11 @@
 				A297B75D1D2F8E5A003C9276 /* MainTabbarController.m in Sources */,
 				A297B7631D2F9622003C9276 /* BaseViewController.m in Sources */,
 				A297B75C1D2F8E5A003C9276 /* DiscoverViewController.m in Sources */,
+				A24695301D34E77D00E32C30 /* ChatDetailViewController.m in Sources */,
 				A297B75B1D2F8E5A003C9276 /* MineViewController.m in Sources */,
 				A297B75A1D2F8E5A003C9276 /* ContactsViewController.m in Sources */,
 				A297B70A1D2F8E14003C9276 /* AppDelegate.m in Sources */,
+				A24695331D34EA7600E32C30 /* JPKeyBoardToolView.m in Sources */,
 				A297B7071D2F8E14003C9276 /* main.m in Sources */,
 				A297B7591D2F8E5A003C9276 /* UIView+Toast.m in Sources */,
 				A297B75E1D2F8E5A003C9276 /* WeChatViewController.m in Sources */,

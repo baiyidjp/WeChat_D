@@ -44,11 +44,13 @@
     controller.tabBarItem.selectedImage = [[UIImage imageNamed:selectImageName] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     [controller.tabBarItem setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor colorWithHexString:@"000000"]} forState:UIControlStateSelected];
     [controller.tabBarItem setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor colorWithHexString:@"888888"]} forState:UIControlStateNormal];
-    
     UINavigationController *navCtrl = [[UINavigationController alloc]initWithRootViewController:controller];
     [self addChildViewController:navCtrl];
     
 }
 
-
+- (UIViewController *)childViewControllerForStatusBarStyle{
+    
+    return [self.childViewControllers objectAtIndex:0];
+}
 @end

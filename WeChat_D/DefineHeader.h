@@ -14,8 +14,16 @@
 #define KHEIGHT [UIScreen mainScreen].bounds.size.height//屏幕的高
 #define KMARGIN 10//默认间距
 #define KNAVHEIGHT 64 //导航栏的高度
+#define KTABBARHEIGHT 49 //底部tabbar高度
+#define KTOOLVIEW_MINH 49 //键盘工具栏的最小高度
+#define KTOOLVIEW_MAXH 70 //键盘工具栏的最大高度
 #define TEXTSIZEWITHFONT(text,font) [text sizeWithAttributes:[NSMutableDictionary dictionaryWithObject:font forKey:NSFontAttributeName]]//根据文本及其字号返回size
 #define ScaleValueH(valueh) ((valueh)*667.0f/[UIScreen mainScreen].bounds.size.height)
 #define ScaleValueW(valuew) ((valuew)*375.0f/[UIScreen mainScreen].bounds.size.width)
+
+//define this constant if you want to use Masonry without the 'mas_' prefix
+//#define MAS_SHORTHAND
+//define this constant if you want to enable auto-boxing for default syntax
+#define MAS_SHORTHAND_GLOBALS
 
 #endif /* DefineHeader_h */
