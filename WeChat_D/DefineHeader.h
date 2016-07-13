@@ -17,6 +17,7 @@
 #define KTABBARHEIGHT 49 //底部tabbar高度
 #define KTOOLVIEW_MINH 49 //键盘工具栏的最小高度
 #define KTOOLVIEW_MAXH 70 //键盘工具栏的最大高度
+#define KFACEVIEW_H 210//表情和更多view的高度
 #define TEXTSIZEWITHFONT(text,font) [text sizeWithAttributes:[NSMutableDictionary dictionaryWithObject:font forKey:NSFontAttributeName]]//根据文本及其字号返回size
 #define ScaleValueH(valueh) ((valueh)*667.0f/[UIScreen mainScreen].bounds.size.height)
 #define ScaleValueW(valuew) ((valuew)*375.0f/[UIScreen mainScreen].bounds.size.width)

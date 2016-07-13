@@ -28,5 +28,5 @@ typedef enum : NSUInteger {
 
 @property(nonatomic,assign) CGFloat superViewHeight;
 @property(nonatomic,weak)id<JPKeyBoardToolViewDelegate> delegate;
-
+- (void)endEditing;
 @end

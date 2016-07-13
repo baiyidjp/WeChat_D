@@ -7,8 +7,9 @@
 //
 
 #import "JPKeyBoardToolView.h"
+#import "AddMoreView.h"
 
-@interface JPKeyBoardToolView ()<UITextViewDelegate>
+@interface JPKeyBoardToolView ()<UITextViewDelegate,AddMoreViewDelegate>
 /**
  *  左边录音按钮
  */
@@ -33,6 +34,18 @@
  *  键盘的frame
  */
 @property(nonatomic,assign)CGRect keyBoardFrame;
+/**
+ *  加号view
+ */
+@property(nonatomic,strong)AddMoreView *addMoreView;
+/**
+ *  表情View
+ */
+@property(nonatomic,strong)UIView *faceView;
+/**
+ *  工具栏下面的高度
+ */
+@property(nonatomic,assign)CGFloat bottomHeight;
 @end
 
 @implementation JPKeyBoardToolView
@@ -173,6 +186,35 @@
     return _inputTextView;
 }
 
+#pragma mark 懒加载功能view
+- (AddMoreView *)addMoreView{
+    
+    if (!_addMoreView) {
+        NSMutableArray *arr = [NSMutableArray array];
+        for (int i = 0; i < 5; i++) {
+            NSDictionary *dict1 = @{@"title":@"拍摄",@"imageName":@"chat_bar_icons_camera"};
+            NSDictionary *dict2 = @{@"title":@"照片",@"imageName":@"chat_bar_icons_pic"};
+            NSDictionary *dict3 = @{@"title":@"位置",@"imageName":@"chat_bar_icons_location"};
+            [arr addObject:dict1];
+            [arr addObject:dict2];
+            [arr addObject:dict3];
+        }
+        _addMoreView = [[AddMoreView alloc]initWithFrame:CGRectMake(0, self.superViewHeight, self.frame.size.width, KFACEVIEW_H) data:[arr copy]];
+        _addMoreView.delegate = self;
+        _addMoreView.backgroundColor = self.backgroundColor;
+    }
+    return _addMoreView;
+}
+
+- (CGFloat)bottomHeight{
+    
+    if (self.faceView.superview || self.addMoreView.superview) {
+        return MAX(self.keyBoardFrame.size.height, MAX(self.faceView.frame.size.height, self.addMoreView.frame.size.height));
+    }else{
+        return MAX(self.keyBoardFrame.size.height, CGFLOAT_MIN);
+    }
+}
+
 #pragma mark 功能按钮的点击
 - (void)toolBtnClicked:(UIButton *)toolBtn{
     
@@ -182,20 +224,14 @@
         case ButtonType_Record:
             self.faceBtn.selected = NO;
             self.addMoreBtn.selected = NO;
-            self.recordLongBtn.hidden = !toolBtn.selected;
-            self.inputTextView.hidden = toolBtn.selected;
             break;
         case ButtonType_Face:
             self.recordBtn.selected = NO;
             self.addMoreBtn.selected = NO;
-            self.recordLongBtn.hidden = YES;
-            self.inputTextView.hidden = NO;
             break;
         case ButtonType_AddMore:
             self.recordBtn.selected = NO;
             self.faceBtn.selected = NO;
-            self.recordLongBtn.hidden = YES;
-            self.inputTextView.hidden = NO;
             break;
         default:
             break;
@@ -212,6 +248,10 @@
 #pragma mark 需要显示的view 一级toolView的frame设置
 - (void)showViewWithType:(ButtonType)type{
     
+    [self showMoreView:self.addMoreBtn.selected && type == ButtonType_AddMore];
+    [self showFaceView:self.faceBtn.selected && type == ButtonType_Face];
+    [self showRecordView:self.recordBtn.selected && type == ButtonType_Record];
+    
     switch (type) {
         case ButtonType_None:
         case ButtonType_Record:
@@ -223,18 +263,80 @@
         case ButtonType_Face:
         case ButtonType_AddMore:
         {
+            [self setFrame:CGRectMake(0, self.superViewHeight-KTOOLVIEW_MINH-KFACEVIEW_H, KWIDTH, KTOOLVIEW_MINH) animated:YES];
             [self.inputTextView resignFirstResponder];
-            [self setFrame:CGRectMake(0, self.superViewHeight-KTOOLVIEW_MINH-200, KWIDTH, KTOOLVIEW_MINH) animated:YES];
+            [self textViewDidChange:self.inputTextView];
         }
             break;
         case ButtonType_KeyBoard:
         {
-            [self setFrame:CGRectMake(0, self.superViewHeight-KTOOLVIEW_MINH-self.keyBoardFrame.size.height, KWIDTH, KTOOLVIEW_MINH) animated:NO];
+            [self textViewDidChange:self.inputTextView];
         }
             break;
         default:
             break;
     }
+    
+    
+}
+
+#pragma mark 显示或者隐藏功能view
+- (void)showMoreView:(BOOL)show{
+    
+    if (show) {
+        [self.superview addSubview:self.addMoreView];
+        [UIView animateWithDuration:0.3 animations:^{
+            [self.addMoreView setFrame:CGRectMake(0, self.superViewHeight-KFACEVIEW_H, self.frame.size.width, KFACEVIEW_H)];
+        }];
+    }else{
+        [UIView animateWithDuration:0.3 animations:^{
+            [self.addMoreView setFrame:CGRectMake(0, self.superViewHeight, self.frame.size.width, KFACEVIEW_H)];
+        } completion:^(BOOL finished) {
+            [self.addMoreView removeFromSuperview];
+        }];
+    }
+}
+
+- (void)showFaceView:(BOOL)show{
+    
+    if (show) {
+        [self.superview addSubview:self.faceView];
+        [UIView animateWithDuration:0.3 animations:^{
+            [self.faceView setFrame:CGRectMake(0, self.superViewHeight-KFACEVIEW_H, self.frame.size.width, KFACEVIEW_H)];
+        }];
+    }else{
+        [UIView animateWithDuration:0.3 animations:^{
+            [self.faceView setFrame:CGRectMake(0, self.superViewHeight, self.frame.size.width, KFACEVIEW_H)];
+        } completion:^(BOOL finished) {
+            [self.faceView removeFromSuperview];
+        }];
+    }
+}
+
+- (void)showRecordView:(BOOL)show{
+    
+    self.recordLongBtn.hidden = !show;
+    self.inputTextView.hidden = show;
+}
+
+#pragma mark AddMoreViewDelegate
+- (NSArray *)dataOfMoreView:(AddMoreView *)addMoreView{
+    
+    NSMutableArray *arr = [NSMutableArray array];
+    for (int i = 0; i < 2; i++) {
+        NSDictionary *dict1 = @{@"title":@"拍摄",@"imageName":@"chat_bar_icons_camera"};
+        NSDictionary *dict2 = @{@"title":@"照片",@"imageName":@"chat_bar_icons_pic"};
+        NSDictionary *dict3 = @{@"title":@"位置",@"imageName":@"chat_bar_icons_location"};
+        [arr addObject:dict1];
+        [arr addObject:dict2];
+        [arr addObject:dict3];
+    }
+    return [arr copy];
+}
+
+- (void)addMoreView:(AddMoreView *)addMoreView didSelectedItem:(NSInteger)index{
+    
+    NSLog(@"点击 %zd",index);
 }
 
 #pragma mark 改变toolview的frame
@@ -256,24 +358,49 @@
 - (BOOL)textViewShouldBeginEditing:(UITextView *)textView{
     
     self.recordBtn.selected = self.faceBtn.selected = self.addMoreBtn.selected = NO;
-    [self showViewWithType:ButtonType_KeyBoard];
+    [self showRecordView:NO];
+    [self showFaceView:NO];
+    [self showMoreView:NO];
     return YES;
 }
 
+- (void)textViewDidChange:(UITextView *)textView{
+    
+    CGRect textViewFrame = self.inputTextView.frame;
+    CGSize textSize = [self.inputTextView sizeThatFits:CGSizeMake(CGRectGetWidth(textViewFrame), 1000.0f)];//计算当前文字的宽高
+    
+    CGFloat offset = 10;
+    textView.scrollEnabled = (textSize.height + 0.1 > KTOOLVIEW_MAXH-offset);//判断是否已经需要换行
+    textViewFrame.size.height = MAX(KTOOLVIEW_MINH-offset, MIN(KTOOLVIEW_MAXH, textSize.height));//找出一个最大值最为高度
+    
+    CGRect addBarFrame = self.frame;
+    addBarFrame.size.height = textViewFrame.size.height+offset;
+    addBarFrame.origin.y = self.superViewHeight - self.bottomHeight - addBarFrame.size.height;
+    [self setFrame:addBarFrame animated:NO];
+    if (textView.scrollEnabled) {
+        [textView scrollRangeToVisible:NSMakeRange(textView.text.length - 2, 1)];
+    }
+}
 #pragma mark 键盘的通知方法
 - (void)keyboardWillHide:(NSNotification *)notification{
     self.keyBoardFrame = CGRectZero;
-    [self showViewWithType:ButtonType_KeyBoard];
+    [self textViewDidChange:self.inputTextView];
 }
 - (void)keyboardWillChangeFrame:(NSNotification *)notification{
     self.keyBoardFrame = [notification.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue];
-    [self showViewWithType:ButtonType_KeyBoard];
+    [self textViewDidChange:self.inputTextView];
 }
 
 #pragma mark 销毁时移除通知
 - (void)dealloc{
     [[NSNotificationCenter defaultCenter]removeObserver:self name:UIKeyboardWillHideNotification object:nil];
     [[NSNotificationCenter defaultCenter]removeObserver:self name:UIKeyboardWillChangeFrameNotification object:nil];
+}
+
+#pragma mark 结束编辑状态
+- (void)endEditing{
+    
+    [self showViewWithType:ButtonType_None];
 }
 
 @end
