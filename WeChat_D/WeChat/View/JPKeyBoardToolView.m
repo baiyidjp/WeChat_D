@@ -381,6 +381,17 @@
         [textView scrollRangeToVisible:NSMakeRange(textView.text.length - 2, 1)];
     }
 }
+
+- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text{
+    
+    if ([text isEqualToString:@"\n"]) {
+        //发送消息
+        return NO;
+    }
+    
+    return YES;
+}
+
 #pragma mark 键盘的通知方法
 - (void)keyboardWillHide:(NSNotification *)notification{
     self.keyBoardFrame = CGRectZero;

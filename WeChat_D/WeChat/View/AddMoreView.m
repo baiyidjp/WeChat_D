@@ -91,13 +91,12 @@
         [itemBtn addTarget:self action:@selector(clickItemBtn:) forControlEvents:UIControlEventTouchUpInside];
         [itemBtn setImage:[UIImage imageNamed:[dict objectForKey:@"imageName"]] forState:UIControlStateNormal];
         [self.scrollView addSubview:itemBtn];
-        CGFloat row_left = i%line_num;//当前图片在第几列
-        CGFloat row_top = i/line_num;//当前图片在第几行
-        if (i > 7) {//图片大于8张的时候需要重新赋值
-            row_left += line_num;
-            row_top -= row_num;
-            left_padding = ScaleValueW(4*KMARGIN);
-        }
+        
+        NSInteger pageNum = i/(line_num*row_num);//计算当前图片应该在第几页显示  超过line_row行后会另起一页
+        CGFloat row_left = i%line_num +line_num*pageNum;//当前图片在第几列
+        CGFloat row_top = i/line_num - pageNum*row_num;//当前图片在第几行
+        left_padding = ScaleValueW(2*KMARGIN)+ScaleValueW(pageNum*2*KMARGIN);
+
         CGFloat left = left_padding + row_left*(buttonW_H+button_padding);//计算X
         CGFloat top = top_padding + (self.scrollView.frame.size.height/2)*row_top;//计算Y
         [itemBtn mas_makeConstraints:^(MASConstraintMaker *make) {

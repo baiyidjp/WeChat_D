@@ -22,7 +22,6 @@
     self.view.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:self.toolView];
     [self.view addSubview:self.ChatTableView];
-//    [self.view bringSubviewToFront:self.toolView];
 }
 
 - (UITableView *)ChatTableView{
