@@ -9,7 +9,7 @@
 #import "ChatDetailViewController.h"
 #import "JPKeyBoardToolView.h"
 
-@interface ChatDetailViewController ()<UITableViewDelegate,UITableViewDataSource>
+@interface ChatDetailViewController ()<UITableViewDelegate,UITableViewDataSource,JPKeyBoardToolViewDelegate>
 @property(nonatomic,strong)UITableView *ChatTableView;
 @property(nonatomic,strong)JPKeyBoardToolView *toolView;
 @end
@@ -22,6 +22,7 @@
     self.view.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:self.toolView];
     [self.view addSubview:self.ChatTableView];
+//    [self.view bringSubviewToFront:self.toolView];
 }
 
 - (UITableView *)ChatTableView{
@@ -39,8 +40,21 @@
 - (JPKeyBoardToolView *)toolView{
     if (!_toolView) {
         _toolView = [[JPKeyBoardToolView alloc]initWithFrame:CGRectMake(0, KHEIGHT-KTOOLVIEW_MINH, KWIDTH, KTOOLVIEW_MINH)];
+        _toolView.superViewHeight = KHEIGHT;
+        _toolView.delegate = self;
     }
     return _toolView;
+}
+
+#pragma mark JPKeyBoardToolViewDelegate
+- (void)keyBoardToolViewFrameDidChange:(JPKeyBoardToolView *)toolView frame:(CGRect)frame{
+    
+    if (self.ChatTableView.frame.size.height == frame.origin.y) {
+        return;
+    }
+    [UIView animateWithDuration:0.3 animations:^{
+        self.ChatTableView.frame = CGRectMake(0, KNAVHEIGHT, KWIDTH,frame.origin.y-KNAVHEIGHT);
+    }];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
