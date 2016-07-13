@@ -87,7 +87,8 @@
         //取出数据
         NSDictionary *dict = [self.dataArray objectAtIndex:i];
         UIButton *itemBtn = [[UIButton alloc]init];
-        itemBtn.tag = BUTTON_TAG+i;
+        MoreViewButtonType type = i;
+        itemBtn.tag = type;
         [itemBtn addTarget:self action:@selector(clickItemBtn:) forControlEvents:UIControlEventTouchUpInside];
         [itemBtn setImage:[UIImage imageNamed:[dict objectForKey:@"imageName"]] forState:UIControlStateNormal];
         [self.scrollView addSubview:itemBtn];
@@ -124,7 +125,7 @@
 #pragma mark 点击按钮
 - (void)clickItemBtn:(UIButton *)btn{
     
-    NSInteger index = btn.tag - BUTTON_TAG;
+    NSInteger index = btn.tag;
     if ([self.delegate respondsToSelector:@selector(addMoreView:didSelectedItem:)]) {
         [self.delegate addMoreView:self didSelectedItem:index];
     }
@@ -134,7 +135,6 @@
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView{
     
     NSInteger currentIndex = scrollView.contentOffset.x / self.frame.size.width;
-    
     self.pageControl.currentPage = currentIndex;
 }
 

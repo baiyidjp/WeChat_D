@@ -8,6 +8,17 @@
 
 #import <UIKit/UIKit.h>
 
+typedef enum : NSUInteger {
+    MoreViewButtonType_Camera,//拍摄
+    MoreViewButtonType_Photo,//照片
+    MoreViewButtonType_Location,//位置
+    MoreViewButtonType_Video,//视频
+    MoreViewButtonType_VoiceChat,//语音聊天
+    MoreViewButtonType_RedBag,//红包
+    MoreViewButtonType_MineCard,//个人名片
+    MoreViewButtonType_Collect,//收藏
+} MoreViewButtonType;
+
 @class AddMoreView;
 @protocol AddMoreViewDelegate <NSObject>
 

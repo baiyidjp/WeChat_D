@@ -9,7 +9,7 @@
 #import "ChatDetailViewController.h"
 #import "JPKeyBoardToolView.h"
 
-@interface ChatDetailViewController ()<UITableViewDelegate,UITableViewDataSource,JPKeyBoardToolViewDelegate>
+@interface ChatDetailViewController ()<UITableViewDelegate,UITableViewDataSource,JPKeyBoardToolViewDelegate,UIScrollViewDelegate>
 @property(nonatomic,strong)UITableView *ChatTableView;
 @property(nonatomic,strong)JPKeyBoardToolView *toolView;
 @end
@@ -67,6 +67,11 @@
     cell.textLabel.text = [NSString stringWithFormat:@"%zd",indexPath.row];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView{
+    
+    [self.toolView endEditing];
 }
 
 @end

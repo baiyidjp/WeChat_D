@@ -8,8 +8,9 @@
 
 #import "JPKeyBoardToolView.h"
 #import "AddMoreView.h"
+#import "FaceView.h"
 
-@interface JPKeyBoardToolView ()<UITextViewDelegate,AddMoreViewDelegate>
+@interface JPKeyBoardToolView ()<UITextViewDelegate,AddMoreViewDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate>
 /**
  *  左边录音按钮
  */
@@ -41,11 +42,19 @@
 /**
  *  表情View
  */
-@property(nonatomic,strong)UIView *faceView;
+@property(nonatomic,strong)FaceView *faceView;
 /**
  *  工具栏下面的高度
  */
 @property(nonatomic,assign)CGFloat bottomHeight;
+/**
+ *  记录已经输入的文字或者表情
+ */
+@property(nonatomic,strong)NSString *inputText;
+/**
+ *  获取window的根控制器
+ */
+@property(nonatomic,strong)UIViewController *rootViewController;
 @end
 
 @implementation JPKeyBoardToolView
@@ -186,12 +195,16 @@
     return _inputTextView;
 }
 
+- (UIViewController *)rootViewController{
+    return [[UIApplication sharedApplication] keyWindow].rootViewController;
+}
+
 #pragma mark 懒加载功能view
 - (AddMoreView *)addMoreView{
     
     if (!_addMoreView) {
         NSMutableArray *arr = [NSMutableArray array];
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 6; i++) {
             NSDictionary *dict1 = @{@"title":@"拍摄",@"imageName":@"chat_bar_icons_camera"};
             NSDictionary *dict2 = @{@"title":@"照片",@"imageName":@"chat_bar_icons_pic"};
             NSDictionary *dict3 = @{@"title":@"位置",@"imageName":@"chat_bar_icons_location"};
@@ -204,6 +217,15 @@
         _addMoreView.backgroundColor = self.backgroundColor;
     }
     return _addMoreView;
+}
+
+- (FaceView *)faceView{
+    
+    if (!_faceView) {
+        _faceView = [[FaceView alloc]initWithFrame:CGRectMake(0, self.superViewHeight, self.frame.size.width, KFACEVIEW_H)];
+        _faceView.backgroundColor = [UIColor redColor];
+    }
+    return _faceView;
 }
 
 - (CGFloat)bottomHeight{
@@ -336,7 +358,54 @@
 
 - (void)addMoreView:(AddMoreView *)addMoreView didSelectedItem:(NSInteger)index{
     
-    NSLog(@"点击 %zd",index);
+    MoreViewButtonType type = index;
+    NSLog(@"点击 %zd",type);
+    /*
+     MoreViewButtonType_Camera,//拍摄
+     MoreViewButtonType_Photo,//照片
+     MoreViewButtonType_Location,//位置
+     MoreViewButtonType_Video,//视频
+     MoreViewButtonType_VoiceChat,//语音聊天
+     MoreViewButtonType_RedBag,//红包
+     MoreViewButtonType_MineCard,//个人名片
+     MoreViewButtonType_Collect,//收藏
+     */
+    switch (type) {
+        case MoreViewButtonType_Camera:{
+            UIImagePickerController *pickerC = [[UIImagePickerController alloc] init];
+            pickerC.delegate = self;
+            pickerC.sourceType = UIImagePickerControllerSourceTypeCamera;
+            [self.rootViewController presentViewController:pickerC animated:YES completion:nil];
+        }
+            break;
+        case MoreViewButtonType_Photo:{
+            UIImagePickerController *pickerC = [[UIImagePickerController alloc] init];
+            pickerC.delegate = self;
+            [self.rootViewController presentViewController:pickerC animated:YES completion:nil];
+        }
+            break;
+        case MoreViewButtonType_Location:
+            
+            break;
+        case MoreViewButtonType_Video:
+            
+            break;
+        case MoreViewButtonType_VoiceChat:
+            
+            break;
+        case MoreViewButtonType_RedBag:
+            
+            break;
+        case MoreViewButtonType_MineCard:
+            
+            break;
+        case MoreViewButtonType_Collect:
+            
+            break;
+            
+        default:
+            break;
+    }
 }
 
 #pragma mark 改变toolview的frame

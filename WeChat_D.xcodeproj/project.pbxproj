@@ -36,6 +36,7 @@
 		A297B77F1D2FA192003C9276 /* Tabbar_wechat_select@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A297B7731D2FA192003C9276 /* Tabbar_wechat_select@2x.png */; };
 		A297B7801D2FA192003C9276 /* Tabbar_wechat_select@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = A297B7741D2FA192003C9276 /* Tabbar_wechat_select@3x.png */; };
 		A2C435501D3608CF0097ECC1 /* AddMoreView.m in Sources */ = {isa = PBXBuildFile; fileRef = A2C4354F1D3608CF0097ECC1 /* AddMoreView.m */; };
+		A2C435531D363AB40097ECC1 /* FaceView.m in Sources */ = {isa = PBXBuildFile; fileRef = A2C435521D363AB40097ECC1 /* FaceView.m */; };
 		EEA7B39501F1EDAA38FBFDB0 /* libPods-WeChat_D.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 77912E4F30617DE482F6A3C6 /* libPods-WeChat_D.a */; };
 /* End PBXBuildFile section */
 
@@ -108,6 +109,8 @@
 		A297B7741D2FA192003C9276 /* Tabbar_wechat_select@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Tabbar_wechat_select@3x.png"; sourceTree = "<group>"; };
 		A2C4354E1D3608CF0097ECC1 /* AddMoreView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddMoreView.h; sourceTree = "<group>"; };
 		A2C4354F1D3608CF0097ECC1 /* AddMoreView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddMoreView.m; sourceTree = "<group>"; };
+		A2C435511D363AB40097ECC1 /* FaceView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FaceView.h; sourceTree = "<group>"; };
+		A2C435521D363AB40097ECC1 /* FaceView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FaceView.m; sourceTree = "<group>"; };
 		A9B6923DCF73CFE0F0DA477B /* Pods-WeChat_D.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WeChat_D.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WeChat_D/Pods-WeChat_D.debug.xcconfig"; sourceTree = "<group>"; };
 		CC02DEDA828486EE35A2D3B8 /* Pods-WeChat_D.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WeChat_D.release.xcconfig"; path = "Pods/Target Support Files/Pods-WeChat_D/Pods-WeChat_D.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -370,6 +373,8 @@
 				A24695321D34EA7600E32C30 /* JPKeyBoardToolView.m */,
 				A2C4354E1D3608CF0097ECC1 /* AddMoreView.h */,
 				A2C4354F1D3608CF0097ECC1 /* AddMoreView.m */,
+				A2C435511D363AB40097ECC1 /* FaceView.h */,
+				A2C435521D363AB40097ECC1 /* FaceView.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -626,6 +631,7 @@
 				A297B7071D2F8E14003C9276 /* main.m in Sources */,
 				A297B7591D2F8E5A003C9276 /* UIView+Toast.m in Sources */,
 				A2C435501D3608CF0097ECC1 /* AddMoreView.m in Sources */,
+				A2C435531D363AB40097ECC1 /* FaceView.m in Sources */,
 				A297B75E1D2F8E5A003C9276 /* WeChatViewController.m in Sources */,
 				A297B7581D2F8E5A003C9276 /* UIColor+Extension.m in Sources */,
 			);
