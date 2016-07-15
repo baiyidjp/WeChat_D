@@ -9,12 +9,27 @@
 #import "ChatDetailViewController.h"
 #import "JPKeyBoardToolView.h"
 
+#define MESSAGE @"message"
 @interface ChatDetailViewController ()<UITableViewDelegate,UITableViewDataSource,JPKeyBoardToolViewDelegate,UIScrollViewDelegate>
 @property(nonatomic,strong)UITableView *ChatTableView;
 @property(nonatomic,strong)JPKeyBoardToolView *toolView;
+@property(nonatomic,strong)NSMutableArray *dataArray;
 @end
 
 @implementation ChatDetailViewController
+
+- (NSMutableArray *)dataArray{
+    
+    if (!_dataArray) {
+        NSMutableArray *array = [[NSUserDefaults standardUserDefaults]objectForKey:MESSAGE];
+        if (array.count) {
+            _dataArray = [NSMutableArray arrayWithArray:[array copy]];//_dataArray = array 这样写是错误 并没有制定_dataArray是可变的对象 下面引用的时候在addobject就会崩溃
+        }else{
+            _dataArray = [NSMutableArray array];
+        }
+    }
+    return _dataArray;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -22,6 +37,17 @@
     self.view.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:self.toolView];
     [self.view addSubview:self.ChatTableView];
+    
+    UIBarButtonItem *right = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemEdit target:self action:@selector(delect)];
+    self.navigationItem.rightBarButtonItem = right;
+    
+}
+
+- (void)delect{
+    
+    [self.dataArray removeAllObjects];
+    [[NSUserDefaults standardUserDefaults]setObject:self.dataArray forKey:MESSAGE];
+    [self.ChatTableView reloadData];
 }
 
 - (UITableView *)ChatTableView{
@@ -56,15 +82,22 @@
     }];
 }
 
+- (void)didSendMessageOfFaceView:(JPKeyBoardToolView *)toolView message:(NSString *)message{
+    
+    [self.dataArray addObject:message];
+    [[NSUserDefaults standardUserDefaults]setObject:self.dataArray forKey:MESSAGE];
+    [self.ChatTableView reloadData];
+}
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     
-    return 20;
+    return self.dataArray.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ChatTableView"];
-    cell.textLabel.text = [NSString stringWithFormat:@"%zd",indexPath.row];
+    cell.textLabel.text = [self.dataArray objectAtIndex:indexPath.row];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
 }

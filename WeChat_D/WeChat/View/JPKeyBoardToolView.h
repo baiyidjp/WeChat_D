@@ -19,8 +19,14 @@ typedef enum : NSUInteger {
 
 @class JPKeyBoardToolView;
 @protocol JPKeyBoardToolViewDelegate <NSObject>
-
+/**
+ *  键盘frame变化
+ */
 - (void)keyBoardToolViewFrameDidChange:(JPKeyBoardToolView *)toolView frame:(CGRect)frame;
+/**
+ *  发送消息
+ */
+- (void)didSendMessageOfFaceView:(JPKeyBoardToolView *)toolView message:(NSString *)message;
 
 @end
 

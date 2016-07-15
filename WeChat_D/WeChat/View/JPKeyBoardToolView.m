@@ -439,6 +439,7 @@
 - (void)didSendItemOfFaceView:(FaceView *)faceView{
     
     NSLog(@"发送");
+    [self textView:self.inputTextView shouldChangeTextInRange:NSMakeRange(self.inputTextView.text.length - 1, 1) replacementText:@"\n"];
 }
 
 #pragma mark 改变toolview的frame
@@ -488,6 +489,12 @@
     
     if ([text isEqualToString:@"\n"]) {
         //发送消息
+        NSString *message = textView.text;
+        if ([self.delegate respondsToSelector:@selector(didSendMessageOfFaceView:message:)]) {
+            [self.delegate didSendMessageOfFaceView:self message:message];
+        }
+        textView.text = nil;
+        [self textViewDidChange:self.inputTextView];
         return NO;
     }else if (text.length == 0){//没有新增text 那就是删除text
         NSString *delectText = [textView.text substringWithRange:range];
@@ -513,6 +520,8 @@
     
     return YES;
 }
+
+
 
 #pragma mark 键盘的通知方法
 - (void)keyboardWillHide:(NSNotification *)notification{

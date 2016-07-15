@@ -8,6 +8,8 @@
 
 #import "WeChatViewController.h"
 #import "ChatDetailViewController.h"
+#import "WeChatListModel.h"
+#import "WeChatTableViewCell.h"
 
 @interface WeChatViewController ()<UISearchBarDelegate,UITableViewDelegate,UITableViewDataSource>
 @property(nonatomic,strong)UISearchBar *searchBar;
@@ -15,6 +17,7 @@
 @property(nonatomic,strong)UIButton *cancleBtn;
 @property(nonatomic,strong)UITableView *weChatTableView;
 @property(nonatomic,strong)UIScrollView *searchView;
+@property(nonatomic,strong)NSMutableArray *dataArray;
 @end
 
 @implementation WeChatViewController
@@ -33,6 +36,22 @@
     
     [super viewWillDisappear:animated];
     
+}
+
+- (NSMutableArray *)dataArray{
+    
+    if (!_dataArray) {
+        _dataArray = [NSMutableArray array];
+        for (int i = 0; i < 10 ; i++) {
+            WeChatListModel *model = [[WeChatListModel alloc]init];
+            model.imageUrl = @"Tabar_mine";
+            model.name = @"微信测试";
+            model.message = @"晚上约么?";
+            model.time = @"16:32";
+            [_dataArray addObject:model];
+        }
+    }
+    return _dataArray;
 }
 
 - (void)viewDidLoad {
@@ -73,7 +92,7 @@
     self.weChatTableView = [[UITableView alloc]init];
     self.weChatTableView.delegate = self;
     self.weChatTableView.dataSource = self;
-    [self.weChatTableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"weChatTableView"];
+    [self.weChatTableView registerNib:[UINib nibWithNibName:@"WeChatTableViewCell" bundle:nil] forCellReuseIdentifier:@"weChatTableView"];
     self.weChatTableView.tableFooterView = [[UIView alloc]init];
     [self.view addSubview:self.weChatTableView];
     
@@ -185,13 +204,14 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     
-    return 20;
+    return self.dataArray.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"weChatTableView"];
-    cell.textLabel.text = [NSString stringWithFormat:@"%zd",indexPath.row];
+    WeChatTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"weChatTableView"];
+    WeChatListModel *model = [self.dataArray objectAtIndex:indexPath.row];
+    cell.model = model;
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
 }
@@ -202,6 +222,11 @@
     chatVC.title = [NSString stringWithFormat:@"%zd",indexPath.row];
     self.tabBarController.tabBar.hidden = YES;
     [self.navigationController pushViewController:chatVC animated:YES];
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    return 100;
 }
 
 @end

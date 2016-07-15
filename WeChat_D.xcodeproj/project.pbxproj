@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		A21B628D1D3891B300F0E727 /* face.plist in Resources */ = {isa = PBXBuildFile; fileRef = A21B628C1D3891B300F0E727 /* face.plist */; };
 		A21B62901D3893ED00F0E727 /* FaceViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A21B628F1D3893ED00F0E727 /* FaceViewModel.m */; };
+		A21B62931D38D9BD00F0E727 /* WeChatListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A21B62921D38D9BD00F0E727 /* WeChatListModel.m */; };
+		A21B62971D38DA1700F0E727 /* WeChatTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A21B62951D38DA1700F0E727 /* WeChatTableViewCell.m */; };
+		A21B62981D38DA1700F0E727 /* WeChatTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A21B62961D38DA1700F0E727 /* WeChatTableViewCell.xib */; };
 		A24695301D34E77D00E32C30 /* ChatDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A246952F1D34E77D00E32C30 /* ChatDetailViewController.m */; };
 		A24695331D34EA7600E32C30 /* JPKeyBoardToolView.m in Sources */ = {isa = PBXBuildFile; fileRef = A24695321D34EA7600E32C30 /* JPKeyBoardToolView.m */; };
 		A297B7071D2F8E14003C9276 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A297B7061D2F8E14003C9276 /* main.m */; };
@@ -64,6 +67,11 @@
 		A21B628C1D3891B300F0E727 /* face.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = face.plist; sourceTree = "<group>"; };
 		A21B628E1D3893ED00F0E727 /* FaceViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FaceViewModel.h; sourceTree = "<group>"; };
 		A21B628F1D3893ED00F0E727 /* FaceViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FaceViewModel.m; sourceTree = "<group>"; };
+		A21B62911D38D9BD00F0E727 /* WeChatListModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeChatListModel.h; sourceTree = "<group>"; };
+		A21B62921D38D9BD00F0E727 /* WeChatListModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeChatListModel.m; sourceTree = "<group>"; };
+		A21B62941D38DA1700F0E727 /* WeChatTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeChatTableViewCell.h; sourceTree = "<group>"; };
+		A21B62951D38DA1700F0E727 /* WeChatTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeChatTableViewCell.m; sourceTree = "<group>"; };
+		A21B62961D38DA1700F0E727 /* WeChatTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WeChatTableViewCell.xib; sourceTree = "<group>"; };
 		A246952E1D34E77D00E32C30 /* ChatDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatDetailViewController.h; sourceTree = "<group>"; };
 		A246952F1D34E77D00E32C30 /* ChatDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatDetailViewController.m; sourceTree = "<group>"; };
 		A24695311D34EA7600E32C30 /* JPKeyBoardToolView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JPKeyBoardToolView.h; sourceTree = "<group>"; };
@@ -370,6 +378,8 @@
 			children = (
 				A21B628E1D3893ED00F0E727 /* FaceViewModel.h */,
 				A21B628F1D3893ED00F0E727 /* FaceViewModel.m */,
+				A21B62911D38D9BD00F0E727 /* WeChatListModel.h */,
+				A21B62921D38D9BD00F0E727 /* WeChatListModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -383,6 +393,9 @@
 				A2C4354F1D3608CF0097ECC1 /* AddMoreView.m */,
 				A2C435511D363AB40097ECC1 /* FaceView.h */,
 				A2C435521D363AB40097ECC1 /* FaceView.m */,
+				A21B62941D38DA1700F0E727 /* WeChatTableViewCell.h */,
+				A21B62951D38DA1700F0E727 /* WeChatTableViewCell.m */,
+				A21B62961D38DA1700F0E727 /* WeChatTableViewCell.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -549,6 +562,7 @@
 				A297B7761D2FA192003C9276 /* Tabar_mine@3x.png in Resources */,
 				A297B77E1D2FA192003C9276 /* Tabbar_wechat@3x.png in Resources */,
 				A297B77B1D2FA192003C9276 /* Tabbar_mine_select@2x.png in Resources */,
+				A21B62981D38DA1700F0E727 /* WeChatTableViewCell.xib in Resources */,
 				A297B7121D2F8E14003C9276 /* Assets.xcassets in Resources */,
 				A21B628D1D3891B300F0E727 /* face.plist in Resources */,
 				A297B77F1D2FA192003C9276 /* Tabbar_wechat_select@2x.png in Resources */,
@@ -630,10 +644,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				A297B75D1D2F8E5A003C9276 /* MainTabbarController.m in Sources */,
+				A21B62971D38DA1700F0E727 /* WeChatTableViewCell.m in Sources */,
 				A297B7631D2F9622003C9276 /* BaseViewController.m in Sources */,
 				A297B75C1D2F8E5A003C9276 /* DiscoverViewController.m in Sources */,
 				A24695301D34E77D00E32C30 /* ChatDetailViewController.m in Sources */,
 				A297B75B1D2F8E5A003C9276 /* MineViewController.m in Sources */,
+				A21B62931D38D9BD00F0E727 /* WeChatListModel.m in Sources */,
 				A297B75A1D2F8E5A003C9276 /* ContactsViewController.m in Sources */,
 				A297B70A1D2F8E14003C9276 /* AppDelegate.m in Sources */,
 				A24695331D34EA7600E32C30 /* JPKeyBoardToolView.m in Sources */,
