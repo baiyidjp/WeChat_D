@@ -10,7 +10,7 @@
 #import "AddMoreView.h"
 #import "FaceView.h"
 
-@interface JPKeyBoardToolView ()<UITextViewDelegate,AddMoreViewDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate>
+@interface JPKeyBoardToolView ()<UITextViewDelegate,AddMoreViewDelegate,FaceViewDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate>
 /**
  *  左边录音按钮
  */
@@ -223,7 +223,8 @@
     
     if (!_faceView) {
         _faceView = [[FaceView alloc]initWithFrame:CGRectMake(0, self.superViewHeight, self.frame.size.width, KFACEVIEW_H)];
-        _faceView.backgroundColor = [UIColor redColor];
+        _faceView.delegate = self;
+        _faceView.backgroundColor = self.backgroundColor;
     }
     return _faceView;
 }
@@ -375,12 +376,14 @@
             UIImagePickerController *pickerC = [[UIImagePickerController alloc] init];
             pickerC.delegate = self;
             pickerC.sourceType = UIImagePickerControllerSourceTypeCamera;
+            pickerC.editing = NO;
             [self.rootViewController presentViewController:pickerC animated:YES completion:nil];
         }
             break;
         case MoreViewButtonType_Photo:{
             UIImagePickerController *pickerC = [[UIImagePickerController alloc] init];
             pickerC.delegate = self;
+            pickerC.editing = NO;
             [self.rootViewController presentViewController:pickerC animated:YES completion:nil];
         }
             break;
@@ -408,6 +411,16 @@
     }
 }
 
+#pragma mark  FaceViewDelegate
+- (void)faceView:(FaceView *)FaceView didSelectedItem:(NSInteger)index{
+    
+    NSLog(@"点击 %zd",index);
+}
+
+- (void)didSelectDelectedItemOfFaceView:(FaceView *)faceView{
+    
+    NSLog(@"删除");
+}
 #pragma mark 改变toolview的frame
 - (void)setFrame:(CGRect)frame animated:(BOOL)animated{
     if (animated) {
