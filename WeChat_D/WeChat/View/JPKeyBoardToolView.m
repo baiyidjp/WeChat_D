@@ -9,6 +9,7 @@
 #import "JPKeyBoardToolView.h"
 #import "AddMoreView.h"
 #import "FaceView.h"
+#import "FaceViewModel.h"
 
 @interface JPKeyBoardToolView ()<UITextViewDelegate,AddMoreViewDelegate,FaceViewDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate>
 /**
@@ -55,6 +56,10 @@
  *  获取window的根控制器
  */
 @property(nonatomic,strong)UIViewController *rootViewController;
+/**
+ *  记录已经输入的文本
+ */
+@property(nonatomic,strong)NSString *textViewtext;
 @end
 
 @implementation JPKeyBoardToolView
@@ -277,6 +282,11 @@
     
     switch (type) {
         case ButtonType_None:
+        {
+            self.recordBtn.selected = self.faceBtn.selected = self.addMoreBtn.selected = NO;
+            [self.inputTextView resignFirstResponder];
+            [self setFrame:CGRectMake(0, self.superViewHeight-KTOOLVIEW_MINH, KWIDTH, KTOOLVIEW_MINH) animated:YES];
+        }
         case ButtonType_Record:
         {
             [self.inputTextView resignFirstResponder];
@@ -343,19 +353,19 @@
 }
 
 #pragma mark AddMoreViewDelegate
-- (NSArray *)dataOfMoreView:(AddMoreView *)addMoreView{
-    
-    NSMutableArray *arr = [NSMutableArray array];
-    for (int i = 0; i < 2; i++) {
-        NSDictionary *dict1 = @{@"title":@"拍摄",@"imageName":@"chat_bar_icons_camera"};
-        NSDictionary *dict2 = @{@"title":@"照片",@"imageName":@"chat_bar_icons_pic"};
-        NSDictionary *dict3 = @{@"title":@"位置",@"imageName":@"chat_bar_icons_location"};
-        [arr addObject:dict1];
-        [arr addObject:dict2];
-        [arr addObject:dict3];
-    }
-    return [arr copy];
-}
+//- (NSArray *)dataOfMoreView:(AddMoreView *)addMoreView{
+//    
+//    NSMutableArray *arr = [NSMutableArray array];
+//    for (int i = 0; i < 2; i++) {
+//        NSDictionary *dict1 = @{@"title":@"拍摄",@"imageName":@"chat_bar_icons_camera"};
+//        NSDictionary *dict2 = @{@"title":@"照片",@"imageName":@"chat_bar_icons_pic"};
+//        NSDictionary *dict3 = @{@"title":@"位置",@"imageName":@"chat_bar_icons_location"};
+//        [arr addObject:dict1];
+//        [arr addObject:dict2];
+//        [arr addObject:dict3];
+//    }
+//    return [arr copy];
+//}
 
 - (void)addMoreView:(AddMoreView *)addMoreView didSelectedItem:(NSInteger)index{
     
@@ -412,15 +422,25 @@
 }
 
 #pragma mark  FaceViewDelegate
-- (void)faceView:(FaceView *)FaceView didSelectedItem:(NSInteger)index{
+- (void)faceView:(FaceView *)FaceView didSelectedItem:(FaceViewModel *)model{
     
-    NSLog(@"点击 %zd",index);
+    NSLog(@"点击 %@",model.face_name);
+    NSString *face_name = model.face_name;
+    self.inputTextView.text = [self.inputTextView.text stringByAppendingString:face_name];
+    [self textViewDidChange:self.inputTextView];
 }
 
 - (void)didSelectDelectedItemOfFaceView:(FaceView *)faceView{
     
     NSLog(@"删除");
+    [self textView:self.inputTextView shouldChangeTextInRange:NSMakeRange(self.inputTextView.text.length - 1, 1) replacementText:@""];
 }
+
+- (void)didSendItemOfFaceView:(FaceView *)faceView{
+    
+    NSLog(@"发送");
+}
+
 #pragma mark 改变toolview的frame
 - (void)setFrame:(CGRect)frame animated:(BOOL)animated{
     if (animated) {
@@ -469,7 +489,27 @@
     if ([text isEqualToString:@"\n"]) {
         //发送消息
         return NO;
+    }else if (text.length == 0){//没有新增text 那就是删除text
+        NSString *delectText = [textView.text substringWithRange:range];
+        if ([delectText isEqualToString:@"]"]) {//匹配表情字符串
+            NSUInteger rangeLocation = range.location;
+            NSUInteger rangeLength = range.length;
+            NSString *rangeText;
+            while (1) {//创建一个无限循环 遍历当前之前的字符 直到有[]符合表情规则
+                rangeLocation--;
+                rangeLength++;
+                rangeText = [textView.text substringWithRange:NSMakeRange(rangeLocation, rangeLength)];
+                if ([rangeText hasPrefix:@"["] && [rangeText hasSuffix:@"]"]) {
+                    break;
+                }
+            }
+            textView.text = [textView.text stringByReplacingCharactersInRange:NSMakeRange(rangeLocation, rangeLength) withString:@""];
+            [textView setSelectedRange:NSMakeRange(rangeLocation, 0)];//设置光标的位置
+            [self textViewDidChange:self.inputTextView];
+            return NO;
+        }
     }
+
     
     return YES;
 }
@@ -492,7 +532,9 @@
 
 #pragma mark 结束编辑状态
 - (void)endEditing{
-    
+    if (self.recordBtn.selected) {
+        return;
+    }
     [self showViewWithType:ButtonType_None];
 }
 

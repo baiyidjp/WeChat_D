@@ -26,7 +26,7 @@ typedef enum : NSUInteger {
 /**
  *  返回需要的所有数据 数组中包含字典 字典必须有两个key对应的值 title imageName
  */
-- (NSArray *)dataOfMoreView:(AddMoreView *)addMoreView;
+//- (NSArray *)dataOfMoreView:(AddMoreView *)addMoreView;
 
 @optional
 /**

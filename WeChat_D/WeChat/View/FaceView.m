@@ -7,11 +7,19 @@
 //
 
 #import "FaceView.h"
+#import "FaceViewModel.h"
 
-#define DELECTBTN_TAG 20160715
+#define BTN_TAG 20160715
+#define LASTEMOJI @"lastemoji"
 @interface FaceView ()<UIScrollViewDelegate>
-
+/**
+ *  保存emoji表情
+ */
 @property(nonatomic,strong)NSMutableArray *dataArray;
+/**
+ *  保存最近使用的表情
+ */
+@property(nonatomic,strong)NSMutableArray *lastDataArray;
 @property(nonatomic,strong)UIScrollView *scrollView;
 @property(nonatomic,strong)UIPageControl *pageControl;
 
@@ -26,7 +34,9 @@
     CGFloat button_padding;
     CGFloat buttonW_H;
     NSInteger count;
-
+    UIButton *emojiBtn;
+    UIButton *lastBtn;
+    NSInteger currentEmojiIndex;
 }
 - (instancetype)initWithFrame:(CGRect)frame {
     
@@ -42,19 +52,27 @@
     
     if (!_dataArray) {
         _dataArray = [NSMutableArray array];
-        for (int i = 0; i < 195; i++) {
-            NSString *str = [NSString stringWithFormat:@"%d",i];
-            [_dataArray addObject:str];
-        }
-        
+        _dataArray = [FaceViewModel mj_objectArrayWithFilename:@"face.plist"];
     }
     return _dataArray;
 }
 
+- (NSMutableArray *)lastDataArray{
+    
+    if (!_lastDataArray) {
+        NSMutableArray *array = [[NSUserDefaults standardUserDefaults]objectForKey:LASTEMOJI];
+        if (array.count) {
+            _lastDataArray = [FaceViewModel mj_objectArrayWithKeyValuesArray:array];
+        }else{
+            _lastDataArray = [NSMutableArray array];
+        }
+    }
+    return _lastDataArray;
+}
 - (UIScrollView *)scrollView{
     
     if (!_scrollView) {
-        _scrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, self.bounds.size.width, self.bounds.size.height-3*KMARGIN)];
+        _scrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, self.bounds.size.width, self.bounds.size.height-ScaleValueH(3*KMARGIN))];
         _scrollView.pagingEnabled = YES;
         _scrollView.showsHorizontalScrollIndicator = NO;
         _scrollView.delegate = self;
@@ -65,7 +83,7 @@
 - (UIPageControl *)pageControl{
     
     if (!_pageControl) {
-        _pageControl = [[UIPageControl alloc]initWithFrame:CGRectMake(0, self.frame.size.height-3*KMARGIN, self.frame.size.width, 2*KMARGIN)];
+        _pageControl = [[UIPageControl alloc]initWithFrame:CGRectMake(0, self.frame.size.height-ScaleValueH(5*KMARGIN), self.frame.size.width, ScaleValueH(2*KMARGIN))];
         _pageControl.currentPageIndicatorTintColor = [UIColor darkGrayColor];
         _pageControl.pageIndicatorTintColor = [UIColor lightGrayColor];
         _pageControl.hidesForSinglePage = YES;
@@ -76,20 +94,81 @@
 #pragma mark 加载子view
 - (void)configViews{
     
+    [self addSubview:self.scrollView];
+    [self addSubview:self.pageControl];
+    
+    UIButton *sendBtn = [[UIButton alloc]init];
+    [sendBtn setTitle:@"发送" forState:UIControlStateNormal];
+    [sendBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [sendBtn setBackgroundColor:[UIColor whiteColor]];
+    [sendBtn addTarget:self action:@selector(sendBtn) forControlEvents:UIControlEventTouchUpInside];
+    [self addSubview:sendBtn];
+    [sendBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.offset(-ScaleValueW(2*KMARGIN));
+        make.bottom.offset(0);
+        make.width.equalTo(@50);
+    }];
+    
+    lastBtn = [[UIButton alloc]init];
+    [lastBtn setTitle:@"最近" forState:UIControlStateNormal];
+    [lastBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [lastBtn setTitleColor:[UIColor purpleColor] forState:UIControlStateSelected];
+    [lastBtn setBackgroundColor:[UIColor whiteColor]];
+    [lastBtn addTarget:self action:@selector(changeEmoji:) forControlEvents:UIControlEventTouchUpInside];
+    [self addSubview:lastBtn];
+    [lastBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.offset(ScaleValueW(2*KMARGIN));
+        make.bottom.offset(0);
+        make.width.equalTo(@50);
+    }];
+    emojiBtn = [[UIButton alloc]init];
+    [emojiBtn setTitle:@"emoji" forState:UIControlStateNormal];
+    [emojiBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [emojiBtn setTitleColor:[UIColor purpleColor] forState:UIControlStateSelected];
+    [emojiBtn setBackgroundColor:[UIColor whiteColor]];
+    [emojiBtn addTarget:self action:@selector(changeEmoji:) forControlEvents:UIControlEventTouchUpInside];
+    [self addSubview:emojiBtn];
+    [emojiBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(lastBtn.mas_right).with.offset(2);
+        make.bottom.offset(0);
+        make.width.equalTo(@50);
+    }];
+    //改变表情分类
+    [self changeEmoji:emojiBtn];
+    
+}
+//这个方法是为了确定scrollview和pagecontroller的属性 scroll的滚动范围和page的页数 根据不同的分类调整
+- (void)changeEmoji:(UIButton *)button{
+    
+    //先删除原有的button
+    for (UIButton *btn in self.scrollView.subviews) {
+        [btn removeFromSuperview];
+    }
     line_num = 8;//一行放几个图片
     row_num = 3;//一共几行
     left_padding = ScaleValueW(2*KMARGIN);//左右间距
     top_padding = ScaleValueH(2*KMARGIN);//上下间距
     button_padding = ScaleValueW(KMARGIN);//图片之间的间距
     buttonW_H = (self.frame.size.width - 2*left_padding - (line_num-1)*button_padding)/line_num;//图片的宽高
-    count = self.dataArray.count;//总数
-    CGFloat offsetX = (count/(line_num*row_num-1)+1)*self.frame.size.width; //每页的个数不再是行乘以列 需要减去一个 哪一个变为删除
-    self.scrollView.contentOffset = CGPointMake(0, 0);
-    self.scrollView.contentSize = CGSizeMake(offsetX, self.frame.size.height-3*KMARGIN);
-    self.pageControl.numberOfPages = count/(line_num*row_num-1)+1; //每页的个数不再是行乘以列 需要减去一个 哪一个变为删除
-    [self addSubview:self.scrollView];
-    [self addSubview:self.pageControl];
-    [self configButton];
+    if (button == emojiBtn) {
+        emojiBtn.selected = YES;
+        lastBtn.selected = NO;
+        count = self.dataArray.count;//总数
+        self.scrollView.contentOffset = CGPointMake(currentEmojiIndex*self.frame.size.width, 0);
+        CGFloat offsetX = (count/(line_num*row_num-1)+1)*self.frame.size.width; //每页的个数不再是行乘以列 需要减去一个 哪一个变为删除
+        self.scrollView.contentSize = CGSizeMake(offsetX, self.frame.size.height-ScaleValueH(3*KMARGIN));
+        self.pageControl.numberOfPages = count/(line_num*row_num-1)+1; //每页的个数不再是行乘以列 需要减去一个 哪一个变为删除
+        self.pageControl.currentPage = currentEmojiIndex;//记录上次滚动的页数
+    }else if (button == lastBtn){
+        lastBtn.selected = YES;
+        emojiBtn.selected = NO;
+        count = self.lastDataArray.count;//总数
+        self.scrollView.contentSize = CGSizeMake(self.frame.size.width, self.frame.size.height-ScaleValueH(3*KMARGIN));
+        self.pageControl.numberOfPages = 1;
+    }
+    if (count){
+        [self configButton];
+    }
 }
 
 - (void)configButton{
@@ -97,11 +176,16 @@
     NSInteger j = 0;//记录按钮的实际位置 因为中间插入了删除 所以会使按钮的排序变化
     for (int i = 0; i < count; i++) {
         //取出数据
+        FaceViewModel *model;
+        if (emojiBtn.selected) {
+            model = [self.dataArray objectAtIndex:i];
+        }else if (lastBtn.selected){
+            model = [self.lastDataArray objectAtIndex:count-1-i];
+        }
         UIButton *itemBtn = [[UIButton alloc]init];
-        itemBtn.tag = i;
-        [itemBtn setTitle:self.dataArray[i] forState:UIControlStateNormal];
+        itemBtn.tag = BTN_TAG+i;
+        [itemBtn setBackgroundImage:[UIImage imageNamed:model.face_image_name] forState:UIControlStateNormal];
         [itemBtn addTarget:self action:@selector(clickFaceItemBtn:) forControlEvents:UIControlEventTouchUpInside];
-        itemBtn.backgroundColor = [UIColor purpleColor];
         [self.scrollView addSubview:itemBtn];
         
         NSInteger pageNum = j/(line_num*row_num);//计算当前图片应该在第几页显示  超过line_row行后会另起一页 当前最后一个为删除按钮
@@ -116,9 +200,8 @@
             //此时是最后一个按钮 应该顺延到下一页 此按钮出应该放置一个删除
             
             UIButton *delectBtn = [[UIButton alloc]init];
-            [delectBtn setTitle:@"X" forState:UIControlStateNormal];
+            [delectBtn setBackgroundImage:[UIImage imageNamed:@"[删除]"] forState:UIControlStateNormal];
             [delectBtn addTarget:self action:@selector(clickDelectBtn) forControlEvents:UIControlEventTouchUpInside];
-            delectBtn.backgroundColor = [UIColor redColor];
             delectBtn.frame = itemBtn.frame;
             [self.scrollView addSubview:delectBtn];
             
@@ -140,9 +223,8 @@
             CGFloat top = top_padding + (buttonW_H+top_padding)*row_top;//计算Y
             
             UIButton *delectBtn = [[UIButton alloc]init];
-            [delectBtn setTitle:@"X" forState:UIControlStateNormal];
+            [delectBtn setBackgroundImage:[UIImage imageNamed:@"[删除]"] forState:UIControlStateNormal];
             [delectBtn addTarget:self action:@selector(clickDelectBtn) forControlEvents:UIControlEventTouchUpInside];
-            delectBtn.backgroundColor = [UIColor redColor];
             delectBtn.frame = CGRectMake(left, top, buttonW_H, buttonW_H);
             [self.scrollView addSubview:delectBtn];
         }
@@ -153,9 +235,31 @@
 #pragma mark 点击按钮
 - (void)clickFaceItemBtn:(UIButton *)btn{
     
-    NSInteger index = btn.tag;
+    NSInteger index = btn.tag - BTN_TAG;
+    FaceViewModel *model;
+    //取出数据需要区分点击是哪个分类里的
+    if (lastBtn.selected) {
+        model = [self.lastDataArray objectAtIndex:count-1-index];
+    }else{
+        model = [self.dataArray objectAtIndex:index];
+    }
+    if (self.lastDataArray.count == line_num*row_num-1) {//限制一页的数量
+        [self.lastDataArray removeObjectAtIndex:0];
+    }
+    for (FaceViewModel *lastmodel in [self.lastDataArray copy]) {//遍历最近的表情 是否有重复的 有的话就删除点 并重新添加 为了排序
+        if ([lastmodel.face_name isEqualToString:model.face_name]) {
+            [self.lastDataArray removeObject:lastmodel];
+        }
+    }
+    [self.lastDataArray addObject:model];
+    NSArray *arr = [FaceViewModel mj_keyValuesArrayWithObjectArray:self.lastDataArray];
+    [[NSUserDefaults standardUserDefaults] setObject:arr forKey:LASTEMOJI];//由于model不支持本地存储 所以转化为字典数组存储
+    if (lastBtn.selected) {
+        [self changeEmoji:lastBtn];
+    }
+    NSLog(@"%zd",self.lastDataArray.count);
     if ([self.delegate respondsToSelector:@selector(faceView:didSelectedItem:)]) {
-        [self.delegate faceView:self didSelectedItem:index];
+        [self.delegate faceView:self didSelectedItem:model];
     }
 }
 
@@ -165,11 +269,22 @@
         [self.delegate didSelectDelectedItemOfFaceView:self];
     }
 }
+
+- (void)sendBtn{
+    
+    if ([self.delegate respondsToSelector:@selector(didSendItemOfFaceView:)]){
+        [self.delegate didSendItemOfFaceView:self];
+    }
+}
+
 #pragma mark UIScrollViewDelegate
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView{
     
     NSInteger currentIndex = scrollView.contentOffset.x / self.frame.size.width;
     self.pageControl.currentPage = currentIndex;
+    if (emojiBtn.selected) {
+        currentEmojiIndex = currentIndex;
+    }
 }
 
 

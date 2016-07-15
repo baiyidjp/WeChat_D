@@ -23,7 +23,7 @@
 #import "UIImageView+WebCache.h"
 #import "BaseViewController.h"
 #import "DefineHeader.h"
-
+#import "MJExtension.h"
 
 
 #endif
