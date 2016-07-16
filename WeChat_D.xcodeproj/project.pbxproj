@@ -43,6 +43,7 @@
 		A2C435501D3608CF0097ECC1 /* AddMoreView.m in Sources */ = {isa = PBXBuildFile; fileRef = A2C4354F1D3608CF0097ECC1 /* AddMoreView.m */; };
 		A2C435531D363AB40097ECC1 /* FaceView.m in Sources */ = {isa = PBXBuildFile; fileRef = A2C435521D363AB40097ECC1 /* FaceView.m */; };
 		EEA7B39501F1EDAA38FBFDB0 /* libPods-WeChat_D.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 77912E4F30617DE482F6A3C6 /* libPods-WeChat_D.a */; };
+		F5CF83DB1D39C3EB000CC9F5 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F5CF83DA1D39C3EB000CC9F5 /* LoginViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -126,6 +127,8 @@
 		A2C435521D363AB40097ECC1 /* FaceView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FaceView.m; sourceTree = "<group>"; };
 		A9B6923DCF73CFE0F0DA477B /* Pods-WeChat_D.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WeChat_D.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WeChat_D/Pods-WeChat_D.debug.xcconfig"; sourceTree = "<group>"; };
 		CC02DEDA828486EE35A2D3B8 /* Pods-WeChat_D.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WeChat_D.release.xcconfig"; path = "Pods/Target Support Files/Pods-WeChat_D/Pods-WeChat_D.release.xcconfig"; sourceTree = "<group>"; };
+		F5CF83D91D39C3EB000CC9F5 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
+		F5CF83DA1D39C3EB000CC9F5 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -290,6 +293,8 @@
 			children = (
 				A297B7451D2F8E5A003C9276 /* MineViewController.h */,
 				A297B7461D2F8E5A003C9276 /* MineViewController.m */,
+				F5CF83D91D39C3EB000CC9F5 /* LoginViewController.h */,
+				F5CF83DA1D39C3EB000CC9F5 /* LoginViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -657,6 +662,7 @@
 				A297B7591D2F8E5A003C9276 /* UIView+Toast.m in Sources */,
 				A2C435501D3608CF0097ECC1 /* AddMoreView.m in Sources */,
 				A21B62901D3893ED00F0E727 /* FaceViewModel.m in Sources */,
+				F5CF83DB1D39C3EB000CC9F5 /* LoginViewController.m in Sources */,
 				A2C435531D363AB40097ECC1 /* FaceView.m in Sources */,
 				A297B75E1D2F8E5A003C9276 /* WeChatViewController.m in Sources */,
 				A297B7581D2F8E5A003C9276 /* UIColor+Extension.m in Sources */,

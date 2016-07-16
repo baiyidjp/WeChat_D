@@ -7,6 +7,7 @@
 //
 
 #import "MineViewController.h"
+#import "LoginViewController.h"
 
 @interface MineViewController ()<UITableViewDelegate,UITableViewDataSource>
 
@@ -33,7 +34,17 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
 
+    UIBarButtonItem *right = [[UIBarButtonItem alloc]initWithTitle:@"Login" style:UIBarButtonItemStylePlain target:self action:@selector(login)];
+    self.navigationItem.rightBarButtonItem = right;
+    
+    
     [self configTableView];
+}
+
+- (void)login{
+    
+    LoginViewController *login = [[LoginViewController alloc]init];
+    [self.navigationController pushViewController:login animated:YES];
 }
 
 - (void)configTableView{
@@ -161,5 +172,6 @@
     }
     return 2*KMARGIN;
 }
+
 
 @end
