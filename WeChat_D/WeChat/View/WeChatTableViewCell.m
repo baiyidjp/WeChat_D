@@ -40,7 +40,7 @@
     }else{
         self.messageLabel.text = model.message;
     }
-    self.headImage.image = [UIImage imageNamed:model.imageUrl];
+    [self.headImage sd_setImageWithURL:[NSURL URLWithString:model.imageUrl]];
     self.nameLable.text = model.name;
     self.timeLable.text = model.time;
 }

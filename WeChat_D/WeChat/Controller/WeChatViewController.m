@@ -44,7 +44,7 @@
         _dataArray = [NSMutableArray array];
         for (int i = 0; i < 10 ; i++) {
             WeChatListModel *model = [[WeChatListModel alloc]init];
-            model.imageUrl = @"Tabar_mine";
+            model.imageUrl = @"http://ww1.sinaimg.cn/crop.0.0.1080.1080.1024/006cxmWbjw8evactf4t2ij30u00u0jtj.jpg";
             model.name = @"微信测试";
             model.message = @"晚上约么?";
             model.time = @"16:32";
@@ -226,7 +226,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    return 100;
+    return 60;
 }
 
 @end
