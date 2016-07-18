@@ -154,10 +154,6 @@
 
     [UIView animateWithDuration:0.3 animations:^{
         self.ChatTableView.frame = CGRectMake(0, KNAVHEIGHT, KWIDTH,frame.origin.y-KNAVHEIGHT);
-    } completion:^(BOOL finished) {
-//        if (self.dataArray.count) {
-//            [self.ChatTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:self.dataArray.count-1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
-//        }
     }];
 }
 
@@ -188,20 +184,13 @@
     return cell;
 }
 
-//- (void)tableView:(UITableView *)tableView didEndDisplayingCell:(MessageTableViewCell *)cell forRowAtIndexPath:(nonnull NSIndexPath *)indexPath{
+//- (void)scrollViewDidScroll:(UIScrollView *)scrollView{
 //    
-//    for (UIView *view in cell.contentView.subviews) {
-//        [view removeFromSuperview];
+//    CGFloat panTranslationY = [scrollView.panGestureRecognizer translationInView:self.ChatTableView].y;//在tableVIEW的移动的坐标
+//    if (panTranslationY < 0) {//上滑趋势
+//        [self.toolView beginEditing];
 //    }
 //}
-
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView{
-    
-    CGFloat panTranslationY = [scrollView.panGestureRecognizer translationInView:self.ChatTableView].y;//在tableVIEW的移动的坐标
-    if (panTranslationY < 0) {//上滑趋势
-        [self.toolView beginEditing];
-    }
-}
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     MessageModel *model = [self.dataArray objectAtIndex:indexPath.row];
