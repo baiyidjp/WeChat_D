@@ -24,6 +24,6 @@
 #import "BaseViewController.h"
 #import "DefineHeader.h"
 #import "MJExtension.h"
-
+#import "PublicMethod.h"
 
 #endif

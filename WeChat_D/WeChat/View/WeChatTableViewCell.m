@@ -36,7 +36,7 @@
     //取出最近的消息
     NSMutableArray *array = [[NSUserDefaults standardUserDefaults]objectForKey:@"message"];
     if (array.count) {
-        self.messageLabel.text = [array objectAtIndex:array.count-1];
+        self.messageLabel.attributedText = [PublicMethod emojiWithText:[array objectAtIndex:array.count-1]];
     }else{
         self.messageLabel.text = model.message;
     }

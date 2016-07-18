@@ -89,6 +89,7 @@
     [self.ChatTableView reloadData];
 }
 
+#pragma mark  UITableViewDelegate UITableViewDataSource
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     
     return self.dataArray.count;
@@ -97,7 +98,8 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ChatTableView"];
-    cell.textLabel.text = [self.dataArray objectAtIndex:indexPath.row];
+    NSString *str = [self.dataArray objectAtIndex:indexPath.row];
+    cell.textLabel.attributedText = [PublicMethod emojiWithText:str];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
 }
