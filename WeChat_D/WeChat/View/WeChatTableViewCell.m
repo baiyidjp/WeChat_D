@@ -8,6 +8,7 @@
 
 #import "WeChatTableViewCell.h"
 #import "WeChatListModel.h"
+#import "MessageModel.h"
 
 @interface WeChatTableViewCell ()
 @property (weak, nonatomic) IBOutlet UIImageView *headImage;
@@ -35,8 +36,9 @@
     _model = model;
     //取出最近的消息
     NSMutableArray *array = [[NSUserDefaults standardUserDefaults]objectForKey:@"message"];
+    NSArray *arr = [MessageModel mj_objectArrayWithKeyValuesArray:array];
     if (array.count) {
-        self.messageLabel.attributedText = [PublicMethod emojiWithText:[array objectAtIndex:array.count-1]];
+        self.messageLabel.attributedText = [PublicMethod emojiWithText:[[arr objectAtIndex:arr.count-1] messagetext]];
     }else{
         self.messageLabel.text = model.message;
     }

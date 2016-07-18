@@ -134,7 +134,7 @@
         make.width.equalTo(@50);
     }];
     //改变表情分类
-    [self changeEmoji:lastBtn];
+    [self changeEmoji:emojiBtn];
     
 }
 //这个方法是为了确定scrollview和pagecontroller的属性 scroll的滚动范围和page的页数 根据不同的分类调整

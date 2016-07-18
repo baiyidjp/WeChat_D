@@ -10,6 +10,7 @@
 #import "AddMoreView.h"
 #import "FaceView.h"
 #import "FaceViewModel.h"
+#import "MessageModel.h"
 
 @interface JPKeyBoardToolView ()<UITextViewDelegate,AddMoreViewDelegate,FaceViewDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate>
 /**
@@ -283,7 +284,7 @@
     switch (type) {
         case ButtonType_None:
         {
-            self.recordBtn.selected = self.faceBtn.selected = self.addMoreBtn.selected = NO;
+            self.faceBtn.selected = self.addMoreBtn.selected = NO;
             [self.inputTextView resignFirstResponder];
             [self setFrame:CGRectMake(0, self.superViewHeight-KTOOLVIEW_MINH, KWIDTH, KTOOLVIEW_MINH) animated:YES];
         }
@@ -490,8 +491,11 @@
     if ([text isEqualToString:@"\n"]) {
         //发送消息
         NSString *message = textView.text;
+        MessageModel *model = [[MessageModel alloc]init];
+        model.messagetext = message;
+        model.isMineMessage  = YES;
         if ([self.delegate respondsToSelector:@selector(didSendMessageOfFaceView:message:)]) {
-            [self.delegate didSendMessageOfFaceView:self message:message];
+            [self.delegate didSendMessageOfFaceView:self message:model];
         }
         textView.text = nil;
         [self textViewDidChange:self.inputTextView];
@@ -546,5 +550,13 @@
     }
     [self showViewWithType:ButtonType_None];
 }
+#pragma mark 开始编辑
+- (void)beginEditing{
+    if (self.recordBtn.selected) {
+        return;
+    }
+    [self.inputTextView becomeFirstResponder];
+    [self showViewWithType:ButtonType_KeyBoard];
 
+}
 @end

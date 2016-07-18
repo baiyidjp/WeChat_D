@@ -17,7 +17,7 @@ typedef enum : NSUInteger {
     ButtonType_KeyBoard,//显示键盘
 } ButtonType;
 
-@class JPKeyBoardToolView;
+@class JPKeyBoardToolView,MessageModel;
 @protocol JPKeyBoardToolViewDelegate <NSObject>
 /**
  *  键盘frame变化
@@ -26,7 +26,7 @@ typedef enum : NSUInteger {
 /**
  *  发送消息
  */
-- (void)didSendMessageOfFaceView:(JPKeyBoardToolView *)toolView message:(NSString *)message;
+- (void)didSendMessageOfFaceView:(JPKeyBoardToolView *)toolView message:(MessageModel *)messageModel;
 
 @end
 
@@ -35,4 +35,5 @@ typedef enum : NSUInteger {
 @property(nonatomic,assign) CGFloat superViewHeight;
 @property(nonatomic,weak)id<JPKeyBoardToolViewDelegate> delegate;
 - (void)endEditing;
+- (void)beginEditing;
 @end

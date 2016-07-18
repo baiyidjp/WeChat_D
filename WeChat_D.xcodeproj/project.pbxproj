@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		A2088B3E1D3C6EC200C73446 /* PublicMethod.m in Sources */ = {isa = PBXBuildFile; fileRef = A2088B3D1D3C6EC200C73446 /* PublicMethod.m */; };
+		A2088B421D3CA39100C73446 /* MessageTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A2088B411D3CA39100C73446 /* MessageTableViewCell.m */; };
+		A2088B451D3CACFA00C73446 /* MessageModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A2088B441D3CACFA00C73446 /* MessageModel.m */; };
 		A21B628D1D3891B300F0E727 /* face.plist in Resources */ = {isa = PBXBuildFile; fileRef = A21B628C1D3891B300F0E727 /* face.plist */; };
 		A21B62901D3893ED00F0E727 /* FaceViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A21B628F1D3893ED00F0E727 /* FaceViewModel.m */; };
 		A21B62931D38D9BD00F0E727 /* WeChatListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A21B62921D38D9BD00F0E727 /* WeChatListModel.m */; };
@@ -68,6 +70,10 @@
 		77912E4F30617DE482F6A3C6 /* libPods-WeChat_D.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-WeChat_D.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A2088B3C1D3C6EC200C73446 /* PublicMethod.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PublicMethod.h; sourceTree = "<group>"; };
 		A2088B3D1D3C6EC200C73446 /* PublicMethod.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PublicMethod.m; sourceTree = "<group>"; };
+		A2088B401D3CA39100C73446 /* MessageTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageTableViewCell.h; sourceTree = "<group>"; };
+		A2088B411D3CA39100C73446 /* MessageTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageTableViewCell.m; sourceTree = "<group>"; };
+		A2088B431D3CACFA00C73446 /* MessageModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageModel.h; sourceTree = "<group>"; };
+		A2088B441D3CACFA00C73446 /* MessageModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageModel.m; sourceTree = "<group>"; };
 		A21B628C1D3891B300F0E727 /* face.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = face.plist; sourceTree = "<group>"; };
 		A21B628E1D3893ED00F0E727 /* FaceViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FaceViewModel.h; sourceTree = "<group>"; };
 		A21B628F1D3893ED00F0E727 /* FaceViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FaceViewModel.m; sourceTree = "<group>"; };
@@ -166,6 +172,15 @@
 				77912E4F30617DE482F6A3C6 /* libPods-WeChat_D.a */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		A2088B3F1D3CA32900C73446 /* cells */ = {
+			isa = PBXGroup;
+			children = (
+				A2088B401D3CA39100C73446 /* MessageTableViewCell.h */,
+				A2088B411D3CA39100C73446 /* MessageTableViewCell.m */,
+			);
+			name = cells;
 			sourceTree = "<group>";
 		};
 		A297B6F91D2F8E14003C9276 = {
@@ -390,6 +405,8 @@
 				A21B628F1D3893ED00F0E727 /* FaceViewModel.m */,
 				A21B62911D38D9BD00F0E727 /* WeChatListModel.h */,
 				A21B62921D38D9BD00F0E727 /* WeChatListModel.m */,
+				A2088B431D3CACFA00C73446 /* MessageModel.h */,
+				A2088B441D3CACFA00C73446 /* MessageModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -397,6 +414,7 @@
 		A297B7571D2F8E5A003C9276 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				A2088B3F1D3CA32900C73446 /* cells */,
 				A24695311D34EA7600E32C30 /* JPKeyBoardToolView.h */,
 				A24695321D34EA7600E32C30 /* JPKeyBoardToolView.m */,
 				A2C4354E1D3608CF0097ECC1 /* AddMoreView.h */,
@@ -670,8 +688,10 @@
 				A21B62901D3893ED00F0E727 /* FaceViewModel.m in Sources */,
 				F5CF83DB1D39C3EB000CC9F5 /* LoginViewController.m in Sources */,
 				A2C435531D363AB40097ECC1 /* FaceView.m in Sources */,
+				A2088B421D3CA39100C73446 /* MessageTableViewCell.m in Sources */,
 				A297B75E1D2F8E5A003C9276 /* WeChatViewController.m in Sources */,
 				A297B7581D2F8E5A003C9276 /* UIColor+Extension.m in Sources */,
+				A2088B451D3CACFA00C73446 /* MessageModel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
