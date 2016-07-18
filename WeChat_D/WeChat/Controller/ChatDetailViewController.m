@@ -151,12 +151,14 @@
     if (self.ChatTableView.frame.size.height == frame.origin.y) {
         return;
     }
+
     [UIView animateWithDuration:0.3 animations:^{
         self.ChatTableView.frame = CGRectMake(0, KNAVHEIGHT, KWIDTH,frame.origin.y-KNAVHEIGHT);
+    } completion:^(BOOL finished) {
+//        if (self.dataArray.count) {
+//            [self.ChatTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:self.dataArray.count-1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+//        }
     }];
-    if (self.dataArray.count) {
-        [self.ChatTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:self.dataArray.count-1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
-    }
 }
 
 - (void)didSendMessageOfFaceView:(JPKeyBoardToolView *)toolView message:(MessageModel *)message{

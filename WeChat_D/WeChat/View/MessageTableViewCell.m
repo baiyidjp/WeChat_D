@@ -65,11 +65,17 @@
     if (tap.state == UIGestureRecognizerStateEnded) {
         CGPoint tapPoint = [tap locationInView:self.contentView];
         if (CGRectContainsPoint(self.backImgaeView.frame, tapPoint)) {
-            [self.delegate messageCellTappedMessage:self];
+            if ([self.delegate respondsToSelector:@selector(messageCellTappedMessage:)]) {
+                [self.delegate messageCellTappedMessage:self];
+            }
         }else if (CGRectContainsPoint(self.headerView.frame, tapPoint)) {
-            [self.delegate messageCellTappedHead:self];
+            if ([self.delegate respondsToSelector:@selector(messageCellTappedHead:)]) {
+                [self.delegate messageCellTappedHead:self];
+            }
         }else {
-            [self.delegate messageCellTappedBlank:self];
+            if ([self.delegate respondsToSelector:@selector(messageCellTappedBlank:)]) {
+                [self.delegate messageCellTappedBlank:self];
+            }
         }
     }
 }
@@ -109,7 +115,7 @@
         
         [self.headerView mas_remakeConstraints:^(MASConstraintMaker *make) {
             make.right.offset(-KMARGIN);
-            make.top.offset(KMARGIN);
+            make.top.offset(0);
             make.size.mas_equalTo(CGSizeMake(50, 50));
         }];
         self.headerView.backgroundColor = [UIColor redColor];
@@ -131,7 +137,7 @@
     }else{
         [self.headerView mas_remakeConstraints:^(MASConstraintMaker *make) {
             make.left.offset(KMARGIN);
-            make.top.offset(KMARGIN);
+            make.top.offset(0);
             make.size.mas_equalTo(CGSizeMake(50, 50));
         }];
         self.headerView.backgroundColor = [UIColor blueColor];
@@ -160,7 +166,7 @@
     
     CGFloat height  = CGRectGetMaxY(cell.backImgaeView.frame);
     
-    return height+KMARGIN/2;
+    return height+KMARGIN;
 }
 
 - (UIImage *)backImage:(UIImage *)image{
