@@ -19,6 +19,8 @@ typedef enum : NSUInteger {
 @property(nonatomic,copy)NSString *messagetext;
 @property(nonatomic,copy)NSString *imageUrl;
 @property(nonatomic,copy)NSString *image_mark;
+@property(nonatomic,copy)NSString *voiceTime;
+
 @property(nonatomic,assign)BOOL isMineMessage;
 @property(nonatomic,assign)MessageType messageType;
 

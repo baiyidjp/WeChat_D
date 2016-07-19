@@ -14,8 +14,5 @@
  *  将表情文字转换为表情
  */
 + (NSAttributedString *)emojiWithText:(NSString *)text;
-/**
- *  将表情转换成文字
- */
-//+ (NSMutableString *)textWithemojitext:(NSAttributedString *)text;
+
 @end

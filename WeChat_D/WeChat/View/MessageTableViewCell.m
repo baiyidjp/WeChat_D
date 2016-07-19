@@ -29,7 +29,11 @@
 /**
  *  语音消息
  */
-@property(nonatomic,strong)UIButton *messageVoice;
+@property(nonatomic,strong)UIImageView *messageVoice;
+/**
+ *  语音时间
+ */
+@property(nonatomic,strong)UILabel *timeLabel;
 @end
 
 @implementation MessageTableViewCell
@@ -49,9 +53,6 @@
     
     [self.contentView addSubview:self.headerView];
     [self.contentView addSubview:self.backImgaeView];
-    [self.contentView addSubview:self.messageText];
-    [self.contentView addSubview:self.messsgeImage];
-    [self.contentView addSubview:self.messageVoice];
     
     self.contentView.userInteractionEnabled = YES;
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)];
@@ -118,14 +119,24 @@
     return _messsgeImage;
 }
 
-- (UIButton *)messageVoice{
+- (UIImageView *)messageVoice{
     
     if (!_messageVoice) {
-        _messageVoice = [[UIButton alloc]init];
+        _messageVoice = [[UIImageView alloc]init];
     }
     return _messageVoice;
 }
 
+- (UILabel *)timeLabel{
+    
+    if (!_timeLabel) {
+        _timeLabel = [[UILabel alloc]init];
+        _timeLabel.hidden = YES;
+        _timeLabel.textColor = [UIColor whiteColor];
+        _timeLabel.font = FONTSIZE(14);
+    }
+    return _timeLabel;
+}
 #pragma mark 赋值
 - (void)setModel:(MessageModel *)model{
     
@@ -143,13 +154,14 @@
         //判断消息类型
         switch (model.messageType) {
             case MessageType_Text:{
+                //文字消息
+                self.timeLabel.hidden = YES;
+                [self.backImgaeView addSubview:self.messageText];
                 //换行设置
                 self.messageText.attributedText = [PublicMethod emojiWithText:model.messagetext];
                 self.messageText.preferredMaxLayoutWidth = KWIDTH/5*3;
                 [self.messageText mas_remakeConstraints:^(MASConstraintMaker *make) {
-                    make.top.equalTo(self.headerView.mas_top).with.offset(KMARGIN);
-                    make.right.equalTo(self.headerView.mas_left).with.offset(-2*KMARGIN);
-                    make.width.lessThanOrEqualTo(@(KWIDTH/5*3)).priorityHigh();
+                    make.edges.mas_equalTo(self.backImgaeView).insets(UIEdgeInsetsMake(KMARGIN, 3.0/2*KMARGIN, KMARGIN, 3.0/2*KMARGIN));
                 }];
                 [self.backImgaeView mas_remakeConstraints:^(MASConstraintMaker *make) {
                     make.top.equalTo(self.headerView.mas_top);
@@ -157,19 +169,46 @@
                     make.left.equalTo(self.messageText.mas_left).with.offset(-3.0/2*KMARGIN);
                     make.bottom.equalTo(self.messageText.mas_bottom).with.offset(KMARGIN);
                 }];
+                
             }
 
                 break;
-            case MessageType_Voice:
+            case MessageType_Voice:{
+                //语音消息
+                [self.contentView addSubview:self.timeLabel];
+                [self.backImgaeView addSubview:self.messageVoice];
+                [self.backImgaeView mas_remakeConstraints:^(MASConstraintMaker *make) {
+                    make.top.equalTo(self.headerView.mas_top);
+                    make.right.equalTo(self.headerView.mas_left).with.offset(-KMARGIN/2);
+                    make.width.equalTo(@([model.voiceTime intValue]*2*KMARGIN));
+                    make.width.lessThanOrEqualTo(@(KWIDTH/5*3)).priorityLow();
+                    make.bottom.equalTo(self.headerView.mas_bottom);
+                }];
+                self.messageVoice.image = [UIImage imageNamed:@"message_voice_sender_playing_3"];
+                [self.messageVoice mas_remakeConstraints:^(MASConstraintMaker *make) {
+                    make.centerY.equalTo(self.backImgaeView.mas_centerY);
+                    make.right.offset(-KMARGIN);
+                    make.size.mas_equalTo(CGSizeMake(20, 20));
+                }];
+                self.timeLabel.hidden = NO;
+                self.timeLabel.text = [NSString stringWithFormat:@"%@ s",model.voiceTime];
+                [self.timeLabel mas_remakeConstraints:^(MASConstraintMaker *make) {
+                    make.centerY.equalTo(self.backImgaeView.mas_centerY);
+                    make.right.equalTo(self.backImgaeView.mas_left).with.offset(-KMARGIN/2);
+                }];
+            }
                 
                 break;
             case MessageType_Picture:{
-                
+                //图片消息
+                self.timeLabel.hidden = YES;
+                [self.backImgaeView addSubview:self.messsgeImage];
                 NSData *data = [[NSUserDefaults standardUserDefaults] objectForKey:model.image_mark];
-                self.messsgeImage.image = [UIImage imageWithData:data];
+                if (data) {
+                    self.messsgeImage.image = [UIImage imageWithData:data];
+                }
                 [self.messsgeImage mas_remakeConstraints:^(MASConstraintMaker *make) {
-                    make.top.equalTo(self.headerView.mas_top).with.offset(KMARGIN);
-                    make.right.equalTo(self.headerView.mas_left).with.offset(-2*KMARGIN);
+                    make.edges.mas_equalTo(self.backImgaeView).insets(UIEdgeInsetsMake(KMARGIN, 3.0/2*KMARGIN, KMARGIN, 3.0/2*KMARGIN));
                     make.size.mas_equalTo(CGSizeMake(150, 150));
                 }];
                 [self.backImgaeView mas_remakeConstraints:^(MASConstraintMaker *make) {
@@ -186,7 +225,7 @@
         }
                 self.backImgaeView.image = [self backImage:[UIImage imageNamed:@"message_sender_background_normal"]];
         
-    }else{
+    }else{//判断是朋友发
         [self.headerView mas_remakeConstraints:^(MASConstraintMaker *make) {
             make.left.offset(KMARGIN);
             make.top.offset(KMARGIN);
@@ -195,13 +234,14 @@
         self.headerView.backgroundColor = [UIColor blueColor];
         switch (model.messageType) {
             case MessageType_Text:{
+                
+                self.timeLabel.hidden = YES;
+                [self.backImgaeView addSubview:self.messageText];
                 //换行设置
                 self.messageText.attributedText = [PublicMethod emojiWithText:model.messagetext];
                 self.messageText.preferredMaxLayoutWidth = KWIDTH/5*3;
                 [self.messageText mas_remakeConstraints:^(MASConstraintMaker *make) {
-                    make.top.equalTo(self.headerView.mas_top).with.offset(KMARGIN);
-                    make.left.equalTo(self.headerView.mas_right).with.offset(2*KMARGIN);
-                    make.width.lessThanOrEqualTo(@(KWIDTH/5*3)).priorityHigh();
+                    make.edges.mas_equalTo(self.backImgaeView).insets(UIEdgeInsetsMake(KMARGIN, 3.0/2*KMARGIN, KMARGIN, 3.0/2*KMARGIN));
                 }];
                 [self.backImgaeView mas_remakeConstraints:^(MASConstraintMaker *make) {
                     make.top.equalTo(self.headerView.mas_top);
@@ -211,16 +251,41 @@
                 }];
             }
                 break;
-            case MessageType_Voice:
+            case MessageType_Voice:{
+                
+                [self.contentView addSubview:self.timeLabel];
+                [self.backImgaeView addSubview:self.messageVoice];
+                [self.backImgaeView mas_remakeConstraints:^(MASConstraintMaker *make) {
+                    make.top.equalTo(self.headerView.mas_top);
+                    make.left.equalTo(self.headerView.mas_right).with.offset(KMARGIN/2);
+                    make.width.equalTo(@([model.voiceTime intValue]*2*KMARGIN));
+                    make.bottom.equalTo(self.headerView.mas_bottom);
+                }];
+                self.messageVoice.image = [UIImage imageNamed:@"message_voice_receiver_playing_3"];
+                [self.messageVoice mas_remakeConstraints:^(MASConstraintMaker *make) {
+                    make.centerY.equalTo(self.backImgaeView.mas_centerY);
+                    make.left.offset(KMARGIN);
+                    make.size.mas_equalTo(CGSizeMake(20, 20));
+                }];
+                self.timeLabel.hidden = NO;
+                self.timeLabel.text = [NSString stringWithFormat:@"%@ s",model.voiceTime];
+                [self.timeLabel mas_remakeConstraints:^(MASConstraintMaker *make) {
+                    make.centerY.equalTo(self.backImgaeView.mas_centerY);
+                    make.left.equalTo(self.backImgaeView.mas_right).with.offset(KMARGIN/2);
+                }];
+            }
                 
                 break;
             case MessageType_Picture:{
                 
+                self.timeLabel.hidden = YES;
+                [self.backImgaeView addSubview:self.messsgeImage];
                 NSData *data = [[NSUserDefaults standardUserDefaults] objectForKey:model.image_mark];
-                self.messsgeImage.image = [UIImage imageWithData:data];
+                if (data) {
+                    self.messsgeImage.image = [UIImage imageWithData:data];
+                }
                 [self.messsgeImage mas_remakeConstraints:^(MASConstraintMaker *make) {
-                    make.top.equalTo(self.headerView.mas_top).with.offset(KMARGIN);
-                    make.left.equalTo(self.headerView.mas_right).with.offset(2*KMARGIN);
+                    make.edges.mas_equalTo(self.backImgaeView).insets(UIEdgeInsetsMake(KMARGIN, 3.0/2*KMARGIN, KMARGIN, 3.0/2*KMARGIN));
                     make.size.mas_equalTo(CGSizeMake(150, 150));
                 }];
                 [self.backImgaeView mas_remakeConstraints:^(MASConstraintMaker *make) {
@@ -270,8 +335,15 @@
 
 - (void)prepareForReuse{
     
-    self.messsgeImage.image = nil;
-    self.messageText.text = nil;
+    if (self.backImgaeView.subviews.count) {
+        for (UIView *view in self.backImgaeView.subviews) {
+            [view removeFromSuperview];
+        }
+    }
+    if (self.timeLabel) {
+        [self.timeLabel removeFromSuperview];
+        self.timeLabel = nil;
+    }
 }
 
 @end

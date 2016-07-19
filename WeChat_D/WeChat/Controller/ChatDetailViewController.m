@@ -12,6 +12,7 @@
 #import "MessageModel.h"
 
 #define MESSAGE @"message"
+#define GETMESSAGE_TIME 15
 @interface ChatDetailViewController ()<UITableViewDelegate,UITableViewDataSource,JPKeyBoardToolViewDelegate,UIScrollViewDelegate,MessageTableViewCellDelegate>
 /**
  *  聊天界面
@@ -65,9 +66,9 @@
 - (NSMutableArray *)friendMessage{
     
     if (!_friendMessage) {
-        NSArray *array = @[@"约么?帅哥 ! ! [害羞]",@"你好呀你好呀[微笑]好呀[微笑]好呀[微笑]好呀[微笑]好呀[微笑]好呀[微笑]",@"我是美女我是美女[色]我是美女我是美女[色]我是美女我是美女[色]我是美女我是美女[色]"];
+        NSArray *array = @[@"约么?帅哥 ! ! [害羞]",@"你好呀你好呀[微笑]好呀[微笑]好呀[微笑]好呀[微笑]好呀[微笑]好呀[微笑]",@"我是美女我是美女[色]我是美女我是美女[色]我是美女我是美女[色]我是美女我是美女[色]",@"陈妍希与陈晓这段“神雕之恋”以16个月时间订下终身",@"伴娘团包括：钟欣潼（阿娇）、陈乔恩，还有林依晨、潘玮柏、郑元畅等好友送嫁。"];
         _friendMessage = [NSMutableArray array];
-        for (int i = 0 ; i < 3; i++) {
+        for (int i = 0 ; i < array.count; i++) {
             MessageModel *model = [[MessageModel alloc]init];
             model.messagetext = array[i];
             model.isMineMessage = NO;
@@ -98,11 +99,26 @@
     
     self.timeCount++;
     NSLog(@"时间 -- %zd",self.timeCount);
-    if (self.timeCount % 15 != 0){
+    if (self.timeCount % GETMESSAGE_TIME != 0){
         return;
     }else{
-        NSInteger arccount = arc4random_uniform(3);
-        MessageModel *model = [self.friendMessage objectAtIndex:arccount];
+        NSInteger arccount = arc4random_uniform(10);
+        NSLog(@"随机数--%zd",arccount);
+        MessageModel *model;
+        if (arccount %2 ) {//奇数 取固定数据
+            arccount = arc4random_uniform((int)self.friendMessage.count);
+            NSLog(@"奇数--%zd",arccount);
+            model = [self.friendMessage objectAtIndex:arccount];
+        }else{
+            if (self.dataArray.count) {
+                arccount = arc4random_uniform((int)self.dataArray.count);
+                NSLog(@"偶数--%zd",arccount);
+                model = [self.dataArray objectAtIndex:arccount];
+                model.isMineMessage = NO;
+            }else{
+                return;
+            }
+        }
         [self.dataArray addObject:model];
         NSArray *array = [MessageModel mj_keyValuesArrayWithObjectArray:self.dataArray];
         [[NSUserDefaults standardUserDefaults]setObject:array forKey:MESSAGE];

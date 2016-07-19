@@ -156,6 +156,9 @@
         _recordLongBtn.layer.borderColor = [UIColor colorWithRed:204.0/255.0f green:204.0/255.0f blue:204.0/255.0f alpha:1.0f].CGColor;
         _recordLongBtn.layer.borderWidth = .5f;
         _recordLongBtn.layer.masksToBounds = YES;
+        _recordLongBtn.userInteractionEnabled = YES;
+        UILongPressGestureRecognizer *longTap = [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(longTap:)];
+        [_recordLongBtn addGestureRecognizer:longTap];
     }
     return _recordLongBtn;
 }
@@ -530,7 +533,7 @@
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     formatter.dateFormat = @"yyyyMMddHHmmss";
     NSString *str = [formatter stringFromDate:[NSDate date]];
-    //组装消息的模型
+    //组装消息模型
     MessageModel *model = [[MessageModel alloc]init];
     model.image_mark = [NSString stringWithFormat:@"image%@",str];
     model.messageType = MessageType_Picture;
@@ -573,6 +576,28 @@
     [self.inputTextView becomeFirstResponder];
     [self showViewWithType:ButtonType_KeyBoard];
 
+}
+
+#pragma mark 长按录音
+- (void)longTap:(UILongPressGestureRecognizer *)longTap{
+    
+    switch (longTap.state) {
+        case UIGestureRecognizerStateBegan:
+            
+            break;
+        case UIGestureRecognizerStateEnded:{
+            //组装消息模型
+            MessageModel *model = [[MessageModel alloc]init];
+            model.messageType = MessageType_Voice;
+            model.isMineMessage = YES;
+            model.voiceTime = [NSString stringWithFormat:@"%zd",5];
+            //发送消息
+            [self sendMessageWithModel:model];
+        }
+            break;
+        default:
+            break;
+    }
 }
 
 #pragma mark 发送消息

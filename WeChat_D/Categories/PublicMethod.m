@@ -43,20 +43,5 @@
     return attributeStr;
 }
 
-//+ (NSMutableString *)textWithemojitext:(NSAttributedString *)text{
-//    
-//    //创建一个可变的字符串
-//    NSMutableString *attributeStr = [NSMutableString stringWithString:text.string];
-//    //倒序遍历 是否存在表情
-//    [text enumerateAttribute:NSAttachmentAttributeName inRange:NSMakeRange(0, text.length) options:NSAttributedStringEnumerationReverse usingBlock:^(id  _Nullable value, NSRange range, BOOL * _Nonnull stop) {
-//        //判断是否是图片类型
-//        if (value && [value isKindOfClass:[NSTextAttachment class]]) {
-//            NSTextAttachment *attach = value;
-//            NSString *str = [[NSString alloc]initWithData:attach.contents encoding:NSUTF8StringEncoding];
-//            [attributeStr replaceCharactersInRange:range withString:str];
-//        }
-//    }];
-//    return attributeStr;
-//}
 
 @end
