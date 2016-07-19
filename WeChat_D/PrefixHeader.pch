@@ -25,5 +25,6 @@
 #import "DefineHeader.h"
 #import "MJExtension.h"
 #import "PublicMethod.h"
+#import "SVProgressHUD.h"
 
 #endif

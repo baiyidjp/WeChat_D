@@ -32,7 +32,7 @@
 /**
  *  走过的时间
  */
-@property(nonatomic,assign)NSInteger count;
+@property(nonatomic,assign)NSInteger timeCount;
 /**
  *  模拟对方发消息
  */
@@ -71,6 +71,7 @@
             MessageModel *model = [[MessageModel alloc]init];
             model.messagetext = array[i];
             model.isMineMessage = NO;
+            model.messageType = MessageType_Text;
             [_friendMessage addObject:model];
         }
     }
@@ -90,16 +91,14 @@
     if (self.dataArray.count) {
         [self.ChatTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:self.dataArray.count-1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
     }
-    
-    //加一个时间控制 模拟对方发消息
-    [self.timer setFireDate:[NSDate distantPast]];
 }
 
 //时间控制
 - (void)update{
     
-    self.count++;
-    if (self.count % 15 != 0){
+    self.timeCount++;
+    NSLog(@"时间 -- %zd",self.timeCount);
+    if (self.timeCount % 15 != 0){
         return;
     }else{
         NSInteger arccount = arc4random_uniform(3);
@@ -162,7 +161,12 @@
     [self.dataArray addObject:message];
     NSArray *array = [MessageModel mj_keyValuesArrayWithObjectArray:self.dataArray];
     [[NSUserDefaults standardUserDefaults]setObject:array forKey:MESSAGE];
+    [SVProgressHUD show];
     [self.ChatTableView reloadData];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        SVProgressHUD.minimumDismissTimeInterval = 1.0;
+        [SVProgressHUD showSuccessWithStatus:@"发送成功"];
+    });
     if (self.dataArray.count) {
         [self.ChatTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:self.dataArray.count-1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
     }
@@ -192,6 +196,16 @@
 //    }
 //}
 
+//- (void)tableView:(UITableView *)tableView didEndDisplayingCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath{
+//    
+//    if (cell.contentView.subviews.count) {
+//        for (UIView *view in cell.contentView.subviews) {
+//            [view removeFromSuperview];
+//        }
+//    }
+//}
+
+
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     MessageModel *model = [self.dataArray objectAtIndex:indexPath.row];
     CGFloat height = [MessageTableViewCell cellHeightWithModel:model];
@@ -201,6 +215,14 @@
 #pragma mark MessageTableViewCellDelegate
 - (void)messageCellTappedBlank:(MessageTableViewCell *)messageCell{
     [self.toolView endEditing];
+}
+
+- (void)viewWillAppear:(BOOL)animated{
+    
+    [super viewWillAppear:animated];
+    
+    //加一个时间控制 模拟对方发消息
+    [self.timer setFireDate:[NSDate distantPast]];
 }
 
 - (void)viewWillDisappear:(BOOL)animated{

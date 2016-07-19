@@ -494,9 +494,8 @@
         MessageModel *model = [[MessageModel alloc]init];
         model.messagetext = message;
         model.isMineMessage  = YES;
-        if ([self.delegate respondsToSelector:@selector(didSendMessageOfFaceView:message:)]) {
-            [self.delegate didSendMessageOfFaceView:self message:model];
-        }
+        model.messageType = MessageType_Text;
+        [self sendMessageWithModel:model];
         textView.text = nil;
         [self textViewDidChange:self.inputTextView];
         return NO;
@@ -525,7 +524,23 @@
     return YES;
 }
 
-
+#pragma mark UIImagePickerControllerDelegate
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info{
+    UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    formatter.dateFormat = @"yyyyMMddHHmmss";
+    NSString *str = [formatter stringFromDate:[NSDate date]];
+    //组装消息的模型
+    MessageModel *model = [[MessageModel alloc]init];
+    model.image_mark = [NSString stringWithFormat:@"image%@",str];
+    model.messageType = MessageType_Picture;
+    model.isMineMessage = YES;
+    NSData *data = UIImageJPEGRepresentation(image, 1.0);
+    [[NSUserDefaults standardUserDefaults]setObject:data forKey:model.image_mark];
+    [picker dismissViewControllerAnimated:YES completion:nil];
+    //发送消息
+    [self sendMessageWithModel:model];
+}
 
 #pragma mark 键盘的通知方法
 - (void)keyboardWillHide:(NSNotification *)notification{
@@ -558,5 +573,13 @@
     [self.inputTextView becomeFirstResponder];
     [self showViewWithType:ButtonType_KeyBoard];
 
+}
+
+#pragma mark 发送消息
+- (void)sendMessageWithModel:(MessageModel *)model{
+    
+    if ([self.delegate respondsToSelector:@selector(didSendMessageOfFaceView:message:)]) {
+        [self.delegate didSendMessageOfFaceView:self message:model];
+    }
 }
 @end

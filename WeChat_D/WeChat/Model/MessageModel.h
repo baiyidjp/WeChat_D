@@ -8,9 +8,18 @@
 
 #import <Foundation/Foundation.h>
 
+typedef enum : NSUInteger {
+    MessageType_Text,
+    MessageType_Voice,
+    MessageType_Picture,
+} MessageType;
+
 @interface MessageModel : NSObject
 
 @property(nonatomic,copy)NSString *messagetext;
+@property(nonatomic,copy)NSString *imageUrl;
+@property(nonatomic,copy)NSString *image_mark;
 @property(nonatomic,assign)BOOL isMineMessage;
+@property(nonatomic,assign)MessageType messageType;
 
 @end
