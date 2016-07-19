@@ -97,40 +97,44 @@
     [self addSubview:self.scrollView];
     [self addSubview:self.pageControl];
     
+    UIView *bottomView = [[UIView alloc]init];
+    bottomView.backgroundColor = [UIColor whiteColor];
+    [self addSubview:bottomView];
+    [bottomView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.bottom.right.offset(0);
+        make.height.equalTo(@(ScaleValueH(3*KMARGIN)));
+    }];
+    
     UIButton *sendBtn = [[UIButton alloc]init];
     [sendBtn setTitle:@"发送" forState:UIControlStateNormal];
-    [sendBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [sendBtn setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
     [sendBtn setBackgroundColor:[UIColor whiteColor]];
     [sendBtn addTarget:self action:@selector(sendBtn) forControlEvents:UIControlEventTouchUpInside];
-    [self addSubview:sendBtn];
+    [bottomView addSubview:sendBtn];
     [sendBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.right.offset(-ScaleValueW(2*KMARGIN));
-        make.bottom.offset(0);
+        make.bottom.top.offset(0);
         make.width.equalTo(@50);
     }];
     
     lastBtn = [[UIButton alloc]init];
     [lastBtn setTitle:@"最近" forState:UIControlStateNormal];
     [lastBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [lastBtn setTitleColor:[UIColor purpleColor] forState:UIControlStateSelected];
-    [lastBtn setBackgroundColor:[UIColor whiteColor]];
     [lastBtn addTarget:self action:@selector(changeEmoji:) forControlEvents:UIControlEventTouchUpInside];
-    [self addSubview:lastBtn];
+    [bottomView addSubview:lastBtn];
     [lastBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.offset(ScaleValueW(2*KMARGIN));
-        make.bottom.offset(0);
+        make.bottom.top.offset(0);
         make.width.equalTo(@50);
     }];
     emojiBtn = [[UIButton alloc]init];
     [emojiBtn setTitle:@"emoji" forState:UIControlStateNormal];
     [emojiBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [emojiBtn setTitleColor:[UIColor purpleColor] forState:UIControlStateSelected];
-    [emojiBtn setBackgroundColor:[UIColor whiteColor]];
     [emojiBtn addTarget:self action:@selector(changeEmoji:) forControlEvents:UIControlEventTouchUpInside];
-    [self addSubview:emojiBtn];
+    [bottomView addSubview:emojiBtn];
     [emojiBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(lastBtn.mas_right).with.offset(2);
-        make.bottom.offset(0);
+        make.bottom.top.offset(0);
         make.width.equalTo(@50);
     }];
     //改变表情分类
@@ -153,6 +157,8 @@
     if (button == emojiBtn) {
         emojiBtn.selected = YES;
         lastBtn.selected = NO;
+        [emojiBtn setBackgroundColor:[UIColor grayColor]];
+        [lastBtn setBackgroundColor:[UIColor whiteColor]];
         count = self.dataArray.count;//总数
         self.scrollView.contentOffset = CGPointMake(currentEmojiIndex*self.frame.size.width, 0);
         CGFloat offsetX = (count/(line_num*row_num-1)+1)*self.frame.size.width; //每页的个数不再是行乘以列 需要减去一个 哪一个变为删除
@@ -162,6 +168,8 @@
     }else if (button == lastBtn){
         lastBtn.selected = YES;
         emojiBtn.selected = NO;
+        [lastBtn setBackgroundColor:[UIColor grayColor]];
+        [emojiBtn setBackgroundColor:[UIColor whiteColor]];
         count = self.lastDataArray.count;//总数
         self.scrollView.contentSize = CGSizeMake(self.frame.size.width, self.frame.size.height-ScaleValueH(3*KMARGIN));
         self.pageControl.numberOfPages = 1;

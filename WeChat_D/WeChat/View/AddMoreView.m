@@ -42,7 +42,7 @@
 - (UIScrollView *)scrollView{
     
     if (!_scrollView) {
-        _scrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, self.bounds.size.width, self.bounds.size.height-3*KMARGIN)];
+        _scrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, self.bounds.size.width, self.bounds.size.height-2*KMARGIN)];
         _scrollView.pagingEnabled = YES;
         _scrollView.showsHorizontalScrollIndicator = NO;
         _scrollView.delegate = self;
@@ -53,7 +53,7 @@
 - (UIPageControl *)pageControl{
     
     if (!_pageControl) {
-        _pageControl = [[UIPageControl alloc]initWithFrame:CGRectMake(0, self.frame.size.height-3*KMARGIN, self.frame.size.width, 2*KMARGIN)];
+        _pageControl = [[UIPageControl alloc]initWithFrame:CGRectMake(0, self.frame.size.height-2*KMARGIN, self.frame.size.width, 2*KMARGIN)];
         _pageControl.currentPageIndicatorTintColor = [UIColor darkGrayColor];
         _pageControl.pageIndicatorTintColor = [UIColor lightGrayColor];
         _pageControl.hidesForSinglePage = YES;
@@ -113,7 +113,7 @@
         textLabel.textColor = [UIColor blackColor];
         [self.scrollView addSubview:textLabel];
         [textLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.top.equalTo(itemBtn.mas_bottom);
+            make.top.equalTo(itemBtn.mas_bottom).with.offset(KMARGIN/2);
             make.left.equalTo(itemBtn.mas_left);
             make.right.equalTo(itemBtn.mas_right);
             make.height.equalTo(@(10));
