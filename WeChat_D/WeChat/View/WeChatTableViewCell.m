@@ -36,8 +36,8 @@
     _model = model;
     //取出最近的消息
     NSMutableArray *array = [[NSUserDefaults standardUserDefaults]objectForKey:@"message"];
-    NSArray *arr = [MessageModel mj_objectArrayWithKeyValuesArray:array];
     if (array.count) {
+        NSArray *arr = [MessageModel mj_objectArrayWithKeyValuesArray:array];
         MessageModel *messageModel = [arr objectAtIndex:arr.count-1];
         switch (messageModel.messageType) {
             case MessageType_Text:

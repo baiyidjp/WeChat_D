@@ -11,7 +11,7 @@
 #import "WeChatListModel.h"
 #import "WeChatTableViewCell.h"
 
-@interface WeChatViewController ()<UISearchBarDelegate,UITableViewDelegate,UITableViewDataSource>
+@interface WeChatViewController ()<UISearchBarDelegate,UITableViewDelegate,UITableViewDataSource,EMClientDelegate>
 @property(nonatomic,strong)UISearchBar *searchBar;
 @property(nonatomic,strong)UIView *topStatusView;
 @property(nonatomic,strong)UIButton *cancleBtn;
@@ -57,6 +57,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    
+    //回调的监听代理
+    [[EMClient sharedClient] addDelegate:self delegateQueue:nil];
     
     searchBarTop = KNAVHEIGHT;
     UISearchBar *searchBar = [[UISearchBar alloc]init];
@@ -226,7 +229,33 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    return 60;
+    return 70;
 }
+
+/*!
+ *  SDK连接服务器的状态变化时会接收到该回调
+ *
+ *  有以下几种情况，会引起该方法的调用：
+ *  1. 登录成功后，手机无法上网时，会调用该回调
+ *  2. 登录成功后，网络状态变化时，会调用该回调
+ *
+ *  @param aConnectionState 当前状态
+ */
+- (void)didConnectionStateChanged:(EMConnectionState)aConnectionState{
+    
+    switch (aConnectionState) {
+        case EMConnectionConnected:
+            NSLog(@"网络已连接");
+            self.title = @"微信";
+            break;
+        case EMConnectionDisconnected:
+            NSLog(@"网络断开");
+            self.title = @"微信(未连接)";
+            break;
+        default:
+            break;
+    }
+}
+
 
 @end

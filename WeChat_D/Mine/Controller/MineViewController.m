@@ -33,18 +33,33 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-
-    UIBarButtonItem *right = [[UIBarButtonItem alloc]initWithTitle:@"Login" style:UIBarButtonItemStylePlain target:self action:@selector(login)];
-    self.navigationItem.rightBarButtonItem = right;
     
+    //在导航栏右边加上两个按钮 登录和登出
+    UIBarButtonItem *right_login = [[UIBarButtonItem alloc]initWithTitle:@"Login" style:UIBarButtonItemStylePlain target:self action:@selector(login)];
+    UIBarButtonItem *right_logout = [[UIBarButtonItem alloc]initWithTitle:@"Logout" style:UIBarButtonItemStylePlain target:self action:@selector(logout)];
+    self.navigationItem.rightBarButtonItems = @[right_login,right_logout];
     
     [self configTableView];
 }
 
+#pragma mark  登录 / 登出
 - (void)login{
+    BOOL isAutoLogin = [EMClient sharedClient].isAutoLogin;
+    if (isAutoLogin){
+        [self.view makeToast:@"已经自动登录"];
+    }else{
+        LoginViewController *login = [[LoginViewController alloc]init];
+        self.tabBarController.tabBar.hidden = YES;
+        [self.navigationController pushViewController:login animated:YES];
+    }
+}
+
+- (void)logout{
     
-    LoginViewController *login = [[LoginViewController alloc]init];
-    [self.navigationController pushViewController:login animated:YES];
+    EMError *error = [[EMClient sharedClient] logout:YES];
+    if (!error) {
+        [self.view makeToast:@"退出成功"];
+    }
 }
 
 - (void)configTableView{

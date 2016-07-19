@@ -86,7 +86,7 @@
     [self.view addSubview:self.toolView];
     [self.view addSubview:self.ChatTableView];
     
-    UIBarButtonItem *right = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemEdit target:self action:@selector(delect)];
+    UIBarButtonItem *right =  [[UIBarButtonItem alloc]initWithTitle:@"Delect" style:UIBarButtonItemStylePlain target:self action:@selector(delect)];
     self.navigationItem.rightBarButtonItem = right;
     
     if (self.dataArray.count) {
