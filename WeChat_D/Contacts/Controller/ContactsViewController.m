@@ -101,15 +101,19 @@
     [[EMClient sharedClient].contactManager addDelegate:self delegateQueue:nil];
     
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(loginChange) name:KNOTIFICATION_LOGINCHANGE object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(delectFriend) name:DELECTFRIENDSUEESS object:nil];
 }
 
 #pragma mark 登陆成功的通知
 - (void)loginChange{
     
     [self getContactListFromServer];
-    
 }
-
+#pragma mark 删除好友通知
+- (void)delectFriend{
+    
+    [self getContactListFromServer];
+}
 
 //添加好友按钮的点击
 - (void)addFriend{
@@ -182,6 +186,26 @@
     self.tabBarController.tabBar.hidden = YES;
     [self.navigationController pushViewController:chatCtrl animated:YES];
 }
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath{
+    [SVProgressHUD show];
+    [[EMClient sharedClient].contactManager asyncDeleteContact:[self.dataArray objectAtIndex:indexPath.row] success:^{
+        [SVProgressHUD showSuccessWithStatus:@"删除成功"];
+        [self.dataArray removeObjectAtIndex:indexPath.row];
+        [self.contactTableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+    } failure:^(EMError *aError) {
+        [SVProgressHUD showSuccessWithStatus:@"删除失败"];
+    }];
+    
+}
+#pragma mark titleForDeleteConfirmationButtonForRowAtIndexPath
+- (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath{
+    return @"删除";
+}
+
+
+#pragma mark -------------------------------------------------------
+
 /*!
  *  \~chinese
  *  用户B同意用户A的好友申请后，用户A和用户B都会收到这个回调

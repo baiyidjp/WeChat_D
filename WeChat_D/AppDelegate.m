@@ -114,9 +114,7 @@
  */
 - (void)didReceiveDeletedFromUsername:(NSString *)aUsername{
     
-    UIAlertController *alertCtrl = [UIAlertController alertControllerWithTitle:aUsername message:@"解除了与您的好友关系" preferredStyle:UIAlertControllerStyleAlert];
-    [alertCtrl addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleCancel handler:nil]];
-    [self.window.rootViewController presentViewController:alertCtrl animated:YES completion:nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:DELECTFRIENDSUEESS object:nil];
 }
 
 /*!
