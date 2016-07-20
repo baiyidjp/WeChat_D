@@ -23,6 +23,7 @@
 #define ScaleValueW(valuew) ((valuew)*375.0f/[UIScreen mainScreen].bounds.size.width)
 #define WEAK_SELF(value) __weak typeof(self) value = self
 #define KNOTIFICATION_LOGINCHANGE @"loginstatechange"
+#define ADDFRIENDSUCCESS @"addFriendSuccess" //添加好友成功后的通知名
 
 //define this constant if you want to use Masonry without the 'mas_' prefix
 //#define MAS_SHORTHAND

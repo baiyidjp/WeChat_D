@@ -121,16 +121,6 @@
 
 /*!
  *  \~chinese
- *  用户B同意用户A的好友申请后，用户A和用户B都会收到这个回调
- *
- *  @param aUsername   用户好友关系的另一方
- */
-- (void)didReceiveAddedFromUsername:(NSString *)aUsername{
-    
-}
-
-/*!
- *  \~chinese
  *  用户B申请加A为好友后，用户A会收到这个回调
  *
  *  @param aUsername   用户B
@@ -181,6 +171,7 @@
 - (void)dealloc{
     
     [[EMClient sharedClient] removeDelegate:self];
+    [[EMClient sharedClient].contactManager removeDelegate:self];
 }
 
 /**

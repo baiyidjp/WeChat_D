@@ -65,10 +65,17 @@
 
 - (void)logout{
     
-    EMError *error = [[EMClient sharedClient] logout:YES];
-    if (!error) {
-        [self.view makeToast:@"退出成功"];
-    }
+    [SVProgressHUD show];
+    [[EMClient sharedClient] asyncLogout:YES success:^{
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [SVProgressHUD showSuccessWithStatus:@"退出成功"];
+        });
+    } failure:^(EMError *aError) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [SVProgressHUD showSuccessWithStatus:@"退出失败"];
+        });
+
+    }];
 }
 
 - (void)configTableView{
