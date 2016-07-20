@@ -364,7 +364,7 @@ static const CGFloat SVProgressHUDDefaultAnimationDuration = 0.15;
         
         _cornerRadius = 14.0f;
         
-        _minimumDismissTimeInterval = 5.0;
+        _minimumDismissTimeInterval = 1.0;
 
         _fadeInAnimationDuration = SVProgressHUDDefaultAnimationDuration;
         _fadeOutAnimationDuration = SVProgressHUDDefaultAnimationDuration;

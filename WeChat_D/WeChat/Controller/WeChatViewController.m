@@ -246,16 +246,19 @@
     switch (aConnectionState) {
         case EMConnectionConnected:
             NSLog(@"网络已连接");
-            self.title = @"微信";
+            self.navigationItem.title = @"微信";
             break;
         case EMConnectionDisconnected:
             NSLog(@"网络断开");
-            self.title = @"微信(未连接)";
+            self.navigationItem.title = @"微信(未连接)";
             break;
         default:
             break;
     }
 }
 
-
+- (void)dealloc{
+    
+    [[EMClient sharedClient] removeDelegate:self];
+}
 @end

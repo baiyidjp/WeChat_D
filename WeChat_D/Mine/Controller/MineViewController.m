@@ -17,6 +17,7 @@
 {
     UITableView *mineTableView;
     NSArray *dataArray;
+    UILabel *nameLabel;
 }
 - (void)viewWillAppear:(BOOL)animated{
     
@@ -40,6 +41,14 @@
     self.navigationItem.rightBarButtonItems = @[right_login,right_logout];
     
     [self configTableView];
+    
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(loginChange) name:KNOTIFICATION_LOGINCHANGE object:nil];
+}
+
+#pragma mark 登陆成功的通知
+- (void)loginChange{
+    
+    nameLabel.text = [EMClient sharedClient].currentUsername;
 }
 
 #pragma mark  登录 / 登出
@@ -123,8 +132,8 @@
         make.width.equalTo(@70);
     }];
     
-    UILabel *nameLabel = [[UILabel alloc]init];
-    nameLabel.text = @"微信昵称";
+    nameLabel = [[UILabel alloc]init];
+    nameLabel.text = [EMClient sharedClient].currentUsername;
     nameLabel.font = FONTSIZE(15);
     [backView addSubview:nameLabel];
     [nameLabel mas_makeConstraints:^(MASConstraintMaker *make) {

@@ -10,7 +10,9 @@
 #import "MainTabbarController.h"
 #import "LoginViewController.h"
 
-@interface AppDelegate ()<EMClientDelegate>
+#define AppKey @"djp7393#wechatdjp"
+#define ApnsCertName @"";
+@interface AppDelegate ()<EMClientDelegate,EMContactManagerDelegate>
 
 @end
 
@@ -22,12 +24,13 @@
     
     [self changeNav];
     
-    EMOptions *option = [EMOptions optionsWithAppkey:@"vcread#comunioncastoleducationtest"];
-    option.apnsCertName = @"DevelopmentPushServices";
+    EMOptions *option = [EMOptions optionsWithAppkey:AppKey];
+    option.apnsCertName = ApnsCertName;
     [[EMClient sharedClient]initializeSDKWithOptions:option];
     
     //回调监听代理
     [[EMClient sharedClient] addDelegate:self delegateQueue:nil];
+    [[EMClient sharedClient].contactManager addDelegate:self delegateQueue:nil];
     
     self.window = [[UIWindow alloc]initWithFrame:[UIScreen mainScreen].bounds];
     
@@ -75,6 +78,109 @@
 - (void)didRemovedFromServer{
     
     NSLog(@"当前登录账号已经被从服务器端删除时会收到该回调");
+}
+
+/*!
+ *  用户B同意用户A的加好友请求后，用户A会收到这个回调
+ *
+ *  @param aUsername   用户B
+ */
+- (void)didReceiveAgreedFromUsername:(NSString *)aUsername{
+    
+    UIAlertController *alertCtrl = [UIAlertController alertControllerWithTitle:aUsername message:@"同意了您的好友申请" preferredStyle:UIAlertControllerStyleAlert];
+    [alertCtrl addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleCancel handler:nil]];
+    [self.window.rootViewController presentViewController:alertCtrl animated:YES completion:nil];
+}
+
+/*!
+ *  \~chinese
+ *  用户B拒绝用户A的加好友请求后，用户A会收到这个回调
+ *
+ *  @param aUsername   用户B
+ */
+- (void)didReceiveDeclinedFromUsername:(NSString *)aUsername{
+    
+    UIAlertController *alertCtrl = [UIAlertController alertControllerWithTitle:aUsername message:@"拒绝了您的好友申请" preferredStyle:UIAlertControllerStyleAlert];
+    [alertCtrl addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleCancel handler:nil]];
+    [self.window.rootViewController presentViewController:alertCtrl animated:YES completion:nil];
+    
+}
+
+/*!
+ *  \~chinese
+ *  用户B删除与用户A的好友关系后，用户A会收到这个回调
+ *
+ *  @param aUsername   用户B
+ */
+- (void)didReceiveDeletedFromUsername:(NSString *)aUsername{
+    
+    UIAlertController *alertCtrl = [UIAlertController alertControllerWithTitle:aUsername message:@"解除了与您的好友关系" preferredStyle:UIAlertControllerStyleAlert];
+    [alertCtrl addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleCancel handler:nil]];
+    [self.window.rootViewController presentViewController:alertCtrl animated:YES completion:nil];
+}
+
+/*!
+ *  \~chinese
+ *  用户B同意用户A的好友申请后，用户A和用户B都会收到这个回调
+ *
+ *  @param aUsername   用户好友关系的另一方
+ */
+- (void)didReceiveAddedFromUsername:(NSString *)aUsername{
+    
+}
+
+/*!
+ *  \~chinese
+ *  用户B申请加A为好友后，用户A会收到这个回调
+ *
+ *  @param aUsername   用户B
+ *  @param aMessage    好友邀请信息
+ */
+- (void)didReceiveFriendInvitationFromUsername:(NSString *)aUsername
+                                       message:(NSString *)aMessage{
+    
+    UIAlertController *alertCtrl = [UIAlertController alertControllerWithTitle:[NSString stringWithFormat:@"%@的好友申请",aUsername] message:aMessage preferredStyle:UIAlertControllerStyleAlert];
+    [alertCtrl addAction:[UIAlertAction actionWithTitle:@"拒绝" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action){
+        
+        [SVProgressHUD show];
+        [[EMClient sharedClient].contactManager asyncDeclineInvitationForUsername:aUsername success:^{
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [SVProgressHUD showSuccessWithStatus:@"已拒绝"];
+            });
+            
+        } failure:^(EMError *aError) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [SVProgressHUD showSuccessWithStatus:@"拒绝失败"];
+            });
+            
+        }];
+        
+    }]];
+    [alertCtrl addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        
+        //添加好友
+        [SVProgressHUD show];
+        [[EMClient sharedClient].contactManager asyncAcceptInvitationForUsername:aUsername success:^{
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [SVProgressHUD showSuccessWithStatus:@"添加成功"];
+            });
+            
+        } failure:^(EMError *aError) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [SVProgressHUD showSuccessWithStatus:@"添加失败"];
+            });
+            
+        }];
+    }]];
+    [self.window.rootViewController presentViewController:alertCtrl animated:YES completion:nil];
+    
+}
+
+
+//移除代理
+- (void)dealloc{
+    
+    [[EMClient sharedClient] removeDelegate:self];
 }
 
 /**

@@ -60,6 +60,7 @@
 		F53EC6841D3E643400027A24 /* libstdc++.6.0.9.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = F53EC6831D3E643400027A24 /* libstdc++.6.0.9.tbd */; };
 		F53EC6861D3E643C00027A24 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = F53EC6851D3E643C00027A24 /* libsqlite3.tbd */; };
 		F53EC6881D3E644300027A24 /* libiconv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = F53EC6871D3E644300027A24 /* libiconv.tbd */; };
+		F5CB8B641D3F0533002663F8 /* AddFriendController.m in Sources */ = {isa = PBXBuildFile; fileRef = F5CB8B631D3F0533002663F8 /* AddFriendController.m */; };
 		F5CF83DB1D39C3EB000CC9F5 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F5CF83DA1D39C3EB000CC9F5 /* LoginViewController.m */; };
 /* End PBXBuildFile section */
 
@@ -202,6 +203,8 @@
 		F53EC6831D3E643400027A24 /* libstdc++.6.0.9.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libstdc++.6.0.9.tbd"; path = "usr/lib/libstdc++.6.0.9.tbd"; sourceTree = SDKROOT; };
 		F53EC6851D3E643C00027A24 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		F53EC6871D3E644300027A24 /* libiconv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libiconv.tbd; path = usr/lib/libiconv.tbd; sourceTree = SDKROOT; };
+		F5CB8B621D3F0533002663F8 /* AddFriendController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddFriendController.h; sourceTree = "<group>"; };
+		F5CB8B631D3F0533002663F8 /* AddFriendController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddFriendController.m; sourceTree = "<group>"; };
 		F5CF83D91D39C3EB000CC9F5 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		F5CF83DA1D39C3EB000CC9F5 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -371,6 +374,8 @@
 			children = (
 				A297B73F1D2F8E5A003C9276 /* ContactsViewController.h */,
 				A297B7401D2F8E5A003C9276 /* ContactsViewController.m */,
+				F5CB8B621D3F0533002663F8 /* AddFriendController.h */,
+				F5CB8B631D3F0533002663F8 /* AddFriendController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -845,6 +850,7 @@
 				A21B62931D38D9BD00F0E727 /* WeChatListModel.m in Sources */,
 				A297B75A1D2F8E5A003C9276 /* ContactsViewController.m in Sources */,
 				A297B70A1D2F8E14003C9276 /* AppDelegate.m in Sources */,
+				F5CB8B641D3F0533002663F8 /* AddFriendController.m in Sources */,
 				A24695331D34EA7600E32C30 /* JPKeyBoardToolView.m in Sources */,
 				A297B7071D2F8E14003C9276 /* main.m in Sources */,
 				A297B7591D2F8E5A003C9276 /* UIView+Toast.m in Sources */,
