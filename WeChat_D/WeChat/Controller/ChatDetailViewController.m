@@ -13,7 +13,7 @@
 
 #define MESSAGE @"message"
 #define GETMESSAGE_TIME 15
-@interface ChatDetailViewController ()<UITableViewDelegate,UITableViewDataSource,JPKeyBoardToolViewDelegate,UIScrollViewDelegate,MessageTableViewCellDelegate>
+@interface ChatDetailViewController ()<UITableViewDelegate,UITableViewDataSource,JPKeyBoardToolViewDelegate,UIScrollViewDelegate,MessageTableViewCellDelegate,EMChatManagerDelegate>
 /**
  *  聊天界面
  */
@@ -45,9 +45,11 @@
 - (NSMutableArray *)dataArray{
     
     if (!_dataArray) {
-        NSMutableArray *array = [[NSUserDefaults standardUserDefaults]objectForKey:MESSAGE];
-        if (array.count) {
-            _dataArray = [MessageModel mj_objectArrayWithKeyValuesArray:array];
+        EMConversation *conversation = [[EMClient sharedClient].chatManager getConversation:self.title type:EMConversationTypeChat createIfNotExist:YES];
+        NSArray *messages = [conversation loadMoreMessagesFromId:nil limit:-1 direction:EMMessageSearchDirectionUp];
+        if (messages.count) {
+            _dataArray = [NSMutableArray array];
+            [_dataArray addObjectsFromArray:messages];
         }else{
             _dataArray = [NSMutableArray array];
         }
@@ -58,7 +60,7 @@
 - (NSTimer *)timer{
     
     if (!_timer) {
-        _timer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(update) userInfo:nil repeats:YES];
+//        _timer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(update) userInfo:nil repeats:YES];
     }
     return _timer;
 }
@@ -92,6 +94,8 @@
     if (self.dataArray.count) {
         [self.ChatTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:self.dataArray.count-1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
     }
+    
+    [[EMClient sharedClient].chatManager addDelegate:self delegateQueue:nil];
 }
 
 //时间控制
@@ -155,6 +159,7 @@
     if (!_toolView) {
         _toolView = [[JPKeyBoardToolView alloc]initWithFrame:CGRectMake(0, KHEIGHT-KTOOLVIEW_MINH, KWIDTH, KTOOLVIEW_MINH)];
         _toolView.superViewHeight = KHEIGHT;
+        _toolView.toUser = self.title;
         _toolView.delegate = self;
     }
     return _toolView;
@@ -172,20 +177,32 @@
     }];
 }
 
-- (void)didSendMessageOfFaceView:(JPKeyBoardToolView *)toolView message:(MessageModel *)message{
+- (void)didSendMessageOfFaceView:(JPKeyBoardToolView *)toolView message:(EMMessage *)message{
     
-    [self.dataArray addObject:message];
-    NSArray *array = [MessageModel mj_keyValuesArrayWithObjectArray:self.dataArray];
-    [[NSUserDefaults standardUserDefaults]setObject:array forKey:MESSAGE];
     [SVProgressHUD show];
+    [[EMClient sharedClient].chatManager asyncSendMessage:message progress:^(int progress) {
+        
+    } completion:^(EMMessage *message, EMError *error) {
+        if (!error) {
+            [SVProgressHUD showSuccessWithStatus:@"发送成功"];
+            [self.dataArray addObject:message];
+            [self.ChatTableView reloadData];
+            if (self.dataArray.count) {
+                [self.ChatTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:self.dataArray.count-1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+            }
+        }
+    }];
+}
+
+#pragma mark 接收消息
+- (void)didReceiveMessages:(NSArray *)aMessages{
+    
+    [self.dataArray addObjectsFromArray:aMessages];
     [self.ChatTableView reloadData];
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        SVProgressHUD.minimumDismissTimeInterval = 1.0;
-        [SVProgressHUD showSuccessWithStatus:@"发送成功"];
-    });
     if (self.dataArray.count) {
         [self.ChatTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:self.dataArray.count-1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
     }
+
 }
 
 #pragma mark  UITableViewDelegate UITableViewDataSource
@@ -197,7 +214,9 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
     MessageTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MessageTableViewCell"];
-    MessageModel *model = [self.dataArray objectAtIndex:indexPath.row];
+    MessageModel *model = [[MessageModel alloc]init];
+    EMMessage *emmessage = [self.dataArray objectAtIndex:indexPath.row];
+    model.emmessage = emmessage;
     cell.model = model;
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.delegate = self;
@@ -223,7 +242,9 @@
 
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    MessageModel *model = [self.dataArray objectAtIndex:indexPath.row];
+    MessageModel *model = [[MessageModel alloc]init];
+    EMMessage *emmessage = [self.dataArray objectAtIndex:indexPath.row];
+    model.emmessage = emmessage;
     CGFloat height = [MessageTableViewCell cellHeightWithModel:model];
     return height;
 }
@@ -238,13 +259,13 @@
     [super viewWillAppear:animated];
     
     //加一个时间控制 模拟对方发消息
-    [self.timer setFireDate:[NSDate distantPast]];
+//    [self.timer setFireDate:[NSDate distantPast]];
 }
 
 - (void)viewWillDisappear:(BOOL)animated{
     
     [super viewWillDisappear:animated];
-    [self.timer setFireDate:[NSDate distantFuture]];
+//    [self.timer setFireDate:[NSDate distantFuture]];
 }
 
 @end

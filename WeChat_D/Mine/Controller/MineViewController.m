@@ -69,6 +69,9 @@
     [[EMClient sharedClient] asyncLogout:YES success:^{
         dispatch_async(dispatch_get_main_queue(), ^{
             [SVProgressHUD showSuccessWithStatus:@"退出成功"];
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [self login];
+            });
         });
     } failure:^(EMError *aError) {
         dispatch_async(dispatch_get_main_queue(), ^{

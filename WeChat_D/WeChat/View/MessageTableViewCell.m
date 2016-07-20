@@ -180,7 +180,7 @@
                 [self.backImgaeView mas_remakeConstraints:^(MASConstraintMaker *make) {
                     make.top.equalTo(self.headerView.mas_top);
                     make.right.equalTo(self.headerView.mas_left).with.offset(-KMARGIN/2);
-                    make.width.equalTo(@([model.voiceTime intValue]*2*KMARGIN));
+                    make.width.equalTo(@(model.voiceTime*2*KMARGIN));
                     make.width.lessThanOrEqualTo(@(KWIDTH/5*3)).priorityLow();
                     make.bottom.equalTo(self.headerView.mas_bottom);
                 }];
@@ -191,7 +191,7 @@
                     make.size.mas_equalTo(CGSizeMake(20, 20));
                 }];
                 self.timeLabel.hidden = NO;
-                self.timeLabel.text = [NSString stringWithFormat:@"%@ s",model.voiceTime];
+                self.timeLabel.text = [NSString stringWithFormat:@"%d s",model.voiceTime];
                 [self.timeLabel mas_remakeConstraints:^(MASConstraintMaker *make) {
                     make.centerY.equalTo(self.backImgaeView.mas_centerY);
                     make.right.equalTo(self.backImgaeView.mas_left).with.offset(-KMARGIN/2);
@@ -258,7 +258,7 @@
                 [self.backImgaeView mas_remakeConstraints:^(MASConstraintMaker *make) {
                     make.top.equalTo(self.headerView.mas_top);
                     make.left.equalTo(self.headerView.mas_right).with.offset(KMARGIN/2);
-                    make.width.equalTo(@([model.voiceTime intValue]*2*KMARGIN));
+                    make.width.equalTo(@(model.voiceTime*2*KMARGIN));
                     make.bottom.equalTo(self.headerView.mas_bottom);
                 }];
                 self.messageVoice.image = [UIImage imageNamed:@"message_voice_receiver_playing_3"];
@@ -268,7 +268,7 @@
                     make.size.mas_equalTo(CGSizeMake(20, 20));
                 }];
                 self.timeLabel.hidden = NO;
-                self.timeLabel.text = [NSString stringWithFormat:@"%@ s",model.voiceTime];
+                self.timeLabel.text = [NSString stringWithFormat:@"%d s",model.voiceTime];
                 [self.timeLabel mas_remakeConstraints:^(MASConstraintMaker *make) {
                     make.centerY.equalTo(self.backImgaeView.mas_centerY);
                     make.left.equalTo(self.backImgaeView.mas_right).with.offset(KMARGIN/2);

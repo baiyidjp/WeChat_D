@@ -494,11 +494,16 @@
     if ([text isEqualToString:@"\n"]) {
         //发送消息
         NSString *message = textView.text;
-        MessageModel *model = [[MessageModel alloc]init];
-        model.messagetext = message;
-        model.isMineMessage  = YES;
-        model.messageType = MessageType_Text;
-        [self sendMessageWithModel:model];
+        EMTextMessageBody *body = [[EMTextMessageBody alloc] initWithText:message];
+        NSString *from = [[EMClient sharedClient] currentUsername];
+        //生成Message
+        EMMessage *emmessage = [[EMMessage alloc]initWithConversationID:self.toUser from:from to:self.toUser body:body ext:nil];
+        emmessage.chatType = EMChatTypeChat;
+//        MessageModel *model = [[MessageModel alloc]init];
+//        model.messagetext = message;
+//        model.isMineMessage  = YES;
+//        model.messageType = MessageType_Text;
+        [self sendMessageWithMessage:emmessage];
         textView.text = nil;
         [self textViewDidChange:self.inputTextView];
         return NO;
@@ -542,7 +547,7 @@
     [[NSUserDefaults standardUserDefaults]setObject:data forKey:model.image_mark];
     [picker dismissViewControllerAnimated:YES completion:nil];
     //发送消息
-    [self sendMessageWithModel:model];
+//    [self sendMessageWithModel:model];
 }
 
 #pragma mark 键盘的通知方法
@@ -590,9 +595,9 @@
             MessageModel *model = [[MessageModel alloc]init];
             model.messageType = MessageType_Voice;
             model.isMineMessage = YES;
-            model.voiceTime = [NSString stringWithFormat:@"%zd",5];
+            model.voiceTime = 5;
             //发送消息
-            [self sendMessageWithModel:model];
+//            [self sendMessageWithModel:model];
         }
             break;
         default:
@@ -601,10 +606,10 @@
 }
 
 #pragma mark 发送消息
-- (void)sendMessageWithModel:(MessageModel *)model{
+- (void)sendMessageWithMessage:(EMMessage *)message{
     
     if ([self.delegate respondsToSelector:@selector(didSendMessageOfFaceView:message:)]) {
-        [self.delegate didSendMessageOfFaceView:self message:model];
+        [self.delegate didSendMessageOfFaceView:self message:message];
     }
 }
 @end
