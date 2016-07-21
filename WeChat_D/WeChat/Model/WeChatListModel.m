@@ -44,7 +44,7 @@
         default:
             break;
     }
-    self.time = [self returnTimeWitnLongTime:emmessage.localTime];
+    self.time = [self returnTimeWitnLongTime:emmessage.timestamp];
     self.imageUrl = @"http://ww1.sinaimg.cn/crop.0.0.1080.1080.1024/006cxmWbjw8evactf4t2ij30u00u0jtj.jpg";
 }
 

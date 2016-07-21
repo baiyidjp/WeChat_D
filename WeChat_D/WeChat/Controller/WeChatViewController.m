@@ -77,6 +77,8 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(autoLoginSuccess) name:AUTOLOGINSUCCESS object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(netWorkState:) name:NETWORKSTATE object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reciveMessage) name:RECEIVEMESSAGES object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(agreeFriendNoti:) name:AGREEFRIENDSUCCESS object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(delectFriendNoti) name:DELECTFRIENDSUEESS object:nil];
     
     searchBarTop = KNAVHEIGHT;
     UISearchBar *searchBar = [[UISearchBar alloc]init];
@@ -295,6 +297,29 @@
     [self getAllConversations];
 }
 
+#pragma mark 添加好友成功 A加B A收到的代理发通知
+- (void)agreeFriendNoti:(NSNotification *)notification{
+    NSString *userName = [notification.userInfo objectForKey:@"name"];
+    [[EMClient sharedClient].chatManager getConversation:userName type:EMConversationTypeChat createIfNotExist:YES];
+    EMTextMessageBody *body = [[EMTextMessageBody alloc] initWithText:@"我们已经是好友了,一起来聊天吧"];
+    NSString *currentName = [[EMClient sharedClient] currentUsername];
+    //生成Message
+    EMMessage *emmessage = [[EMMessage alloc]initWithConversationID:userName from:currentName to:userName body:body ext:nil];
+    emmessage.chatType = EMChatTypeChat;
+    [[EMClient sharedClient].chatManager asyncSendMessage:emmessage progress:^(int progress) {
+        
+    } completion:^(EMMessage *message, EMError *error) {
+        if (!error) {
+            [self getAllConversations];
+        }
+    }];
+
+}
+#pragma mark 删除好友刷新页面
+- (void)delectFriendNoti{
+    
+    [self getAllConversations];
+}
 #pragma mark 获取会话列表
 - (void)getAllConversations{
     

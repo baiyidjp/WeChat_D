@@ -129,7 +129,13 @@
 - (void)didReceiveAgreedFromUsername:(NSString *)aUsername{
     
     UIAlertController *alertCtrl = [UIAlertController alertControllerWithTitle:aUsername message:@"同意了您的好友申请" preferredStyle:UIAlertControllerStyleAlert];
-    [alertCtrl addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleCancel handler:nil]];
+    [alertCtrl addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        
+        NSDictionary *dict = [NSDictionary dictionaryWithObject:aUsername forKey:@"name"];
+        [[NSNotificationCenter defaultCenter] postNotificationName:AGREEFRIENDSUCCESS object:nil userInfo:dict];
+    }]];
+
+
     [self.window.rootViewController presentViewController:alertCtrl animated:YES completion:nil];
 }
 
@@ -203,7 +209,7 @@
         [SVProgressHUD show];
         [[EMClient sharedClient].contactManager asyncAcceptInvitationForUsername:aUsername success:^{
             dispatch_async(dispatch_get_main_queue(), ^{
-                [SVProgressHUD showSuccessWithStatus:@"添加成功"];
+                [SVProgressHUD showSuccessWithStatus:@"已添加"];
             });
             
         } failure:^(EMError *aError) {

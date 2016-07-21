@@ -81,9 +81,24 @@
 #pragma mark 删除当前会话的所有消息
 - (void)delect{
     
-    [self.dataArray removeAllObjects];
-    [self.conversation deleteAllMessages];
-    [self.ChatTableView reloadData];
+    UIAlertController *alertCtrl = [UIAlertController alertControllerWithTitle:@"确定删除消息记录么?" message:nil preferredStyle:UIAlertControllerStyleAlert];
+    [alertCtrl addAction:[UIAlertAction actionWithTitle:@"删除" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
+        
+        //添加好友
+        [SVProgressHUD show];
+        [self.dataArray removeAllObjects];
+        BOOL isSuccess =  [self.conversation deleteAllMessages];
+        if (isSuccess) {
+            [SVProgressHUD showSuccessWithStatus:@"删除成功"];
+            [self.ChatTableView reloadData];
+        }else{
+            [SVProgressHUD showSuccessWithStatus:@"删除失败"];
+        }
+        
+    }]];
+    [alertCtrl addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil]];
+    [self presentViewController:alertCtrl animated:YES completion:nil];
+
 }
 
 - (UITableView *)ChatTableView{

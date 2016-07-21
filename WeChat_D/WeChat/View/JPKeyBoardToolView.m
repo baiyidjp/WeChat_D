@@ -499,10 +499,6 @@
         //生成Message
         EMMessage *emmessage = [[EMMessage alloc]initWithConversationID:self.toUser from:from to:self.toUser body:body ext:nil];
         emmessage.chatType = EMChatTypeChat;
-//        MessageModel *model = [[MessageModel alloc]init];
-//        model.messagetext = message;
-//        model.isMineMessage  = YES;
-//        model.messageType = MessageType_Text;
         [self sendMessageWithMessage:emmessage];
         textView.text = nil;
         [self textViewDidChange:self.inputTextView];

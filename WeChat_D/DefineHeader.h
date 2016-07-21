@@ -25,6 +25,7 @@
 #define LOGINCHANGE @"loginstatechange" //重新登录后
 #define AUTOLOGINSUCCESS @"autoLoginSuccess" //自动登录成功
 #define ADDFRIENDSUCCESS @"addFriendSuccess" //添加好友成功后的通知名
+#define AGREEFRIENDSUCCESS @"agreeFriendSuccess" //同意好友申请通知
 #define DELECTFRIENDSUEESS @"delectFriendSuccess" //删除好友成功的通知名
 #define NETWORKSTATE @"netWorkState" //网络状态
 #define RECEIVEMESSAGES @"ReceiveMessages"// 接收消息的通知
