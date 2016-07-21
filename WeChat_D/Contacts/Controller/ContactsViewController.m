@@ -92,7 +92,7 @@
 //    [self getContactListFromServer];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(loginChange) name:LOGINCHANGE object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(delectFriend) name:DELECTFRIENDSUEESS object:nil];
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(addFriendNoti) name:ADDFRIENDSUCCESS object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(agreenFriendNoti) name:AGREEFRIENDSUCCESS object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(autoLogin) name:AUTOLOGINSUCCESS object:nil];
 }
 
@@ -106,8 +106,8 @@
     
     [self getContactListFromServer];
 }
-#pragma mark 添加好友成功
-- (void)addFriendNoti{
+#pragma mark 添加好友成功 双方都收到的
+- (void)agreenFriendNoti{
     
     [self getContactListFromServer];
 }
@@ -224,7 +224,7 @@
     
     [[NSNotificationCenter defaultCenter]removeObserver:self name:LOGINCHANGE object:nil];
     [[NSNotificationCenter defaultCenter]removeObserver:self name:DELECTFRIENDSUEESS object:nil];
-    [[NSNotificationCenter defaultCenter]removeObserver:self name:ADDFRIENDSUCCESS object:nil];
+    [[NSNotificationCenter defaultCenter]removeObserver:self name:AGREEFRIENDSUCCESS object:nil];
     [[NSNotificationCenter defaultCenter]removeObserver:self name:AUTOLOGINSUCCESS object:nil];
 }
 @end

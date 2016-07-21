@@ -132,7 +132,7 @@
     [alertCtrl addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         
         NSDictionary *dict = [NSDictionary dictionaryWithObject:aUsername forKey:@"name"];
-        [[NSNotificationCenter defaultCenter] postNotificationName:AGREEFRIENDSUCCESS object:nil userInfo:dict];
+        [[NSNotificationCenter defaultCenter] postNotificationName:ADDFRIENDSUCCESS object:nil userInfo:dict];
     }]];
 
 
@@ -147,7 +147,7 @@
  */
 - (void)didReceiveAddedFromUsername:(NSString *)aUsername{
     
-    [[NSNotificationCenter defaultCenter]postNotificationName:ADDFRIENDSUCCESS object:nil];
+    [[NSNotificationCenter defaultCenter]postNotificationName:AGREEFRIENDSUCCESS object:nil];
     
 }
 
