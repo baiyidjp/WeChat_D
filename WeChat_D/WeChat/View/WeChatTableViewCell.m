@@ -34,28 +34,7 @@
 - (void)setModel:(WeChatListModel *)model{
     
     _model = model;
-    //取出最近的消息
-    NSMutableArray *array = [[NSUserDefaults standardUserDefaults]objectForKey:@"message"];
-    if (array.count) {
-        NSArray *arr = [MessageModel mj_objectArrayWithKeyValuesArray:array];
-        MessageModel *messageModel = [arr objectAtIndex:arr.count-1];
-        switch (messageModel.messageType) {
-            case MessageType_Text:
-                self.messageLabel.attributedText = [PublicMethod emojiWithText:messageModel.messagetext];
-                break;
-            case MessageType_Voice:
-                self.messageLabel.text = @"[语音消息]";
-                break;
-            case MessageType_Picture:
-                self.messageLabel.text = @"[图片]";
-                break;
-            default:
-                break;
-        }
-        
-    }else{
-        self.messageLabel.text = model.message;
-    }
+    self.messageLabel.text = model.message;
     [self.headImage sd_setImageWithURL:[NSURL URLWithString:model.imageUrl]];
     self.nameLable.text = model.name;
     self.timeLable.text = model.time;

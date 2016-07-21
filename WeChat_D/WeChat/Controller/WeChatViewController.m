@@ -29,7 +29,10 @@
     
     [super viewWillAppear:animated];
     self.tabBarController.tabBar.hidden = NO;
-    
+    NSArray *conversations = [[EMClient sharedClient].chatManager getAllConversations];
+    [_dataArray removeAllObjects];
+    [_dataArray addObjectsFromArray:conversations];
+    [self.weChatTableView reloadData];
 }
 
 - (void)viewWillDisappear:(BOOL)animated{
@@ -42,14 +45,7 @@
     
     if (!_dataArray) {
         _dataArray = [NSMutableArray array];
-        for (int i = 0; i < 10 ; i++) {
-            WeChatListModel *model = [[WeChatListModel alloc]init];
-            model.imageUrl = @"http://ww1.sinaimg.cn/crop.0.0.1080.1080.1024/006cxmWbjw8evactf4t2ij30u00u0jtj.jpg";
-            model.name = @"微信测试";
-            model.message = @"晚上约么?";
-            model.time = @"16:32";
-            [_dataArray addObject:model];
-        }
+       
     }
     return _dataArray;
 }
@@ -60,7 +56,8 @@
     
     //回调的监听代理
     [[EMClient sharedClient] addDelegate:self delegateQueue:nil];
-    
+    //登陆成功通知
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loginSuccess) name:KNOTIFICATION_LOGINCHANGE object:nil];
     searchBarTop = KNAVHEIGHT;
     UISearchBar *searchBar = [[UISearchBar alloc]init];
     searchBar.backgroundColor = [UIColor whiteColor];
@@ -191,7 +188,6 @@
     [UIView animateWithDuration:0.3 animations:^{
         [self.view layoutIfNeeded];
         [self isHidden:YES];
-        //        [self setNeedsStatusBarAppearanceUpdate];
     }];
 
 }
@@ -213,7 +209,9 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
     WeChatTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"weChatTableView"];
-    WeChatListModel *model = [self.dataArray objectAtIndex:indexPath.row];
+    EMConversation *conversation = [self.dataArray objectAtIndex:indexPath.row];
+    WeChatListModel *model = [[WeChatListModel alloc]init];
+    model.conversation = conversation;
     cell.model = model;
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
@@ -222,7 +220,8 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
     ChatDetailViewController *chatVC = [[ChatDetailViewController alloc]init];
-    chatVC.title = [NSString stringWithFormat:@"%zd",indexPath.row];
+    EMConversation *conversation = [self.dataArray objectAtIndex:indexPath.row];
+    chatVC.title = conversation.conversationId;
     self.tabBarController.tabBar.hidden = YES;
     [self.navigationController pushViewController:chatVC animated:YES];
 }
@@ -230,6 +229,23 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     
     return 70;
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath{
+    [SVProgressHUD show];
+    EMConversation *conversation = [self.dataArray objectAtIndex:indexPath.row];
+    if ([[EMClient sharedClient].chatManager deleteConversation:conversation.conversationId deleteMessages:NO]){
+        [SVProgressHUD showSuccessWithStatus:@"删除成功"];
+        [self.dataArray removeObjectAtIndex:indexPath.row];
+        [self.weChatTableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+    } else{
+        [SVProgressHUD showSuccessWithStatus:@"删除失败"];
+    };
+    
+}
+#pragma mark titleForDeleteConfirmationButtonForRowAtIndexPath
+- (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath{
+    return @"删除";
 }
 
 /*!
@@ -256,9 +272,18 @@
             break;
     }
 }
+//登录通知
+- (void)loginSuccess{
+    
+    [self.dataArray removeAllObjects];
+    NSArray *convers = [[EMClient sharedClient].chatManager getAllConversations];
+    [self.dataArray addObjectsFromArray:convers];
+    [self.weChatTableView reloadData];
+}
 
 - (void)dealloc{
     
     [[EMClient sharedClient] removeDelegate:self];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:KNOTIFICATION_LOGINCHANGE object:nil];
 }
 @end

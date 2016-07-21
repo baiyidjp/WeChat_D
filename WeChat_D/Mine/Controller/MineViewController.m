@@ -207,5 +207,9 @@
     return 2*KMARGIN;
 }
 
+- (void)dealloc{
+    
+    [[NSNotificationCenter defaultCenter]removeObserver:self name:KNOTIFICATION_LOGINCHANGE object:nil];
+}
 
 @end

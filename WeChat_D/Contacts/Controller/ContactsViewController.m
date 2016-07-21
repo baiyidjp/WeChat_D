@@ -236,5 +236,7 @@
 
 - (void)dealloc{
     [[EMClient sharedClient].contactManager removeDelegate:self];
+    [[NSNotificationCenter defaultCenter]removeObserver:self name:KNOTIFICATION_LOGINCHANGE object:nil];
+    [[NSNotificationCenter defaultCenter]removeObserver:self name:DELECTFRIENDSUEESS object:nil];
 }
 @end
