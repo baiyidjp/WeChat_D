@@ -33,16 +33,10 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
-    
-    //在导航栏右边加上两个按钮 登录和登出
-    UIBarButtonItem *right_login = [[UIBarButtonItem alloc]initWithTitle:@"Login" style:UIBarButtonItemStylePlain target:self action:@selector(login)];
-    UIBarButtonItem *right_logout = [[UIBarButtonItem alloc]initWithTitle:@"Logout" style:UIBarButtonItemStylePlain target:self action:@selector(logout)];
-    self.navigationItem.rightBarButtonItems = @[right_login,right_logout];
-    
+
     [self configTableView];
     
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(loginChange) name:KNOTIFICATION_LOGINCHANGE object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(loginChange) name:LOGINCHANGE object:nil];
 }
 
 #pragma mark 登陆成功的通知
@@ -53,14 +47,11 @@
 
 #pragma mark  登录 / 登出
 - (void)login{
-    BOOL isAutoLogin = [EMClient sharedClient].isAutoLogin;
-    if (isAutoLogin){
-        [self.view makeToast:@"已经自动登录"];
-    }else{
-        LoginViewController *login = [[LoginViewController alloc]init];
-        self.tabBarController.tabBar.hidden = YES;
-        [self.navigationController pushViewController:login animated:YES];
-    }
+
+    LoginViewController *login = [[LoginViewController alloc]init];
+    self.tabBarController.tabBar.hidden = YES;
+    [self presentViewController:login animated:YES completion:nil];
+    
 }
 
 - (void)logout{
@@ -103,7 +94,7 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
     
-    return 4;
+    return 5;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
@@ -120,6 +111,16 @@
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     if (indexPath.section == 0) {
         [self configSectionOneView:cell.contentView];
+    }else if (indexPath.section == 4){
+        UILabel *logouttext = [[UILabel alloc]init];
+        logouttext.text = @"退出登录";
+        logouttext.textAlignment = NSTextAlignmentCenter;
+        logouttext.font = FONTSIZE(15);
+        [cell.contentView addSubview:logouttext];
+        cell.accessoryType = UITableViewCellAccessoryNone;
+        [logouttext mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.left.bottom.right.offset(0);
+        }];
     }else{
         NSArray *section = [dataArray objectAtIndex:indexPath.section-1];
         NSDictionary *dataDict = [section objectAtIndex:indexPath.row];
@@ -207,9 +208,33 @@
     return 2*KMARGIN;
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    switch (indexPath.section) {
+        case 0:
+            
+            break;
+        case 1:
+            
+            break;
+        case 2:
+            
+            break;
+        case 3:
+            
+            break;
+        case 4:
+            [self logout];
+            break;
+            
+        default:
+            break;
+    }
+}
+
 - (void)dealloc{
     
-    [[NSNotificationCenter defaultCenter]removeObserver:self name:KNOTIFICATION_LOGINCHANGE object:nil];
+    [[NSNotificationCenter defaultCenter]removeObserver:self name:LOGINCHANGE object:nil];
 }
 
 @end

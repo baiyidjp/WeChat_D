@@ -26,7 +26,7 @@ typedef enum : NSUInteger {
 /**
  *  发送消息
  */
-- (void)didSendMessageOfFaceView:(JPKeyBoardToolView *)toolView message:(MessageModel *)messageModel;
+- (void)didSendMessageOfFaceView:(JPKeyBoardToolView *)toolView message:(EMMessage *)message;
 
 @end
 

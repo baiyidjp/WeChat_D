@@ -11,7 +11,7 @@
 #import "MessageTableViewCell.h"
 #import "MessageModel.h"
 
-@interface ChatDetailViewController ()<UITableViewDelegate,UITableViewDataSource,JPKeyBoardToolViewDelegate,UIScrollViewDelegate,MessageTableViewCellDelegate,EMChatManagerDelegate>
+@interface ChatDetailViewController ()<UITableViewDelegate,UITableViewDataSource,JPKeyBoardToolViewDelegate,UIScrollViewDelegate,MessageTableViewCellDelegate>
 /**
  *  聊天界面
  */
@@ -24,7 +24,14 @@
  *  聊天数据(all)
  */
 @property(nonatomic,strong)NSMutableArray *dataArray;
+/**
+ *  当前会话
+ */
 @property(nonatomic,strong)EMConversation *conversation;
+/**
+ *  当前会话接收到的消息集合
+ */
+@property(nonatomic,strong)NSMutableArray *reciveMessageArray;
 @end
 
 @implementation ChatDetailViewController
@@ -32,19 +39,19 @@
 - (NSMutableArray *)dataArray{
     
     if (!_dataArray) {
-        EMConversation *conversation = [[EMClient sharedClient].chatManager getConversation:self.title type:EMConversationTypeChat createIfNotExist:YES];
-        self.conversation = conversation;
-        NSArray *messages = [conversation loadMoreMessagesFromId:nil limit:20 direction:EMMessageSearchDirectionUp];
-        if (messages.count) {
-            _dataArray = [NSMutableArray array];
-            [_dataArray addObjectsFromArray:messages];
-        }else{
-            _dataArray = [NSMutableArray array];
-        }
+        
+        _dataArray = [NSMutableArray array];
     }
     return _dataArray;
 }
 
+- (NSMutableArray *)reciveMessageArray{
+    
+    if (!_reciveMessageArray) {
+        _reciveMessageArray = [NSMutableArray array];
+    }
+    return _reciveMessageArray;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -56,11 +63,19 @@
     UIBarButtonItem *right =  [[UIBarButtonItem alloc]initWithTitle:@"Delect" style:UIBarButtonItemStylePlain target:self action:@selector(delect)];
     self.navigationItem.rightBarButtonItem = right;
     
+    EMConversation *conversation = [[EMClient sharedClient].chatManager getConversation:self.title type:EMConversationTypeChat createIfNotExist:YES];
+    self.conversation = conversation;
+    [conversation markAllMessagesAsRead];
+    NSArray *messages = [conversation loadMoreMessagesFromId:nil limit:20 direction:EMMessageSearchDirectionUp];
+    [self.dataArray addObjectsFromArray:messages];
+    
     if (self.dataArray.count) {
+        [self.ChatTableView reloadData];
         [self.ChatTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:self.dataArray.count-1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
     }
     
-    [[EMClient sharedClient].chatManager addDelegate:self delegateQueue:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveMessages:) name:RECEIVEMESSAGES object:nil];
 }
 
 #pragma mark 删除当前会话的所有消息
@@ -127,9 +142,11 @@
 }
 
 #pragma mark 接收消息
-- (void)didReceiveMessages:(NSArray *)aMessages{
+- (void)receiveMessages:(NSNotification *)notification{
     
-    [self.dataArray addObjectsFromArray:aMessages];
+    NSArray *messages = [notification.userInfo objectForKey:@"Message"];
+    [self.dataArray addObjectsFromArray:messages];
+    [self.reciveMessageArray addObjectsFromArray:messages];
     [self.ChatTableView reloadData];
     if (self.dataArray.count) {
         [self.ChatTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:self.dataArray.count-1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
@@ -182,18 +199,17 @@
 
 }
 
-- (void)viewWillAppear:(BOOL)animated{
+- (void)dealloc{
     
-    [super viewWillAppear:animated];
-    
-    //加一个时间控制 模拟对方发消息
-//    [self.timer setFireDate:[NSDate distantPast]];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:RECEIVEMESSAGES object:nil];
 }
 
 - (void)viewWillDisappear:(BOOL)animated{
     
     [super viewWillDisappear:animated];
-//    [self.timer setFireDate:[NSDate distantFuture]];
+    for (EMMessage *emmessage in self.reciveMessageArray) {
+        [self.conversation markMessageAsReadWithId:emmessage.messageId];
+    }
 }
 
 @end

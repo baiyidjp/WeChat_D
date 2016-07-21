@@ -12,7 +12,7 @@
 
 #define AppKey @"djp7393#wechatdjp"
 #define ApnsCertName @"";
-@interface AppDelegate ()<EMClientDelegate,EMContactManagerDelegate>
+@interface AppDelegate ()<EMClientDelegate,EMContactManagerDelegate,EMChatManagerDelegate>
 
 @end
 
@@ -30,14 +30,15 @@
     
     //回调监听代理
     [[EMClient sharedClient] addDelegate:self delegateQueue:nil];
-    [[EMClient sharedClient].contactManager addDelegate:self delegateQueue:nil];
+    [[EMClient sharedClient].contactManager addDelegate:self delegateQueue:nil];//通讯管理
+    [[EMClient sharedClient].chatManager addDelegate:self delegateQueue:nil];//聊天管理
     
     self.window = [[UIWindow alloc]initWithFrame:[UIScreen mainScreen].bounds];
     
     //判断是否自动登录
     BOOL isAutoLogin = [EMClient sharedClient].isAutoLogin;
     if (isAutoLogin){
-        [[NSNotificationCenter defaultCenter] postNotificationName:KNOTIFICATION_LOGINCHANGE object:@YES];
+        [[NSNotificationCenter defaultCenter] postNotificationName:LOGINCHANGE object:@YES];
         MainTabbarController *mainController = [[MainTabbarController alloc]init];
         self.window.rootViewController = mainController;
         [self.window makeKeyAndVisible];
@@ -45,7 +46,7 @@
     }
     else
     {
-        [[NSNotificationCenter defaultCenter] postNotificationName:KNOTIFICATION_LOGINCHANGE object:@NO];
+        [[NSNotificationCenter defaultCenter] postNotificationName:LOGINCHANGE object:@NO];
         LoginViewController *mainController = [[LoginViewController alloc]init];
         self.window.rootViewController = mainController;
         [self.window makeKeyAndVisible];
@@ -54,10 +55,39 @@
     return YES;
 }
 
+/*!
+ *  SDK连接服务器的状态变化时会接收到该回调
+ *
+ *  有以下几种情况，会引起该方法的调用：
+ *  1. 登录成功后，手机无法上网时，会调用该回调
+ *  2. 登录成功后，网络状态变化时，会调用该回调
+ *
+ *  @param aConnectionState 当前状态
+ */
+- (void)didConnectionStateChanged:(EMConnectionState)aConnectionState{
+    
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    switch (aConnectionState) {
+        case EMConnectionConnected:
+            NSLog(@"网络已连接");
+            [dict setObject:@1 forKey:@"isConnect"];
+            [[NSNotificationCenter defaultCenter] postNotificationName:NETWORKSTATE object:nil userInfo:dict];
+            break;
+        case EMConnectionDisconnected:
+            NSLog(@"网络断开");
+            [dict setObject:@0 forKey:@"isConnect"];
+            [[NSNotificationCenter defaultCenter] postNotificationName:NETWORKSTATE object:nil userInfo:dict];
+            break;
+        default:
+            break;
+    }
+}
+
 //自动登录是否成功
 - (void)didAutoLoginWithError:(EMError *)aError{
     if (!aError) {
         NSLog(@"Auto login success");
+        [[NSNotificationCenter defaultCenter]postNotificationName:AUTOLOGINSUCCESS object:nil];
     }else{
         NSLog(@"Auto login erreo,%@",aError);
         
@@ -69,7 +99,12 @@
  */
 - (void)didLoginFromOtherDevice{
     
-    NSLog(@"当前登录账号在其它设备登录时会接收到该回调");
+    UIAlertController *alertCtrl = [UIAlertController alertControllerWithTitle:@"当前登录账号在其它设备登录" message:@"如非本人操作,请及时修改密码" preferredStyle:UIAlertControllerStyleAlert];
+    [alertCtrl addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        LoginViewController *loginController = [[LoginViewController alloc]init];
+        [self.window.rootViewController presentViewController:loginController animated:YES completion:nil];
+    }]];
+    [self.window.rootViewController presentViewController:alertCtrl animated:YES completion:nil];
 }
 
 /*
@@ -77,7 +112,13 @@
  */
 - (void)didRemovedFromServer{
     
-    NSLog(@"当前登录账号已经被从服务器端删除时会收到该回调");
+    UIAlertController *alertCtrl = [UIAlertController alertControllerWithTitle:@"当前登录账号已被从服务器删除" message:@"请联系客户解决,电话-110" preferredStyle:UIAlertControllerStyleAlert];
+    [alertCtrl addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        LoginViewController *loginController = [[LoginViewController alloc]init];
+        [self.window.rootViewController presentViewController:loginController animated:YES completion:nil];
+    }]];
+    [self.window.rootViewController presentViewController:alertCtrl animated:YES completion:nil];
+
 }
 
 /*!
@@ -90,6 +131,18 @@
     UIAlertController *alertCtrl = [UIAlertController alertControllerWithTitle:aUsername message:@"同意了您的好友申请" preferredStyle:UIAlertControllerStyleAlert];
     [alertCtrl addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleCancel handler:nil]];
     [self.window.rootViewController presentViewController:alertCtrl animated:YES completion:nil];
+}
+
+/*!
+ *  \~chinese
+ *  用户B同意用户A的好友申请后，用户A和用户B都会收到这个回调
+ *
+ *  @param aUsername   用户好友关系的另一方
+ */
+- (void)didReceiveAddedFromUsername:(NSString *)aUsername{
+    
+    [[NSNotificationCenter defaultCenter]postNotificationName:ADDFRIENDSUCCESS object:nil];
+    
 }
 
 /*!
@@ -108,7 +161,7 @@
 
 /*!
  *  \~chinese
- *  用户B删除与用户A的好友关系后，用户A会收到这个回调
+ *  用户B删除与用户A的好友关系后，用户A和B会收到这个回调
  *
  *  @param aUsername   用户B
  */
@@ -163,13 +216,20 @@
     [self.window.rootViewController presentViewController:alertCtrl animated:YES completion:nil];
     
 }
-
+//接收消息
+- (void)didReceiveMessages:(NSArray *)aMessages{
+    
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    [dict setObject:aMessages forKey:@"Message"];
+    [[NSNotificationCenter defaultCenter] postNotificationName:RECEIVEMESSAGES object:nil userInfo:dict];
+}
 
 //移除代理
 - (void)dealloc{
     
     [[EMClient sharedClient] removeDelegate:self];
     [[EMClient sharedClient].contactManager removeDelegate:self];
+    [[EMClient sharedClient].chatManager removeDelegate:self];
 }
 
 /**

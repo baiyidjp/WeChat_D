@@ -15,6 +15,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *timeLable;
 @property (weak, nonatomic) IBOutlet UILabel *nameLable;
 @property (weak, nonatomic) IBOutlet UILabel *messageLabel;
+@property (weak, nonatomic) IBOutlet UILabel *unreadCount;
 
 @end
 
@@ -23,6 +24,8 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     // Initialization code
+    self.unreadCount.layer.cornerRadius = 10;
+    self.unreadCount.layer.masksToBounds = YES;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -38,6 +41,16 @@
     [self.headImage sd_setImageWithURL:[NSURL URLWithString:model.imageUrl]];
     self.nameLable.text = model.name;
     self.timeLable.text = model.time;
+    if (model.unreadMessagesCount) {
+        self.unreadCount.hidden = NO;
+        self.unreadCount.text = [NSString stringWithFormat:@"%zd",model.unreadMessagesCount];
+        if (model.unreadMessagesCount > 99) {
+            self.unreadCount.text = @"99+";
+        }
+    }else{
+        self.unreadCount.text = [NSString stringWithFormat:@"%zd",model.unreadMessagesCount];
+        self.unreadCount.hidden = YES;
+    }
 }
 
 @end

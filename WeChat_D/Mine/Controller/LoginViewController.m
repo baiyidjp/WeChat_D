@@ -24,6 +24,7 @@
     // Do any additional setup after loading the view.
     
     self.title = @"登录/注册";
+    self.view.backgroundColor = [UIColor colorWithHexString:@"f4f4f4"];
     
     userTextFiled = [[UITextField alloc]init];
     userTextFiled.delegate = self;
@@ -64,7 +65,7 @@
     }];
     
     UIButton *loginBtn = [[UIButton alloc]init];
-    [loginBtn setTitle:@"login" forState:UIControlStateNormal];
+    [loginBtn setTitle:@"登录" forState:UIControlStateNormal];
     [loginBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [loginBtn addTarget:self action:@selector(login) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:loginBtn];
@@ -74,7 +75,7 @@
     }];
     
     UIButton *registerBtn = [[UIButton alloc]init];
-    [registerBtn setTitle:@"register" forState:UIControlStateNormal];
+    [registerBtn setTitle:@"注册" forState:UIControlStateNormal];
     [registerBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [registerBtn addTarget:self action:@selector(registerBtn) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:registerBtn];
@@ -83,6 +84,18 @@
         make.right.equalTo(passWordTextFiled);
     }];
     
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField{
+    
+    if ([textField isEqual:userTextFiled]) {
+        [textField resignFirstResponder];
+        [passWordTextFiled becomeFirstResponder];
+    }else{
+        [passWordTextFiled resignFirstResponder];
+        [self login];
+    }
+    return YES;
 }
 
 - (void)login{
@@ -98,7 +111,7 @@
                 dispatch_async(dispatch_get_main_queue(), ^{
                     SVProgressHUD.minimumDismissTimeInterval = 1.0;
                     [SVProgressHUD showSuccessWithStatus:@"登录成功"];
-                    [[NSNotificationCenter defaultCenter]postNotificationName:KNOTIFICATION_LOGINCHANGE object:nil];
+                    [[NSNotificationCenter defaultCenter]postNotificationName:LOGINCHANGE object:nil];
                     //设置是否自动登录
                     [[EMClient sharedClient].options setIsAutoLogin:YES];
                     //保存当前登录账号
@@ -109,7 +122,7 @@
                             MainTabbarController *mainController = [[MainTabbarController alloc]init];
                             [UIApplication sharedApplication].keyWindow.rootViewController = mainController;
                         }else{
-                            [self.navigationController popViewControllerAnimated:YES];
+                            [self dismissViewControllerAnimated:YES completion:nil];
                         }
 
                     });

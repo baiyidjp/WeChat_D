@@ -11,13 +11,35 @@
 #import "WeChatListModel.h"
 #import "WeChatTableViewCell.h"
 
-@interface WeChatViewController ()<UISearchBarDelegate,UITableViewDelegate,UITableViewDataSource,EMClientDelegate>
+@interface WeChatViewController ()<UISearchBarDelegate,UITableViewDelegate,UITableViewDataSource>
+/**
+ *  搜索栏
+ */
 @property(nonatomic,strong)UISearchBar *searchBar;
+/**
+ *  状态栏的底部
+ */
 @property(nonatomic,strong)UIView *topStatusView;
+/**
+ *  取消按钮
+ */
 @property(nonatomic,strong)UIButton *cancleBtn;
+/**
+ *  会话列表
+ */
 @property(nonatomic,strong)UITableView *weChatTableView;
+/**
+ *  搜索的view
+ */
 @property(nonatomic,strong)UIScrollView *searchView;
+/**
+ *  数据源
+ */
 @property(nonatomic,strong)NSMutableArray *dataArray;
+/**
+ *  未读消息的总数
+ */
+@property(nonatomic,assign)NSInteger unreadCount;
 @end
 
 @implementation WeChatViewController
@@ -29,10 +51,7 @@
     
     [super viewWillAppear:animated];
     self.tabBarController.tabBar.hidden = NO;
-    NSArray *conversations = [[EMClient sharedClient].chatManager getAllConversations];
-    [_dataArray removeAllObjects];
-    [_dataArray addObjectsFromArray:conversations];
-    [self.weChatTableView reloadData];
+    [self getAllConversations];
 }
 
 - (void)viewWillDisappear:(BOOL)animated{
@@ -52,12 +71,13 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
-    
-    //回调的监听代理
-    [[EMClient sharedClient] addDelegate:self delegateQueue:nil];
+
     //登陆成功通知
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loginSuccess) name:KNOTIFICATION_LOGINCHANGE object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loginSuccess) name:LOGINCHANGE object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(autoLoginSuccess) name:AUTOLOGINSUCCESS object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(netWorkState:) name:NETWORKSTATE object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reciveMessage) name:RECEIVEMESSAGES object:nil];
+    
     searchBarTop = KNAVHEIGHT;
     UISearchBar *searchBar = [[UISearchBar alloc]init];
     searchBar.backgroundColor = [UIColor whiteColor];
@@ -248,42 +268,62 @@
     return @"删除";
 }
 
-/*!
- *  SDK连接服务器的状态变化时会接收到该回调
- *
- *  有以下几种情况，会引起该方法的调用：
- *  1. 登录成功后，手机无法上网时，会调用该回调
- *  2. 登录成功后，网络状态变化时，会调用该回调
- *
- *  @param aConnectionState 当前状态
- */
-- (void)didConnectionStateChanged:(EMConnectionState)aConnectionState{
+
+#pragma mark 登录成功通知
+- (void)loginSuccess{
     
-    switch (aConnectionState) {
-        case EMConnectionConnected:
-            NSLog(@"网络已连接");
-            self.navigationItem.title = @"微信";
-            break;
-        case EMConnectionDisconnected:
-            NSLog(@"网络断开");
-            self.navigationItem.title = @"微信(未连接)";
-            break;
-        default:
-            break;
+    [self getAllConversations];
+}
+#pragma mark 自动登录成功通知
+- (void)autoLoginSuccess{
+    
+    [self getAllConversations];
+}
+#pragma mark 网络状态的变化
+- (void)netWorkState:(NSNotification *)notification{
+    
+    NSDictionary *dict = notification.userInfo;
+    if ([[dict objectForKey:@"isConnect"] intValue]) {
+        self.navigationItem.title = @"微信";
+    }else{
+        self.navigationItem.title = @"微信(未连接)";
     }
 }
-//登录通知
-- (void)loginSuccess{
+#pragma mark  接收到新消息
+- (void)reciveMessage{
+    
+    [self getAllConversations];
+}
+
+#pragma mark 获取会话列表
+- (void)getAllConversations{
     
     [self.dataArray removeAllObjects];
     NSArray *convers = [[EMClient sharedClient].chatManager getAllConversations];
     [self.dataArray addObjectsFromArray:convers];
+    NSInteger unreadCount = 0;//取出各个会话的未读消息数
+    NSInteger unreadAllCount = 0;//全部会话的未读消息数
+    for (EMConversation *conversation in convers) {
+        unreadCount = conversation.unreadMessagesCount;
+        unreadAllCount += unreadCount;
+    }
+    if (unreadAllCount) {
+        self.tabBarItem.badgeValue = [NSString stringWithFormat:@"%zd",unreadAllCount];
+        if (unreadAllCount > 10) {
+            self.tabBarItem.badgeValue = @"99+";
+        }
+    }else{
+        self.tabBarItem.badgeValue = nil;
+    }
     [self.weChatTableView reloadData];
+
 }
 
 - (void)dealloc{
     
-    [[EMClient sharedClient] removeDelegate:self];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:KNOTIFICATION_LOGINCHANGE object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:LOGINCHANGE object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:AUTOLOGINSUCCESS object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:NETWORKSTATE object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:RECEIVEMESSAGES object:nil];
 }
 @end

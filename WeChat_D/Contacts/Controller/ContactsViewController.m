@@ -12,7 +12,7 @@
 
 #define CellID @"contactTableViewCell"
 
-@interface ContactsViewController ()<EMContactManagerDelegate,UITableViewDelegate,UITableViewDataSource,UISearchBarDelegate>
+@interface ContactsViewController ()<UITableViewDelegate,UITableViewDataSource,UISearchBarDelegate>
 /** 好友列表 */
 @property(nonatomic,strong) NSMutableArray *dataArray;
 /** 好友列表View */
@@ -51,14 +51,6 @@
     if (!_dataArray) {
         
         _dataArray = [NSMutableArray array];
-        //从服务器获取所有的好友列表
-        [[EMClient sharedClient].contactManager asyncGetContactsFromServer:^(NSArray *aList) {
-            [_dataArray addObjectsFromArray:aList];
-        } failure:^(EMError *aError) {
-            //若获取失败则从本地获取好友列表
-            [_dataArray addObjectsFromArray:[[EMClient sharedClient].contactManager getContactsFromDB]];
-        }];
-
     }
     return _dataArray;
 }
@@ -96,12 +88,12 @@
         make.left.right.bottom.offset(0);
         make.top.equalTo(self.searchBar.mas_bottom);
     }];
-    
-    //好友操作的代理添加
-    [[EMClient sharedClient].contactManager addDelegate:self delegateQueue:nil];
-    
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(loginChange) name:KNOTIFICATION_LOGINCHANGE object:nil];
+    //先从服务器获取列表
+//    [self getContactListFromServer];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(loginChange) name:LOGINCHANGE object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(delectFriend) name:DELECTFRIENDSUEESS object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(addFriendNoti) name:ADDFRIENDSUCCESS object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(autoLogin) name:AUTOLOGINSUCCESS object:nil];
 }
 
 #pragma mark 登陆成功的通知
@@ -114,7 +106,16 @@
     
     [self getContactListFromServer];
 }
-
+#pragma mark 添加好友成功
+- (void)addFriendNoti{
+    
+    [self getContactListFromServer];
+}
+#pragma mark 自动登录成功
+- (void)autoLogin{
+    
+    [self getContactListFromServer];
+}
 //添加好友按钮的点击
 - (void)addFriend{
     
@@ -203,40 +204,27 @@
     return @"删除";
 }
 
-
-#pragma mark -------------------------------------------------------
-
-/*!
- *  \~chinese
- *  用户B同意用户A的好友申请后，用户A和用户B都会收到这个回调
- *
- *  @param aUsername   用户好友关系的另一方
- */
-- (void)didReceiveAddedFromUsername:(NSString *)aUsername{
-    
-    NSLog(@"*  用户B同意用户A的好友申请后，用户A和用户B都会收到这个回调");
-    [self getContactListFromServer];
-    
-}
-
 #pragma mark 从服务器获取好友列表
 - (void)getContactListFromServer{
     
-    [_dataArray removeAllObjects];
+    [self.dataArray removeAllObjects];
     //从服务器获取所有的好友列表
     [[EMClient sharedClient].contactManager asyncGetContactsFromServer:^(NSArray *aList) {
-        [_dataArray addObjectsFromArray:aList];
+        [self.dataArray addObjectsFromArray:aList];
         [self.contactTableView reloadData];
     } failure:^(EMError *aError) {
         //若获取失败则从本地获取好友列表
-        [_dataArray addObjectsFromArray:[[EMClient sharedClient].contactManager getContactsFromDB]];
+        [self.dataArray addObjectsFromArray:[[EMClient sharedClient].contactManager getContactsFromDB]];
         [self.contactTableView reloadData];
     }];
 }
 
 - (void)dealloc{
-    [[EMClient sharedClient].contactManager removeDelegate:self];
-    [[NSNotificationCenter defaultCenter]removeObserver:self name:KNOTIFICATION_LOGINCHANGE object:nil];
+    //移除通知
+    
+    [[NSNotificationCenter defaultCenter]removeObserver:self name:LOGINCHANGE object:nil];
     [[NSNotificationCenter defaultCenter]removeObserver:self name:DELECTFRIENDSUEESS object:nil];
+    [[NSNotificationCenter defaultCenter]removeObserver:self name:ADDFRIENDSUCCESS object:nil];
+    [[NSNotificationCenter defaultCenter]removeObserver:self name:AUTOLOGINSUCCESS object:nil];
 }
 @end
