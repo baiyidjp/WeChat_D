@@ -138,20 +138,25 @@
 }
 
 #pragma mark 发送消息
-- (void)didSendMessageOfFaceView:(JPKeyBoardToolView *)toolView message:(EMMessage *)message{
-    
-    [SVProgressHUD show];
-    
-    [[EMClient sharedClient].chatManager asyncSendMessage:message progress:^(int progress) {
-        
+- (void)didSendMessageOfFaceView:(JPKeyBoardToolView *)toolView message:(EMMessage *)emmessage{
+    if (emmessage.body.type == EMMessageBodyTypeText) {
+        [SVProgressHUD show];
+    }
+    [[EMClient sharedClient].chatManager asyncSendMessage:emmessage progress:^(int progress) {
+        [SVProgressHUD showProgress:progress/100.0 status:[NSString stringWithFormat:@"发送中 %d%%",progress]];
     } completion:^(EMMessage *message, EMError *error) {
         if (!error) {
             [SVProgressHUD showSuccessWithStatus:@"发送成功"];
             [self.dataArray addObject:message];
+            MessageModel *model = [[MessageModel alloc]init];
+            model.emmessage = emmessage;
+            NSLog(@"%@",model.imageUrl);
             [self.ChatTableView reloadData];
             if (self.dataArray.count) {
                 [self.ChatTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:self.dataArray.count-1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
             }
+        }else{
+            [SVProgressHUD showSuccessWithStatus:@"发送失败"];
         }
     }];
 }

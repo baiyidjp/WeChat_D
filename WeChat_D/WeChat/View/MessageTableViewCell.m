@@ -180,7 +180,11 @@
                 [self.backImgaeView mas_remakeConstraints:^(MASConstraintMaker *make) {
                     make.top.equalTo(self.headerView.mas_top);
                     make.right.equalTo(self.headerView.mas_left).with.offset(-KMARGIN/2);
-                    make.width.equalTo(@(model.voiceTime*2*KMARGIN));
+                    if (model.voiceTime < 5) {
+                        make.width.equalTo(@80);
+                    }else{
+                        make.width.equalTo(@(model.voiceTime*2*KMARGIN));
+                    }
                     make.width.lessThanOrEqualTo(@(KWIDTH/5*3)).priorityLow();
                     make.bottom.equalTo(self.headerView.mas_bottom);
                 }];
@@ -203,7 +207,7 @@
                 //图片消息
                 self.timeLabel.hidden = YES;
                 [self.backImgaeView addSubview:self.messsgeImage];
-                [self.messsgeImage sd_setImageWithURL:[NSURL URLWithString:model.image_mark] placeholderImage:nil];
+                [self.messsgeImage sd_setImageWithURL:[NSURL URLWithString:model.imageUrl] placeholderImage:nil];
                 [self.messsgeImage mas_remakeConstraints:^(MASConstraintMaker *make) {
                     make.edges.mas_equalTo(self.backImgaeView).insets(UIEdgeInsetsMake(KMARGIN, 3.0/2*KMARGIN, KMARGIN, 3.0/2*KMARGIN));
                     make.size.mas_equalTo(CGSizeMake(150, 150));
@@ -255,7 +259,12 @@
                 [self.backImgaeView mas_remakeConstraints:^(MASConstraintMaker *make) {
                     make.top.equalTo(self.headerView.mas_top);
                     make.left.equalTo(self.headerView.mas_right).with.offset(KMARGIN/2);
-                    make.width.equalTo(@(model.voiceTime*2*KMARGIN));
+                    if (model.voiceTime < 5) {
+                        make.width.equalTo(@80);
+                    }else{
+                        make.width.equalTo(@(model.voiceTime*2*KMARGIN));
+                    }
+                    make.width.lessThanOrEqualTo(@(KWIDTH/5*3)).priorityLow();
                     make.bottom.equalTo(self.headerView.mas_bottom);
                 }];
                 self.messageVoice.image = [UIImage imageNamed:@"message_voice_receiver_playing_3"];
@@ -277,10 +286,7 @@
                 
                 self.timeLabel.hidden = YES;
                 [self.backImgaeView addSubview:self.messsgeImage];
-                NSData *data = [[NSUserDefaults standardUserDefaults] objectForKey:model.image_mark];
-                if (data) {
-                    self.messsgeImage.image = [UIImage imageWithData:data];
-                }
+                [self.messsgeImage sd_setImageWithURL:[NSURL URLWithString:model.imageUrl] placeholderImage:nil];
                 [self.messsgeImage mas_remakeConstraints:^(MASConstraintMaker *make) {
                     make.edges.mas_equalTo(self.backImgaeView).insets(UIEdgeInsetsMake(KMARGIN, 3.0/2*KMARGIN, KMARGIN, 3.0/2*KMARGIN));
                     make.size.mas_equalTo(CGSizeMake(150, 150));

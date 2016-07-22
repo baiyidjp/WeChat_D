@@ -9,6 +9,7 @@
 #import "ContactsViewController.h"
 #import "AddFriendController.h"
 #import "ChatDetailViewController.h"
+#import "AgreeFriendViewController.h"
 
 #define CellID @"contactTableViewCell"
 
@@ -21,6 +22,10 @@
 @property(nonatomic,strong) UISearchBar *searchBar;
 /** 第一组列表 */
 @property(nonatomic,strong) NSArray *topDataArray;
+/** 新好友请求 */
+@property(nonatomic,strong) NSMutableArray *newFriendDataArray;
+/** 新好友个数 */
+@property(nonatomic,strong)UILabel *friendUnreadLabel;
 @end
 
 @implementation ContactsViewController
@@ -51,8 +56,32 @@
     if (!_dataArray) {
         
         _dataArray = [NSMutableArray array];
+        
     }
     return _dataArray;
+}
+
+- (NSMutableArray *)newFriendDataArray{
+    
+    if (!_newFriendDataArray) {
+        _newFriendDataArray = [NSMutableArray array];
+    }
+    return _newFriendDataArray;
+}
+
+- (UILabel *)friendUnreadLabel{
+    
+    if (!_friendUnreadLabel) {
+        _friendUnreadLabel = [[UILabel alloc]initWithFrame:CGRectMake(KWIDTH-KMARGIN-2*KMARGIN, 44/2-KMARGIN, 2*KMARGIN, 2*KMARGIN)];
+        _friendUnreadLabel.textAlignment = NSTextAlignmentCenter;
+        _friendUnreadLabel.layer.cornerRadius = KMARGIN;
+        _friendUnreadLabel.layer.masksToBounds = YES;
+        _friendUnreadLabel.backgroundColor = [UIColor redColor];
+        _friendUnreadLabel.textColor = [UIColor whiteColor];
+        _friendUnreadLabel.font = FONTSIZE(13);
+        _friendUnreadLabel.hidden = YES;
+    }
+    return _friendUnreadLabel;
 }
 
 - (void)viewDidLoad {
@@ -88,12 +117,12 @@
         make.left.right.bottom.offset(0);
         make.top.equalTo(self.searchBar.mas_bottom);
     }];
-    //先从服务器获取列表
-//    [self getContactListFromServer];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(loginChange) name:LOGINCHANGE object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(delectFriend) name:DELECTFRIENDSUEESS object:nil];
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(agreenFriendNoti) name:AGREEFRIENDSUCCESS object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(agreenFriendNoti) name:ADDFRIENDSUCCESS object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(autoLogin) name:AUTOLOGINSUCCESS object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(newFriendRequest:) name:NEWFRIENDREQUEST object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(newFriendRequestResult) name:NEWFRIENDREQUESTRESULT object:nil];
 }
 
 #pragma mark 登陆成功的通知
@@ -106,7 +135,7 @@
     
     [self getContactListFromServer];
 }
-#pragma mark 添加好友成功 双方都收到的
+#pragma mark 添加好友成功 主动添加收到
 - (void)agreenFriendNoti{
     
     [self getContactListFromServer];
@@ -114,6 +143,20 @@
 #pragma mark 自动登录成功
 - (void)autoLogin{
     
+    [self getContactListFromServer];
+}
+#pragma mark 新好友请求
+- (void)newFriendRequest:(NSNotification *)notification{
+    NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithDictionary:notification.userInfo];
+    [dict setObject:@0 forKey:@"isAgree"]; //添加一个值判断是都查看 或者是否同意或者拒绝 0未处理 1已同意 2已拒绝
+    NSMutableArray *arr = [NSMutableArray arrayWithArray:[[NSUserDefaults standardUserDefaults] objectForKey:@"NewFriendArray"]];
+    [arr addObject:dict];
+    [[NSUserDefaults standardUserDefaults] setObject:arr forKey:@"NewFriendArray"];
+    [self.newFriendDataArray addObject:dict];
+    [self getContactListFromServer];
+}
+#pragma mark 好友请求处理的通知
+- (void)newFriendRequestResult{
     [self getContactListFromServer];
 }
 //添加好友按钮的点击
@@ -144,6 +187,10 @@
         case 0:
             cell.textLabel.text = [self.topDataArray objectAtIndex:indexPath.row];
             cell.imageView.image = [UIImage imageNamed:@"Tabar_mine"];
+            if (indexPath.row == 0) {
+                
+                [cell.contentView addSubview:self.friendUnreadLabel];
+            }
             break;
         case 1:
             cell.textLabel.text = [self.dataArray objectAtIndex:indexPath.row];
@@ -180,12 +227,19 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
     if (indexPath.section == 0) {
-        return;
+        if (indexPath.row == 0) {
+            AgreeFriendViewController *agreeCtrl = [[AgreeFriendViewController alloc]init];
+            agreeCtrl.dataArray = self.newFriendDataArray;
+            [self.navigationController pushViewController:agreeCtrl animated:YES];
+        }else{
+            return;
+        }
+    }else if (indexPath.section == 1){
+        ChatDetailViewController *chatCtrl = [[ChatDetailViewController alloc]init];
+        chatCtrl.title = [self.dataArray objectAtIndex:indexPath.row];
+        self.tabBarController.tabBar.hidden = YES;
+        [self.navigationController pushViewController:chatCtrl animated:YES];
     }
-    ChatDetailViewController *chatCtrl = [[ChatDetailViewController alloc]init];
-    chatCtrl.title = [self.dataArray objectAtIndex:indexPath.row];
-    self.tabBarController.tabBar.hidden = YES;
-    [self.navigationController pushViewController:chatCtrl animated:YES];
 }
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -207,6 +261,24 @@
 #pragma mark 从服务器获取好友列表
 - (void)getContactListFromServer{
     
+    [self.newFriendDataArray removeAllObjects];
+    NSArray *arr = [[NSUserDefaults standardUserDefaults] objectForKey:@"NewFriendArray"];
+    [self.newFriendDataArray addObjectsFromArray:arr];
+    
+    NSInteger newFriCount = 0;
+    for (NSDictionary *dict in self.newFriendDataArray) {
+        if (![[dict objectForKey:@"isAgree"] integerValue]) {
+            newFriCount++;
+        }
+    }
+    if (newFriCount) {
+        self.friendUnreadLabel.hidden = NO;
+        self.friendUnreadLabel.text = [NSString stringWithFormat:@"%zd",newFriCount];
+        self.tabBarItem.badgeValue = [NSString stringWithFormat:@"%zd",newFriCount];
+    }else{
+        self.friendUnreadLabel.hidden = YES;
+        self.tabBarItem.badgeValue = nil;
+    }
     [self.dataArray removeAllObjects];
     //从服务器获取所有的好友列表
     [[EMClient sharedClient].contactManager asyncGetContactsFromServer:^(NSArray *aList) {
@@ -224,7 +296,7 @@
     
     [[NSNotificationCenter defaultCenter]removeObserver:self name:LOGINCHANGE object:nil];
     [[NSNotificationCenter defaultCenter]removeObserver:self name:DELECTFRIENDSUEESS object:nil];
-    [[NSNotificationCenter defaultCenter]removeObserver:self name:AGREEFRIENDSUCCESS object:nil];
+    [[NSNotificationCenter defaultCenter]removeObserver:self name:ADDFRIENDSUCCESS object:nil];
     [[NSNotificationCenter defaultCenter]removeObserver:self name:AUTOLOGINSUCCESS object:nil];
 }
 @end

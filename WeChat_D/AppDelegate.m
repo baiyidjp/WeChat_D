@@ -147,7 +147,7 @@
  */
 - (void)didReceiveAddedFromUsername:(NSString *)aUsername{
     
-    [[NSNotificationCenter defaultCenter]postNotificationName:AGREEFRIENDSUCCESS object:nil];
+//    [[NSNotificationCenter defaultCenter]postNotificationName:AGREEFRIENDSUCCESS object:nil];
     
 }
 
@@ -186,40 +186,44 @@
 - (void)didReceiveFriendInvitationFromUsername:(NSString *)aUsername
                                        message:(NSString *)aMessage{
     
-    UIAlertController *alertCtrl = [UIAlertController alertControllerWithTitle:[NSString stringWithFormat:@"%@的好友申请",aUsername] message:aMessage preferredStyle:UIAlertControllerStyleAlert];
-    [alertCtrl addAction:[UIAlertAction actionWithTitle:@"拒绝" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action){
-        
-        [SVProgressHUD show];
-        [[EMClient sharedClient].contactManager asyncDeclineInvitationForUsername:aUsername success:^{
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [SVProgressHUD showSuccessWithStatus:@"已拒绝"];
-            });
-            
-        } failure:^(EMError *aError) {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [SVProgressHUD showSuccessWithStatus:@"拒绝失败"];
-            });
-            
-        }];
-        
-    }]];
-    [alertCtrl addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        
-        //添加好友
-        [SVProgressHUD show];
-        [[EMClient sharedClient].contactManager asyncAcceptInvitationForUsername:aUsername success:^{
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [SVProgressHUD showSuccessWithStatus:@"已添加"];
-            });
-            
-        } failure:^(EMError *aError) {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [SVProgressHUD showSuccessWithStatus:@"添加失败"];
-            });
-            
-        }];
-    }]];
-    [self.window.rootViewController presentViewController:alertCtrl animated:YES completion:nil];
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    [dict setObject:aMessage forKey:@"aMessage"];
+    [dict setObject:aUsername forKey:@"aUsername"];
+    [[NSNotificationCenter defaultCenter] postNotificationName:NEWFRIENDREQUEST object:nil userInfo:dict];
+//    UIAlertController *alertCtrl = [UIAlertController alertControllerWithTitle:[NSString stringWithFormat:@"%@的好友申请",aUsername] message:aMessage preferredStyle:UIAlertControllerStyleAlert];
+//    [alertCtrl addAction:[UIAlertAction actionWithTitle:@"拒绝" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action){
+//        
+//        [SVProgressHUD show];
+//        [[EMClient sharedClient].contactManager asyncDeclineInvitationForUsername:aUsername success:^{
+//            dispatch_async(dispatch_get_main_queue(), ^{
+//                [SVProgressHUD showSuccessWithStatus:@"已拒绝"];
+//            });
+//            
+//        } failure:^(EMError *aError) {
+//            dispatch_async(dispatch_get_main_queue(), ^{
+//                [SVProgressHUD showSuccessWithStatus:@"拒绝失败"];
+//            });
+//            
+//        }];
+//        
+//    }]];
+//    [alertCtrl addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+//        
+//        //添加好友
+//        [SVProgressHUD show];
+//        [[EMClient sharedClient].contactManager asyncAcceptInvitationForUsername:aUsername success:^{
+//            dispatch_async(dispatch_get_main_queue(), ^{
+//                [SVProgressHUD showSuccessWithStatus:@"已添加"];
+//            });
+//            
+//        } failure:^(EMError *aError) {
+//            dispatch_async(dispatch_get_main_queue(), ^{
+//                [SVProgressHUD showSuccessWithStatus:@"添加失败"];
+//            });
+//            
+//        }];
+//    }]];
+//    [self.window.rootViewController presentViewController:alertCtrl animated:YES completion:nil];
     
 }
 //接收消息

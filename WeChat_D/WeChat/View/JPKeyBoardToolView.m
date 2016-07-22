@@ -548,8 +548,11 @@
     formatter.dateFormat = @"yyyyMMddHHmmss";
     NSString *str = [formatter stringFromDate:[NSDate date]];
     //组装消息模型
-    NSData *data = UIImageJPEGRepresentation(image, 1.0);
-    EMImageMessageBody *body = [[EMImageMessageBody alloc]initWithData:data displayName:[NSString stringWithFormat:@"image_%@",str]];;
+    NSData *data = UIImagePNGRepresentation(image);
+//    NSString *imagePath = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject] stringByAppendingPathComponent:[NSString stringWithFormat:@"image_%@.jpg",str]];
+//    [data writeToFile:imagePath atomically:YES];
+//    EMImageMessageBody *body = [[EMImageMessageBody alloc]initWithLocalPath:imagePath displayName:[NSString stringWithFormat:@"image_%@.jpg",str]];;
+    EMImageMessageBody *body = [[EMImageMessageBody alloc]initWithData:data displayName:[NSString stringWithFormat:@"image_%@.png",str]];
     NSString *from = [[EMClient sharedClient] currentUsername];
     //生成Message
     EMMessage *emmessage = [[EMMessage alloc]initWithConversationID:self.toUser from:from to:self.toUser body:body ext:nil];

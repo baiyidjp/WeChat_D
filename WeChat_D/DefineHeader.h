@@ -29,6 +29,8 @@
 #define DELECTFRIENDSUEESS @"delectFriendSuccess" //删除好友成功的通知名
 #define NETWORKSTATE @"netWorkState" //网络状态
 #define RECEIVEMESSAGES @"ReceiveMessages"// 接收消息的通知
+#define NEWFRIENDREQUEST @"newFriendRequest" //新朋友请求
+#define NEWFRIENDREQUESTRESULT @"newFriendRequestResult" //新朋友请求的结果的通知
 
 //define this constant if you want to use Masonry without the 'mas_' prefix
 //#define MAS_SHORTHAND
