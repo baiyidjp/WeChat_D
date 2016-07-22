@@ -45,6 +45,8 @@
 		A297B7801D2FA192003C9276 /* Tabbar_wechat_select@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = A297B7741D2FA192003C9276 /* Tabbar_wechat_select@3x.png */; };
 		A2C435501D3608CF0097ECC1 /* AddMoreView.m in Sources */ = {isa = PBXBuildFile; fileRef = A2C4354F1D3608CF0097ECC1 /* AddMoreView.m */; };
 		A2C435531D363AB40097ECC1 /* FaceView.m in Sources */ = {isa = PBXBuildFile; fileRef = A2C435521D363AB40097ECC1 /* FaceView.m */; };
+		A2C512BB1D41BB9A00D84829 /* libmp3lame.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A2C512B81D41BB9A00D84829 /* libmp3lame.a */; };
+		A2C512BC1D41BB9A00D84829 /* Mp3Recorder.m in Sources */ = {isa = PBXBuildFile; fileRef = A2C512BA1D41BB9A00D84829 /* Mp3Recorder.m */; };
 		EEA7B39501F1EDAA38FBFDB0 /* libPods-WeChat_D.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 77912E4F30617DE482F6A3C6 /* libPods-WeChat_D.a */; };
 		F53EC6711D3E636900027A24 /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F53EC66D1D3E636900027A24 /* libcrypto.a */; };
 		F53EC6721D3E636900027A24 /* libcurl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F53EC66E1D3E636900027A24 /* libcurl.a */; };
@@ -149,6 +151,10 @@
 		A2C4354F1D3608CF0097ECC1 /* AddMoreView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddMoreView.m; sourceTree = "<group>"; };
 		A2C435511D363AB40097ECC1 /* FaceView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FaceView.h; sourceTree = "<group>"; };
 		A2C435521D363AB40097ECC1 /* FaceView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FaceView.m; sourceTree = "<group>"; };
+		A2C512B71D41BB9A00D84829 /* lame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lame.h; sourceTree = "<group>"; };
+		A2C512B81D41BB9A00D84829 /* libmp3lame.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libmp3lame.a; sourceTree = "<group>"; };
+		A2C512B91D41BB9A00D84829 /* Mp3Recorder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Mp3Recorder.h; sourceTree = "<group>"; };
+		A2C512BA1D41BB9A00D84829 /* Mp3Recorder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Mp3Recorder.m; sourceTree = "<group>"; };
 		A9B6923DCF73CFE0F0DA477B /* Pods-WeChat_D.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WeChat_D.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WeChat_D/Pods-WeChat_D.debug.xcconfig"; sourceTree = "<group>"; };
 		CC02DEDA828486EE35A2D3B8 /* Pods-WeChat_D.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WeChat_D.release.xcconfig"; path = "Pods/Target Support Files/Pods-WeChat_D/Pods-WeChat_D.release.xcconfig"; sourceTree = "<group>"; };
 		F53EC6451D3E636900027A24 /* EMCallLocalView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMCallLocalView.h; sourceTree = "<group>"; };
@@ -215,6 +221,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F53EC6881D3E644300027A24 /* libiconv.tbd in Frameworks */,
+				A2C512BB1D41BB9A00D84829 /* libmp3lame.a in Frameworks */,
 				F53EC6861D3E643C00027A24 /* libsqlite3.tbd in Frameworks */,
 				F53EC6841D3E643400027A24 /* libstdc++.6.0.9.tbd in Frameworks */,
 				F53EC6821D3E642C00027A24 /* libz.tbd in Frameworks */,
@@ -349,6 +356,7 @@
 		A297B7381D2F8E5A003C9276 /* Categories */ = {
 			isa = PBXGroup;
 			children = (
+				A2C512B61D41BB9A00D84829 /* VoiceLib */,
 				A297B7391D2F8E5A003C9276 /* UIColor+Extension.h */,
 				A297B73A1D2F8E5A003C9276 /* UIColor+Extension.m */,
 				A297B73B1D2F8E5A003C9276 /* UIView+Toast.h */,
@@ -561,6 +569,17 @@
 				A297B7741D2FA192003C9276 /* Tabbar_wechat_select@3x.png */,
 			);
 			path = Tabbar;
+			sourceTree = "<group>";
+		};
+		A2C512B61D41BB9A00D84829 /* VoiceLib */ = {
+			isa = PBXGroup;
+			children = (
+				A2C512B71D41BB9A00D84829 /* lame.h */,
+				A2C512B81D41BB9A00D84829 /* libmp3lame.a */,
+				A2C512B91D41BB9A00D84829 /* Mp3Recorder.h */,
+				A2C512BA1D41BB9A00D84829 /* Mp3Recorder.m */,
+			);
+			path = VoiceLib;
 			sourceTree = "<group>";
 		};
 		E75D83693CCF032FD1D3DC14 /* Pods */ = {
@@ -851,6 +870,7 @@
 				A297B75A1D2F8E5A003C9276 /* ContactsViewController.m in Sources */,
 				A297B70A1D2F8E14003C9276 /* AppDelegate.m in Sources */,
 				F5CB8B641D3F0533002663F8 /* AddFriendController.m in Sources */,
+				A2C512BC1D41BB9A00D84829 /* Mp3Recorder.m in Sources */,
 				A24695331D34EA7600E32C30 /* JPKeyBoardToolView.m in Sources */,
 				A297B7071D2F8E14003C9276 /* main.m in Sources */,
 				A297B7591D2F8E5A003C9276 /* UIView+Toast.m in Sources */,
@@ -1009,6 +1029,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/WeChat_D/HyphenateSDK/lib/3rdparty",
 					"$(PROJECT_DIR)/WeChat_D/HyphenateSDK/lib",
+					"$(PROJECT_DIR)/WeChat_D/Categories/VoiceLib",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.dong.WeChat-D";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1032,6 +1053,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/WeChat_D/HyphenateSDK/lib/3rdparty",
 					"$(PROJECT_DIR)/WeChat_D/HyphenateSDK/lib",
+					"$(PROJECT_DIR)/WeChat_D/Categories/VoiceLib",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.dong.WeChat-D";
 				PRODUCT_NAME = "$(TARGET_NAME)";

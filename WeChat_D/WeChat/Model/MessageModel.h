@@ -21,6 +21,7 @@ typedef enum : NSUInteger {
 @property(nonatomic,copy)NSString *imageUrl;
 @property(nonatomic,copy)NSString *image_mark;
 @property(nonatomic,assign)int voiceTime;
+@property(nonatomic,copy)NSString *voicePath;
 
 @property(nonatomic,assign)BOOL isMineMessage;
 @property(nonatomic,assign)MessageType messageType;

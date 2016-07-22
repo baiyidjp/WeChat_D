@@ -334,7 +334,7 @@
     }
     if (unreadAllCount) {
         self.tabBarItem.badgeValue = [NSString stringWithFormat:@"%zd",unreadAllCount];
-        if (unreadAllCount > 10) {
+        if (unreadAllCount > 99) {
             self.tabBarItem.badgeValue = @"99+";
         }
     }else{

@@ -203,10 +203,7 @@
                 //图片消息
                 self.timeLabel.hidden = YES;
                 [self.backImgaeView addSubview:self.messsgeImage];
-                NSData *data = [[NSUserDefaults standardUserDefaults] objectForKey:model.image_mark];
-                if (data) {
-                    self.messsgeImage.image = [UIImage imageWithData:data];
-                }
+                [self.messsgeImage sd_setImageWithURL:[NSURL URLWithString:model.image_mark] placeholderImage:nil];
                 [self.messsgeImage mas_remakeConstraints:^(MASConstraintMaker *make) {
                     make.edges.mas_equalTo(self.backImgaeView).insets(UIEdgeInsetsMake(KMARGIN, 3.0/2*KMARGIN, KMARGIN, 3.0/2*KMARGIN));
                     make.size.mas_equalTo(CGSizeMake(150, 150));

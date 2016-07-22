@@ -31,13 +31,13 @@
         case EMMessageBodyTypeVoice:{
             
 //            EMVoiceMessageBody *voiceBody = (EMVoiceMessageBody *)emmessage.body;
-            self.message = @"语音消息";
+            self.message = @"[语音消息]";
         }
             break;
             
         case EMMessageBodyTypeImage:{
 //            EMImageMessageBody *imageBody = (EMImageMessageBody *)emmessage.body;
-            self.message = @"图片";
+            self.message = @"[图片]";
         }
             break;
             

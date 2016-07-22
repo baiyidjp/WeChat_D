@@ -11,8 +11,9 @@
 #import "FaceView.h"
 #import "FaceViewModel.h"
 #import "MessageModel.h"
+#import "Mp3recorder.h"
 
-@interface JPKeyBoardToolView ()<UITextViewDelegate,AddMoreViewDelegate,FaceViewDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate>
+@interface JPKeyBoardToolView ()<UITextViewDelegate,AddMoreViewDelegate,FaceViewDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate,Mp3RecorderDelegate>
 /**
  *  左边录音按钮
  */
@@ -61,6 +62,10 @@
  *  记录已经输入的文本
  */
 @property(nonatomic,strong)NSString *textViewtext;
+/**
+ *  录音管理
+ */
+@property(nonatomic,strong)Mp3Recorder *mp3Recorder;
 @end
 
 @implementation JPKeyBoardToolView
@@ -245,6 +250,14 @@
     }else{
         return MAX(self.keyBoardFrame.size.height, CGFLOAT_MIN);
     }
+}
+
+- (Mp3Recorder *)mp3Recorder{
+    
+    if (!_mp3Recorder) {
+        _mp3Recorder = [[Mp3Recorder alloc]initWithDelegate:self];
+    }
+    return _mp3Recorder;
 }
 
 #pragma mark 功能按钮的点击
@@ -535,15 +548,15 @@
     formatter.dateFormat = @"yyyyMMddHHmmss";
     NSString *str = [formatter stringFromDate:[NSDate date]];
     //组装消息模型
-    MessageModel *model = [[MessageModel alloc]init];
-    model.image_mark = [NSString stringWithFormat:@"image%@",str];
-    model.messageType = MessageType_Picture;
-    model.isMineMessage = YES;
     NSData *data = UIImageJPEGRepresentation(image, 1.0);
-    [[NSUserDefaults standardUserDefaults]setObject:data forKey:model.image_mark];
-    [picker dismissViewControllerAnimated:YES completion:nil];
+    EMImageMessageBody *body = [[EMImageMessageBody alloc]initWithData:data displayName:[NSString stringWithFormat:@"image_%@",str]];;
+    NSString *from = [[EMClient sharedClient] currentUsername];
+    //生成Message
+    EMMessage *emmessage = [[EMMessage alloc]initWithConversationID:self.toUser from:from to:self.toUser body:body ext:nil];
+    emmessage.chatType = EMChatTypeChat;
     //发送消息
-//    [self sendMessageWithModel:model];
+    [self sendMessageWithMessage:emmessage];
+    [picker dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark 键盘的通知方法
@@ -583,17 +596,15 @@
 - (void)longTap:(UILongPressGestureRecognizer *)longTap{
     
     switch (longTap.state) {
+        
         case UIGestureRecognizerStateBegan:
-            
+            //开始录音
+            [self.mp3Recorder startRecord];
+            [self.superview makeToast:@"开始录音"];
             break;
         case UIGestureRecognizerStateEnded:{
-            //组装消息模型
-            MessageModel *model = [[MessageModel alloc]init];
-            model.messageType = MessageType_Voice;
-            model.isMineMessage = YES;
-            model.voiceTime = 5;
-            //发送消息
-//            [self sendMessageWithModel:model];
+            //结束录音
+            [self.mp3Recorder stopRecord];
         }
             break;
         default:
@@ -601,11 +612,31 @@
     }
 }
 
+#pragma mark Mp3RecorderDelegate
+- (void)failRecord{
+    
+    [self.superview makeToast:@"!录音时间太短!"];
+}
+
+- (void)endConvertWithMP3FileName:(NSString *)fileName recordTime:(NSInteger)recordTime{
+    
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    formatter.dateFormat = @"yyyyMMddHHmmss";
+    NSString *str = [formatter stringFromDate:[NSDate date]];
+    EMVoiceMessageBody *body = [[EMVoiceMessageBody alloc] initWithLocalPath:fileName displayName:[NSString stringWithFormat:@"voice_%@",str]];
+    body.duration = (int)recordTime;
+    NSString *from = [[EMClient sharedClient] currentUsername];
+    // 生成message
+    EMMessage *message = [[EMMessage alloc] initWithConversationID:self.toUser from:from to:self.toUser body:body ext:nil];
+    message.chatType = EMChatTypeChat;// 设置为单聊消息
+    [self sendMessageWithMessage:message];
+}
+
 #pragma mark 发送消息
-- (void)sendMessageWithMessage:(EMMessage *)message{
+- (void)sendMessageWithMessage:(EMMessage *)emmessage{
     
     if ([self.delegate respondsToSelector:@selector(didSendMessageOfFaceView:message:)]) {
-        [self.delegate didSendMessageOfFaceView:self message:message];
+        [self.delegate didSendMessageOfFaceView:self message:emmessage];
     }
 }
 @end
