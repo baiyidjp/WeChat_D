@@ -9,6 +9,7 @@
 #import "MessageTableViewCell.h"
 #import "MessageModel.h"
 
+#define ImageDefaultSizeWH 150.0
 @interface MessageTableViewCell ()
 /**
  *  头像
@@ -207,10 +208,24 @@
                 //图片消息
                 self.timeLabel.hidden = YES;
                 [self.backImgaeView addSubview:self.messsgeImage];
-                [self.messsgeImage sd_setImageWithURL:[NSURL URLWithString:model.imageUrl] placeholderImage:nil];
+                CGSize imageSize = CGSizeZero;
+                NSFileManager *fileManger = [NSFileManager defaultManager];
+                if ([fileManger fileExistsAtPath:model.image_mark]) {
+                    [self.messsgeImage sd_setImageWithURL:[NSURL fileURLWithPath:model.image_mark] placeholderImage:[UIImage imageNamed:@"location"]];
+                    imageSize = model.thumbnailSize;
+                }else{
+                    [self.messsgeImage sd_setImageWithURL:[NSURL URLWithString:model.imageUrl] placeholderImage:[UIImage imageNamed:@"location"]];
+                    UIImage *image = self.messsgeImage.image;
+                    imageSize = image.size;
+                }
                 [self.messsgeImage mas_remakeConstraints:^(MASConstraintMaker *make) {
                     make.edges.mas_equalTo(self.backImgaeView).insets(UIEdgeInsetsMake(KMARGIN, 3.0/2*KMARGIN, KMARGIN, 3.0/2*KMARGIN));
-                    make.size.mas_equalTo(CGSizeMake(150, 150));
+                    if (imageSize.width > ImageDefaultSizeWH) {
+                        make.size.mas_equalTo(CGSizeMake(ImageDefaultSizeWH, ImageDefaultSizeWH/imageSize.width * imageSize.height));
+                    }else{
+                        make.size.mas_equalTo(imageSize);
+                    }
+
                 }];
                 [self.backImgaeView mas_remakeConstraints:^(MASConstraintMaker *make) {
                     make.top.equalTo(self.headerView.mas_top);
@@ -285,11 +300,21 @@
             case MessageType_Picture:{
                 
                 self.timeLabel.hidden = YES;
+                __block CGSize imageSize = CGSizeZero;
+                NSFileManager *fileManger = [NSFileManager defaultManager];
+                if ([fileManger fileExistsAtPath:model.image_mark]) {
+                    [self.messsgeImage sd_setImageWithURL:[NSURL fileURLWithPath:model.image_mark] placeholderImage:[UIImage imageNamed:@"location"]];
+                    imageSize = model.thumbnailSize;
+                }else{
+                    [self.messsgeImage sd_setImageWithURL:[NSURL URLWithString:model.imageUrl] placeholderImage:[UIImage imageNamed:@"location"]];
+                    UIImage *image = self.messsgeImage.image;
+                    imageSize = image.size;
+                }
+                NSLog(@"%f",imageSize.width);
                 [self.backImgaeView addSubview:self.messsgeImage];
-                [self.messsgeImage sd_setImageWithURL:[NSURL URLWithString:model.imageUrl] placeholderImage:nil];
                 [self.messsgeImage mas_remakeConstraints:^(MASConstraintMaker *make) {
                     make.edges.mas_equalTo(self.backImgaeView).insets(UIEdgeInsetsMake(KMARGIN, 3.0/2*KMARGIN, KMARGIN, 3.0/2*KMARGIN));
-                    make.size.mas_equalTo(CGSizeMake(150, 150));
+                    make.size.mas_equalTo(CGSizeMake(ImageDefaultSizeWH, ImageDefaultSizeWH/imageSize.width * imageSize.height));
                 }];
                 [self.backImgaeView mas_remakeConstraints:^(MASConstraintMaker *make) {
                     make.top.equalTo(self.headerView.mas_top);

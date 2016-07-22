@@ -12,6 +12,9 @@
 #import "FaceViewModel.h"
 #import "MessageModel.h"
 #import "Mp3recorder.h"
+#import <Photos/Photos.h>
+#import <AssetsLibrary/AssetsLibrary.h>
+
 
 @interface JPKeyBoardToolView ()<UITextViewDelegate,AddMoreViewDelegate,FaceViewDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate,Mp3RecorderDelegate>
 /**
@@ -543,16 +546,21 @@
 
 #pragma mark UIImagePickerControllerDelegate
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info{
-    UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
+    //组装消息模型
+    
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     formatter.dateFormat = @"yyyyMMddHHmmss";
     NSString *str = [formatter stringFromDate:[NSDate date]];
-    //组装消息模型
-    NSData *data = UIImagePNGRepresentation(image);
-//    NSString *imagePath = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject] stringByAppendingPathComponent:[NSString stringWithFormat:@"image_%@.jpg",str]];
-//    [data writeToFile:imagePath atomically:YES];
-//    EMImageMessageBody *body = [[EMImageMessageBody alloc]initWithLocalPath:imagePath displayName:[NSString stringWithFormat:@"image_%@.jpg",str]];;
-    EMImageMessageBody *body = [[EMImageMessageBody alloc]initWithData:data displayName:[NSString stringWithFormat:@"image_%@.png",str]];
+    
+    UIImage *orgImage = info[UIImagePickerControllerOriginalImage];
+    NSData *data = UIImageJPEGRepresentation(orgImage, 1);
+    NSData *thumdata = UIImageJPEGRepresentation(orgImage, 0.1);
+    EMImageMessageBody *body = [[EMImageMessageBody alloc]initWithData:data displayName:@"image.png"];
+    NSString *thumlocaImagePath = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject] stringByAppendingPathComponent:[NSString stringWithFormat:@"thumimage_%@.png",str]];
+    body.thumbnailLocalPath = thumlocaImagePath;
+    body.thumbnailSize = [UIImage imageWithData:thumdata].size;
+    NSLog(@"%f %f",body.thumbnailSize.width,body.thumbnailSize.height);
+    [thumdata writeToFile:thumlocaImagePath atomically:YES];
     NSString *from = [[EMClient sharedClient] currentUsername];
     //生成Message
     EMMessage *emmessage = [[EMMessage alloc]initWithConversationID:self.toUser from:from to:self.toUser body:body ext:nil];
@@ -560,6 +568,18 @@
     //发送消息
     [self sendMessageWithMessage:emmessage];
     [picker dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)sendImageMessageWithImageData:(NSData *)data{
+    
+    EMImageMessageBody *body = [[EMImageMessageBody alloc]initWithData:data displayName:@"image.png"];
+    NSString *from = [[EMClient sharedClient] currentUsername];
+    //生成Message
+    EMMessage *emmessage = [[EMMessage alloc]initWithConversationID:self.toUser from:from to:self.toUser body:body ext:nil];
+    emmessage.chatType = EMChatTypeChat;
+    //发送消息
+    [self sendMessageWithMessage:emmessage];
+
 }
 
 #pragma mark 键盘的通知方法

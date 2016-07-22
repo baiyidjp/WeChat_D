@@ -148,9 +148,6 @@
         if (!error) {
             [SVProgressHUD showSuccessWithStatus:@"发送成功"];
             [self.dataArray addObject:message];
-            MessageModel *model = [[MessageModel alloc]init];
-            model.emmessage = emmessage;
-            NSLog(@"%@",model.imageUrl);
             [self.ChatTableView reloadData];
             if (self.dataArray.count) {
                 [self.ChatTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:self.dataArray.count-1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];

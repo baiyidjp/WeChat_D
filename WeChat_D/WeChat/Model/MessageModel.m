@@ -43,7 +43,9 @@
 
         case EMMessageBodyTypeImage:{
             EMImageMessageBody *imageBody = (EMImageMessageBody *)_messageBody;
-            self.imageUrl = imageBody.thumbnailRemotePath;//缩略图的路径
+            self.imageUrl = imageBody.thumbnailRemotePath;//缩略图的服务器路径
+            self.image_mark = imageBody.thumbnailLocalPath;//缩略图的本地路径
+            self.thumbnailSize = imageBody.thumbnailSize;
             self.messageType = MessageType_Picture;
         }
             break;
