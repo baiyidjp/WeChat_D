@@ -35,6 +35,10 @@
  *  语音时间
  */
 @property(nonatomic,strong)UILabel *timeLabel;
+/** 时间 */
+@property(nonatomic,strong) NSTimer *timer;
+/** 记录时间 */
+@property(nonatomic,assign) NSInteger timerCount;
 @end
 
 @implementation MessageTableViewCell
@@ -43,6 +47,8 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         [self congifViews];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(recordPlayFinish) name:RECORDPLAYFINISH object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(recordPlayBegin) name:RECORDPLAYBEGIN object:nil];
     }
     return self;
 }
@@ -70,8 +76,10 @@
     if (tap.state == UIGestureRecognizerStateEnded) {
         CGPoint tapPoint = [tap locationInView:self.contentView];
         if (CGRectContainsPoint(self.backImgaeView.frame, tapPoint)) {
-            if ([self.delegate respondsToSelector:@selector(messageCellTappedMessage:)]) {
-                [self.delegate messageCellTappedMessage:self];
+            if ([self.delegate respondsToSelector:@selector(messageCellTappedMessage:MessageModel:)]) {
+                [self.delegate messageCellTappedMessage:self MessageModel:self.model];
+                [self.timer setFireDate:[NSDate distantPast]];
+                self.contentView.userInteractionEnabled = NO;
             }
         }else if (CGRectContainsPoint(self.headerView.frame, tapPoint)) {
             if ([self.delegate respondsToSelector:@selector(messageCellTappedHead:)]) {
@@ -138,6 +146,29 @@
     }
     return _timeLabel;
 }
+
+- (NSTimer *)timer{
+    
+    if (!_timer) {
+        
+        _timer = [NSTimer scheduledTimerWithTimeInterval:0.2 target:self selector:@selector(updateSliderValue) userInfo:nil repeats:YES];
+        [_timer setFireDate:[NSDate distantFuture]];
+    }
+    return _timer;
+}
+
+- (void)updateSliderValue{
+    
+    self.timerCount ++;
+    NSLog(@"%zd",self.timerCount);
+    if (self.model.isMineMessage) {
+        self.messageVoice.image = [UIImage imageNamed:[NSString stringWithFormat:@"message_voice_sender_playing_%zd",self.timerCount%3+1]];
+    }else{
+        self.messageVoice.image = [UIImage imageNamed:[NSString stringWithFormat:@"message_voice_receiver_playing_%zd",self.timerCount%3+1]];
+    }
+}
+
+
 #pragma mark 赋值
 - (void)setModel:(MessageModel *)model{
     
@@ -356,6 +387,23 @@
     UIImage *newImage = [image resizableImageWithCapInsets:edgeInsets resizingMode:mode];
     
     return newImage;
+}
+
+//语音开始播放
+- (void)recordPlayBegin{
+    
+}
+//语音播放完毕
+- (void)recordPlayFinish{
+    
+    [self.timer setFireDate:[NSDate distantFuture]];
+    self.timerCount = 0;
+    self.contentView.userInteractionEnabled = YES;
+    if (self.model.isMineMessage) {
+        [self.messageVoice setImage:[UIImage imageNamed:@"message_voice_sender_normal"]];
+    }else{
+        [self.messageVoice setImage:[UIImage imageNamed:@"message_voice_receiver_normal"]];
+    }
 }
 
 - (void)prepareForReuse{

@@ -10,9 +10,12 @@
 #import "lame.h"
 #import <AVFoundation/AVFoundation.h>
 
-@interface Mp3Recorder()<AVAudioRecorderDelegate>
+@interface Mp3Recorder()<AVAudioRecorderDelegate,AVAudioPlayerDelegate>
 @property (nonatomic, strong) AVAudioSession *session;
 @property (nonatomic, strong) AVAudioRecorder *recorder;
+/** 本地播放器对象 */
+@property (nonatomic, strong) AVAudioPlayer *audioPlayer;
+
 @end
 
 @implementation Mp3Recorder
@@ -114,6 +117,31 @@
     }
 }
 
+- (void)startPlayRecordWithPath:(NSString *)path{
+    
+    // 正在播放就返回
+    [self stopPlayRecord];
+    self.audioPlayer=[[AVAudioPlayer alloc]initWithContentsOfURL:[NSURL URLWithString:path] error:NULL];
+    self.audioPlayer.delegate = self;
+    [self.session setCategory:AVAudioSessionCategoryPlayback error:nil];
+    [self.audioPlayer play];
+    [[NSNotificationCenter defaultCenter] postNotificationName:RECORDPLAYBEGIN object:Nil];
+}
+
+- (void)stopPlayRecord{
+    
+    if ([self.audioPlayer isPlaying]){
+        [self.audioPlayer stop];
+        [[NSNotificationCenter defaultCenter] postNotificationName:RECORDPLAYFINISH object:Nil];
+    }
+}
+
+- (void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag{
+    
+    NSLog(@"听完了");
+    [[NSNotificationCenter defaultCenter] postNotificationName:RECORDPLAYFINISH object:Nil];
+}
+
 #pragma mark - Convert Utils
 - (void)audio_PCMtoMP3WithTime:(NSInteger)recordTime
 {
@@ -180,7 +208,7 @@
 }
 
 - (NSString *)mp3Path {
-    NSString *mp3Path = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject] stringByAppendingPathComponent:@"com.XMFraker.XMNChat.audioCache"];
+    NSString *mp3Path = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject] stringByAppendingPathComponent:@"voiceCache"];
     if (![[NSFileManager defaultManager] fileExistsAtPath:mp3Path]) {
         [[NSFileManager defaultManager] createDirectoryAtPath:mp3Path withIntermediateDirectories:YES attributes:nil error:nil];
     }

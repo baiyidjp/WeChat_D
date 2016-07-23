@@ -37,6 +37,7 @@
             EMVoiceMessageBody *voiceBody = (EMVoiceMessageBody *)_messageBody;
             self.voiceTime = voiceBody.duration;
             self.voicePath = voiceBody.remotePath;
+            self.voiceLocaPath = voiceBody.localPath;
             self.messageType = MessageType_Voice;
         }
             break;

@@ -22,7 +22,7 @@
 /**
  *  点击消息
  */
-- (void)messageCellTappedMessage:(MessageTableViewCell *)messageCell;
+- (void)messageCellTappedMessage:(MessageTableViewCell *)messageCell MessageModel:(MessageModel *)messageModel;
 
 @end
 

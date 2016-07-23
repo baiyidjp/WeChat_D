@@ -10,6 +10,8 @@
 #import "JPKeyBoardToolView.h"
 #import "MessageTableViewCell.h"
 #import "MessageModel.h"
+#import "Mp3Recorder.h"
+#import "MessageModel.h"
 
 @interface ChatDetailViewController ()<UITableViewDelegate,UITableViewDataSource,JPKeyBoardToolViewDelegate,UIScrollViewDelegate,MessageTableViewCellDelegate>
 /**
@@ -32,6 +34,9 @@
  *  当前会话接收到的消息集合
  */
 @property(nonatomic,strong)NSMutableArray *reciveMessageArray;
+/** 播放语音 */
+@property(nonatomic,strong) Mp3Recorder *mp3Recorder;
+
 @end
 
 @implementation ChatDetailViewController
@@ -125,6 +130,16 @@
     return _toolView;
 }
 
+- (Mp3Recorder *)mp3Recorder{
+    
+    if (!_mp3Recorder) {
+        _mp3Recorder = [[Mp3Recorder alloc]init];
+    }
+    return _mp3Recorder;
+}
+
+
+
 #pragma mark JPKeyBoardToolViewDelegate
 - (void)keyBoardToolViewFrameDidChange:(JPKeyBoardToolView *)toolView frame:(CGRect)frame{
     
@@ -212,8 +227,28 @@
 - (void)messageCellTappedHead:(MessageTableViewCell *)messageCell{
 
 }
-- (void)messageCellTappedMessage:(MessageTableViewCell *)messageCell{
+- (void)messageCellTappedMessage:(MessageTableViewCell *)messageCell MessageModel:(MessageModel *)messageModel{
+    
+    switch (messageModel.messageType) {
+        case MessageType_Text:
+            
+            break;
+        case MessageType_Picture:
+            break;
 
+        case MessageType_Voice:{
+            NSFileManager *fileManger = [NSFileManager defaultManager];
+            if ([fileManger fileExistsAtPath:messageModel.voiceLocaPath]){
+                [self.mp3Recorder startPlayRecordWithPath:messageModel.voiceLocaPath];
+            }else{
+                [self.mp3Recorder startPlayRecordWithPath:messageModel.voicePath];
+            }
+        }
+            break;
+
+        default:
+            break;
+    }
 }
 
 - (void)dealloc{

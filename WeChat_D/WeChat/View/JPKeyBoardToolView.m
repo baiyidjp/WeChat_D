@@ -15,7 +15,7 @@
 #import <Photos/Photos.h>
 #import <AssetsLibrary/AssetsLibrary.h>
 
-
+#define BackColor [UIColor colorWithRed:204.0/255.0f green:204.0/255.0f blue:204.0/255.0f alpha:1.0f]
 @interface JPKeyBoardToolView ()<UITextViewDelegate,AddMoreViewDelegate,FaceViewDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate,Mp3RecorderDelegate>
 /**
  *  左边录音按钮
@@ -161,7 +161,7 @@
         _recordLongBtn.titleLabel.font = FONTSIZE(16);
         _recordLongBtn.hidden = YES;
         _recordLongBtn.layer.cornerRadius = 4.0f;
-        _recordLongBtn.layer.borderColor = [UIColor colorWithRed:204.0/255.0f green:204.0/255.0f blue:204.0/255.0f alpha:1.0f].CGColor;
+        _recordLongBtn.layer.borderColor = BackColor.CGColor;
         _recordLongBtn.layer.borderWidth = .5f;
         _recordLongBtn.layer.masksToBounds = YES;
         _recordLongBtn.userInteractionEnabled = YES;
@@ -204,7 +204,7 @@
         _inputTextView.font = FONTSIZE(16);
         _inputTextView.delegate = self;
         _inputTextView.layer.cornerRadius = 4.0f;
-        _inputTextView.layer.borderColor = [UIColor colorWithRed:204.0/255.0f green:204.0/255.0f blue:204.0/255.0f alpha:1.0f].CGColor;
+        _inputTextView.layer.borderColor =BackColor.CGColor;
         _inputTextView.returnKeyType = UIReturnKeySend;
         _inputTextView.layer.borderWidth = .5f;
         _inputTextView.layer.masksToBounds = YES;
@@ -569,19 +569,6 @@
     [self sendMessageWithMessage:emmessage];
     [picker dismissViewControllerAnimated:YES completion:nil];
 }
-
-- (void)sendImageMessageWithImageData:(NSData *)data{
-    
-    EMImageMessageBody *body = [[EMImageMessageBody alloc]initWithData:data displayName:@"image.png"];
-    NSString *from = [[EMClient sharedClient] currentUsername];
-    //生成Message
-    EMMessage *emmessage = [[EMMessage alloc]initWithConversationID:self.toUser from:from to:self.toUser body:body ext:nil];
-    emmessage.chatType = EMChatTypeChat;
-    //发送消息
-    [self sendMessageWithMessage:emmessage];
-
-}
-
 #pragma mark 键盘的通知方法
 - (void)keyboardWillHide:(NSNotification *)notification{
     self.keyBoardFrame = CGRectZero;
@@ -624,10 +611,12 @@
             //开始录音
             [self.mp3Recorder startRecord];
             [self.superview makeToast:@"开始录音"];
+            [self.recordLongBtn setBackgroundColor:[UIColor grayColor]];
             break;
         case UIGestureRecognizerStateEnded:{
             //结束录音
             [self.mp3Recorder stopRecord];
+            [self.recordLongBtn setBackgroundColor:[UIColor colorWithHexString:@"f4f4f4"]];
         }
             break;
         default:

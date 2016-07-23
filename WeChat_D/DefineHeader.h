@@ -31,6 +31,8 @@
 #define RECEIVEMESSAGES @"ReceiveMessages"// 接收消息的通知
 #define NEWFRIENDREQUEST @"newFriendRequest" //新朋友请求
 #define NEWFRIENDREQUESTRESULT @"newFriendRequestResult" //新朋友请求的结果的通知
+#define RECORDPLAYBEGIN @"recordPlayBegin" //录音开始播放
+#define RECORDPLAYFINISH @"recordPlayFinish" //录音播放完毕
 
 //define this constant if you want to use Masonry without the 'mas_' prefix
 //#define MAS_SHORTHAND

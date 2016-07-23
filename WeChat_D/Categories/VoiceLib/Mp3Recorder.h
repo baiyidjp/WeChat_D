@@ -21,5 +21,7 @@
 - (void)startRecord;
 - (void)stopRecord;
 - (void)cancelRecord;
+- (void)startPlayRecordWithPath:(NSString *)path;
+- (void)stopPlayRecord;
 
 @end

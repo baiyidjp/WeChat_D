@@ -24,7 +24,14 @@ typedef enum : NSUInteger {
 @property(nonatomic,assign) CGSize thumbnailSize;
 
 @property(nonatomic,assign)int voiceTime;
+/**
+ *  网络路径
+ */
 @property(nonatomic,copy)NSString *voicePath;
+/**
+ *  本地路径
+ */
+@property(nonatomic,copy)NSString *voiceLocaPath;
 
 @property(nonatomic,assign)BOOL isMineMessage;
 @property(nonatomic,assign)MessageType messageType;
