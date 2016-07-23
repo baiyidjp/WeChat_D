@@ -23,6 +23,9 @@ typedef enum : NSUInteger {
 /** 缩略图的尺寸 */
 @property(nonatomic,assign) CGSize thumbnailSize;
 
+/** 语音是否已读 */
+@property(nonatomic,assign) BOOL voiceIsListen;
+
 @property(nonatomic,assign)int voiceTime;
 /**
  *  网络路径

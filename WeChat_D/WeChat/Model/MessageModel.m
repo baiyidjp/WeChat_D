@@ -39,6 +39,13 @@
             self.voicePath = voiceBody.remotePath;
             self.voiceLocaPath = voiceBody.localPath;
             self.messageType = MessageType_Voice;
+            NSFileManager *fileManger = [NSFileManager defaultManager];
+            if ([fileManger fileExistsAtPath:self.voiceLocaPath]){
+                self.voiceIsListen = [[NSUserDefaults standardUserDefaults] objectForKey:self.voiceLocaPath];
+            }else{
+                self.voiceIsListen = [[NSUserDefaults standardUserDefaults] objectForKey:self.voicePath];
+            }
+
         }
             break;
 

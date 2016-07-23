@@ -35,6 +35,8 @@
  *  语音时间
  */
 @property(nonatomic,strong)UILabel *timeLabel;
+/** 语音未读标记 */
+@property(nonatomic,strong) UIView *voiceUnread;
 /** 时间 */
 @property(nonatomic,strong) NSTimer *timer;
 /** 记录时间 */
@@ -80,6 +82,14 @@
                 [self.delegate messageCellTappedMessage:self MessageModel:self.model];
                 [self.timer setFireDate:[NSDate distantPast]];
                 self.contentView.userInteractionEnabled = NO;
+                NSFileManager *fileManger = [NSFileManager defaultManager];
+                if ([fileManger fileExistsAtPath:self.model.voiceLocaPath]){
+                    [[NSUserDefaults standardUserDefaults] setObject:@1 forKey:self.model.voiceLocaPath];
+                }else{
+                    [[NSUserDefaults standardUserDefaults] setObject:@1 forKey:self.model.voicePath];
+                }
+
+                self.voiceUnread.hidden = YES;
             }
         }else if (CGRectContainsPoint(self.headerView.frame, tapPoint)) {
             if ([self.delegate respondsToSelector:@selector(messageCellTappedHead:)]) {
@@ -145,6 +155,18 @@
         _timeLabel.font = FONTSIZE(14);
     }
     return _timeLabel;
+}
+
+- (UIView *)voiceUnread{
+    
+    if (!_voiceUnread) {
+        
+        _voiceUnread = [[UIView alloc]init];
+        _voiceUnread.backgroundColor = [UIColor redColor];
+        _voiceUnread.layer.cornerRadius = KMARGIN/2;
+        _voiceUnread.layer.masksToBounds = YES;
+    }
+    return _voiceUnread;
 }
 
 - (NSTimer *)timer{
@@ -324,6 +346,13 @@
                 [self.timeLabel mas_remakeConstraints:^(MASConstraintMaker *make) {
                     make.centerY.equalTo(self.backImgaeView.mas_centerY);
                     make.left.equalTo(self.backImgaeView.mas_right).with.offset(KMARGIN/2);
+                }];
+                [self.backImgaeView addSubview:self.voiceUnread];
+                self.voiceUnread.hidden = model.voiceIsListen;
+                [self.voiceUnread mas_remakeConstraints:^(MASConstraintMaker *make) {
+                    make.top.equalTo(self.backImgaeView.mas_top).with.offset(0);
+                    make.left.equalTo(self.backImgaeView.mas_right).with.offset(-KMARGIN);
+                    make.size.mas_equalTo(CGSizeMake(KMARGIN, KMARGIN));
                 }];
             }
                 
