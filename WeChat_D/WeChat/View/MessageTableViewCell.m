@@ -208,16 +208,13 @@
                 //图片消息
                 self.timeLabel.hidden = YES;
                 [self.backImgaeView addSubview:self.messsgeImage];
-                CGSize imageSize = CGSizeZero;
                 NSFileManager *fileManger = [NSFileManager defaultManager];
                 if ([fileManger fileExistsAtPath:model.image_mark]) {
                     [self.messsgeImage sd_setImageWithURL:[NSURL fileURLWithPath:model.image_mark] placeholderImage:[UIImage imageNamed:@"location"]];
-                    imageSize = model.thumbnailSize;
                 }else{
                     [self.messsgeImage sd_setImageWithURL:[NSURL URLWithString:model.imageUrl] placeholderImage:[UIImage imageNamed:@"location"]];
-                    UIImage *image = self.messsgeImage.image;
-                    imageSize = image.size;
                 }
+                CGSize imageSize = model.thumbnailSize;
                 [self.messsgeImage mas_remakeConstraints:^(MASConstraintMaker *make) {
                     make.edges.mas_equalTo(self.backImgaeView).insets(UIEdgeInsetsMake(KMARGIN, 3.0/2*KMARGIN, KMARGIN, 3.0/2*KMARGIN));
                     if (imageSize.width > ImageDefaultSizeWH) {
@@ -300,16 +297,13 @@
             case MessageType_Picture:{
                 
                 self.timeLabel.hidden = YES;
-                __block CGSize imageSize = CGSizeZero;
                 NSFileManager *fileManger = [NSFileManager defaultManager];
                 if ([fileManger fileExistsAtPath:model.image_mark]) {
                     [self.messsgeImage sd_setImageWithURL:[NSURL fileURLWithPath:model.image_mark] placeholderImage:[UIImage imageNamed:@"location"]];
-                    imageSize = model.thumbnailSize;
                 }else{
                     [self.messsgeImage sd_setImageWithURL:[NSURL URLWithString:model.imageUrl] placeholderImage:[UIImage imageNamed:@"location"]];
-                    UIImage *image = self.messsgeImage.image;
-                    imageSize = image.size;
                 }
+                CGSize imageSize = model.thumbnailSize;
                 NSLog(@"%f",imageSize.width);
                 [self.backImgaeView addSubview:self.messsgeImage];
                 [self.messsgeImage mas_remakeConstraints:^(MASConstraintMaker *make) {

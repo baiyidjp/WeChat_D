@@ -45,7 +45,15 @@
             EMImageMessageBody *imageBody = (EMImageMessageBody *)_messageBody;
             self.imageUrl = imageBody.thumbnailRemotePath;//缩略图的服务器路径
             self.image_mark = imageBody.thumbnailLocalPath;//缩略图的本地路径
-            self.thumbnailSize = imageBody.thumbnailSize;
+            if (imageBody.thumbnailSize.width) {
+                self.thumbnailSize = imageBody.thumbnailSize;
+            }else{
+                [[UIImageView new] sd_setImageWithURL:[NSURL URLWithString:self.imageUrl] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+                   dispatch_async(dispatch_get_main_queue(), ^{
+                       self.thumbnailSize = image.size;
+                   });
+                }];
+            }
             self.messageType = MessageType_Picture;
         }
             break;
