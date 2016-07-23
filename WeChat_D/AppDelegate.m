@@ -187,8 +187,8 @@
                                        message:(NSString *)aMessage{
     
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-    [dict setObject:aMessage forKey:@"aMessage"];
-    [dict setObject:aUsername forKey:@"aUsername"];
+    [dict setObject:aMessage forKey:NewFriendMessage];
+    [dict setObject:aUsername forKey:NewFriendName];
     [[NSNotificationCenter defaultCenter] postNotificationName:NEWFRIENDREQUEST object:nil userInfo:dict];
 //    UIAlertController *alertCtrl = [UIAlertController alertControllerWithTitle:[NSString stringWithFormat:@"%@的好友申请",aUsername] message:aMessage preferredStyle:UIAlertControllerStyleAlert];
 //    [alertCtrl addAction:[UIAlertAction actionWithTitle:@"拒绝" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action){

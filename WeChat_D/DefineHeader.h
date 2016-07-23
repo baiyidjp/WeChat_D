@@ -37,4 +37,10 @@
 //define this constant if you want to enable auto-boxing for default syntax
 #define MAS_SHORTHAND_GLOBALS
 
+//新好友申请的Key值
+#define NewFriendName           @"NewFriendName"
+#define NewFriendMessage        @"NewFriendMessage"
+#define NewFriendAgreeState     @"NewFriendAgreeState"
+#define NewFriendLocationArray  @"NewFriendLocationArray"
+
 #endif /* DefineHeader_h */

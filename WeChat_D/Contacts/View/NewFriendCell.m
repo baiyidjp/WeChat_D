@@ -24,9 +24,9 @@
     
     _dict = dict;
     self.headimage.backgroundColor = [UIColor purpleColor];
-    self.nameLabel.text = [dict objectForKey:@"aUsername"];
-    self.messageLabel.text = [dict objectForKey:@"aMessage"];
-    if ([[dict objectForKey:@"isAgree"]integerValue]) {
+    self.nameLabel.text = [dict objectForKey:NewFriendName];
+    self.messageLabel.text = [dict objectForKey:NewFriendMessage];
+    if ([[dict objectForKey:NewFriendAgreeState]integerValue]) {
         self.haveAgreeLabel.hidden = NO;
         self.jujueBtn.hidden = YES;
         self.agreeBtn.hidden = YES;
@@ -38,15 +38,15 @@
     [[EMClient sharedClient].contactManager asyncDeclineInvitationForUsername:self.nameLabel.text success:^{
         dispatch_async(dispatch_get_main_queue(), ^{
             [SVProgressHUD showSuccessWithStatus:@"已拒绝"];
-            NSMutableArray *arr = [NSMutableArray arrayWithArray:[[NSUserDefaults standardUserDefaults] objectForKey:@"NewFriendArray"]];
+            NSMutableArray *arr = [NSMutableArray arrayWithArray:[[NSUserDefaults standardUserDefaults] objectForKey:NewFriendLocationArray]];
             [arr removeObject:self.dict];
             self.haveAgreeLabel.hidden = NO;
             self.jujueBtn.hidden = YES;
             self.agreeBtn.hidden = YES;
             self.haveAgreeLabel.text = @"已拒绝";
-            [self.dict setObject:@2 forKey:@"isAgree"];
+            [self.dict setObject:@2 forKey:NewFriendAgreeState];
             [arr addObject:self.dict];
-            [[NSUserDefaults standardUserDefaults]setObject:arr forKey:@"NewFriendArray"];
+            [[NSUserDefaults standardUserDefaults]setObject:arr forKey:NewFriendLocationArray];
             [[NSNotificationCenter defaultCenter]postNotificationName:NEWFRIENDREQUESTRESULT object:nil];
         });
         
@@ -65,15 +65,17 @@
     [[EMClient sharedClient].contactManager asyncAcceptInvitationForUsername:self.nameLabel.text success:^{
         dispatch_async(dispatch_get_main_queue(), ^{
             [SVProgressHUD showSuccessWithStatus:@"已添加"];
-            NSMutableArray *arr = [NSMutableArray arrayWithArray:[[NSUserDefaults standardUserDefaults] objectForKey:@"NewFriendArray"]];
+            NSMutableArray *arr = [NSMutableArray arrayWithArray:[[NSUserDefaults standardUserDefaults] objectForKey:NewFriendLocationArray]];
+            //移除当前的已处理的数据
             [arr removeObject:self.dict];
             self.haveAgreeLabel.hidden = NO;
             self.jujueBtn.hidden = YES;
             self.agreeBtn.hidden = YES;
             self.haveAgreeLabel.text = @"已添加";
-            [self.dict setObject:@1 forKey:@"isAgree"];
+            //给当前的数据处理状态 根据自己的处理赋值 在重新加载到本地数据组中
+            [self.dict setObject:@1 forKey:NewFriendAgreeState];
             [arr addObject:self.dict];
-            [[NSUserDefaults standardUserDefaults]setObject:arr forKey:@"NewFriendArray"];
+            [[NSUserDefaults standardUserDefaults]setObject:arr forKey:NewFriendLocationArray];
             [[NSNotificationCenter defaultCenter]postNotificationName:NEWFRIENDREQUESTRESULT object:nil];
         });
         

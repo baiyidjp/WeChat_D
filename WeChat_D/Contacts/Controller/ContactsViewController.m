@@ -148,10 +148,17 @@
 #pragma mark 新好友请求
 - (void)newFriendRequest:(NSNotification *)notification{
     NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithDictionary:notification.userInfo];
-    [dict setObject:@0 forKey:@"isAgree"]; //添加一个值判断是都查看 或者是否同意或者拒绝 0未处理 1已同意 2已拒绝
-    NSMutableArray *arr = [NSMutableArray arrayWithArray:[[NSUserDefaults standardUserDefaults] objectForKey:@"NewFriendArray"]];
+    [dict setObject:@0 forKey:NewFriendAgreeState]; //添加一个值判断是都查看 或者是否同意或者拒绝 0未处理 1已同意 2已拒绝
+    NSMutableArray *arr = [NSMutableArray arrayWithArray:[[NSUserDefaults standardUserDefaults] objectForKey:NewFriendLocationArray]];
+    //因为环信好友申请不再保存服务器 所以需要自己存到本地
+    //遍历本地存储的好友请求信息 若有相同好友请求 则移除本地 再次添加新的好友请求
+    for (NSDictionary *locationDict in arr) {
+        if ([[dict objectForKey:NewFriendName] isEqualToString:[locationDict objectForKey:NewFriendName]]) {
+            [arr removeObject:locationDict];
+        }
+    }
     [arr addObject:dict];
-    [[NSUserDefaults standardUserDefaults] setObject:arr forKey:@"NewFriendArray"];
+    [[NSUserDefaults standardUserDefaults] setObject:arr forKey:NewFriendLocationArray];
     [self.newFriendDataArray addObject:dict];
     [self getContactListFromServer];
 }
@@ -261,13 +268,16 @@
 #pragma mark 从服务器获取好友列表
 - (void)getContactListFromServer{
     
+    //显示新申请的个数
     [self.newFriendDataArray removeAllObjects];
-    NSArray *arr = [[NSUserDefaults standardUserDefaults] objectForKey:@"NewFriendArray"];
+    //先移除已加入的数据 在从本地获取当前最新的数据
+    NSArray *arr = [[NSUserDefaults standardUserDefaults] objectForKey:NewFriendLocationArray];
     [self.newFriendDataArray addObjectsFromArray:arr];
     
     NSInteger newFriCount = 0;
     for (NSDictionary *dict in self.newFriendDataArray) {
-        if (![[dict objectForKey:@"isAgree"] integerValue]) {
+        //通过比较数据中的处理状态 如果是0则是未处理 
+        if (![[dict objectForKey:NewFriendAgreeState] integerValue]) {
             newFriCount++;
         }
     }
@@ -279,6 +289,8 @@
         self.friendUnreadLabel.hidden = YES;
         self.tabBarItem.badgeValue = nil;
     }
+    
+    //获取刷新后的好友列表
     [self.dataArray removeAllObjects];
     //从服务器获取所有的好友列表
     [[EMClient sharedClient].contactManager asyncGetContactsFromServer:^(NSArray *aList) {
