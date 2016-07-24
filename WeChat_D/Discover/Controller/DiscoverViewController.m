@@ -48,12 +48,12 @@
         make.edges.equalTo(self.view);
     }];
     
-    dataArray = @[@[@{@"imageName":@"Tabbar_contact",@"title":@"朋友圈"},
-                    @{@"imageName":@"Tabbar_contact",@"title":@"附近的人"},
-                    @{@"imageName":@"Tabbar_contact",@"title":@"摇一摇"}],
-                  @[@{@"imageName":@"Tabbar_contact",@"title":@"扫一扫"}],
-                  @[@{@"imageName":@"Tabbar_contact",@"title":@"购物"},
-                    @{@"imageName":@"Tabbar_contact",@"title":@"游戏"}]];
+    dataArray = @[@[@{@"imageName":@"ff_IconShowAlbum_25x25_",@"title":@"朋友圈"},
+                    @{@"imageName":@"ff_IconLocationService_25x25_",@"title":@"附近的人"},
+                    @{@"imageName":@"ff_IconShake_25x25_",@"title":@"摇一摇"}],
+                  @[@{@"imageName":@"ff_IconQRCode_25x25_",@"title":@"扫一扫"}],
+                  @[@{@"imageName":@"MoreGame_25x25_",@"title":@"购物"},
+                    @{@"imageName":@"MoreGame_25x25_",@"title":@"游戏"}]];
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
@@ -88,7 +88,7 @@
     [image mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.offset(KMARGIN*3/2);
         make.centerY.equalTo(backView);
-        make.size.mas_equalTo(CGSizeMake(30, 30));
+        make.size.mas_equalTo(CGSizeMake(25, 25));
     }];
     
     UILabel *title = [[UILabel alloc]init];

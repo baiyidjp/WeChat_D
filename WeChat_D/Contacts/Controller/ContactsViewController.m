@@ -42,15 +42,6 @@
     
 }
 
-- (NSArray *)topDataArray{
-    
-    if (!_topDataArray) {
-        
-        _topDataArray = @[@"新的朋友",@"群聊",@"公众号"];
-    }
-    return _topDataArray;
-}
-
 - (NSMutableArray *)dataArray{
     
     if (!_dataArray) {
@@ -88,6 +79,11 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
+    self.topDataArray = @[@{@"imageName":@"add_friend_icon_addgroup_36x36_",@"title":@"新的朋友"},
+                          @{@"imageName":@"add_friend_icon_addgroup_36x36_",@"title":@"群聊"},
+                          @{@"imageName":@"Contact_icon_ContactTag_36x36_",@"title":@"标签"},
+                          @{@"imageName":@"add_friend_icon_offical_36x36_",@"title":@"公共号"},];
+
     //添加 加号
     UIBarButtonItem *rightitem = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addFriend)];
     self.navigationItem.rightBarButtonItem = rightitem;
@@ -192,8 +188,7 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellID];
     switch (indexPath.section) {
         case 0:
-            cell.textLabel.text = [self.topDataArray objectAtIndex:indexPath.row];
-            cell.imageView.image = [UIImage imageNamed:@"Tabar_mine"];
+            [self configSectionView:cell.contentView data:[self.topDataArray objectAtIndex:indexPath.row]];
             if (indexPath.row == 0) {
                 
                 [cell.contentView addSubview:self.friendUnreadLabel];
@@ -201,7 +196,7 @@
             break;
         case 1:
             cell.textLabel.text = [self.dataArray objectAtIndex:indexPath.row];
-            cell.imageView.image = [UIImage imageNamed:@"Tabar_mine"];
+            cell.imageView.image = [UIImage imageNamed:@"fts_default_headimage_36x36_"];
             break;
         default:
             break;
@@ -210,6 +205,28 @@
     return cell;
     
 }
+
+- (void)configSectionView:(UIView *)backView data:(NSDictionary *)dataDict{
+    
+    UIImageView *image = [[UIImageView alloc]init];
+    image.image = [UIImage imageNamed:[dataDict objectForKey:@"imageName"]];
+    [backView addSubview:image];
+    [image mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.offset(KMARGIN*3/2);
+        make.centerY.equalTo(backView);
+        make.size.mas_equalTo(CGSizeMake(36, 36));
+    }];
+    
+    UILabel *title = [[UILabel alloc]init];
+    title.text = [dataDict objectForKey:@"title"];
+    title.font = FONTSIZE(15);
+    [backView addSubview:title];
+    [title mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(image.mas_right).with.offset(KMARGIN*3/2);
+        make.centerY.equalTo(backView);
+    }];
+}
+
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
     

@@ -204,7 +204,8 @@
             make.top.offset(KMARGIN);
             make.size.mas_equalTo(CGSizeMake(50, 50));
         }];
-        self.headerView.backgroundColor = [UIColor redColor];
+        self.headerView.image = [UIImage imageNamed:@"fts_default_headimage_36x36_"];
+        self.headerView.backgroundColor = [UIColor whiteColor];
         //判断消息类型
         switch (model.messageType) {
             case MessageType_Text:{
@@ -300,7 +301,8 @@
             make.top.offset(KMARGIN);
             make.size.mas_equalTo(CGSizeMake(50, 50));
         }];
-        self.headerView.backgroundColor = [UIColor blueColor];
+        self.headerView.image = [UIImage imageNamed:@"fts_default_headimage_36x36_"];
+        self.headerView.backgroundColor = [UIColor whiteColor];
         switch (model.messageType) {
             case MessageType_Text:{
                 
@@ -435,6 +437,7 @@
     }
 }
 
+//重用时调用
 - (void)prepareForReuse{
     
     if (self.backImgaeView.subviews.count) {

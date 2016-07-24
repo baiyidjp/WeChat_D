@@ -32,4 +32,5 @@
 + (CGFloat)cellHeightWithModel:(MessageModel *)model;
 @property(nonatomic,weak)id<MessageTableViewCellDelegate> delegate;
 
+- (void)recordPlayFinish;
 @end

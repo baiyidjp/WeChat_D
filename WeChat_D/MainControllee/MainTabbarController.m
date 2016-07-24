@@ -22,8 +22,8 @@
     [super viewDidLoad];
 
     NSArray *titleArray = @[@"微信",@"通讯录",@"发现",@"我"];
-    NSArray *imageArray = @[@"Tabbar_wechat",@"Tabbar_contact",@"Tabar_mine",@"Tabar_mine"];
-    NSArray *selectImageArray = @[@"Tabbar_wechat_select",@"Tabbar_contact_select",@"Tabbar_mine_select",@"Tabbar_mine_select"];
+    NSArray *imageArray = @[@"tabbar_mainframe_25x23_",@"tabbar_contacts_27x23_",@"tabbar_discover_23x23_",@"tabbar_me_23x23_"];
+    NSArray *selectImageArray = @[@"tabbar_mainframeHL_25x23_",@"tabbar_contactsHL_27x23_@2x",@"tabbar_discoverHL_23x23_",@"tabbar_meHL_23x23_"];
     WeChatViewController *weChatCtrl = [[WeChatViewController alloc]init];
     ContactsViewController *contactsCtrl = [[ContactsViewController alloc]init];
     DiscoverViewController *discoverCtrl = [[DiscoverViewController alloc]init];

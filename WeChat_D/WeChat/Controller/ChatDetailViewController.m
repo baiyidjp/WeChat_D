@@ -36,6 +36,8 @@
 @property(nonatomic,strong)NSMutableArray *reciveMessageArray;
 /** 播放语音 */
 @property(nonatomic,strong) Mp3Recorder *mp3Recorder;
+/** MessCell 用来停止播放语音 */
+@property(nonatomic,strong) MessageTableViewCell *voiceMessageCell;
 
 @end
 
@@ -231,12 +233,14 @@
     
     switch (messageModel.messageType) {
         case MessageType_Text:
-            
+            return;
             break;
         case MessageType_Picture:
+            NSLog(@"点击图片放大");
             break;
 
         case MessageType_Voice:{
+            self.voiceMessageCell = messageCell;
             NSFileManager *fileManger = [NSFileManager defaultManager];
             if ([fileManger fileExistsAtPath:messageModel.voiceLocaPath]){
                 [self.mp3Recorder startPlayRecordWithPath:messageModel.voiceLocaPath];
@@ -262,6 +266,7 @@
     for (EMMessage *emmessage in self.reciveMessageArray) {
         [self.conversation markMessageAsReadWithId:emmessage.messageId];
     }
+    [self.voiceMessageCell recordPlayFinish];
 }
 
 @end

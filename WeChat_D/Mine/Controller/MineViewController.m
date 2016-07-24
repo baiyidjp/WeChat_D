@@ -84,12 +84,12 @@
         make.edges.equalTo(self.view);
     }];
     
-    dataArray = @[@[@{@"imageName":@"Tabbar_contact",@"title":@"相册"},
-                    @{@"imageName":@"Tabbar_contact",@"title":@"收藏"},
-                    @{@"imageName":@"Tabbar_contact",@"title":@"钱包"},
-                    @{@"imageName":@"Tabbar_contact",@"title":@"卡包"}],
-                @[@{@"imageName":@"Tabbar_contact",@"title":@"表情"}],
-                @[@{@"imageName":@"Tabbar_contact",@"title":@"设置"}]];
+    dataArray = @[@[@{@"imageName":@"MoreMyAlbum_25x25_",@"title":@"相册"},
+                    @{@"imageName":@"MoreMyFavorites_25x25_",@"title":@"收藏"},
+                    @{@"imageName":@"MoreMyBankCard_25x25_",@"title":@"钱包"},
+                    @{@"imageName":@"MyCardPackageIcon_25x25_",@"title":@"卡包"}],
+                @[@{@"imageName":@"MoreExpressionShops_25x25_",@"title":@"表情"}],
+                @[@{@"imageName":@"MoreSetting_25x25_",@"title":@"设置"}]];
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
@@ -179,7 +179,7 @@
     [image mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.offset(KMARGIN*3/2);
         make.centerY.equalTo(backView);
-        make.size.mas_equalTo(CGSizeMake(30, 30));
+        make.size.mas_equalTo(CGSizeMake(25, 25));
     }];
     
     UILabel *title = [[UILabel alloc]init];
