@@ -228,7 +228,8 @@
     [self.toolView endEditing];
 }
 - (void)messageCellTappedHead:(MessageTableViewCell *)messageCell{
-
+    
+    [self.view makeToast:@"点击头像未处理"];
 }
 - (void)messageCellTappedMessage:(MessageTableViewCell *)messageCell MessageModel:(MessageModel *)messageModel{
     
