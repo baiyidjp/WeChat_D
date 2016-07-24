@@ -43,6 +43,7 @@ typedef enum : NSUInteger {
 @property(nonatomic,strong)EMMessage *emmessage;
 /** body */
 @property(nonatomic,strong)EMMessageBody *messageBody;
-
+/** 消息ID */
+@property(nonatomic,copy)NSString *messageId;
 
 @end

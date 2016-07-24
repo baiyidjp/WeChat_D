@@ -23,7 +23,10 @@
  *  点击消息
  */
 - (void)messageCellTappedMessage:(MessageTableViewCell *)messageCell MessageModel:(MessageModel *)messageModel;
-
+/**
+ *  长按消息
+ */
+- (void)messageCellLonrPressMessage:(MessageTableViewCell *)messageCell MessageModel:(MessageModel *)messageModel indexPath:(NSIndexPath *)indexPath;
 @end
 
 @interface MessageTableViewCell : UITableViewCell
@@ -31,6 +34,7 @@
 @property(nonatomic,strong)MessageModel *model;
 + (CGFloat)cellHeightWithModel:(MessageModel *)model;
 @property(nonatomic,weak)id<MessageTableViewCellDelegate> delegate;
-
+/** indexpath */
+@property(nonatomic,strong) NSIndexPath *indexPath;
 - (void)recordPlayFinish;
 @end

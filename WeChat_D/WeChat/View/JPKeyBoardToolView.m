@@ -560,6 +560,7 @@
     NSString *thumlocaImagePath = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject] stringByAppendingPathComponent:[NSString stringWithFormat:@"thumimage_%@.png",str]];
     body.thumbnailLocalPath = thumlocaImagePath;
     body.thumbnailSize = [UIImage imageWithData:thumdata].size;
+    body.compressRatio = 1.0;
     [thumdata writeToFile:thumlocaImagePath atomically:YES];
     NSString *from = [[EMClient sharedClient] currentUsername];
     //生成Message

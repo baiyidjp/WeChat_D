@@ -67,10 +67,10 @@
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)];
     [self.contentView addGestureRecognizer:tap];
     
-//    UILongPressGestureRecognizer *longPress = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(handleLongPress:)];
-//    longPress.numberOfTouchesRequired = 1;
-//    longPress.minimumPressDuration = 1.f;
-//    [self.contentView addGestureRecognizer:longPress];
+    UILongPressGestureRecognizer *longPress = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(handleLongPress:)];
+    longPress.numberOfTouchesRequired = 1;
+    longPress.minimumPressDuration = 1.f;
+    [self.contentView addGestureRecognizer:longPress];
 }
 
 #pragma mark 点击消息 / 头像 /空白 处的事件 代理
@@ -80,16 +80,26 @@
         if (CGRectContainsPoint(self.backImgaeView.frame, tapPoint)) {
             if ([self.delegate respondsToSelector:@selector(messageCellTappedMessage:MessageModel:)]) {
                 [self.delegate messageCellTappedMessage:self MessageModel:self.model];
-                [self.timer setFireDate:[NSDate distantPast]];
-                self.contentView.userInteractionEnabled = NO;
-                NSFileManager *fileManger = [NSFileManager defaultManager];
-                if ([fileManger fileExistsAtPath:self.model.voiceLocaPath]){
-                    [[NSUserDefaults standardUserDefaults] setObject:@1 forKey:self.model.voiceLocaPath];
-                }else{
-                    [[NSUserDefaults standardUserDefaults] setObject:@1 forKey:self.model.voicePath];
-                }
+                switch (self.model.messageType) {
+                    case MessageType_Voice:
+                    {
+                        [self.timer setFireDate:[NSDate distantPast]];
+                        self.contentView.userInteractionEnabled = NO;
+                        NSFileManager *fileManger = [NSFileManager defaultManager];
+                        if ([fileManger fileExistsAtPath:self.model.voiceLocaPath]){
+                            [[NSUserDefaults standardUserDefaults] setObject:@1 forKey:self.model.voiceLocaPath];
+                        }else{
+                            [[NSUserDefaults standardUserDefaults] setObject:@1 forKey:self.model.voicePath];
+                        }
+                        
+                        self.voiceUnread.hidden = YES;
 
-                self.voiceUnread.hidden = YES;
+                    }
+                        break;
+                        
+                    default:
+                        break;
+                }
             }
         }else if (CGRectContainsPoint(self.headerView.frame, tapPoint)) {
             if ([self.delegate respondsToSelector:@selector(messageCellTappedHead:)]) {
@@ -103,6 +113,16 @@
     }
 }
 
+#pragma mark 长按消息
+- (void)handleLongPress:(UILongPressGestureRecognizer *)longPtess{
+    
+    CGPoint tapPoint = [longPtess locationInView:self.contentView];
+    if (CGRectContainsPoint(self.backImgaeView.frame, tapPoint)) {
+        if ([self.delegate respondsToSelector:@selector(messageCellLonrPressMessage:MessageModel:indexPath:)]) {
+            [self.delegate messageCellLonrPressMessage:self MessageModel:self.model indexPath:self.indexPath];
+        }
+    }
+}
 #pragma mark 懒加载views
 - (UIImageView *)headerView{
     
@@ -265,13 +285,16 @@
                 NSFileManager *fileManger = [NSFileManager defaultManager];
 #warning 因为发送方发送消息的时候 环信没有返回网络路径 而重新进入聊天界面后确是从网络加载的图片 好坑 所以我们要先判断 是否存在本地图片 也就是发送时我们自己存下的那个本地路径 若有就加载 没有再去网络加载
                 if ([fileManger fileExistsAtPath:model.image_mark]) {
-                    [self.messsgeImage sd_setImageWithURL:[NSURL fileURLWithPath:model.image_mark] placeholderImage:[UIImage imageNamed:@"location"]];
+                    self.messsgeImage.image = [UIImage imageWithContentsOfFile:model.image_mark];;
                 }else{
                     [self.messsgeImage sd_setImageWithURL:[NSURL URLWithString:model.imageUrl] placeholderImage:[UIImage imageNamed:@"location"]];
                 }
 #warning 关于图片的size问题 坑了好久 本地的size可以直接拿到 没问题 但是从网络下载的size 由于SDWebImage是异步下载 我们无法再当前主线程直接拿到size 若直接用[self.messsgeImage.image.size] 赋值的话size一直是(60 ,60) 所以无法正常显示图片 然后想到使用SD的下载方法中有一个下载完成的回调 所以想着在回调中直接拿到image的size 虽然拿到了 但是无法进行赋值 因为我们在进行布局和计算cell高度的时候 image还在异步下载呢 到时size一直是zero 最后我将计算size的方法放到model中 这样便解决了size的问题
                 
                 CGSize imageSize = model.thumbnailSize;
+                if (imageSize.width == 0) {
+                    imageSize = CGSizeMake(150, 150);
+                }
                 [self.messsgeImage mas_remakeConstraints:^(MASConstraintMaker *make) {
                     make.edges.mas_equalTo(self.backImgaeView).insets(UIEdgeInsetsMake(KMARGIN, 3.0/2*KMARGIN, KMARGIN, 3.0/2*KMARGIN));
                     if (imageSize.width > ImageDefaultSizeWH) {
@@ -364,11 +387,15 @@
                 self.timeLabel.hidden = YES;
                 NSFileManager *fileManger = [NSFileManager defaultManager];
                 if ([fileManger fileExistsAtPath:model.image_mark]) {
-                    [self.messsgeImage sd_setImageWithURL:[NSURL fileURLWithPath:model.image_mark] placeholderImage:[UIImage imageNamed:@"location"]];
+                    self.messsgeImage.image = [UIImage imageWithContentsOfFile:model.image_mark];;
                 }else{
                     [self.messsgeImage sd_setImageWithURL:[NSURL URLWithString:model.imageUrl] placeholderImage:[UIImage imageNamed:@"location"]];
                 }
                 CGSize imageSize = model.thumbnailSize;
+                if (imageSize.width == 0) {
+                    imageSize = CGSizeMake(150, 150);
+                }
+
                 NSLog(@"%f",imageSize.width);
                 [self.backImgaeView addSubview:self.messsgeImage];
                 [self.messsgeImage mas_remakeConstraints:^(MASConstraintMaker *make) {

@@ -103,7 +103,7 @@
         }
         
     }]];
-    [alertCtrl addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil]];
+    [alertCtrl addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:nil]];
     [self presentViewController:alertCtrl animated:YES completion:nil];
 
 }
@@ -200,6 +200,7 @@
     MessageModel *model = [[MessageModel alloc]init];
     EMMessage *emmessage = [self.dataArray objectAtIndex:indexPath.row];
     model.emmessage = emmessage;
+    cell.indexPath = indexPath;
     cell.model = model;
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.delegate = self;
@@ -253,6 +254,28 @@
         default:
             break;
     }
+}
+
+- (void)messageCellLonrPressMessage:(MessageTableViewCell *)messageCell MessageModel:(MessageModel *)messageModel indexPath:(NSIndexPath *)indexPath{
+    
+    NSLog(@"长按删除消息");
+    UIAlertController *alertCtrl = [UIAlertController alertControllerWithTitle:@"是否删除本条消息" message:nil preferredStyle:UIAlertControllerStyleAlert];
+    [alertCtrl addAction:[UIAlertAction actionWithTitle:@"删除" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action){
+
+        [SVProgressHUD show];
+        BOOL delectMessage = [self.conversation deleteMessageWithId:messageModel.messageId];
+        if (delectMessage) {
+            [SVProgressHUD showSuccessWithStatus:@"删除成功"];
+            [self.dataArray removeObject:messageModel.emmessage];
+            [self.ChatTableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+        }else{
+            [SVProgressHUD showSuccessWithStatus:@"删除失败"];
+        }
+        
+    }]];
+    [alertCtrl addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:nil]];
+    [self presentViewController:alertCtrl animated:YES completion:nil];
+
 }
 
 - (void)dealloc{
