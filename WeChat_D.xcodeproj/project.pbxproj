@@ -53,6 +53,8 @@
 		F53EC6841D3E643400027A24 /* libstdc++.6.0.9.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = F53EC6831D3E643400027A24 /* libstdc++.6.0.9.tbd */; };
 		F53EC6861D3E643C00027A24 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = F53EC6851D3E643C00027A24 /* libsqlite3.tbd */; };
 		F53EC6881D3E644300027A24 /* libiconv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = F53EC6871D3E644300027A24 /* libiconv.tbd */; };
+		F55532A41D46542A00427192 /* MessageSendFail_28x28_@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F55532A21D46542A00427192 /* MessageSendFail_28x28_@2x.png */; };
+		F55532A51D46542A00427192 /* MessageSendFail_28x28_@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = F55532A31D46542A00427192 /* MessageSendFail_28x28_@3x.png */; };
 		F5CB8B641D3F0533002663F8 /* AddFriendController.m in Sources */ = {isa = PBXBuildFile; fileRef = F5CB8B631D3F0533002663F8 /* AddFriendController.m */; };
 		F5CB8B781D447229002663F8 /* tabbar_badge_30x30_@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F5CB8B651D447229002663F8 /* tabbar_badge_30x30_@2x.png */; };
 		F5CB8B791D447229002663F8 /* tabbar_badge_30x30_@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = F5CB8B661D447229002663F8 /* tabbar_badge_30x30_@3x.png */; };
@@ -322,6 +324,8 @@
 		F53EC6831D3E643400027A24 /* libstdc++.6.0.9.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libstdc++.6.0.9.tbd"; path = "usr/lib/libstdc++.6.0.9.tbd"; sourceTree = SDKROOT; };
 		F53EC6851D3E643C00027A24 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		F53EC6871D3E644300027A24 /* libiconv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libiconv.tbd; path = usr/lib/libiconv.tbd; sourceTree = SDKROOT; };
+		F55532A21D46542A00427192 /* MessageSendFail_28x28_@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "MessageSendFail_28x28_@2x.png"; sourceTree = "<group>"; };
+		F55532A31D46542A00427192 /* MessageSendFail_28x28_@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "MessageSendFail_28x28_@3x.png"; sourceTree = "<group>"; };
 		F5CB8B621D3F0533002663F8 /* AddFriendController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddFriendController.h; sourceTree = "<group>"; };
 		F5CB8B631D3F0533002663F8 /* AddFriendController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddFriendController.m; sourceTree = "<group>"; };
 		F5CB8B651D447229002663F8 /* tabbar_badge_30x30_@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tabbar_badge_30x30_@2x.png"; sourceTree = "<group>"; };
@@ -1034,6 +1038,8 @@
 		F5CB8BD31D4477E0002663F8 /* Voice */ = {
 			isa = PBXGroup;
 			children = (
+				F55532A21D46542A00427192 /* MessageSendFail_28x28_@2x.png */,
+				F55532A31D46542A00427192 /* MessageSendFail_28x28_@3x.png */,
 				F5CB8BD41D4477E0002663F8 /* VoiceSearchFeedback005_90x90_@2x.png */,
 				F5CB8BD51D4477E0002663F8 /* VoiceSearchFeedback006_90x90_@2x.png */,
 				F5CB8BD61D4477E0002663F8 /* VoiceSearchFeedback007_90x90_@2x.png */,
@@ -1204,6 +1210,7 @@
 				F5CB8C461D4477E0002663F8 /* VoiceSearchIcon_90x90_@2x.png in Resources */,
 				F5CB8C451D4477E0002663F8 /* VoiceSearchFeedback020_90x90_@2x.png in Resources */,
 				F5CB8C3A1D4477E0002663F8 /* VoiceSearchFeedback009_90x90_@2x.png in Resources */,
+				F55532A41D46542A00427192 /* MessageSendFail_28x28_@2x.png in Resources */,
 				F5CB8C411D4477E0002663F8 /* VoiceSearchFeedback016_90x90_@2x.png in Resources */,
 				F5CB8B801D447229002663F8 /* tabbar_discoverHL_22x22_@3x.png in Resources */,
 				F5CB8B7E1D447229002663F8 /* tabbar_discover_22x22_@3x.png in Resources */,
@@ -1278,6 +1285,7 @@
 				F5CB8C491D4477E0002663F8 /* VoiceSearchLoading002_90x90_@2x.png in Resources */,
 				F5CB8C471D4477E0002663F8 /* VoiceSearchIconHL_90x90_@2x.png in Resources */,
 				F5CB8C181D4477E0002663F8 /* ff_IconQRCode_25x25_@1x.png in Resources */,
+				F55532A51D46542A00427192 /* MessageSendFail_28x28_@3x.png in Resources */,
 				F5CB8C4C1D4477E0002663F8 /* VoiceSearchLoading005_90x90_@2x.png in Resources */,
 				F5CB8C5E1D447A83002663F8 /* add_friend_icon_offical_36x36_@2x.png in Resources */,
 				F5CB8C231D4477E0002663F8 /* ff_IconShowQQ_25x25_@1x.png in Resources */,

@@ -198,8 +198,8 @@
     
     if (!_sendFiledBtn) {
         _sendFiledBtn = [[UIButton alloc]init];
-        _sendFiledBtn.backgroundColor = [UIColor redColor];
-        [_sendFiledBtn setTitle:@"重发" forState:UIControlStateNormal];
+        _sendFiledBtn.backgroundColor = [UIColor clearColor];
+        [_sendFiledBtn setImage:[UIImage imageNamed:@"MessageSendFail_28x28_"] forState:UIControlStateNormal];
         [_sendFiledBtn addTarget:self action:@selector(reSendMessage) forControlEvents:UIControlEventTouchUpInside];
         [_sendFiledBtn.titleLabel setFont:FONTSIZE(11)];
         

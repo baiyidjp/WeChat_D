@@ -105,18 +105,19 @@
 - (void)updateConstraints{
     
     [self.recordBtn mas_updateConstraints:^(MASConstraintMaker *make) {
-        make.top.left.offset(KMARGIN);
+        make.centerY.equalTo(self.mas_centerY);
+        make.left.offset(KMARGIN);
         make.width.equalTo(self.recordBtn.mas_height);
     }];
     
     [self.addMoreBtn mas_updateConstraints:^(MASConstraintMaker *make) {
-        make.top.offset(KMARGIN);
+        make.centerY.equalTo(self.mas_centerY);
         make.right.offset(-KMARGIN);
         make.width.equalTo(self.addMoreBtn.mas_height);
     }];
     
     [self.faceBtn mas_updateConstraints:^(MASConstraintMaker *make) {
-        make.top.offset(KMARGIN);
+        make.centerY.equalTo(self.mas_centerY);
         make.right.equalTo(self.addMoreBtn.mas_left).with.offset(-KMARGIN);
         make.width.equalTo(self.faceBtn.mas_height);
     }];
