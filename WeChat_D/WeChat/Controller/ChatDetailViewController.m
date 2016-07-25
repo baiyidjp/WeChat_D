@@ -164,17 +164,44 @@
     } completion:^(EMMessage *message, EMError *error) {
         if (!error) {
             [SVProgressHUD showSuccessWithStatus:@"发送成功"];
-            [self.dataArray addObject:message];
-            [self.ChatTableView reloadData];
-            if (self.dataArray.count) {
-                [self.ChatTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:self.dataArray.count-1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
-            }
+            NSLog(@"消息发送状态 成功%zd",message.status);
         }else{
             [SVProgressHUD showSuccessWithStatus:@"发送失败"];
+            NSLog(@"消息发送状态 失败%zd",message.status);
+        }
+        [self.dataArray addObject:message];
+        [self.ChatTableView reloadData];
+        if (self.dataArray.count) {
+            [self.ChatTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:self.dataArray.count-1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
         }
     }];
 }
+#pragma mark 重发消息
+- (void)resendMessageWith:(MessageTableViewCell *)messageCell indexPath:(NSIndexPath *)indexPath{
+    
+    EMMessage *emmessage = [self.dataArray objectAtIndex:indexPath.row];
+    if (emmessage.body.type == EMMessageBodyTypeText) {
+        [SVProgressHUD show];
+    }
+    [[EMClient sharedClient].chatManager asyncResendMessage:emmessage progress:^(int progress) {
+        [SVProgressHUD showProgress:progress/100.0 status:[NSString stringWithFormat:@"发送中 %d%%",progress]];
+    } completion:^(EMMessage *message, EMError *error) {
+        if (!error) {
+            [SVProgressHUD showSuccessWithStatus:@"发送成功"];
+            NSLog(@"消息发送状态 成功%zd",message.status);
+        }else{
+            [SVProgressHUD showSuccessWithStatus:@"发送失败"];
+            NSLog(@"消息发送状态 失败%zd",message.status);
+        }
+        [self.dataArray removeObject:emmessage];
+        [self.dataArray addObject:message];
+        [self.ChatTableView reloadData];
+        if (self.dataArray.count) {
+            [self.ChatTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:self.dataArray.count-1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+        }
+    }];
 
+}
 #pragma mark 接收消息
 - (void)receiveMessages:(NSNotification *)notification{
     
@@ -256,7 +283,7 @@
             break;
     }
 }
-
+#pragma mark 删除消息
 - (void)messageCellLonrPressMessage:(MessageTableViewCell *)messageCell MessageModel:(MessageModel *)messageModel indexPath:(NSIndexPath *)indexPath{
     
     NSLog(@"长按删除消息");
@@ -290,7 +317,7 @@
     for (EMMessage *emmessage in self.reciveMessageArray) {
         [self.conversation markMessageAsReadWithId:emmessage.messageId];
     }
-    [self.voiceMessageCell recordPlayFinish];
+    [self.voiceMessageCell viewBack];
 }
 
 @end

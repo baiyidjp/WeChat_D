@@ -143,8 +143,8 @@
     if (!_recordBtn) {
         _recordBtn = [[UIButton alloc]init];
         _recordBtn.tag = ButtonType_Record;
-        [_recordBtn setBackgroundImage:[UIImage imageNamed:@"chat_bar_voice_normal"] forState:UIControlStateNormal];
-        [_recordBtn setBackgroundImage:[UIImage imageNamed:@"chat_bar_input_normal"] forState:UIControlStateSelected];
+        [_recordBtn setBackgroundImage:[UIImage imageNamed:@"ToolViewInputVoice_35x35_"] forState:UIControlStateNormal];
+        [_recordBtn setBackgroundImage:[UIImage imageNamed:@"ToolViewKeyboard_35x35_"] forState:UIControlStateSelected];
         [_recordBtn sizeToFit];
         [_recordBtn addTarget:self action:@selector(toolBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
     }
@@ -176,8 +176,8 @@
     if (!_faceBtn) {
         _faceBtn = [[UIButton alloc]init];
         _faceBtn.tag = ButtonType_Face;
-        [_faceBtn setBackgroundImage:[UIImage imageNamed:@"chat_bar_face_normal"] forState:UIControlStateNormal];
-        [_faceBtn setBackgroundImage:[UIImage imageNamed:@"chat_bar_input_normal"] forState:UIControlStateSelected];
+        [_faceBtn setBackgroundImage:[UIImage imageNamed:@"ToolViewEmotion_35x35_"] forState:UIControlStateNormal];
+        [_faceBtn setBackgroundImage:[UIImage imageNamed:@"ToolViewKeyboard_35x35_"] forState:UIControlStateSelected];
         [_faceBtn sizeToFit];
         [_faceBtn addTarget:self action:@selector(toolBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
     }
@@ -189,8 +189,8 @@
     if (!_addMoreBtn) {
         _addMoreBtn = [[UIButton alloc]init];
         _addMoreBtn.tag = ButtonType_AddMore;
-        [_addMoreBtn setBackgroundImage:[UIImage imageNamed:@"chat_bar_more_normal"] forState:UIControlStateNormal];
-        [_addMoreBtn setBackgroundImage:[UIImage imageNamed:@"chat_bar_input_normal"] forState:UIControlStateSelected];
+        [_addMoreBtn setBackgroundImage:[UIImage imageNamed:@"TypeSelectorBtn_Black_35x35_"] forState:UIControlStateNormal];
+        [_addMoreBtn setBackgroundImage:[UIImage imageNamed:@"ToolViewKeyboard_35x35_"] forState:UIControlStateSelected];
         [_addMoreBtn sizeToFit];
         [_addMoreBtn addTarget:self action:@selector(toolBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
     }

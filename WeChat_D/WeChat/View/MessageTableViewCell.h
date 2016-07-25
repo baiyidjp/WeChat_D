@@ -27,6 +27,10 @@
  *  长按消息
  */
 - (void)messageCellLonrPressMessage:(MessageTableViewCell *)messageCell MessageModel:(MessageModel *)messageModel indexPath:(NSIndexPath *)indexPath;
+/**
+ *  重新发送
+ */
+- (void)resendMessageWith:(MessageTableViewCell *)messageCell indexPath:(NSIndexPath *)indexPath;
 @end
 
 @interface MessageTableViewCell : UITableViewCell
@@ -36,5 +40,5 @@
 @property(nonatomic,weak)id<MessageTableViewCellDelegate> delegate;
 /** indexpath */
 @property(nonatomic,strong) NSIndexPath *indexPath;
-- (void)recordPlayFinish;
+- (void)viewBack;
 @end

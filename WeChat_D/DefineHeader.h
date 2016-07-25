@@ -33,6 +33,8 @@
 #define NEWFRIENDREQUESTRESULT @"newFriendRequestResult" //新朋友请求的结果的通知
 #define RECORDPLAYBEGIN @"recordPlayBegin" //录音开始播放
 #define RECORDPLAYFINISH @"recordPlayFinish" //录音播放完毕
+#define SENDMESSAGEFIELD @"sendMessageField" //发送消息失败
+#define SENDMESSAGESUCCESS @"sendMessageSuccess" //发送消息成功
 
 //define this constant if you want to use Masonry without the 'mas_' prefix
 //#define MAS_SHORTHAND

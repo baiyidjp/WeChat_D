@@ -14,6 +14,12 @@ typedef enum : NSUInteger {
     MessageType_Picture,
 } MessageType;
 
+typedef enum : NSUInteger {
+    MessageSendNone,
+    MessageSendSuccess,
+    MessageSendField,
+} MessageSendStale;
+
 @class EMMessage;
 @interface MessageModel : NSObject
 
@@ -45,5 +51,8 @@ typedef enum : NSUInteger {
 @property(nonatomic,strong)EMMessageBody *messageBody;
 /** 消息ID */
 @property(nonatomic,copy)NSString *messageId;
-
+/**
+ *  发送状态
+ */
+@property(nonatomic,assign) EMMessageStatus sendSuccess;
 @end

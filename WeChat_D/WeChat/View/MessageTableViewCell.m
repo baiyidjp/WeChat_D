@@ -41,6 +41,10 @@
 @property(nonatomic,strong) NSTimer *timer;
 /** 记录时间 */
 @property(nonatomic,assign) NSInteger timerCount;
+/**
+ *  发送失败显示
+ */
+@property(nonatomic,strong)UIButton *sendFiledBtn;
 @end
 
 @implementation MessageTableViewCell
@@ -154,6 +158,7 @@
     
     if (!_messsgeImage) {
         _messsgeImage = [[UIImageView alloc]init];
+        _messsgeImage.backgroundColor = [UIColor clearColor];
     }
     return _messsgeImage;
 }
@@ -189,6 +194,20 @@
     return _voiceUnread;
 }
 
+- (UIButton *)sendFiledBtn{
+    
+    if (!_sendFiledBtn) {
+        _sendFiledBtn = [[UIButton alloc]init];
+        _sendFiledBtn.backgroundColor = [UIColor redColor];
+        [_sendFiledBtn setTitle:@"重发" forState:UIControlStateNormal];
+        [_sendFiledBtn addTarget:self action:@selector(reSendMessage) forControlEvents:UIControlEventTouchUpInside];
+        [_sendFiledBtn.titleLabel setFont:FONTSIZE(11)];
+        
+    }
+    return _sendFiledBtn;
+}
+
+#pragma mark 播放语音的动画
 - (NSTimer *)timer{
     
     if (!_timer) {
@@ -257,10 +276,11 @@
                     make.right.equalTo(self.headerView.mas_left).with.offset(-KMARGIN/2);
                     if (model.voiceTime < 5) {
                         make.width.equalTo(@80);
+                    }else if(model.voiceTime*2.0*KMARGIN > KWIDTH/5*3.0){
+                        make.width.equalTo(@(KWIDTH/5*3.0));
                     }else{
                         make.width.equalTo(@(model.voiceTime*2*KMARGIN));
                     }
-                    make.width.lessThanOrEqualTo(@(KWIDTH/5*3)).priorityLow();
                     make.bottom.equalTo(self.headerView.mas_bottom);
                 }];
                 self.messageVoice.image = [UIImage imageNamed:@"message_voice_sender_playing_3"];
@@ -316,7 +336,13 @@
             default:
                 break;
         }
-                self.backImgaeView.image = [self backImage:[UIImage imageNamed:@"message_sender_background_normal"]];
+        self.backImgaeView.image = [self backImage:[UIImage imageNamed:@"message_sender_background_normal"]];
+        self.sendFiledBtn.hidden = model.sendSuccess == EMMessageStatusSuccessed ? YES:NO;
+        [self.contentView addSubview:self.sendFiledBtn];
+        [self.sendFiledBtn mas_remakeConstraints:^(MASConstraintMaker *make) {
+            make.centerY.equalTo(self.backImgaeView.mas_centerY);
+            make.right.equalTo(self.backImgaeView.mas_left).with.offset(-KMARGIN/2);
+        }];
         
     }else{//判断是朋友发
         [self.headerView mas_remakeConstraints:^(MASConstraintMaker *make) {
@@ -325,7 +351,7 @@
             make.size.mas_equalTo(CGSizeMake(50, 50));
         }];
         self.headerView.image = [UIImage imageNamed:@"fts_default_headimage_36x36_"];
-        self.headerView.backgroundColor = [UIColor whiteColor];
+        self.headerView.backgroundColor = [UIColor redColor];
         switch (model.messageType) {
             case MessageType_Text:{
                 
@@ -354,10 +380,11 @@
                     make.left.equalTo(self.headerView.mas_right).with.offset(KMARGIN/2);
                     if (model.voiceTime < 5) {
                         make.width.equalTo(@80);
+                    }else if(model.voiceTime*2.0*KMARGIN > KWIDTH/5*3.0){
+                        make.width.equalTo(@(KWIDTH/5*3.0));
                     }else{
                         make.width.equalTo(@(model.voiceTime*2*KMARGIN));
                     }
-                    make.width.lessThanOrEqualTo(@(KWIDTH/5*3)).priorityLow();
                     make.bottom.equalTo(self.headerView.mas_bottom);
                 }];
                 self.messageVoice.image = [UIImage imageNamed:@"message_voice_receiver_playing_3"];
@@ -416,6 +443,12 @@
         }
         
         self.backImgaeView.image = [self backImage:[UIImage imageNamed:@"message_receiver_background_normal"]];
+        self.sendFiledBtn.hidden = model.sendSuccess == EMMessageStatusSuccessed ? YES:NO;
+        [self.contentView addSubview:self.sendFiledBtn];
+        [self.sendFiledBtn mas_remakeConstraints:^(MASConstraintMaker *make) {
+            make.centerY.equalTo(self.backImgaeView.mas_centerY);
+            make.left.equalTo(self.backImgaeView.mas_right).with.offset(KMARGIN/2);
+        }];
     }
 }
 
@@ -462,6 +495,23 @@
     }else{
         [self.messageVoice setImage:[UIImage imageNamed:@"message_voice_receiver_normal"]];
     }
+}
+
+
+#pragma mark 重新发送
+- (void)reSendMessage{
+    
+    if ([self.delegate respondsToSelector:@selector(resendMessageWith:indexPath:)]) {
+        [self.delegate resendMessageWith:self indexPath:self.indexPath];
+    }
+}
+//当离开聊天界面时
+- (void)viewBack{
+    [self.timer setFireDate:[NSDate distantFuture]];
+    self.timerCount = 0;
+    self.contentView.userInteractionEnabled = YES;
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:RECORDPLAYBEGIN object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:RECORDPLAYFINISH object:nil];
 }
 
 //重用时调用
