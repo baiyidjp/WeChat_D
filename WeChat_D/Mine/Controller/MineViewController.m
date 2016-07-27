@@ -162,7 +162,7 @@
     }];
     
     UIButton *qrCode = [[UIButton alloc]init];
-    [qrCode setBackgroundColor:[UIColor grayColor]];
+    [qrCode setBackgroundImage:[UIImage imageNamed:@"setting_myQR_18x18_"] forState:UIControlStateNormal];
     [backView addSubview:qrCode];
     [qrCode mas_makeConstraints:^(MASConstraintMaker *make) {
         make.right.offset(0);

@@ -46,9 +46,9 @@ static CGFloat kTableView_cell_textFont = 15;//cell字号
 
 - (void)configView{
     
-    UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(self.frame.size.width-kTableView_width-kTableView_padding, CGRectGetMaxY(self.topViewFrame)+kTableView_top_padding*2-2, kTableView_width, kTableView_cell_height*self.dataArray.count+2)];
+    UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(self.frame.size.width-kTableView_width-kTableView_padding+2, CGRectGetMaxY(self.topViewFrame)+kTableView_top_padding, kTableView_width, kTableView_cell_height*self.dataArray.count+kTableView_padding*2)];
     // 加载图片
-    UIImage *image = [UIImage imageNamed:@"kuang"];
+    UIImage *image = [UIImage imageNamed:@"MoreFunctionFrame_70x62_"];
     // 设置端盖的值
     CGFloat top = image.size.height * 0.8;
     CGFloat left = image.size.width * 0.5;

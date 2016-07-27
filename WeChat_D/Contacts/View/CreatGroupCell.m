@@ -28,8 +28,8 @@
 - (void)setSubViews{
     
     self.selectBtn = [[UIButton alloc]init];
-    [self.selectBtn setBackgroundImage:[UIImage imageNamed:@"[NO]"] forState:UIControlStateNormal];
-    [self.selectBtn setBackgroundImage:[UIImage imageNamed:@"[OK]"] forState:UIControlStateSelected];
+    [self.selectBtn setBackgroundImage:[UIImage imageNamed:@"FriendsSendsPicturesSelectIcon_27x27_"] forState:UIControlStateNormal];
+    [self.selectBtn setBackgroundImage:[UIImage imageNamed:@"FriendsSendsPicturesSelectYIcon_27x27_"] forState:UIControlStateSelected];
     [self.contentView addSubview:self.selectBtn];
     
     

@@ -83,10 +83,10 @@
     
     if (!_listDataArray) {
         _listDataArray = [NSMutableArray array];
-        NSDictionary *dict1 = [NSDictionary dictionaryWithObjects:@[@"发起群聊",@"add_friend_icon_addgroup_36x36_"] forKeys:@[@"title",@"imageName"]];
-        NSDictionary *dict2 = [NSDictionary dictionaryWithObjects:@[@"添加朋友",@"add_friend_icon_addgroup_36x36_"] forKeys:@[@"title",@"imageName"]];
-        NSDictionary *dict3 = [NSDictionary dictionaryWithObjects:@[@"扫 一 扫",@"add_friend_icon_addgroup_36x36_"] forKeys:@[@"title",@"imageName"]];
-        NSDictionary *dict4 = [NSDictionary dictionaryWithObjects:@[@"收 付 款",@"add_friend_icon_addgroup_36x36_"] forKeys:@[@"title",@"imageName"]];
+        NSDictionary *dict1 = [NSDictionary dictionaryWithObjects:@[@"发起群聊",@"contacts_add_newmessage_30x30_"] forKeys:@[@"title",@"imageName"]];
+        NSDictionary *dict2 = [NSDictionary dictionaryWithObjects:@[@"添加朋友",@"contacts_add_friend_30x30_"] forKeys:@[@"title",@"imageName"]];
+        NSDictionary *dict3 = [NSDictionary dictionaryWithObjects:@[@"扫 一 扫",@"contacts_add_scan_30x30_"] forKeys:@[@"title",@"imageName"]];
+        NSDictionary *dict4 = [NSDictionary dictionaryWithObjects:@[@"收 付 款",@"contacts_add_scan_30x30_"] forKeys:@[@"title",@"imageName"]];
         [_listDataArray addObject:dict1];
         [_listDataArray addObject:dict2];
         [_listDataArray addObject:dict3];
@@ -158,9 +158,9 @@
     [self.view layoutIfNeeded];
     
     //添加 加号
-    UIImage *addImage = [UIImage imageNamed:@"TypeSelectorBtn_Black_35x35_"];
+    UIImage *addImage = [UIImage imageNamed:@"barbuttonicon_add_30x30_"];
     addImage = [addImage imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-    UIButton *addBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 25, 25)];
+    UIButton *addBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
     [addBtn setBackgroundImage:addImage forState:UIControlStateNormal];
     [addBtn addTarget:self action:@selector(addClicked:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *addItem = [[UIBarButtonItem alloc] initWithCustomView:addBtn];

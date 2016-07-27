@@ -62,4 +62,7 @@
 #define NSLog(...)
 #endif
 
+//默认头像
+#define DefaultHeadImageName_Message @"DefaultHead_48x48_"
+#define DefaultHeadImageName @"fts_default_headimage_36x36_"
 #endif /* DefineHeader_h */

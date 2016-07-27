@@ -241,9 +241,9 @@
         [self.headerView mas_remakeConstraints:^(MASConstraintMaker *make) {
             make.right.offset(-KMARGIN);
             make.top.offset(KMARGIN);
-            make.size.mas_equalTo(CGSizeMake(50, 50));
+            make.size.mas_equalTo(CGSizeMake(48, 48));
         }];
-        self.headerView.image = [UIImage imageNamed:@"fts_default_headimage_36x36_"];
+        self.headerView.image = [UIImage imageNamed:DefaultHeadImageName_Message];
         self.headerView.backgroundColor = [UIColor whiteColor];
         //判断消息类型
         switch (model.messageType) {
@@ -348,9 +348,9 @@
         [self.headerView mas_remakeConstraints:^(MASConstraintMaker *make) {
             make.left.offset(KMARGIN);
             make.top.offset(KMARGIN);
-            make.size.mas_equalTo(CGSizeMake(50, 50));
+            make.size.mas_equalTo(CGSizeMake(48, 48));
         }];
-        self.headerView.image = [UIImage imageNamed:@"fts_default_headimage_36x36_"];
+        self.headerView.image = [UIImage imageNamed:DefaultHeadImageName_Message];
         self.headerView.backgroundColor = [UIColor redColor];
         switch (model.messageType) {
             case MessageType_Text:{

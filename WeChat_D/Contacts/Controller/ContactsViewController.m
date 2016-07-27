@@ -188,6 +188,7 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellID];
     switch (indexPath.section) {
         case 0:
+            
             [self configSectionView:cell.contentView data:[self.topDataArray objectAtIndex:indexPath.row]];
             if (indexPath.row == 0) {
                 
@@ -196,7 +197,7 @@
             break;
         case 1:
             cell.textLabel.text = [self.dataArray objectAtIndex:indexPath.row];
-            cell.imageView.image = [UIImage imageNamed:@"fts_default_headimage_36x36_"];
+            cell.imageView.image = [UIImage imageNamed:DefaultHeadImageName];
             break;
         default:
             break;

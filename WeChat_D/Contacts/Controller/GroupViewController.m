@@ -105,7 +105,7 @@
         for (NSString *name in aList) {
             CreatGroupModel *model = [[CreatGroupModel alloc]init];
             model.name = name;
-            model.imageName = @"fts_default_headimage_36x36_";
+            model.imageName = DefaultHeadImageName;
             model.isSelect = NO;
             [self.dataArray addObject:model];
         }
@@ -115,7 +115,7 @@
         for (NSString *name in [[EMClient sharedClient].contactManager getContactsFromDB]) {
             CreatGroupModel *model = [[CreatGroupModel alloc]init];
             model.name = name;
-            model.imageName = @"fts_default_headimage_36x36_";
+            model.imageName = DefaultHeadImageName;
             model.isSelect = NO;
             [self.dataArray addObject:model];
         }
