@@ -111,7 +111,7 @@
                 dispatch_async(dispatch_get_main_queue(), ^{
                     SVProgressHUD.minimumDismissTimeInterval = 1.0;
                     [SVProgressHUD showSuccessWithStatus:@"登录成功"];
-                    [[NSNotificationCenter defaultCenter]postNotificationName:LOGINCHANGE object:nil];
+                    [JP_NotificationCenter postNotificationName:LOGINCHANGE object:nil];
                     //设置是否自动登录
                     [[EMClient sharedClient].options setIsAutoLogin:YES];
                     //保存当前登录账号

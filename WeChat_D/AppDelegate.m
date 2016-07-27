@@ -12,7 +12,7 @@
 
 #define AppKey @"djp7393#wechatdjp"
 #define ApnsCertName @"";
-@interface AppDelegate ()<EMClientDelegate,EMContactManagerDelegate,EMChatManagerDelegate>
+@interface AppDelegate ()<EMClientDelegate,EMContactManagerDelegate,EMChatManagerDelegate,EMGroupManagerDelegate>
 
 @end
 
@@ -32,13 +32,14 @@
     [[EMClient sharedClient] addDelegate:self delegateQueue:nil];
     [[EMClient sharedClient].contactManager addDelegate:self delegateQueue:nil];//通讯管理
     [[EMClient sharedClient].chatManager addDelegate:self delegateQueue:nil];//聊天管理
+    [[EMClient sharedClient].groupManager addDelegate:self delegateQueue:nil]; //群组管理
     
     self.window = [[UIWindow alloc]initWithFrame:[UIScreen mainScreen].bounds];
     
     //判断是否自动登录
     BOOL isAutoLogin = [EMClient sharedClient].isAutoLogin;
     if (isAutoLogin){
-        [[NSNotificationCenter defaultCenter] postNotificationName:LOGINCHANGE object:@YES];
+        [JP_NotificationCenter postNotificationName:LOGINCHANGE object:@YES];
         MainTabbarController *mainController = [[MainTabbarController alloc]init];
         self.window.rootViewController = mainController;
         [self.window makeKeyAndVisible];
@@ -46,7 +47,7 @@
     }
     else
     {
-        [[NSNotificationCenter defaultCenter] postNotificationName:LOGINCHANGE object:@NO];
+        [JP_NotificationCenter postNotificationName:LOGINCHANGE object:@NO];
         LoginViewController *mainController = [[LoginViewController alloc]init];
         self.window.rootViewController = mainController;
         [self.window makeKeyAndVisible];
@@ -71,12 +72,12 @@
         case EMConnectionConnected:
             NSLog(@"网络已连接");
             [dict setObject:@1 forKey:@"isConnect"];
-            [[NSNotificationCenter defaultCenter] postNotificationName:NETWORKSTATE object:nil userInfo:dict];
+            [JP_NotificationCenter postNotificationName:NETWORKSTATE object:nil userInfo:dict];
             break;
         case EMConnectionDisconnected:
             NSLog(@"网络断开");
             [dict setObject:@0 forKey:@"isConnect"];
-            [[NSNotificationCenter defaultCenter] postNotificationName:NETWORKSTATE object:nil userInfo:dict];
+            [JP_NotificationCenter postNotificationName:NETWORKSTATE object:nil userInfo:dict];
             break;
         default:
             break;
@@ -87,7 +88,7 @@
 - (void)didAutoLoginWithError:(EMError *)aError{
     if (!aError) {
         NSLog(@"Auto login success");
-        [[NSNotificationCenter defaultCenter]postNotificationName:AUTOLOGINSUCCESS object:nil];
+        [JP_NotificationCenter postNotificationName:AUTOLOGINSUCCESS object:nil];
     }else{
         NSLog(@"Auto login erreo,%@",aError);
         
@@ -132,7 +133,7 @@
     [alertCtrl addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         
         NSDictionary *dict = [NSDictionary dictionaryWithObject:aUsername forKey:@"name"];
-        [[NSNotificationCenter defaultCenter] postNotificationName:ADDFRIENDSUCCESS object:nil userInfo:dict];
+        [JP_NotificationCenter postNotificationName:ADDFRIENDSUCCESS object:nil userInfo:dict];
     }]];
 
 
@@ -147,7 +148,7 @@
  */
 - (void)didReceiveAddedFromUsername:(NSString *)aUsername{
     
-//    [[NSNotificationCenter defaultCenter]postNotificationName:AGREEFRIENDSUCCESS object:nil];
+//    [JP_NotificationCenter postNotificationName:AGREEFRIENDSUCCESS object:nil];
     
 }
 
@@ -173,7 +174,7 @@
  */
 - (void)didReceiveDeletedFromUsername:(NSString *)aUsername{
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:DELECTFRIENDSUEESS object:nil];
+    [JP_NotificationCenter postNotificationName:DELECTFRIENDSUEESS object:nil];
 }
 
 /*!
@@ -189,7 +190,7 @@
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     [dict setObject:aMessage forKey:NewFriendMessage];
     [dict setObject:aUsername forKey:NewFriendName];
-    [[NSNotificationCenter defaultCenter] postNotificationName:NEWFRIENDREQUEST object:nil userInfo:dict];
+    [JP_NotificationCenter postNotificationName:NEWFRIENDREQUEST object:nil userInfo:dict];
     
 }
 //接收消息
@@ -197,7 +198,27 @@
     
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     [dict setObject:aMessages forKey:@"Message"];
-    [[NSNotificationCenter defaultCenter] postNotificationName:RECEIVEMESSAGES object:nil userInfo:dict];
+    [JP_NotificationCenter postNotificationName:RECEIVEMESSAGES object:nil userInfo:dict];
+}
+
+
+/*!
+ *  \~chinese
+ *  用户A邀请用户B入群,用户B接收到该回调
+ *
+ *  @param aGroupId    群组ID
+ *  @param aInviter    邀请者
+ *  @param aMessage    邀请信息
+ */
+- (void)didReceiveGroupInvitation:(NSString *)aGroupId
+                          inviter:(NSString *)aInviter
+                          message:(NSString *)aMessage{
+    
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    [dict setObject:aGroupId forKey:GroupID];
+    [dict setObject:aInviter forKey:GroupInviter];
+    [dict setObject:aMessage forKey:GroupInviterMessage];
+    [JP_NotificationCenter postNotificationName:RECEIVEGROUPINVITE object:nil userInfo:dict];
 }
 
 //移除代理
@@ -206,6 +227,7 @@
     [[EMClient sharedClient] removeDelegate:self];
     [[EMClient sharedClient].contactManager removeDelegate:self];
     [[EMClient sharedClient].chatManager removeDelegate:self];
+    [[EMClient sharedClient].groupManager removeDelegate:self];
 }
 
 /**

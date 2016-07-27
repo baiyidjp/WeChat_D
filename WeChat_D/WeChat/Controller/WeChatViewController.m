@@ -11,6 +11,7 @@
 #import "WeChatListModel.h"
 #import "WeChatTableViewCell.h"
 #import "ListView.h"
+#import "GroupViewController.h"
 
 @interface WeChatViewController ()<UISearchBarDelegate,UITableViewDelegate,UITableViewDataSource>
 /**
@@ -98,12 +99,12 @@
     [super viewDidLoad];
 
     //登陆成功通知
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loginSuccess) name:LOGINCHANGE object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(autoLoginSuccess) name:AUTOLOGINSUCCESS object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(netWorkState:) name:NETWORKSTATE object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reciveMessage) name:RECEIVEMESSAGES object:nil];
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(addFriendNoti:) name:ADDFRIENDSUCCESS object:nil];
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(delectFriendNoti) name:DELECTFRIENDSUEESS object:nil];
+    [JP_NotificationCenter addObserver:self selector:@selector(loginSuccess) name:LOGINCHANGE object:nil];
+    [JP_NotificationCenter addObserver:self selector:@selector(autoLoginSuccess) name:AUTOLOGINSUCCESS object:nil];
+    [JP_NotificationCenter addObserver:self selector:@selector(netWorkState:) name:NETWORKSTATE object:nil];
+    [JP_NotificationCenter addObserver:self selector:@selector(reciveMessage) name:RECEIVEMESSAGES object:nil];
+    [JP_NotificationCenter addObserver:self selector:@selector(addFriendNoti:) name:ADDFRIENDSUCCESS object:nil];
+    [JP_NotificationCenter addObserver:self selector:@selector(delectFriendNoti) name:DELECTFRIENDSUEESS object:nil];
     
     searchBarTop = KNAVHEIGHT;
     UISearchBar *searchBar = [[UISearchBar alloc]init];
@@ -171,11 +172,13 @@
 - (void)addClicked:(UIButton *)addBtn{
     
     addBtn.selected = !addBtn.selected;
+    WEAK_SELF(weakSelf);
     if (addBtn.selected) {
         if (!self.listView) {
             self.listView = [ListView creatListViewWithTopView:(UIView *)addBtn dataArray:self.listDataArray frame:self.view.bounds selectBlock:^(NSInteger index) {
-
-                [self addClicked:addBtn];
+                [weakSelf addClicked:addBtn];
+                //处理点击事件
+                [weakSelf listViewClickWith:index];
             }];
             self.listView.alpha = 0.0;
             [UIView animateWithDuration:0.1 animations:^{
@@ -195,6 +198,31 @@
         }];
     }
 
+}
+//处理加号列表的点击事件
+- (void)listViewClickWith:(NSInteger)index{
+    switch (index) {
+        case 0:{
+            GroupViewController *groupCtrl = [[GroupViewController alloc]init];
+            [self presentViewController:groupCtrl animated:YES completion:nil];
+        }
+            break;
+        case 1:{
+            [self.view makeToast:@"点击添加朋友"];
+        }
+            break;
+        case 2:{
+            [self.view makeToast:@"点击扫一扫"];
+        }
+            break;
+        case 3:{
+            [self.view makeToast:@"点击收付款"];
+        }
+            break;
+            
+        default:
+            break;
+    }
 }
 
 - (void)updateViewConstraints{
@@ -410,10 +438,10 @@
 
 - (void)dealloc{
     
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:LOGINCHANGE object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:AUTOLOGINSUCCESS object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:NETWORKSTATE object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:RECEIVEMESSAGES object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:ADDFRIENDSUCCESS object:nil];
+    [JP_NotificationCenter removeObserver:self name:LOGINCHANGE object:nil];
+    [JP_NotificationCenter removeObserver:self name:AUTOLOGINSUCCESS object:nil];
+    [JP_NotificationCenter removeObserver:self name:NETWORKSTATE object:nil];
+    [JP_NotificationCenter removeObserver:self name:RECEIVEMESSAGES object:nil];
+    [JP_NotificationCenter removeObserver:self name:ADDFRIENDSUCCESS object:nil];
 }
 @end

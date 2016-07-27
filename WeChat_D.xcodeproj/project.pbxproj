@@ -21,6 +21,8 @@
 		A25AAB5F1D4882C800DBBBE5 /* ListView.m in Sources */ = {isa = PBXBuildFile; fileRef = A25AAB5E1D4882C800DBBBE5 /* ListView.m */; };
 		A25AAB621D4883DB00DBBBE5 /* kuang@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A25AAB601D4883DB00DBBBE5 /* kuang@2x.png */; };
 		A25AAB631D4883DB00DBBBE5 /* kuang@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = A25AAB611D4883DB00DBBBE5 /* kuang@3x.png */; };
+		A25AAB661D48B13A00DBBBE5 /* CreatGroupCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A25AAB651D48B13A00DBBBE5 /* CreatGroupCell.m */; };
+		A25AAB691D48B1D900DBBBE5 /* CreatGroupModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A25AAB681D48B1D900DBBBE5 /* CreatGroupModel.m */; };
 		A297B7071D2F8E14003C9276 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A297B7061D2F8E14003C9276 /* main.m */; };
 		A297B70A1D2F8E14003C9276 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A297B7091D2F8E14003C9276 /* AppDelegate.m */; };
 		A297B7121D2F8E14003C9276 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A297B7111D2F8E14003C9276 /* Assets.xcassets */; };
@@ -235,6 +237,10 @@
 		A25AAB5E1D4882C800DBBBE5 /* ListView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ListView.m; sourceTree = "<group>"; };
 		A25AAB601D4883DB00DBBBE5 /* kuang@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "kuang@2x.png"; sourceTree = "<group>"; };
 		A25AAB611D4883DB00DBBBE5 /* kuang@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "kuang@3x.png"; sourceTree = "<group>"; };
+		A25AAB641D48B13A00DBBBE5 /* CreatGroupCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreatGroupCell.h; sourceTree = "<group>"; };
+		A25AAB651D48B13A00DBBBE5 /* CreatGroupCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreatGroupCell.m; sourceTree = "<group>"; };
+		A25AAB671D48B1D900DBBBE5 /* CreatGroupModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreatGroupModel.h; sourceTree = "<group>"; };
+		A25AAB681D48B1D900DBBBE5 /* CreatGroupModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreatGroupModel.m; sourceTree = "<group>"; };
 		A296C9151D473444008E5C13 /* JP_DefaultHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JP_DefaultHeader.h; sourceTree = "<group>"; };
 		A297B7021D2F8E14003C9276 /* WeChat_D.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WeChat_D.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A297B7061D2F8E14003C9276 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -655,6 +661,8 @@
 		A297B7411D2F8E5A003C9276 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				A25AAB671D48B1D900DBBBE5 /* CreatGroupModel.h */,
+				A25AAB681D48B1D900DBBBE5 /* CreatGroupModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -665,6 +673,8 @@
 				A2C512BD1D41F8FA00D84829 /* NewFriendCell.h */,
 				A2C512BE1D41F8FA00D84829 /* NewFriendCell.m */,
 				A2C512BF1D41F8FA00D84829 /* NewFriendCell.xib */,
+				A25AAB641D48B13A00DBBBE5 /* CreatGroupCell.h */,
+				A25AAB651D48B13A00DBBBE5 /* CreatGroupCell.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1411,6 +1421,7 @@
 			files = (
 				A25AAB5C1D48652500DBBBE5 /* GroupViewController.m in Sources */,
 				A297B75D1D2F8E5A003C9276 /* MainTabbarController.m in Sources */,
+				A25AAB691D48B1D900DBBBE5 /* CreatGroupModel.m in Sources */,
 				A21B62971D38DA1700F0E727 /* WeChatTableViewCell.m in Sources */,
 				A297B7631D2F9622003C9276 /* BaseViewController.m in Sources */,
 				A297B75C1D2F8E5A003C9276 /* DiscoverViewController.m in Sources */,
@@ -1424,6 +1435,7 @@
 				F5CB8B641D3F0533002663F8 /* AddFriendController.m in Sources */,
 				A25AAB5F1D4882C800DBBBE5 /* ListView.m in Sources */,
 				A2C512BC1D41BB9A00D84829 /* Mp3Recorder.m in Sources */,
+				A25AAB661D48B13A00DBBBE5 /* CreatGroupCell.m in Sources */,
 				A2C512C01D41F8FA00D84829 /* NewFriendCell.m in Sources */,
 				A24695331D34EA7600E32C30 /* JPKeyBoardToolView.m in Sources */,
 				A297B7071D2F8E14003C9276 /* main.m in Sources */,

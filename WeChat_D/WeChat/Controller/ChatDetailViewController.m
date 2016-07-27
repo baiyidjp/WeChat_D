@@ -82,7 +82,7 @@
     }
     
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveMessages:) name:RECEIVEMESSAGES object:nil];
+    [JP_NotificationCenter addObserver:self selector:@selector(receiveMessages:) name:RECEIVEMESSAGES object:nil];
 }
 
 #pragma mark 删除当前会话的所有消息
@@ -308,7 +308,7 @@
 
 - (void)dealloc{
     
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:RECEIVEMESSAGES object:nil];
+    [JP_NotificationCenter removeObserver:self name:RECEIVEMESSAGES object:nil];
 }
 
 - (void)viewWillDisappear:(BOOL)animated{

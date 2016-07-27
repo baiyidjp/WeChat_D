@@ -131,21 +131,21 @@
     self.audioPlayer.delegate = self;
     [self.session setCategory:AVAudioSessionCategoryPlayback error:nil];
     [self.audioPlayer play];
-    [[NSNotificationCenter defaultCenter] postNotificationName:RECORDPLAYBEGIN object:Nil];
+    [JP_NotificationCenter postNotificationName:RECORDPLAYBEGIN object:Nil];
 }
 
 - (void)stopPlayRecord{
     
     if ([self.audioPlayer isPlaying]){
         [self.audioPlayer stop];
-        [[NSNotificationCenter defaultCenter] postNotificationName:RECORDPLAYFINISH object:Nil];
+        [JP_NotificationCenter postNotificationName:RECORDPLAYFINISH object:Nil];
     }
 }
 
 - (void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag{
     
     NSLog(@"听完了");
-    [[NSNotificationCenter defaultCenter] postNotificationName:RECORDPLAYFINISH object:Nil];
+    [JP_NotificationCenter postNotificationName:RECORDPLAYFINISH object:Nil];
 }
 
 #pragma mark - Convert Utils

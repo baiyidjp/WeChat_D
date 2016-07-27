@@ -101,8 +101,8 @@
     [self addSubview:self.recordLongBtn];
     
 #pragma mark 添加键盘出现与消失的通知
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(keyboardWillChangeFrame:) name:UIKeyboardWillChangeFrameNotification object:nil];
+    [JP_NotificationCenter addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
+    [JP_NotificationCenter addObserver:self selector:@selector(keyboardWillChangeFrame:) name:UIKeyboardWillChangeFrameNotification object:nil];
     
     [self setNeedsUpdateConstraints];
     [self updateConstraintsIfNeeded];
@@ -600,8 +600,8 @@
 
 #pragma mark 销毁时移除通知
 - (void)dealloc{
-    [[NSNotificationCenter defaultCenter]removeObserver:self name:UIKeyboardWillHideNotification object:nil];
-    [[NSNotificationCenter defaultCenter]removeObserver:self name:UIKeyboardWillChangeFrameNotification object:nil];
+    [JP_NotificationCenter removeObserver:self name:UIKeyboardWillHideNotification object:nil];
+    [JP_NotificationCenter removeObserver:self name:UIKeyboardWillChangeFrameNotification object:nil];
 }
 
 #pragma mark 结束编辑状态

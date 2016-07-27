@@ -22,6 +22,8 @@
 #define ScaleValueH(valueh) ((valueh)*667.0f/[UIScreen mainScreen].bounds.size.height)
 #define ScaleValueW(valuew) ((valuew)*375.0f/[UIScreen mainScreen].bounds.size.width)
 #define WEAK_SELF(value) __weak typeof(self) value = self
+#define JP_NotificationCenter [NSNotificationCenter defaultCenter]
+
 #define LOGINCHANGE @"loginstatechange" //重新登录后
 #define AUTOLOGINSUCCESS @"autoLoginSuccess" //自动登录成功
 #define ADDFRIENDSUCCESS @"addFriendSuccess" //添加好友成功后的通知名
@@ -35,6 +37,7 @@
 #define RECORDPLAYFINISH @"recordPlayFinish" //录音播放完毕
 #define SENDMESSAGEFIELD @"sendMessageField" //发送消息失败
 #define SENDMESSAGESUCCESS @"sendMessageSuccess" //发送消息成功
+#define RECEIVEGROUPINVITE @"ReceiveGroupInvite" //接到入群邀请
 
 //define this constant if you want to use Masonry without the 'mas_' prefix
 //#define MAS_SHORTHAND
@@ -46,5 +49,17 @@
 #define NewFriendMessage        @"NewFriendMessage"
 #define NewFriendAgreeState     @"NewFriendAgreeState"
 #define NewFriendLocationArray  @"NewFriendLocationArray"
+
+//群组Key值
+#define GroupName           @"GroupName" //群组名
+#define GroupID             @"GroupID" //群组ID
+#define GroupInviter        @"GroupInviter" //邀请者
+#define GroupInviterMessage @"GroupInviterMessage" //邀请信息
+//高效打印
+#ifdef DEBUG
+#define NSLog(...) NSLog(@"%s 第%d行 \n %@\n\n",__func__,__LINE__,[NSString stringWithFormat:__VA_ARGS__])
+#else
+#define NSLog(...)
+#endif
 
 #endif /* DefineHeader_h */

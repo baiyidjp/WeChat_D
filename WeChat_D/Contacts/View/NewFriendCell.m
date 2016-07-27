@@ -47,7 +47,7 @@
             [self.dict setObject:@2 forKey:NewFriendAgreeState];
             [arr addObject:self.dict];
             [[NSUserDefaults standardUserDefaults]setObject:arr forKey:NewFriendLocationArray];
-            [[NSNotificationCenter defaultCenter]postNotificationName:NEWFRIENDREQUESTRESULT object:nil];
+            [JP_NotificationCenter postNotificationName:NEWFRIENDREQUESTRESULT object:nil];
         });
         
     } failure:^(EMError *aError) {
@@ -76,7 +76,7 @@
             [self.dict setObject:@1 forKey:NewFriendAgreeState];
             [arr addObject:self.dict];
             [[NSUserDefaults standardUserDefaults]setObject:arr forKey:NewFriendLocationArray];
-            [[NSNotificationCenter defaultCenter]postNotificationName:NEWFRIENDREQUESTRESULT object:nil];
+            [JP_NotificationCenter postNotificationName:NEWFRIENDREQUESTRESULT object:nil];
         });
         
     } failure:^(EMError *aError) {

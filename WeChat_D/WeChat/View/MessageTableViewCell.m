@@ -53,8 +53,8 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         [self congifViews];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(recordPlayFinish) name:RECORDPLAYFINISH object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(recordPlayBegin) name:RECORDPLAYBEGIN object:nil];
+        [JP_NotificationCenter addObserver:self selector:@selector(recordPlayFinish) name:RECORDPLAYFINISH object:nil];
+        [JP_NotificationCenter addObserver:self selector:@selector(recordPlayBegin) name:RECORDPLAYBEGIN object:nil];
     }
     return self;
 }
@@ -510,8 +510,8 @@
     [self.timer setFireDate:[NSDate distantFuture]];
     self.timerCount = 0;
     self.contentView.userInteractionEnabled = YES;
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:RECORDPLAYBEGIN object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:RECORDPLAYFINISH object:nil];
+    [JP_NotificationCenter removeObserver:self name:RECORDPLAYBEGIN object:nil];
+    [JP_NotificationCenter removeObserver:self name:RECORDPLAYFINISH object:nil];
 }
 
 //重用时调用

@@ -36,7 +36,7 @@
 
     [self configTableView];
     
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(loginChange) name:LOGINCHANGE object:nil];
+    [JP_NotificationCenter addObserver:self selector:@selector(loginChange) name:LOGINCHANGE object:nil];
 }
 
 #pragma mark 登陆成功的通知
@@ -234,7 +234,7 @@
 
 - (void)dealloc{
     
-    [[NSNotificationCenter defaultCenter]removeObserver:self name:LOGINCHANGE object:nil];
+    [JP_NotificationCenter removeObserver:self name:LOGINCHANGE object:nil];
 }
 
 @end

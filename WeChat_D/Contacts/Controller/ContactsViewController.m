@@ -113,12 +113,12 @@
         make.left.right.bottom.offset(0);
         make.top.equalTo(self.searchBar.mas_bottom);
     }];
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(loginChange) name:LOGINCHANGE object:nil];
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(delectFriend) name:DELECTFRIENDSUEESS object:nil];
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(agreenFriendNoti) name:ADDFRIENDSUCCESS object:nil];
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(autoLogin) name:AUTOLOGINSUCCESS object:nil];
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(newFriendRequest:) name:NEWFRIENDREQUEST object:nil];
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(newFriendRequestResult) name:NEWFRIENDREQUESTRESULT object:nil];
+    [JP_NotificationCenter addObserver:self selector:@selector(loginChange) name:LOGINCHANGE object:nil];
+    [JP_NotificationCenter addObserver:self selector:@selector(delectFriend) name:DELECTFRIENDSUEESS object:nil];
+    [JP_NotificationCenter addObserver:self selector:@selector(agreenFriendNoti) name:ADDFRIENDSUCCESS object:nil];
+    [JP_NotificationCenter addObserver:self selector:@selector(autoLogin) name:AUTOLOGINSUCCESS object:nil];
+    [JP_NotificationCenter addObserver:self selector:@selector(newFriendRequest:) name:NEWFRIENDREQUEST object:nil];
+    [JP_NotificationCenter addObserver:self selector:@selector(newFriendRequestResult) name:NEWFRIENDREQUESTRESULT object:nil];
 }
 
 #pragma mark 登陆成功的通知
@@ -330,9 +330,9 @@
 - (void)dealloc{
     //移除通知
     
-    [[NSNotificationCenter defaultCenter]removeObserver:self name:LOGINCHANGE object:nil];
-    [[NSNotificationCenter defaultCenter]removeObserver:self name:DELECTFRIENDSUEESS object:nil];
-    [[NSNotificationCenter defaultCenter]removeObserver:self name:ADDFRIENDSUCCESS object:nil];
-    [[NSNotificationCenter defaultCenter]removeObserver:self name:AUTOLOGINSUCCESS object:nil];
+    [JP_NotificationCenter removeObserver:self name:LOGINCHANGE object:nil];
+    [JP_NotificationCenter removeObserver:self name:DELECTFRIENDSUEESS object:nil];
+    [JP_NotificationCenter removeObserver:self name:ADDFRIENDSUCCESS object:nil];
+    [JP_NotificationCenter removeObserver:self name:AUTOLOGINSUCCESS object:nil];
 }
 @end
