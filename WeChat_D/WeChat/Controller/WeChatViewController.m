@@ -10,6 +10,7 @@
 #import "ChatDetailViewController.h"
 #import "WeChatListModel.h"
 #import "WeChatTableViewCell.h"
+#import "ListView.h"
 
 @interface WeChatViewController ()<UISearchBarDelegate,UITableViewDelegate,UITableViewDataSource>
 /**
@@ -40,6 +41,14 @@
  *  未读消息的总数
  */
 @property(nonatomic,assign)NSInteger unreadCount;
+/**
+ *  右上角的列表
+ */
+@property(nonatomic,strong)ListView *listView;
+/**
+ *  列表的数据
+ */
+@property(nonatomic,strong)NSMutableArray *listDataArray;
 @end
 
 @implementation WeChatViewController
@@ -67,6 +76,22 @@
        
     }
     return _dataArray;
+}
+
+- (NSMutableArray *)listDataArray{
+    
+    if (!_listDataArray) {
+        _listDataArray = [NSMutableArray array];
+        NSDictionary *dict1 = [NSDictionary dictionaryWithObjects:@[@"发起群聊",@"add_friend_icon_addgroup_36x36_"] forKeys:@[@"title",@"imageName"]];
+        NSDictionary *dict2 = [NSDictionary dictionaryWithObjects:@[@"添加朋友",@"add_friend_icon_addgroup_36x36_"] forKeys:@[@"title",@"imageName"]];
+        NSDictionary *dict3 = [NSDictionary dictionaryWithObjects:@[@"扫 一 扫",@"add_friend_icon_addgroup_36x36_"] forKeys:@[@"title",@"imageName"]];
+        NSDictionary *dict4 = [NSDictionary dictionaryWithObjects:@[@"收 付 款",@"add_friend_icon_addgroup_36x36_"] forKeys:@[@"title",@"imageName"]];
+        [_listDataArray addObject:dict1];
+        [_listDataArray addObject:dict2];
+        [_listDataArray addObject:dict3];
+        [_listDataArray addObject:dict4];
+    }
+    return _listDataArray;
 }
 
 - (void)viewDidLoad {
@@ -130,6 +155,45 @@
     //检测这个view是否有约束需要更新 如果有在调用下面的方法 更新约束
     [self.view updateConstraintsIfNeeded];
     [self.view layoutIfNeeded];
+    
+    //添加 加号
+    UIImage *addImage = [UIImage imageNamed:@"TypeSelectorBtn_Black_35x35_"];
+    addImage = [addImage imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+    UIButton *addBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 25, 25)];
+    [addBtn setBackgroundImage:addImage forState:UIControlStateNormal];
+    [addBtn addTarget:self action:@selector(addClicked:) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *addItem = [[UIBarButtonItem alloc] initWithCustomView:addBtn];
+    self.navigationItem.rightBarButtonItem = addItem;
+    
+}
+
+#pragma mark 点击加号 更多列表
+- (void)addClicked:(UIButton *)addBtn{
+    
+    addBtn.selected = !addBtn.selected;
+    if (addBtn.selected) {
+        if (!self.listView) {
+            self.listView = [ListView creatListViewWithTopView:(UIView *)addBtn dataArray:self.listDataArray frame:self.view.bounds selectBlock:^(NSInteger index) {
+
+                [self addClicked:addBtn];
+            }];
+            self.listView.alpha = 0.0;
+            [UIView animateWithDuration:0.1 animations:^{
+                self.listView.alpha = 1.0;
+            }];
+            [self.view addSubview:self.listView];
+        }
+    }else{
+        [UIView animateWithDuration:0.1 animations:^{
+            self.listView.alpha = 0.0;
+        } completion:^(BOOL finished) {
+            if (self.listView) {
+                
+                [self.listView removeFromSuperview];
+                self.listView = nil;
+            }
+        }];
+    }
 
 }
 

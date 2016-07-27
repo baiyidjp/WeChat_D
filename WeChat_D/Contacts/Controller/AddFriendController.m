@@ -64,7 +64,7 @@
     }
     [self.friendNameText resignFirstResponder];
     NSString *currentName = [EMClient sharedClient].currentUsername;
-    UIAlertController *alertCtrl = [UIAlertController alertControllerWithTitle:@"说点啥" message:nil preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertController *alertCtrl = [UIAlertController alertControllerWithTitle:@"打个招呼吧" message:nil preferredStyle:UIAlertControllerStyleAlert];
     [alertCtrl addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
         textField.text = [NSString stringWithFormat:@"我是%@",currentName];
     }];

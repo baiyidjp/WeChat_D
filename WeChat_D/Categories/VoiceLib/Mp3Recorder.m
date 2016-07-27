@@ -74,6 +74,12 @@
     [_recorder record];
 }
 
+- (NSInteger)updateMeters{
+    [_recorder updateMeters];//更新测量值
+    float power= [_recorder averagePowerForChannel:0];//取得第一个通道的音频，注意音频强度范围时-160到0
+    NSInteger progress = power+160;
+    return progress;
+}
 
 - (void)stopRecord
 {

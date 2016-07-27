@@ -23,5 +23,5 @@
 - (void)cancelRecord;
 - (void)startPlayRecordWithPath:(NSString *)path;
 - (void)stopPlayRecord;
-
+- (NSInteger)updateMeters;
 @end

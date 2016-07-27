@@ -69,6 +69,14 @@
  *  录音管理
  */
 @property(nonatomic,strong)Mp3Recorder *mp3Recorder;
+/** 时间 */
+@property(nonatomic,strong) NSTimer *timer;
+/** 记录时间 */
+@property(nonatomic,assign) NSInteger timerCount;
+/**
+ *  录音标示
+ */
+@property(nonatomic,strong)UIImageView *recordImage;
 @end
 
 @implementation JPKeyBoardToolView
@@ -264,6 +272,15 @@
     return _mp3Recorder;
 }
 
+- (UIImageView *)recordImage{
+    
+    if (!_recordImage) {
+        _recordImage = [[UIImageView alloc]init];
+        _recordImage.image = [UIImage imageNamed:@"VoiceSearchIcon_90x90_"];
+        _recordImage.backgroundColor = [UIColor whiteColor];
+    }
+    return _recordImage;
+}
 #pragma mark 功能按钮的点击
 - (void)toolBtnClicked:(UIButton *)toolBtn{
     
@@ -609,20 +626,56 @@
     
     switch (longTap.state) {
         
-        case UIGestureRecognizerStateBegan:
+        case UIGestureRecognizerStateBegan:{
             //开始录音
             [self.mp3Recorder startRecord];
-            [self.superview makeToast:@"开始录音"];
+            [self.timer setFireDate:[NSDate distantPast]];
+            [self.superview addSubview:self.recordImage];
+            self.recordImage.hidden = NO;
+            [self.recordImage mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.centerX.equalTo(self.superview.mas_centerX);
+                make.centerY.equalTo(self.superview.mas_centerY);
+                make.size.mas_equalTo(CGSizeMake(90, 90));
+            }];
             [self.recordLongBtn setBackgroundColor:[UIColor grayColor]];
+        }
             break;
         case UIGestureRecognizerStateEnded:{
             //结束录音
             [self.mp3Recorder stopRecord];
             [self.recordLongBtn setBackgroundColor:[UIColor colorWithHexString:@"f4f4f4"]];
+            [self.timer setFireDate:[NSDate distantFuture]];
+            self.timerCount = 0;
+            self.recordImage.hidden = YES;
+            [self.recordImage removeFromSuperview];
         }
             break;
         default:
             break;
+    }
+}
+
+#pragma mark 录音
+- (NSTimer *)timer{
+    
+    if (!_timer) {
+        
+        _timer = [NSTimer scheduledTimerWithTimeInterval:0.2 target:self selector:@selector(updateSliderValue) userInfo:nil repeats:YES];
+        [_timer setFireDate:[NSDate distantFuture]];
+    }
+    return _timer;
+}
+
+- (void)updateSliderValue{
+    
+    NSInteger progress = [self.mp3Recorder updateMeters];
+    NSLog(@"%zd",progress);
+    if (progress < 40) {
+        self.recordImage.image = [UIImage imageNamed:[NSString stringWithFormat:@"VoiceSearchLoading0%.2zd_90x90_",progress/4+1]];
+    }else if(progress == 40){
+        self.recordImage.image = [UIImage imageNamed:@"VoiceSearchLoading010_90x90_"];
+    }else{
+        self.recordImage.image = [UIImage imageNamed:[NSString stringWithFormat:@"VoiceSearchFeedback0%.2zd_90x90_",progress/8]];
     }
 }
 

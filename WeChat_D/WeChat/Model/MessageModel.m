@@ -60,12 +60,13 @@
                 UIImage *image = [UIImage imageWithContentsOfFile:self.image_mark];
                 self.thumbnailSize = image.size;
             }else{
-                [[UIImageView new] sd_setImageWithURL:[NSURL URLWithString:self.imageUrl] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+                [[SDWebImageManager sharedManager] downloadImageWithURL:[NSURL URLWithString:self.imageUrl] options:SDWebImageRetryFailed progress:nil completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
                     //下载是异步下载 一定要回到主线程赋值
-                   dispatch_async(dispatch_get_main_queue(), ^{
-                       self.thumbnailSize = image.size;
-                   });
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        self.thumbnailSize = image.size;
+                    });
                 }];
+
                 if (imageBody.thumbnailSize.width) {
                     self.thumbnailSize = imageBody.thumbnailSize;
                 }

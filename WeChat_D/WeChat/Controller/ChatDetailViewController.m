@@ -262,10 +262,10 @@
     
     switch (messageModel.messageType) {
         case MessageType_Text:
-            return;
+            [self.view makeToast:@"点击文字未处理"];
             break;
         case MessageType_Picture:
-            NSLog(@"点击图片放大");
+            [self.view makeToast:@"点击图片未处理"];
             break;
 
         case MessageType_Voice:{

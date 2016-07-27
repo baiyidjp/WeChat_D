@@ -17,6 +17,10 @@
 		A21B62981D38DA1700F0E727 /* WeChatTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A21B62961D38DA1700F0E727 /* WeChatTableViewCell.xib */; };
 		A24695301D34E77D00E32C30 /* ChatDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A246952F1D34E77D00E32C30 /* ChatDetailViewController.m */; };
 		A24695331D34EA7600E32C30 /* JPKeyBoardToolView.m in Sources */ = {isa = PBXBuildFile; fileRef = A24695321D34EA7600E32C30 /* JPKeyBoardToolView.m */; };
+		A25AAB5C1D48652500DBBBE5 /* GroupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A25AAB5B1D48652500DBBBE5 /* GroupViewController.m */; };
+		A25AAB5F1D4882C800DBBBE5 /* ListView.m in Sources */ = {isa = PBXBuildFile; fileRef = A25AAB5E1D4882C800DBBBE5 /* ListView.m */; };
+		A25AAB621D4883DB00DBBBE5 /* kuang@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A25AAB601D4883DB00DBBBE5 /* kuang@2x.png */; };
+		A25AAB631D4883DB00DBBBE5 /* kuang@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = A25AAB611D4883DB00DBBBE5 /* kuang@3x.png */; };
 		A297B7071D2F8E14003C9276 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A297B7061D2F8E14003C9276 /* main.m */; };
 		A297B70A1D2F8E14003C9276 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A297B7091D2F8E14003C9276 /* AppDelegate.m */; };
 		A297B7121D2F8E14003C9276 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A297B7111D2F8E14003C9276 /* Assets.xcassets */; };
@@ -225,6 +229,13 @@
 		A246952F1D34E77D00E32C30 /* ChatDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatDetailViewController.m; sourceTree = "<group>"; };
 		A24695311D34EA7600E32C30 /* JPKeyBoardToolView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JPKeyBoardToolView.h; sourceTree = "<group>"; };
 		A24695321D34EA7600E32C30 /* JPKeyBoardToolView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JPKeyBoardToolView.m; sourceTree = "<group>"; };
+		A25AAB5A1D48652400DBBBE5 /* GroupViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GroupViewController.h; sourceTree = "<group>"; };
+		A25AAB5B1D48652500DBBBE5 /* GroupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GroupViewController.m; sourceTree = "<group>"; };
+		A25AAB5D1D4882C800DBBBE5 /* ListView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ListView.h; sourceTree = "<group>"; };
+		A25AAB5E1D4882C800DBBBE5 /* ListView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ListView.m; sourceTree = "<group>"; };
+		A25AAB601D4883DB00DBBBE5 /* kuang@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "kuang@2x.png"; sourceTree = "<group>"; };
+		A25AAB611D4883DB00DBBBE5 /* kuang@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "kuang@3x.png"; sourceTree = "<group>"; };
+		A296C9151D473444008E5C13 /* JP_DefaultHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JP_DefaultHeader.h; sourceTree = "<group>"; };
 		A297B7021D2F8E14003C9276 /* WeChat_D.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WeChat_D.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A297B7061D2F8E14003C9276 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		A297B7081D2F8E14003C9276 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -577,6 +588,7 @@
 				A297B7061D2F8E14003C9276 /* main.m */,
 				A297B7651D2F97FA003C9276 /* PrefixHeader.pch */,
 				A297B7661D2FA044003C9276 /* DefineHeader.h */,
+				A296C9151D473444008E5C13 /* JP_DefaultHeader.h */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -609,6 +621,8 @@
 				A297B73C1D2F8E5A003C9276 /* UIView+Toast.m */,
 				A2088B3C1D3C6EC200C73446 /* PublicMethod.h */,
 				A2088B3D1D3C6EC200C73446 /* PublicMethod.m */,
+				A25AAB5D1D4882C800DBBBE5 /* ListView.h */,
+				A25AAB5E1D4882C800DBBBE5 /* ListView.m */,
 			);
 			path = Categories;
 			sourceTree = "<group>";
@@ -632,6 +646,8 @@
 				F5CB8B631D3F0533002663F8 /* AddFriendController.m */,
 				A2C512C21D42090700D84829 /* AgreeFriendViewController.h */,
 				A2C512C31D42090700D84829 /* AgreeFriendViewController.m */,
+				A25AAB5A1D48652400DBBBE5 /* GroupViewController.h */,
+				A25AAB5B1D48652500DBBBE5 /* GroupViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -811,6 +827,8 @@
 		A297B7681D2FA192003C9276 /* Tabbar */ = {
 			isa = PBXGroup;
 			children = (
+				A25AAB601D4883DB00DBBBE5 /* kuang@2x.png */,
+				A25AAB611D4883DB00DBBBE5 /* kuang@3x.png */,
 				F5CB8B651D447229002663F8 /* tabbar_badge_30x30_@2x.png */,
 				F5CB8B661D447229002663F8 /* tabbar_badge_30x30_@3x.png */,
 				F5CB8B671D447229002663F8 /* tabbar_contacts_26x22_@3x.png */,
@@ -1207,6 +1225,7 @@
 				F5CB8C191D4477E0002663F8 /* ff_IconQRCode_25x25_@2x.png in Resources */,
 				F5CB8C301D4477E0002663F8 /* MoreMyBankCard_25x25_@2x.png in Resources */,
 				F5CB8C361D4477E0002663F8 /* VoiceSearchFeedback005_90x90_@2x.png in Resources */,
+				A25AAB631D4883DB00DBBBE5 /* kuang@3x.png in Resources */,
 				F5CB8C461D4477E0002663F8 /* VoiceSearchIcon_90x90_@2x.png in Resources */,
 				F5CB8C451D4477E0002663F8 /* VoiceSearchFeedback020_90x90_@2x.png in Resources */,
 				F5CB8C3A1D4477E0002663F8 /* VoiceSearchFeedback009_90x90_@2x.png in Resources */,
@@ -1277,6 +1296,7 @@
 				F5CB8BFC1D4477E0002663F8 /* AlbumAddBtnHL_65x65_@2x.png in Resources */,
 				F5CB8C2F1D4477E0002663F8 /* MoreMyAppleWatch_24x24_@3x.png in Resources */,
 				F5CB8C0B1D4477E0002663F8 /* TypeSelectorBtnHL_Black_35x35_@2x.png in Resources */,
+				A25AAB621D4883DB00DBBBE5 /* kuang@2x.png in Resources */,
 				A21B62981D38DA1700F0E727 /* WeChatTableViewCell.xib in Resources */,
 				F5CB8C1B1D4477E0002663F8 /* ff_IconShake_25x25_@1x.png in Resources */,
 				F5CB8C441D4477E0002663F8 /* VoiceSearchFeedback019_90x90_@2x.png in Resources */,
@@ -1389,6 +1409,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A25AAB5C1D48652500DBBBE5 /* GroupViewController.m in Sources */,
 				A297B75D1D2F8E5A003C9276 /* MainTabbarController.m in Sources */,
 				A21B62971D38DA1700F0E727 /* WeChatTableViewCell.m in Sources */,
 				A297B7631D2F9622003C9276 /* BaseViewController.m in Sources */,
@@ -1401,6 +1422,7 @@
 				A297B75A1D2F8E5A003C9276 /* ContactsViewController.m in Sources */,
 				A297B70A1D2F8E14003C9276 /* AppDelegate.m in Sources */,
 				F5CB8B641D3F0533002663F8 /* AddFriendController.m in Sources */,
+				A25AAB5F1D4882C800DBBBE5 /* ListView.m in Sources */,
 				A2C512BC1D41BB9A00D84829 /* Mp3Recorder.m in Sources */,
 				A2C512C01D41F8FA00D84829 /* NewFriendCell.m in Sources */,
 				A24695331D34EA7600E32C30 /* JPKeyBoardToolView.m in Sources */,
