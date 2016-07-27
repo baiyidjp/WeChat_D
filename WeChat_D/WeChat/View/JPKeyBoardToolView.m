@@ -672,10 +672,10 @@
     NSLog(@"%zd",progress);
     if (progress < 40) {
         self.recordImage.image = [UIImage imageNamed:[NSString stringWithFormat:@"VoiceSearchLoading0%.2zd_90x90_",progress/4+1]];
-    }else if(progress == 40){
+    }else if(progress > 40 && progress < 120){
         self.recordImage.image = [UIImage imageNamed:@"VoiceSearchLoading010_90x90_"];
     }else{
-        self.recordImage.image = [UIImage imageNamed:[NSString stringWithFormat:@"VoiceSearchFeedback0%.2zd_90x90_",progress/8]];
+        self.recordImage.image = [UIImage imageNamed:[NSString stringWithFormat:@"VoiceSearchFeedback0%.2zd_90x90_",(progress-120)/2]];
     }
 }
 
