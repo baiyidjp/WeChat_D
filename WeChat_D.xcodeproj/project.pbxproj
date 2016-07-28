@@ -11,6 +11,7 @@
 		A2088B421D3CA39100C73446 /* MessageTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A2088B411D3CA39100C73446 /* MessageTableViewCell.m */; };
 		A2088B451D3CACFA00C73446 /* MessageModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A2088B441D3CACFA00C73446 /* MessageModel.m */; };
 		A21137DD1D49E53500CB6EF7 /* MyGroupListController.m in Sources */ = {isa = PBXBuildFile; fileRef = A21137DC1D49E53500CB6EF7 /* MyGroupListController.m */; };
+		A21137E01D4A21BD00CB6EF7 /* UIViewController+BackButtonHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = A21137DF1D4A21BD00CB6EF7 /* UIViewController+BackButtonHandler.m */; };
 		A21B628D1D3891B300F0E727 /* face.plist in Resources */ = {isa = PBXBuildFile; fileRef = A21B628C1D3891B300F0E727 /* face.plist */; };
 		A21B62901D3893ED00F0E727 /* FaceViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A21B628F1D3893ED00F0E727 /* FaceViewModel.m */; };
 		A21B62931D38D9BD00F0E727 /* WeChatListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A21B62921D38D9BD00F0E727 /* WeChatListModel.m */; };
@@ -355,6 +356,8 @@
 		A2088B441D3CACFA00C73446 /* MessageModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageModel.m; sourceTree = "<group>"; };
 		A21137DB1D49E53500CB6EF7 /* MyGroupListController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyGroupListController.h; sourceTree = "<group>"; };
 		A21137DC1D49E53500CB6EF7 /* MyGroupListController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyGroupListController.m; sourceTree = "<group>"; };
+		A21137DE1D4A21BD00CB6EF7 /* UIViewController+BackButtonHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+BackButtonHandler.h"; sourceTree = "<group>"; };
+		A21137DF1D4A21BD00CB6EF7 /* UIViewController+BackButtonHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+BackButtonHandler.m"; sourceTree = "<group>"; };
 		A21B628C1D3891B300F0E727 /* face.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = face.plist; sourceTree = "<group>"; };
 		A21B628E1D3893ED00F0E727 /* FaceViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FaceViewModel.h; sourceTree = "<group>"; };
 		A21B628F1D3893ED00F0E727 /* FaceViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FaceViewModel.m; sourceTree = "<group>"; };
@@ -898,6 +901,8 @@
 				A2088B3D1D3C6EC200C73446 /* PublicMethod.m */,
 				A25AAB5D1D4882C800DBBBE5 /* ListView.h */,
 				A25AAB5E1D4882C800DBBBE5 /* ListView.m */,
+				A21137DE1D4A21BD00CB6EF7 /* UIViewController+BackButtonHandler.h */,
+				A21137DF1D4A21BD00CB6EF7 /* UIViewController+BackButtonHandler.m */,
 			);
 			path = Categories;
 			sourceTree = "<group>";
@@ -2002,6 +2007,7 @@
 				A297B75A1D2F8E5A003C9276 /* ContactsViewController.m in Sources */,
 				A297B70A1D2F8E14003C9276 /* AppDelegate.m in Sources */,
 				F5CB8B641D3F0533002663F8 /* AddFriendController.m in Sources */,
+				A21137E01D4A21BD00CB6EF7 /* UIViewController+BackButtonHandler.m in Sources */,
 				A25AAB5F1D4882C800DBBBE5 /* ListView.m in Sources */,
 				A2C512BC1D41BB9A00D84829 /* Mp3Recorder.m in Sources */,
 				A25AAB661D48B13A00DBBBE5 /* CreatGroupCell.m in Sources */,

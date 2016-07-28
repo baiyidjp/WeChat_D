@@ -110,11 +110,9 @@
     
     searchBarTop = KNAVHEIGHT;
     UISearchBar *searchBar = [[UISearchBar alloc]init];
-    searchBar.backgroundColor = [UIColor whiteColor];
+    searchBar.backgroundColor = [UIColor colorWithHexString:@"f4f4f4"];
     searchBar.placeholder = @"搜索";
     searchBar.delegate = self;
-    searchBar.layer.cornerRadius = 5;
-    searchBar.layer.masksToBounds = YES;
     [self.view addSubview:searchBar];
     self.searchBar = searchBar;
     
@@ -129,7 +127,8 @@
     self.cancleBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [self.cancleBtn setTitle:@"取消" forState:UIControlStateNormal];
     [self.cancleBtn.titleLabel setFont:FONTSIZE(15)];
-    [self.cancleBtn setTitleColor:[UIColor greenColor] forState:UIControlStateNormal];
+    [self.cancleBtn setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
+    [self.cancleBtn setBackgroundColor:searchBar.barTintColor];
     [self.cancleBtn addTarget:self action:@selector(clickCancelBtn) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.cancleBtn];
     [self.cancleBtn mas_makeConstraints:^(MASConstraintMaker *make) {

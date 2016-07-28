@@ -12,6 +12,8 @@
 #import "MessageModel.h"
 #import "Mp3Recorder.h"
 #import "MessageModel.h"
+#import "UIViewController+BackButtonHandler.h"
+#import "WeChatViewController.h"
 
 @interface ChatDetailViewController ()<UITableViewDelegate,UITableViewDataSource,JPKeyBoardToolViewDelegate,UIScrollViewDelegate,MessageTableViewCellDelegate>
 /**
@@ -60,6 +62,15 @@
     return _reciveMessageArray;
 }
 
+//重写返回事件
+- (BOOL)navigationShouldPopOnBackButton{
+    for (UIViewController *ctrl in self.navigationController.viewControllers) {
+        if ([ctrl isKindOfClass:[WeChatViewController class]]) {
+            [self.navigationController popToViewController:ctrl animated:YES];
+        }
+    }
+    return YES;
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
@@ -76,6 +87,9 @@
         aConversationType = EMConversationTypeGroupChat;
     }
     EMConversation *conversation = [[EMClient sharedClient].chatManager getConversation:aConversationId type:aConversationType createIfNotExist:YES];
+    if (self.groupID.length) {
+        conversation.ext = [NSDictionary dictionaryWithObject:self.title forKey:GroupName];
+    }
     self.conversation = conversation;
     [conversation markAllMessagesAsRead];
     NSArray *messages = [conversation loadMoreMessagesFromId:nil limit:20 direction:EMMessageSearchDirectionUp];

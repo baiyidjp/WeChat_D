@@ -106,14 +106,16 @@
     
     //从服务器获取所有的好友列表
     [[EMClient sharedClient].contactManager asyncGetContactsFromServer:^(NSArray *aList) {
-        for (NSString *name in aList) {
-            CreatGroupModel *model = [[CreatGroupModel alloc]init];
-            model.name = name;
-            model.imageName = DefaultHeadImageName;
-            model.isSelect = NO;
-            [self.dataArray addObject:model];
-        }
-        [self.contactTableView reloadData];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            for (NSString *name in aList) {
+                CreatGroupModel *model = [[CreatGroupModel alloc]init];
+                model.name = name;
+                model.imageName = DefaultHeadImageName;
+                model.isSelect = NO;
+                [self.dataArray addObject:model];
+            }
+            [self.contactTableView reloadData];
+        });
     } failure:^(EMError *aError) {
         //若获取失败则从本地获取好友列表
         for (NSString *name in [[EMClient sharedClient].contactManager getContactsFromDB]) {
@@ -163,9 +165,12 @@
     NSString *message = [NSString stringWithFormat:@"%@邀请你加入群",[[EMClient sharedClient] currentUsername]];
     [SVProgressHUD show];
     [[EMClient sharedClient].groupManager asyncCreateGroupWithSubject:subject description:description invitees:[nameArray copy] message:message setting:setting success:^(EMGroup *aGroup) {
-        [SVProgressHUD showSuccessWithStatus:@"创建群成功"];
-        NSDictionary *dict = [NSDictionary dictionaryWithObject:aGroup forKey:GroupValue];
-        [JP_NotificationCenter postNotificationName:CREATGROUPSUCCESS object:nil userInfo:dict];
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [SVProgressHUD showSuccessWithStatus:@"创建群成功"];
+            NSDictionary *dict = [NSDictionary dictionaryWithObject:aGroup forKey:GroupValue];
+            [JP_NotificationCenter postNotificationName:CREATGROUPSUCCESS object:nil userInfo:dict];
+        });
         
     } failure:^(EMError *aError) {
         [SVProgressHUD showSuccessWithStatus:@"创建群失败"];

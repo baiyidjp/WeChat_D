@@ -132,16 +132,16 @@
                 switch (aError.code)
                 {
                     case EMErrorNetworkUnavailable:
-                        [weakSelf.view makeToast:@"error.connectNetworkFail,No network connection!"];
+                        [weakSelf.view makeToast:@"网络不可用!"];
                         break;
                     case EMErrorServerNotReachable:
-                        [weakSelf.view makeToast:@"error.connectServerFail, Connect to the server failed!"];
+                        [weakSelf.view makeToast:@"服务器未连接!"];
                         break;
                     case EMErrorUserAuthenticationFailed:
-                        [weakSelf.view makeToast:@"error.errorDescription"];
+                        [weakSelf.view makeToast:@"密码验证失败"];
                         break;
                     case EMErrorServerTimeout:
-                        [weakSelf.view makeToast:@"error.connectServerTimeout,Connect to the server timed out!"];
+                        [weakSelf.view makeToast:@"服务器超时!"];
                         break;
                     default:
                         [weakSelf.view makeToast:@"login.fail, Login failure"];
@@ -171,16 +171,16 @@
             [SVProgressHUD dismiss];
             switch (aError.code) {
                 case EMErrorServerNotReachable:
-                    [weakSelf.view makeToast:@"error.connectServerFail---Connect to the server failed!"];
+                    [weakSelf.view makeToast:@"服务器未连接!"];
                     break;
                 case EMErrorUserAlreadyExist:
-                    [weakSelf.view makeToast:@"register.repeat---You registered user already exists!"];
+                    [weakSelf.view makeToast:@"用户已存在!"];
                     break;
                 case EMErrorNetworkUnavailable:
-                    [weakSelf.view makeToast:@"error.connectNetworkFail--No network connection!"];
+                    [weakSelf.view makeToast:@"网络不可用"];
                     break;
                 case EMErrorServerTimeout:
-                    [weakSelf.view makeToast:@"error.connectServerTimeout---Connect to the server timed out!"];
+                    [weakSelf.view makeToast:@"服务器超时!"];
                     break;
                 default:
                     [weakSelf.view makeToast:@"register.fail---Registration failed"];

@@ -10,6 +10,7 @@
 #import "AddFriendController.h"
 #import "ChatDetailViewController.h"
 #import "AgreeFriendViewController.h"
+#import "MyGroupListController.h"
 
 #define CellID @"contactTableViewCell"
 
@@ -93,8 +94,6 @@
     searchBar.backgroundColor = [UIColor whiteColor];
     searchBar.placeholder = @"搜索";
     searchBar.delegate = self;
-    searchBar.layer.cornerRadius = 5;
-    searchBar.layer.masksToBounds = YES;
     [self.view addSubview:searchBar];
     self.searchBar = searchBar;
     [searchBar mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -186,9 +185,13 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellID];
+    if (cell.contentView.subviews.count) {
+        for (UIView *view in cell.contentView.subviews) {
+            [view removeFromSuperview];
+        }
+    }
     switch (indexPath.section) {
         case 0:
-            
             [self configSectionView:cell.contentView data:[self.topDataArray objectAtIndex:indexPath.row]];
             if (indexPath.row == 0) {
                 
@@ -263,6 +266,11 @@
             AgreeFriendViewController *agreeCtrl = [[AgreeFriendViewController alloc]init];
             agreeCtrl.dataArray = self.newFriendDataArray;
             [self.navigationController pushViewController:agreeCtrl animated:YES];
+        }else if (indexPath.row == 1){
+            MyGroupListController *groupCtrl = [[MyGroupListController alloc]init];
+            groupCtrl.title = @"我的群聊";
+            self.tabBarController.tabBar.hidden = YES;
+            [self.navigationController pushViewController:groupCtrl animated:YES];
         }else{
             return;
         }
