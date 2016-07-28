@@ -17,33 +17,26 @@
     self.conversationID = conversation.conversationId;
     self.unreadMessagesCount = conversation.unreadMessagesCount;
     self.conversationType = conversation.type;
-    self.name = conversation.conversationId;
     EMMessage *emmessage = conversation.latestMessage;
-    switch (emmessage.body.type) {
-            
-        case EMMessageBodyTypeText:{
-            //文本类型的消息
-            //拿到文本消息体
-            EMTextMessageBody *textBody = (EMTextMessageBody *)emmessage.body;
-            self.message = textBody.text;
+    switch (self.conversationType) {//判断属于单聊还是群聊
+        case EMConversationTypeChat:{
+            self.name = conversation.conversationId;
+            [self setChatModelWith:emmessage];
         }
             break;
-        case EMMessageBodyTypeVoice:{
-            
-//            EMVoiceMessageBody *voiceBody = (EMVoiceMessageBody *)emmessage.body;
-            self.message = @"[语音消息]";
+        case EMConversationTypeGroupChat:{
+            self.name = [conversation.ext objectForKey:GroupName];
+            if ([emmessage.from isEqualToString:[[EMClient sharedClient] currentUsername]]) {
+                [self setChatModelWith:emmessage];
+            }else{
+                [self setChatGroupModelWith:emmessage];
+            }
         }
             break;
-            
-        case EMMessageBodyTypeImage:{
-//            EMImageMessageBody *imageBody = (EMImageMessageBody *)emmessage.body;
-            self.message = @"[图片]";
-        }
-            break;
-            
         default:
             break;
     }
+    
     self.time = [self returnTimeWitnLongTime:emmessage.timestamp];
     self.imageUrl = @"http://ww1.sinaimg.cn/crop.0.0.1080.1080.1024/006cxmWbjw8evactf4t2ij30u00u0jtj.jpg";
 }
@@ -57,4 +50,53 @@
     return time;
 }
 
+- (void)setChatModelWith:(EMMessage *)emmessage{
+    switch (emmessage.body.type) {
+        case EMMessageBodyTypeText:{
+            //文本类型的消息
+            //拿到文本消息体
+            EMTextMessageBody *textBody = (EMTextMessageBody *)emmessage.body;
+            self.message = textBody.text;
+        }
+            break;
+        case EMMessageBodyTypeVoice:{
+            self.message = @"[语音消息]";
+        }
+            break;
+            
+        case EMMessageBodyTypeImage:{
+            self.message = @"[图片]";
+        }
+            break;
+            
+        default:
+            break;
+    }
+
+}
+
+- (void)setChatGroupModelWith:(EMMessage *)emmessage{
+    switch (emmessage.body.type) {
+        case EMMessageBodyTypeText:{
+            //文本类型的消息
+            //拿到文本消息体
+            EMTextMessageBody *textBody = (EMTextMessageBody *)emmessage.body;
+            self.message = [NSString stringWithFormat:@"%@:%@",emmessage.from,textBody.text];
+        }
+            break;
+        case EMMessageBodyTypeVoice:{
+            self.message = [NSString stringWithFormat:@"%@:[语音消息]",emmessage.from];
+        }
+            break;
+            
+        case EMMessageBodyTypeImage:{
+            self.message = [NSString stringWithFormat:@"%@:[图片]",emmessage.from];
+        }
+            break;
+            
+        default:
+            break;
+    }
+
+}
 @end

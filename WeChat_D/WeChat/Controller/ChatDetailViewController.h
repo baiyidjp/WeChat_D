@@ -10,4 +10,6 @@
 
 @interface ChatDetailViewController : BaseViewController
 
+@property(nonatomic,strong)NSString *groupID;
+
 @end

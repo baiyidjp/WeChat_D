@@ -17,7 +17,11 @@
 @property(nonatomic,strong) UITableView *contactTableView;
 /** 搜索框 */
 @property(nonatomic,strong) UISearchBar *searchBar;
+/**
+ *  确定按钮
+ */
 @property(nonatomic,strong) UIButton *doneBtn;
+@property(nonatomic,strong)EMConversation *conversation;
 @end
 
 @implementation GroupViewController
@@ -160,6 +164,9 @@
     [SVProgressHUD show];
     [[EMClient sharedClient].groupManager asyncCreateGroupWithSubject:subject description:description invitees:[nameArray copy] message:message setting:setting success:^(EMGroup *aGroup) {
         [SVProgressHUD showSuccessWithStatus:@"创建群成功"];
+        NSDictionary *dict = [NSDictionary dictionaryWithObject:aGroup forKey:GroupValue];
+        [JP_NotificationCenter postNotificationName:CREATGROUPSUCCESS object:nil userInfo:dict];
+        
     } failure:^(EMError *aError) {
         [SVProgressHUD showSuccessWithStatus:@"创建群失败"];
     }];

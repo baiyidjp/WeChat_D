@@ -38,7 +38,7 @@
     
     _model = model;
     self.messageLabel.text = model.message;
-    [self.headImage sd_setImageWithURL:[NSURL URLWithString:model.imageUrl]];
+    [self.headImage sd_setImageWithURL:[NSURL URLWithString:model.imageUrl] placeholderImage:[UIImage imageNamed:DefaultHeadImageName_Message]];
     self.nameLable.text = model.name;
     self.timeLable.text = model.time;
     if (model.unreadMessagesCount) {

@@ -69,8 +69,13 @@
     
     UIBarButtonItem *right =  [[UIBarButtonItem alloc]initWithTitle:@"Delect" style:UIBarButtonItemStylePlain target:self action:@selector(delect)];
     self.navigationItem.rightBarButtonItem = right;
-    
-    EMConversation *conversation = [[EMClient sharedClient].chatManager getConversation:self.title type:EMConversationTypeChat createIfNotExist:YES];
+    NSString *aConversationId = self.title;
+    EMConversationType aConversationType = EMConversationTypeChat;
+    if (self.groupID.length) {
+        aConversationId = self.groupID;
+        aConversationType = EMConversationTypeGroupChat;
+    }
+    EMConversation *conversation = [[EMClient sharedClient].chatManager getConversation:aConversationId type:aConversationType createIfNotExist:YES];
     self.conversation = conversation;
     [conversation markAllMessagesAsRead];
     NSArray *messages = [conversation loadMoreMessagesFromId:nil limit:20 direction:EMMessageSearchDirectionUp];
@@ -126,8 +131,14 @@
     if (!_toolView) {
         _toolView = [[JPKeyBoardToolView alloc]initWithFrame:CGRectMake(0, KHEIGHT-KTOOLVIEW_MINH, KWIDTH, KTOOLVIEW_MINH)];
         _toolView.superViewHeight = KHEIGHT;
-        _toolView.toUser = self.title;
         _toolView.delegate = self;
+        if (self.groupID.length) {
+            _toolView.toUser = self.groupID;
+            _toolView.chatType = EMChatTypeGroupChat;
+        }else{
+            _toolView.toUser = self.title;
+            _toolView.chatType = EMChatTypeChat;
+        }
     }
     return _toolView;
 }

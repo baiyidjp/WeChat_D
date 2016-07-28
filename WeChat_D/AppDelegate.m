@@ -200,25 +200,28 @@
     [dict setObject:aMessages forKey:@"Message"];
     [JP_NotificationCenter postNotificationName:RECEIVEMESSAGES object:nil userInfo:dict];
 }
-
-
 /*!
  *  \~chinese
- *  用户A邀请用户B入群,用户B接收到该回调
+ *  SDK自动同意了用户A的加B入群邀请后，用户B接收到该回调，需要设置EMOptions的isAutoAcceptGroupInvitation为YES
  *
- *  @param aGroupId    群组ID
- *  @param aInviter    邀请者
- *  @param aMessage    邀请信息
+ *  @param aGroup    群组实例
+ *  @param aInviter  邀请者
+ *  @param aMessage  邀请消息
  */
-- (void)didReceiveGroupInvitation:(NSString *)aGroupId
-                          inviter:(NSString *)aInviter
-                          message:(NSString *)aMessage{
-    
-    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-    [dict setObject:aGroupId forKey:GroupID];
-    [dict setObject:aInviter forKey:GroupInviter];
-    [dict setObject:aMessage forKey:GroupInviterMessage];
-    [JP_NotificationCenter postNotificationName:RECEIVEGROUPINVITE object:nil userInfo:dict];
+- (void)didJoinedGroup:(EMGroup *)aGroup
+               inviter:(NSString *)aInviter
+               message:(NSString *)aMessage{
+    UIAlertController *alertCtrl = [UIAlertController alertControllerWithTitle:aInviter message:aMessage preferredStyle:UIAlertControllerStyleAlert];
+    [alertCtrl addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+        
+        NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+        [dict setObject:aGroup forKey:GroupValue];
+        [dict setObject:aInviter forKey:GroupInviter];
+        [dict setObject:aMessage forKey:GroupInviterMessage];
+        [JP_NotificationCenter postNotificationName:RECEIVEGROUPINVITE object:nil userInfo:dict];
+    }]];
+    [self.window.rootViewController presentViewController:alertCtrl animated:YES completion:nil];
+
 }
 
 //移除代理

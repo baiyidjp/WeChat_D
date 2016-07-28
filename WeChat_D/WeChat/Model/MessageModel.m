@@ -16,6 +16,8 @@
     
     self.messageId = emmessage.messageId;
     self.sendSuccess = emmessage.status;
+    self.chatType = emmessage.chatType;
+    self.messageFromName = emmessage.from;
     _messageBody = emmessage.body;
     if (emmessage.direction == EMMessageDirectionSend) {
         self.isMineMessage = YES;

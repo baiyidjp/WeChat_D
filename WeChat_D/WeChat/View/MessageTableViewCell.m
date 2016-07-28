@@ -16,6 +16,10 @@
  */
 @property(nonatomic,strong)UIImageView *headerView;
 /**
+ *  消息发送者名字 用于群组 而且是朋友所发
+ */
+@property(nonatomic,strong)UILabel *messageFromName;
+/**
  *  底层图片
  */
 @property(nonatomic,strong)UIImageView *backImgaeView;
@@ -66,6 +70,7 @@
     
     [self.contentView addSubview:self.headerView];
     [self.contentView addSubview:self.backImgaeView];
+    [self.contentView addSubview:self.messageFromName];
     
     self.contentView.userInteractionEnabled = YES;
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)];
@@ -201,10 +206,18 @@
         _sendFiledBtn.backgroundColor = [UIColor clearColor];
         [_sendFiledBtn setImage:[UIImage imageNamed:@"MessageSendFail_28x28_"] forState:UIControlStateNormal];
         [_sendFiledBtn addTarget:self action:@selector(reSendMessage) forControlEvents:UIControlEventTouchUpInside];
-        [_sendFiledBtn.titleLabel setFont:FONTSIZE(11)];
-        
     }
     return _sendFiledBtn;
+}
+
+- (UILabel *)messageFromName{
+    
+    if (!_messageFromName) {
+        _messageFromName = [[UILabel alloc]init];
+        _messageFromName.textColor = [UIColor redColor];
+        _messageFromName.font = FONTSIZE(12);
+    }
+    return _messageFromName;
 }
 
 #pragma mark 播放语音的动画
@@ -352,6 +365,24 @@
         }];
         self.headerView.image = [UIImage imageNamed:DefaultHeadImageName_Message];
         self.headerView.backgroundColor = [UIColor redColor];
+        CGFloat name_backImage_padding = 0.0;
+        switch (model.chatType) {
+            case EMChatTypeChat:{
+                name_backImage_padding = 0.0;
+            }
+                break;
+            case EMChatTypeGroupChat:{
+                name_backImage_padding = KMARGIN*3/2.0;
+                self.messageFromName.text = model.messageFromName;
+                [self.messageFromName mas_remakeConstraints:^(MASConstraintMaker *make) {
+                    make.top.equalTo(self.headerView.mas_top);
+                    make.left.equalTo(self.headerView.mas_right).with.offset(KMARGIN*3/2.0);
+                }];
+            }
+                break;
+            default:
+                break;
+        }
         switch (model.messageType) {
             case MessageType_Text:{
                 
@@ -364,7 +395,7 @@
                     make.edges.mas_equalTo(self.backImgaeView).insets(UIEdgeInsetsMake(KMARGIN, 3.0/2*KMARGIN, KMARGIN, 3.0/2*KMARGIN));
                 }];
                 [self.backImgaeView mas_remakeConstraints:^(MASConstraintMaker *make) {
-                    make.top.equalTo(self.headerView.mas_top);
+                    make.top.equalTo(self.headerView.mas_top).with.offset(name_backImage_padding);
                     make.left.equalTo(self.headerView.mas_right).with.offset(KMARGIN/2);
                     make.right.equalTo(self.messageText.mas_right).with.offset(3.0/2*KMARGIN);
                     make.bottom.equalTo(self.messageText.mas_bottom).with.offset(KMARGIN);
@@ -376,7 +407,7 @@
                 [self.contentView addSubview:self.timeLabel];
                 [self.backImgaeView addSubview:self.messageVoice];
                 [self.backImgaeView mas_remakeConstraints:^(MASConstraintMaker *make) {
-                    make.top.equalTo(self.headerView.mas_top);
+                    make.top.equalTo(self.headerView.mas_top).with.offset(name_backImage_padding);
                     make.left.equalTo(self.headerView.mas_right).with.offset(KMARGIN/2);
                     if (model.voiceTime < 5) {
                         make.width.equalTo(@80);
@@ -385,7 +416,7 @@
                     }else{
                         make.width.equalTo(@(model.voiceTime*2*KMARGIN));
                     }
-                    make.bottom.equalTo(self.headerView.mas_bottom);
+                    make.height.equalTo(self.headerView.mas_height);
                 }];
                 self.messageVoice.image = [UIImage imageNamed:@"message_voice_receiver_playing_3"];
                 [self.messageVoice mas_remakeConstraints:^(MASConstraintMaker *make) {
@@ -430,7 +461,7 @@
                     make.size.mas_equalTo(CGSizeMake(ImageDefaultSizeWH, ImageDefaultSizeWH/imageSize.width * imageSize.height));
                 }];
                 [self.backImgaeView mas_remakeConstraints:^(MASConstraintMaker *make) {
-                    make.top.equalTo(self.headerView.mas_top);
+                    make.top.equalTo(self.headerView.mas_top).with.offset(name_backImage_padding);
                     make.left.equalTo(self.headerView.mas_right).with.offset(KMARGIN/2);
                     make.right.equalTo(self.messsgeImage.mas_right).with.offset(3.0/2*KMARGIN);
                     make.bottom.equalTo(self.messsgeImage.mas_bottom).with.offset(KMARGIN);

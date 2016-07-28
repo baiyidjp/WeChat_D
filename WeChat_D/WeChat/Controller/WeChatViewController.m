@@ -105,6 +105,8 @@
     [JP_NotificationCenter addObserver:self selector:@selector(reciveMessage) name:RECEIVEMESSAGES object:nil];
     [JP_NotificationCenter addObserver:self selector:@selector(addFriendNoti:) name:ADDFRIENDSUCCESS object:nil];
     [JP_NotificationCenter addObserver:self selector:@selector(delectFriendNoti) name:DELECTFRIENDSUEESS object:nil];
+    [JP_NotificationCenter addObserver:self selector:@selector(creatGroupSuccess:) name:CREATGROUPSUCCESS object:nil];
+    [JP_NotificationCenter addObserver:self selector:@selector(receiveGroupInvite:) name:RECEIVEGROUPINVITE object:nil];
     
     searchBarTop = KNAVHEIGHT;
     UISearchBar *searchBar = [[UISearchBar alloc]init];
@@ -335,14 +337,25 @@
     
     ChatDetailViewController *chatVC = [[ChatDetailViewController alloc]init];
     EMConversation *conversation = [self.dataArray objectAtIndex:indexPath.row];
-    chatVC.title = conversation.conversationId;
+    switch (conversation.type) {
+        case EMConversationTypeChat:
+            chatVC.title = conversation.conversationId;
+            break;
+        case EMConversationTypeGroupChat:
+            chatVC.title = [conversation.ext objectForKey:GroupName];
+            chatVC.groupID = conversation.conversationId;
+            break;
+        default:
+            break;
+    }
+
     self.tabBarController.tabBar.hidden = YES;
     [self.navigationController pushViewController:chatVC animated:YES];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    return 70;
+    return 68;
 }
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -385,7 +398,7 @@
 }
 #pragma mark  接收到新消息
 - (void)reciveMessage{
-    
+
     [self getAllConversations];
 }
 
@@ -407,6 +420,36 @@
     }];
 
 }
+#pragma mark 创建群组成功 
+- (void)creatGroupSuccess:(NSNotification *)notifacation{
+    
+    EMGroup *group = [notifacation.userInfo objectForKey:GroupValue];
+    EMConversation *conversation = [[EMClient sharedClient].chatManager getConversation:group.groupId type:EMConversationTypeGroupChat createIfNotExist:YES];
+    conversation.ext = [NSDictionary dictionaryWithObject:group.subject forKey:GroupName];
+//    [[EMClient sharedClient].chatManager importConversations:@[conversation]];
+    [self getAllConversations];
+}
+#pragma mark  接收到入群申请(自动同意加群)
+- (void)receiveGroupInvite:(NSNotification *)notification{
+    
+    NSDictionary *dict = notification.userInfo;
+    EMGroup *group = [dict objectForKey:GroupValue];
+    EMTextMessageBody *body = [[EMTextMessageBody alloc] initWithText:@"我加进来了,一起来聊天吧"];
+    NSString *currentName = [[EMClient sharedClient] currentUsername];
+    //生成Message
+    EMMessage *emmessage = [[EMMessage alloc]initWithConversationID:group.groupId from:currentName to:group.groupId body:body ext:nil];
+    emmessage.chatType = EMChatTypeGroupChat;
+    [[EMClient sharedClient].chatManager asyncSendMessage:emmessage progress:^(int progress) {
+        
+    } completion:^(EMMessage *message, EMError *error) {
+        if (!error) {
+            EMConversation *conversation = [[EMClient sharedClient].chatManager getConversation:group.groupId type:EMConversationTypeGroupChat createIfNotExist:YES];
+            conversation.ext = [NSDictionary dictionaryWithObject:group.subject forKey:GroupName];
+            [self getAllConversations];
+        }
+    }];
+}
+
 #pragma mark 删除好友刷新页面
 - (void)delectFriendNoti{
     
@@ -443,5 +486,6 @@
     [JP_NotificationCenter removeObserver:self name:NETWORKSTATE object:nil];
     [JP_NotificationCenter removeObserver:self name:RECEIVEMESSAGES object:nil];
     [JP_NotificationCenter removeObserver:self name:ADDFRIENDSUCCESS object:nil];
+    [JP_NotificationCenter removeObserver:self name:CREATGROUPSUCCESS object:nil];
 }
 @end

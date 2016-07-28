@@ -35,6 +35,10 @@ typedef enum : NSUInteger {
 @property(nonatomic,assign) CGFloat superViewHeight;
 /** 接收者 */
 @property(nonatomic,strong) NSString *toUser;
+/**
+ *  消息类型
+ */
+@property(nonatomic,assign) EMChatType chatType;
 
 @property(nonatomic,weak)id<JPKeyBoardToolViewDelegate> delegate;
 - (void)endEditing;

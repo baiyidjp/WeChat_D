@@ -532,7 +532,6 @@
         NSString *from = [[EMClient sharedClient] currentUsername];
         //生成Message
         EMMessage *emmessage = [[EMMessage alloc]initWithConversationID:self.toUser from:from to:self.toUser body:body ext:nil];
-        emmessage.chatType = EMChatTypeChat;
         [self sendMessageWithMessage:emmessage];
         textView.text = nil;
         [self textViewDidChange:self.inputTextView];
@@ -583,7 +582,6 @@
     NSString *from = [[EMClient sharedClient] currentUsername];
     //生成Message
     EMMessage *emmessage = [[EMMessage alloc]initWithConversationID:self.toUser from:from to:self.toUser body:body ext:nil];
-    emmessage.chatType = EMChatTypeChat;
     //发送消息
     [self sendMessageWithMessage:emmessage];
     [picker dismissViewControllerAnimated:YES completion:nil];
@@ -695,13 +693,12 @@
     NSString *from = [[EMClient sharedClient] currentUsername];
     // 生成message
     EMMessage *message = [[EMMessage alloc] initWithConversationID:self.toUser from:from to:self.toUser body:body ext:nil];
-    message.chatType = EMChatTypeChat;// 设置为单聊消息
     [self sendMessageWithMessage:message];
 }
 
 #pragma mark 发送消息
 - (void)sendMessageWithMessage:(EMMessage *)emmessage{
-    
+    emmessage.chatType = self.chatType;
     if ([self.delegate respondsToSelector:@selector(didSendMessageOfFaceView:message:)]) {
         [self.delegate didSendMessageOfFaceView:self message:emmessage];
     }

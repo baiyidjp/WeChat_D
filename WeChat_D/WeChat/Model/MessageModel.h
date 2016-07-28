@@ -31,7 +31,9 @@ typedef enum : NSUInteger {
 
 /** 语音是否已读 */
 @property(nonatomic,assign) BOOL voiceIsListen;
-
+/**
+ *  录音时间
+ */
 @property(nonatomic,assign)int voiceTime;
 /**
  *  网络路径
@@ -41,8 +43,13 @@ typedef enum : NSUInteger {
  *  本地路径
  */
 @property(nonatomic,copy)NSString *voiceLocaPath;
-
+/**
+ *  是否本人发送
+ */
 @property(nonatomic,assign)BOOL isMineMessage;
+/**
+ *  消息体类型
+ */
 @property(nonatomic,assign)MessageType messageType;
 
 /** Emmessage */
@@ -55,4 +62,12 @@ typedef enum : NSUInteger {
  *  发送状态
  */
 @property(nonatomic,assign) EMMessageStatus sendSuccess;
+/**
+ *  消息类型
+ */
+@property(nonatomic,assign)EMChatType chatType;
+/**
+ *  消息发送者名字
+ */
+@property(nonatomic,copy)NSString *messageFromName;
 @end

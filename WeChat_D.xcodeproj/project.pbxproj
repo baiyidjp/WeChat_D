@@ -10,6 +10,7 @@
 		A2088B3E1D3C6EC200C73446 /* PublicMethod.m in Sources */ = {isa = PBXBuildFile; fileRef = A2088B3D1D3C6EC200C73446 /* PublicMethod.m */; };
 		A2088B421D3CA39100C73446 /* MessageTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A2088B411D3CA39100C73446 /* MessageTableViewCell.m */; };
 		A2088B451D3CACFA00C73446 /* MessageModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A2088B441D3CACFA00C73446 /* MessageModel.m */; };
+		A21137DD1D49E53500CB6EF7 /* MyGroupListController.m in Sources */ = {isa = PBXBuildFile; fileRef = A21137DC1D49E53500CB6EF7 /* MyGroupListController.m */; };
 		A21B628D1D3891B300F0E727 /* face.plist in Resources */ = {isa = PBXBuildFile; fileRef = A21B628C1D3891B300F0E727 /* face.plist */; };
 		A21B62901D3893ED00F0E727 /* FaceViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A21B628F1D3893ED00F0E727 /* FaceViewModel.m */; };
 		A21B62931D38D9BD00F0E727 /* WeChatListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A21B62921D38D9BD00F0E727 /* WeChatListModel.m */; };
@@ -157,7 +158,6 @@
 		F5A131111D48FE5A00190C1B /* sent_ok_icon_10x10_@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F5A130F11D48FE5A00190C1B /* sent_ok_icon_10x10_@2x.png */; };
 		F5A131121D48FE5A00190C1B /* SentScreenSnipBtn_81x110_@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F5A130F21D48FE5A00190C1B /* SentScreenSnipBtn_81x110_@2x.png */; };
 		F5A131131D48FE5A00190C1B /* SentScreenSnipBtnHL_81x110_@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F5A130F31D48FE5A00190C1B /* SentScreenSnipBtnHL_81x110_@2x.png */; };
-		F5A131151D48FE7800190C1B /* setting_myQR_18x18_@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F5A131141D48FE7800190C1B /* setting_myQR_18x18_@2x.png */; };
 		F5A1313C1D48FF0900190C1B /* sharemore_-progress-bar_12x9_@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F5A131171D48FF0900190C1B /* sharemore_-progress-bar_12x9_@2x.png */; };
 		F5A1313D1D48FF0900190C1B /* sharemore_-progress-bar_bg_12x9_@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F5A131181D48FF0900190C1B /* sharemore_-progress-bar_bg_12x9_@2x.png */; };
 		F5A1313E1D48FF0900190C1B /* sharemore_action_12x12_@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F5A131191D48FF0900190C1B /* sharemore_action_12x12_@2x.png */; };
@@ -353,6 +353,8 @@
 		A2088B411D3CA39100C73446 /* MessageTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageTableViewCell.m; sourceTree = "<group>"; };
 		A2088B431D3CACFA00C73446 /* MessageModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageModel.h; sourceTree = "<group>"; };
 		A2088B441D3CACFA00C73446 /* MessageModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageModel.m; sourceTree = "<group>"; };
+		A21137DB1D49E53500CB6EF7 /* MyGroupListController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyGroupListController.h; sourceTree = "<group>"; };
+		A21137DC1D49E53500CB6EF7 /* MyGroupListController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyGroupListController.m; sourceTree = "<group>"; };
 		A21B628C1D3891B300F0E727 /* face.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = face.plist; sourceTree = "<group>"; };
 		A21B628E1D3893ED00F0E727 /* FaceViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FaceViewModel.h; sourceTree = "<group>"; };
 		A21B628F1D3893ED00F0E727 /* FaceViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FaceViewModel.m; sourceTree = "<group>"; };
@@ -573,7 +575,6 @@
 		F5A130F11D48FE5A00190C1B /* sent_ok_icon_10x10_@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sent_ok_icon_10x10_@2x.png"; sourceTree = "<group>"; };
 		F5A130F21D48FE5A00190C1B /* SentScreenSnipBtn_81x110_@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "SentScreenSnipBtn_81x110_@2x.png"; sourceTree = "<group>"; };
 		F5A130F31D48FE5A00190C1B /* SentScreenSnipBtnHL_81x110_@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "SentScreenSnipBtnHL_81x110_@2x.png"; sourceTree = "<group>"; };
-		F5A131141D48FE7800190C1B /* setting_myQR_18x18_@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "setting_myQR_18x18_@2x.png"; sourceTree = "<group>"; };
 		F5A131171D48FF0900190C1B /* sharemore_-progress-bar_12x9_@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sharemore_-progress-bar_12x9_@2x.png"; sourceTree = "<group>"; };
 		F5A131181D48FF0900190C1B /* sharemore_-progress-bar_bg_12x9_@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sharemore_-progress-bar_bg_12x9_@2x.png"; sourceTree = "<group>"; };
 		F5A131191D48FF0900190C1B /* sharemore_action_12x12_@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sharemore_action_12x12_@2x.png"; sourceTree = "<group>"; };
@@ -922,6 +923,8 @@
 				A2C512C31D42090700D84829 /* AgreeFriendViewController.m */,
 				A25AAB5A1D48652400DBBBE5 /* GroupViewController.h */,
 				A25AAB5B1D48652500DBBBE5 /* GroupViewController.m */,
+				A21137DB1D49E53500CB6EF7 /* MyGroupListController.h */,
+				A21137DC1D49E53500CB6EF7 /* MyGroupListController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -1447,7 +1450,6 @@
 		F5CB8BA91D4477E0002663F8 /* More */ = {
 			isa = PBXGroup;
 			children = (
-				F5A131141D48FE7800190C1B /* setting_myQR_18x18_@2x.png */,
 				F5CB8C541D447A6C002663F8 /* MyCardPackageIcon_25x25_@2x.png */,
 				F5CB8BAA1D4477E0002663F8 /* Action_Moments_60x60_@2x.png */,
 				F5CB8BAB1D4477E0002663F8 /* Action_Moments_60x60_@3x.png */,
@@ -1739,7 +1741,6 @@
 				F5CB8C151D4477E0002663F8 /* ff_IconLocationService_25x25_@1x.png in Resources */,
 				F5CB8B7B1D447229002663F8 /* tabbar_contacts_27x23_@2x.png in Resources */,
 				F5CB8BFF1D4477E0002663F8 /* ToolViewEmotionHL_35x35_@2x.png in Resources */,
-				F5A131151D48FE7800190C1B /* setting_myQR_18x18_@2x.png in Resources */,
 				F5CB8BF61D4477E0002663F8 /* BootImage_320x480_@1x.png in Resources */,
 				F5A131421D48FF0900190C1B /* sharemore_fromapp_30x18_@2x.png in Resources */,
 				F5CB8C3E1D4477E0002663F8 /* VoiceSearchFeedback013_90x90_@2x.png in Resources */,
@@ -2004,6 +2005,7 @@
 				A25AAB5F1D4882C800DBBBE5 /* ListView.m in Sources */,
 				A2C512BC1D41BB9A00D84829 /* Mp3Recorder.m in Sources */,
 				A25AAB661D48B13A00DBBBE5 /* CreatGroupCell.m in Sources */,
+				A21137DD1D49E53500CB6EF7 /* MyGroupListController.m in Sources */,
 				A2C512C01D41F8FA00D84829 /* NewFriendCell.m in Sources */,
 				A24695331D34EA7600E32C30 /* JPKeyBoardToolView.m in Sources */,
 				A297B7071D2F8E14003C9276 /* main.m in Sources */,

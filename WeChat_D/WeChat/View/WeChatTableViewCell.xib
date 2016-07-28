@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -17,7 +17,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="FBB-b1-eGQ">
-                        <rect key="frame" x="8" y="8" width="53" height="53"/>
+                        <rect key="frame" x="10" y="10" width="49" height="49"/>
                         <constraints>
                             <constraint firstAttribute="width" secondItem="FBB-b1-eGQ" secondAttribute="height" multiplier="1:1" id="7C2-2j-Bgd"/>
                             <constraint firstAttribute="width" constant="121" id="HMa-se-rWg"/>
@@ -35,13 +35,13 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="我是名字" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="btW-Zv-Krb">
-                        <rect key="frame" x="71" y="15" width="286" height="20"/>
+                        <rect key="frame" x="69" y="15" width="288" height="20"/>
                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="我是简介我是简介我是message" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Axm-nh-l5e">
-                        <rect key="frame" x="71" y="40" width="286" height="17"/>
+                        <rect key="frame" x="69" y="40" width="288" height="17"/>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <color key="textColor" red="0.4549019608" green="0.4549019608" blue="0.4549019608" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
@@ -59,14 +59,17 @@
                     </label>
                 </subviews>
                 <constraints>
+                    <constraint firstAttribute="bottom" secondItem="FBB-b1-eGQ" secondAttribute="bottom" constant="10" id="5Uc-ou-xOB"/>
                     <constraint firstAttribute="trailingMargin" secondItem="z0i-dc-5dJ" secondAttribute="trailing" constant="10" id="5aX-Nj-2MS"/>
                     <constraint firstItem="Axm-nh-l5e" firstAttribute="centerY" secondItem="FBB-b1-eGQ" secondAttribute="centerY" constant="10" id="64F-e9-HXv"/>
                     <constraint firstAttribute="bottomMargin" secondItem="FBB-b1-eGQ" secondAttribute="bottom" id="BZo-Q4-6Qk"/>
                     <constraint firstItem="7VP-Qb-AJe" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" constant="-128.5" id="CNn-So-Nve"/>
+                    <constraint firstItem="FBB-b1-eGQ" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="EKJ-Fp-aHk"/>
                     <constraint firstItem="Axm-nh-l5e" firstAttribute="leading" secondItem="FBB-b1-eGQ" secondAttribute="trailing" constant="10" id="MEr-mf-Svf"/>
                     <constraint firstAttribute="trailingMargin" secondItem="btW-Zv-Krb" secondAttribute="trailing" constant="10" id="OiJ-jq-S1N"/>
                     <constraint firstItem="btW-Zv-Krb" firstAttribute="centerY" secondItem="FBB-b1-eGQ" secondAttribute="centerY" constant="-10" id="UCp-LV-Htq"/>
                     <constraint firstItem="FBB-b1-eGQ" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="X6H-Mg-Ma7"/>
+                    <constraint firstItem="FBB-b1-eGQ" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="Z1C-Jp-Seu"/>
                     <constraint firstItem="z0i-dc-5dJ" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="10" id="c4O-Om-3dz"/>
                     <constraint firstAttribute="trailingMargin" secondItem="Axm-nh-l5e" secondAttribute="trailing" constant="10" id="er6-s7-lhL"/>
                     <constraint firstItem="btW-Zv-Krb" firstAttribute="top" secondItem="FBB-b1-eGQ" secondAttribute="top" id="hdj-LX-cOd"/>
@@ -77,6 +80,9 @@
                 </constraints>
                 <variation key="default">
                     <mask key="constraints">
+                        <exclude reference="BZo-Q4-6Qk"/>
+                        <exclude reference="X6H-Mg-Ma7"/>
+                        <exclude reference="lqe-aK-QQn"/>
                         <exclude reference="hdj-LX-cOd"/>
                         <exclude reference="64F-e9-HXv"/>
                     </mask>
