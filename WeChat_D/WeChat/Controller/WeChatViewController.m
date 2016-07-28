@@ -426,7 +426,6 @@
     EMGroup *group = [notifacation.userInfo objectForKey:GroupValue];
     EMConversation *conversation = [[EMClient sharedClient].chatManager getConversation:group.groupId type:EMConversationTypeGroupChat createIfNotExist:YES];
     conversation.ext = [NSDictionary dictionaryWithObject:group.subject forKey:GroupName];
-//    [[EMClient sharedClient].chatManager importConversations:@[conversation]];
     [self getAllConversations];
 }
 #pragma mark  接收到入群申请(自动同意加群)

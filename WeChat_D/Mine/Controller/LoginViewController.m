@@ -109,7 +109,6 @@
             [SVProgressHUD show];
             [[EMClient sharedClient] asyncLoginWithUsername:userTextFiled.text password:passWordTextFiled.text success:^{
                 dispatch_async(dispatch_get_main_queue(), ^{
-                    SVProgressHUD.minimumDismissTimeInterval = 1.0;
                     [SVProgressHUD showSuccessWithStatus:@"登录成功"];
                     [JP_NotificationCenter postNotificationName:LOGINCHANGE object:nil];
                     //设置是否自动登录

@@ -143,8 +143,7 @@
 }
 
 - (void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag{
-    
-    NSLog(@"听完了");
+
     [JP_NotificationCenter postNotificationName:RECORDPLAYFINISH object:Nil];
 }
 

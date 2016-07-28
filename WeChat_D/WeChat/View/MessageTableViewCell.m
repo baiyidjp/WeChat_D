@@ -365,7 +365,7 @@
         }];
         self.headerView.image = [UIImage imageNamed:DefaultHeadImageName_Message];
         self.headerView.backgroundColor = [UIColor redColor];
-        CGFloat name_backImage_padding = 0.0;
+        CGFloat name_backImage_padding = 0.0; //为了让聊天的背景图片布局时 在不同的聊天中有一个参考距离
         switch (model.chatType) {
             case EMChatTypeChat:{
                 name_backImage_padding = 0.0;
@@ -513,7 +513,7 @@
 
 //语音开始播放
 - (void)recordPlayBegin{
-    
+#warning 特别说明 不写这个通知 会出现一个特别奇怪的bug无意中发现的 突然就忘记了
 }
 //语音播放完毕
 - (void)recordPlayFinish{

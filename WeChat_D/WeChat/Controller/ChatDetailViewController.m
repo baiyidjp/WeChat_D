@@ -190,7 +190,7 @@
 #pragma mark 重发消息
 - (void)resendMessageWith:(MessageTableViewCell *)messageCell indexPath:(NSIndexPath *)indexPath{
     
-    EMMessage *emmessage = [self.dataArray objectAtIndex:indexPath.row];
+    EMMessage *emmessage = [self.dataArray objectAtIndex:indexPath.row];// 拿到要重新发送的消息
     if (emmessage.body.type == EMMessageBodyTypeText) {
         [SVProgressHUD show];
     }
@@ -204,8 +204,8 @@
             [SVProgressHUD showSuccessWithStatus:@"发送失败"];
             NSLog(@"消息发送状态 失败%zd",message.status);
         }
-        [self.dataArray removeObject:emmessage];
-        [self.dataArray addObject:message];
+        [self.dataArray removeObject:emmessage];//移除发送失败的那条消息 也就是我们上面拿到的那一条
+        [self.dataArray addObject:message];//添加已经重新发送成功的消息
         [self.ChatTableView reloadData];
         if (self.dataArray.count) {
             [self.ChatTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:self.dataArray.count-1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
@@ -328,7 +328,7 @@
     for (EMMessage *emmessage in self.reciveMessageArray) {
         [self.conversation markMessageAsReadWithId:emmessage.messageId];
     }
-    [self.voiceMessageCell viewBack];
+    [self.voiceMessageCell viewBack];//处理正在播放时候 离开聊天界面的问题
 }
 
 @end
