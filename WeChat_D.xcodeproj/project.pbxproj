@@ -198,6 +198,15 @@
 		F5A1315E1D48FF0900190C1B /* sharemore_wallet_59x59_@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = F5A131391D48FF0900190C1B /* sharemore_wallet_59x59_@3x.png */; };
 		F5A1315F1D48FF0900190C1B /* sharemorePay_59x59_@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F5A1313A1D48FF0900190C1B /* sharemorePay_59x59_@2x.png */; };
 		F5A131601D48FF0900190C1B /* sharemorePay_59x59_@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = F5A1313B1D48FF0900190C1B /* sharemorePay_59x59_@3x.png */; };
+		F5A131621D4CDC7900190C1B /* setting_myQR_18x18_@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F5A131611D4CDC7900190C1B /* setting_myQR_18x18_@2x.png */; };
+		F5A131721D50E0F500190C1B /* FirstViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F5A131661D50E0F500190C1B /* FirstViewController.m */; };
+		F5A131731D50E0F500190C1B /* SecondViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F5A131681D50E0F500190C1B /* SecondViewController.m */; };
+		F5A131741D50E0F500190C1B /* ThirdViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F5A1316A1D50E0F500190C1B /* ThirdViewController.m */; };
+		F5A131751D50E0F500190C1B /* CityNameModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F5A1316D1D50E0F500190C1B /* CityNameModel.m */; };
+		F5A131761D50E0F500190C1B /* JPTableViewDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F5A131701D50E0F500190C1B /* JPTableViewDelegate.m */; };
+		F5A131771D50E0F500190C1B /* zh_CN.json in Resources */ = {isa = PBXBuildFile; fileRef = F5A131711D50E0F500190C1B /* zh_CN.json */; };
+		F5A1317A1D50E77800190C1B /* MyQRCodeController.m in Sources */ = {isa = PBXBuildFile; fileRef = F5A131791D50E77800190C1B /* MyQRCodeController.m */; };
+		F5A1317C1D50F3C400190C1B /* Contact_Male_18x18_@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F5A1317B1D50F3C400190C1B /* Contact_Male_18x18_@2x.png */; };
 		F5CB8B641D3F0533002663F8 /* AddFriendController.m in Sources */ = {isa = PBXBuildFile; fileRef = F5CB8B631D3F0533002663F8 /* AddFriendController.m */; };
 		F5CB8B781D447229002663F8 /* tabbar_badge_30x30_@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F5CB8B651D447229002663F8 /* tabbar_badge_30x30_@2x.png */; };
 		F5CB8B791D447229002663F8 /* tabbar_badge_30x30_@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = F5CB8B661D447229002663F8 /* tabbar_badge_30x30_@3x.png */; };
@@ -621,6 +630,21 @@
 		F5A131391D48FF0900190C1B /* sharemore_wallet_59x59_@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sharemore_wallet_59x59_@3x.png"; sourceTree = "<group>"; };
 		F5A1313A1D48FF0900190C1B /* sharemorePay_59x59_@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sharemorePay_59x59_@2x.png"; sourceTree = "<group>"; };
 		F5A1313B1D48FF0900190C1B /* sharemorePay_59x59_@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sharemorePay_59x59_@3x.png"; sourceTree = "<group>"; };
+		F5A131611D4CDC7900190C1B /* setting_myQR_18x18_@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "setting_myQR_18x18_@2x.png"; sourceTree = "<group>"; };
+		F5A131651D50E0F500190C1B /* FirstViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FirstViewController.h; sourceTree = "<group>"; };
+		F5A131661D50E0F500190C1B /* FirstViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FirstViewController.m; sourceTree = "<group>"; };
+		F5A131671D50E0F500190C1B /* SecondViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SecondViewController.h; sourceTree = "<group>"; };
+		F5A131681D50E0F500190C1B /* SecondViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SecondViewController.m; sourceTree = "<group>"; };
+		F5A131691D50E0F500190C1B /* ThirdViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThirdViewController.h; sourceTree = "<group>"; };
+		F5A1316A1D50E0F500190C1B /* ThirdViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThirdViewController.m; sourceTree = "<group>"; };
+		F5A1316C1D50E0F500190C1B /* CityNameModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CityNameModel.h; sourceTree = "<group>"; };
+		F5A1316D1D50E0F500190C1B /* CityNameModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CityNameModel.m; sourceTree = "<group>"; };
+		F5A1316F1D50E0F500190C1B /* JPTableViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JPTableViewDelegate.h; sourceTree = "<group>"; };
+		F5A131701D50E0F500190C1B /* JPTableViewDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JPTableViewDelegate.m; sourceTree = "<group>"; };
+		F5A131711D50E0F500190C1B /* zh_CN.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = zh_CN.json; sourceTree = "<group>"; };
+		F5A131781D50E77800190C1B /* MyQRCodeController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyQRCodeController.h; sourceTree = "<group>"; };
+		F5A131791D50E77800190C1B /* MyQRCodeController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyQRCodeController.m; sourceTree = "<group>"; };
+		F5A1317B1D50F3C400190C1B /* Contact_Male_18x18_@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Contact_Male_18x18_@2x.png"; sourceTree = "<group>"; };
 		F5CB8B621D3F0533002663F8 /* AddFriendController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddFriendController.h; sourceTree = "<group>"; };
 		F5CB8B631D3F0533002663F8 /* AddFriendController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddFriendController.m; sourceTree = "<group>"; };
 		F5CB8B651D447229002663F8 /* tabbar_badge_30x30_@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tabbar_badge_30x30_@2x.png"; sourceTree = "<group>"; };
@@ -966,6 +990,7 @@
 		A297B7431D2F8E5A003C9276 /* Mine */ = {
 			isa = PBXGroup;
 			children = (
+				F5A131631D50E0F500190C1B /* ChooseCity */,
 				A297B7441D2F8E5A003C9276 /* Controller */,
 				A297B7471D2F8E5A003C9276 /* Model */,
 				A297B7481D2F8E5A003C9276 /* View */,
@@ -982,6 +1007,8 @@
 				F5CF83DA1D39C3EB000CC9F5 /* LoginViewController.m */,
 				A2DA92511D50B6FE000077ED /* MyInfoController.h */,
 				A2DA92521D50B6FE000077ED /* MyInfoController.m */,
+				F5A131781D50E77800190C1B /* MyQRCodeController.h */,
+				F5A131791D50E77800190C1B /* MyQRCodeController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -1403,6 +1430,48 @@
 			path = KeyAdd;
 			sourceTree = "<group>";
 		};
+		F5A131631D50E0F500190C1B /* ChooseCity */ = {
+			isa = PBXGroup;
+			children = (
+				F5A131641D50E0F500190C1B /* Controller */,
+				F5A1316B1D50E0F500190C1B /* Model */,
+				F5A1316E1D50E0F500190C1B /* Other */,
+			);
+			path = ChooseCity;
+			sourceTree = "<group>";
+		};
+		F5A131641D50E0F500190C1B /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				F5A131651D50E0F500190C1B /* FirstViewController.h */,
+				F5A131661D50E0F500190C1B /* FirstViewController.m */,
+				F5A131671D50E0F500190C1B /* SecondViewController.h */,
+				F5A131681D50E0F500190C1B /* SecondViewController.m */,
+				F5A131691D50E0F500190C1B /* ThirdViewController.h */,
+				F5A1316A1D50E0F500190C1B /* ThirdViewController.m */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		F5A1316B1D50E0F500190C1B /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				F5A1316C1D50E0F500190C1B /* CityNameModel.h */,
+				F5A1316D1D50E0F500190C1B /* CityNameModel.m */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		F5A1316E1D50E0F500190C1B /* Other */ = {
+			isa = PBXGroup;
+			children = (
+				F5A1316F1D50E0F500190C1B /* JPTableViewDelegate.h */,
+				F5A131701D50E0F500190C1B /* JPTableViewDelegate.m */,
+				F5A131711D50E0F500190C1B /* zh_CN.json */,
+			);
+			path = Other;
+			sourceTree = "<group>";
+		};
 		F5CB8B8B1D4477E0002663F8 /* Address */ = {
 			isa = PBXGroup;
 			children = (
@@ -1465,6 +1534,8 @@
 		F5CB8BA91D4477E0002663F8 /* More */ = {
 			isa = PBXGroup;
 			children = (
+				F5A1317B1D50F3C400190C1B /* Contact_Male_18x18_@2x.png */,
+				F5A131611D4CDC7900190C1B /* setting_myQR_18x18_@2x.png */,
 				F5CB8C541D447A6C002663F8 /* MyCardPackageIcon_25x25_@2x.png */,
 				F5CB8BAA1D4477E0002663F8 /* Action_Moments_60x60_@2x.png */,
 				F5CB8BAB1D4477E0002663F8 /* Action_Moments_60x60_@3x.png */,
@@ -1723,6 +1794,7 @@
 				F5A130C31D48FDFD00190C1B /* RecordingSignal001_38x100_@2x.png in Resources */,
 				F5CB8C3A1D4477E0002663F8 /* VoiceSearchFeedback009_90x90_@2x.png in Resources */,
 				F5A131591D48FF0900190C1B /* sharemore_videovoip_60x60_@3x.png in Resources */,
+				F5A131771D50E0F500190C1B /* zh_CN.json in Resources */,
 				F55532A41D46542A00427192 /* MessageSendFail_28x28_@2x.png in Resources */,
 				F5CB8C411D4477E0002663F8 /* VoiceSearchFeedback016_90x90_@2x.png in Resources */,
 				F5A1314F1D48FF0900190C1B /* sharemore_other_HL_60x60_@3x.png in Resources */,
@@ -1809,6 +1881,7 @@
 				F5CB8C4D1D4477E0002663F8 /* VoiceSearchLoading006_90x90_@2x.png in Resources */,
 				F5CB8C221D4477E0002663F8 /* ff_IconShowMobile_25x25_@2x.png in Resources */,
 				F5A131551D48FF0900190C1B /* sharemore_sight_60x60_@3x.png in Resources */,
+				F5A131621D4CDC7900190C1B /* setting_myQR_18x18_@2x.png in Resources */,
 				F5CB8C4E1D4477E0002663F8 /* VoiceSearchLoading007_90x90_@2x.png in Resources */,
 				F5A130F51D48FE5A00190C1B /* SenderAppCardNodeBkg_HL_66x54_@2x.png in Resources */,
 				F5CB8C3D1D4477E0002663F8 /* VoiceSearchFeedback012_90x90_@2x.png in Resources */,
@@ -1879,6 +1952,7 @@
 				F5A1306F1D48FCAE00190C1B /* contacts_add_friend_30x30_@3x.png in Resources */,
 				F5CB8C051D4477E0002663F8 /* ToolViewKeyboard_35x35_@2x.png in Resources */,
 				F5A1310E1D48FE5A00190C1B /* SenderVoiceNodePlaying_12x17_@2x.png in Resources */,
+				F5A1317C1D50F3C400190C1B /* Contact_Male_18x18_@2x.png in Resources */,
 				F5CB8C2D1D4477E0002663F8 /* MoreMyAlbum_25x25_@3x.png in Resources */,
 				F5CB8B8A1D44722A002663F8 /* tabbarBkg_5x49_@2x.png in Resources */,
 				F5A130FB1D48FE5A00190C1B /* SenderImageNodeBorder_57x52_@3x.png in Resources */,
@@ -2007,15 +2081,18 @@
 				A2DA92501D50B42E000077ED /* QRCodeManger.m in Sources */,
 				A297B75D1D2F8E5A003C9276 /* MainTabbarController.m in Sources */,
 				A25AAB691D48B1D900DBBBE5 /* CreatGroupModel.m in Sources */,
+				F5A131761D50E0F500190C1B /* JPTableViewDelegate.m in Sources */,
 				A21B62971D38DA1700F0E727 /* WeChatTableViewCell.m in Sources */,
 				A297B7631D2F9622003C9276 /* BaseViewController.m in Sources */,
 				A297B75C1D2F8E5A003C9276 /* DiscoverViewController.m in Sources */,
 				A2C512C41D42090700D84829 /* AgreeFriendViewController.m in Sources */,
 				A24695301D34E77D00E32C30 /* ChatDetailViewController.m in Sources */,
 				A297B75B1D2F8E5A003C9276 /* MineViewController.m in Sources */,
+				F5A131731D50E0F500190C1B /* SecondViewController.m in Sources */,
 				A2088B3E1D3C6EC200C73446 /* PublicMethod.m in Sources */,
 				A21B62931D38D9BD00F0E727 /* WeChatListModel.m in Sources */,
 				A297B75A1D2F8E5A003C9276 /* ContactsViewController.m in Sources */,
+				F5A131741D50E0F500190C1B /* ThirdViewController.m in Sources */,
 				A297B70A1D2F8E14003C9276 /* AppDelegate.m in Sources */,
 				A2DA92531D50B6FE000077ED /* MyInfoController.m in Sources */,
 				F5CB8B641D3F0533002663F8 /* AddFriendController.m in Sources */,
@@ -2025,13 +2102,16 @@
 				A25AAB661D48B13A00DBBBE5 /* CreatGroupCell.m in Sources */,
 				A21137DD1D49E53500CB6EF7 /* MyGroupListController.m in Sources */,
 				A2C512C01D41F8FA00D84829 /* NewFriendCell.m in Sources */,
+				F5A131751D50E0F500190C1B /* CityNameModel.m in Sources */,
 				A24695331D34EA7600E32C30 /* JPKeyBoardToolView.m in Sources */,
 				A297B7071D2F8E14003C9276 /* main.m in Sources */,
 				A297B7591D2F8E5A003C9276 /* UIView+Toast.m in Sources */,
 				A2C435501D3608CF0097ECC1 /* AddMoreView.m in Sources */,
 				A21B62901D3893ED00F0E727 /* FaceViewModel.m in Sources */,
+				F5A1317A1D50E77800190C1B /* MyQRCodeController.m in Sources */,
 				F5CF83DB1D39C3EB000CC9F5 /* LoginViewController.m in Sources */,
 				A2C435531D363AB40097ECC1 /* FaceView.m in Sources */,
+				F5A131721D50E0F500190C1B /* FirstViewController.m in Sources */,
 				A2088B421D3CA39100C73446 /* MessageTableViewCell.m in Sources */,
 				A297B75E1D2F8E5A003C9276 /* WeChatViewController.m in Sources */,
 				A297B7581D2F8E5A003C9276 /* UIColor+Extension.m in Sources */,

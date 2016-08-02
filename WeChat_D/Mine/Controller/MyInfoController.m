@@ -7,7 +7,12 @@
 //
 
 #import "MyInfoController.h"
+#import "FirstViewController.h"
+#import "MyQRCodeController.h"
 
+#define INFOARRAY @"infoArray"
+#define DESCTITLE @"desctitle"
+#define TITLE     @"title"
 @interface MyInfoController ()<UITableViewDelegate,UITableViewDataSource>
 
 @end
@@ -25,6 +30,7 @@
     
     [self configTableView];
     
+    [JP_NotificationCenter addObserver:self selector:@selector(chooseCity:) name:CITYCHOOSESUCCESS object:nil];
 }
 
 - (void)configTableView{
@@ -39,18 +45,24 @@
         make.edges.equalTo(self.view);
     }];
     dataArray = [NSMutableArray array];
-    NSDictionary *dict1 = [NSDictionary dictionaryWithObjects:@[@"头像",DefaultHeadImageName_Message] forKeys:@[@"title",@"desctitle"]];
-    NSDictionary *dict2 = [NSDictionary dictionaryWithObjects:@[@"名字",[EMClient sharedClient].currentUsername] forKeys:@[@"title",@"desctitle"]];
-    NSDictionary *dict3 = [NSDictionary dictionaryWithObjects:@[@"微信号",[EMClient sharedClient].currentUsername] forKeys:@[@"title",@"desctitle"]];
-    NSDictionary *dict4 = [NSDictionary dictionaryWithObjects:@[@"我的二维码",@"setting_myQR_18x18_"] forKeys:@[@"title",@"desctitle"]];
-    NSDictionary *dict5 = [NSDictionary dictionaryWithObjects:@[@"我的地址",@""] forKeys:@[@"title",@"desctitle"]];
-    NSDictionary *dict6 = [NSDictionary dictionaryWithObjects:@[@"性别",@""] forKeys:@[@"title",@"desctitle"]];
-    NSDictionary *dict7 = [NSDictionary dictionaryWithObjects:@[@"地区",@""] forKeys:@[@"title",@"desctitle"]];
-    NSDictionary *dict8 = [NSDictionary dictionaryWithObjects:@[@"个性签名",@""] forKeys:@[@"title",@"desctitle"]];
-    NSMutableArray *arr1 = [NSMutableArray arrayWithObjects:dict1,dict2,dict3,dict4,dict5, nil];
-    NSMutableArray *arr2 = [NSMutableArray arrayWithObjects:dict6,dict7,dict8, nil];
-    [dataArray addObject:arr1];
-    [dataArray addObject:arr2];
+    NSArray *infoArr = [[NSUserDefaults standardUserDefaults]objectForKey:INFOARRAY];
+    if (infoArr.count) {
+        [dataArray addObjectsFromArray:infoArr];
+    }else{
+        NSDictionary *dict1 = [NSDictionary dictionaryWithObjects:@[@"头像",DefaultHeadImageName_Message] forKeys:@[TITLE,DESCTITLE]];
+        NSDictionary *dict2 = [NSDictionary dictionaryWithObjects:@[@"名字",[EMClient sharedClient].currentUsername] forKeys:@[TITLE,DESCTITLE]];
+        NSDictionary *dict3 = [NSDictionary dictionaryWithObjects:@[@"微信号",[EMClient sharedClient].currentUsername] forKeys:@[TITLE,DESCTITLE]];
+        NSDictionary *dict4 = [NSDictionary dictionaryWithObjects:@[@"我的二维码",@"setting_myQR_18x18_"] forKeys:@[TITLE,DESCTITLE]];
+        NSDictionary *dict5 = [NSDictionary dictionaryWithObjects:@[@"我的地址",@""] forKeys:@[TITLE,DESCTITLE]];
+        NSDictionary *dict6 = [NSDictionary dictionaryWithObjects:@[@"性别",@""] forKeys:@[TITLE,DESCTITLE]];
+        NSDictionary *dict7 = [NSDictionary dictionaryWithObjects:@[@"地区",@""] forKeys:@[TITLE,DESCTITLE]];
+        NSDictionary *dict8 = [NSDictionary dictionaryWithObjects:@[@"个性签名",@""] forKeys:@[TITLE,DESCTITLE]];
+        NSMutableArray *arr1 = [NSMutableArray arrayWithObjects:dict1,dict2,dict3,dict4,dict5, nil];
+        NSMutableArray *arr2 = [NSMutableArray arrayWithObjects:dict6,dict7,dict8, nil];
+        [dataArray addObject:arr1];
+        [dataArray addObject:arr2];
+
+    }
     [myInfoTableView reloadData];
 }
 
@@ -72,7 +84,7 @@
     if (indexPath.section == 0 && indexPath.row == 0) {
         
             UIImageView *headImage = [[UIImageView alloc]init];
-            headImage.image = [UIImage imageNamed:[dict objectForKey:@"desctitle"]];
+            headImage.image = [UIImage imageNamed:[dict objectForKey:DESCTITLE]];
             [cell.contentView addSubview:headImage];
             [headImage mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.top.offset(KMARGIN/2);
@@ -81,19 +93,19 @@
             }];
         }else if (indexPath.section == 0 && indexPath.row == 3){
             UIImageView *QRImage = [[UIImageView alloc]init];
-            QRImage.image = [UIImage imageNamed:[dict objectForKey:@"desctitle"]];
+            QRImage.image = [UIImage imageNamed:[dict objectForKey:DESCTITLE]];
             [cell.contentView addSubview:QRImage];
             [QRImage mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.top.offset(KMARGIN/2);
-                make.right.bottom.offset(-KMARGIN/2);
-                make.width.equalTo(QRImage.mas_height);
+                make.centerY.equalTo(cell.contentView.mas_centerY);
+                make.right.offset(-KMARGIN/2);
+                make.size.mas_equalTo(CGSizeMake(20, 20));
             }];
         }else{
             UILabel *descLable = [[UILabel alloc]init];
-            descLable.textColor = [UIColor colorWithHexString:@"000000"];
+            descLable.textColor = [UIColor colorWithHexString:@"888888"];
             descLable.font = FONTSIZE(14);
             descLable.numberOfLines = 2;
-            descLable.text = [dict objectForKey:@"desctitle"];
+            descLable.text = [dict objectForKey:DESCTITLE];
             [cell.contentView addSubview:descLable];
             descLable.preferredMaxLayoutWidth = ScaleValueW(200);
             [descLable mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -101,7 +113,8 @@
                 make.right.bottom.offset(-KMARGIN/2);
             }];
     }
-    cell.textLabel.text = [dict objectForKey:@"title"];
+    cell.textLabel.text = [dict objectForKey:TITLE];
+    cell.textLabel.font = FONTSIZE(15);
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
@@ -125,4 +138,71 @@
     return 2*KMARGIN;
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    NSDictionary *dict = [[dataArray objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
+    
+    if (indexPath.section == 0) {
+        switch (indexPath.row) {
+            case 0:
+                [self.view makeToast:@"更换头像"];
+                break;
+            case 1:
+                [self.view makeToast:@"更改名字"];
+                break;
+            case 3:
+            {
+                MyQRCodeController *ctrl = [[MyQRCodeController alloc]init];
+                NSDictionary *addressdict = [[dataArray objectAtIndex:1] objectAtIndex:1];
+                ctrl.region = [addressdict objectForKey:DESCTITLE];
+                [self.navigationController pushViewController:ctrl animated:YES];
+                
+            }
+                break;
+            case 4:
+                [self.view makeToast:@"收货地址"];
+                break;
+            default:
+                break;
+        }
+    }else{
+        switch (indexPath.row) {
+            case 0:
+                [self.view makeToast:@"更改性别"];
+                break;
+            case 1:
+            {
+                FirstViewController *ctrl = [[FirstViewController alloc]init];
+                [self.navigationController pushViewController:ctrl animated:YES];
+                
+            }
+                break;
+            case 2:
+                [self.view makeToast:@"个性签名"];
+                break;
+            default:
+                break;
+        }
+
+        
+    }
+}
+
+//选择城市 的通知
+- (void)chooseCity:(NSNotification *)notification{
+    
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:1 inSection:1];
+    NSDictionary *dict = notification.userInfo;
+    NSMutableArray *arr = [NSMutableArray arrayWithArray:[dataArray objectAtIndex:indexPath.section]];
+    NSDictionary *dict7 = [NSDictionary dictionaryWithObjects:@[@"地区",[dict objectForKey:@"name"] ] forKeys:@[TITLE,DESCTITLE]];
+    [arr replaceObjectAtIndex:indexPath.row withObject:dict7];
+    [dataArray replaceObjectAtIndex:indexPath.section withObject:arr];
+    [[NSUserDefaults standardUserDefaults] setObject:dataArray forKey:INFOARRAY];
+    [myInfoTableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+}
+
+- (void)dealloc{
+    
+    [JP_NotificationCenter removeObserver:self name:CITYCHOOSESUCCESS object:nil];
+}
 @end

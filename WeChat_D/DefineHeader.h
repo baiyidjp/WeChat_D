@@ -57,6 +57,9 @@
 #define GroupID             @"GroupID" //群组ID
 #define GroupInviter        @"GroupInviter" //邀请者
 #define GroupInviterMessage @"GroupInviterMessage" //邀请信息
+
+//城市选择成功
+#define CITYCHOOSESUCCESS   @"CityChooseSuccess"
 //高效打印
 #ifdef DEBUG
 #define NSLog(...) NSLog(@"%s 第%d行 \n %@\n",__func__,__LINE__,[NSString stringWithFormat:__VA_ARGS__])
