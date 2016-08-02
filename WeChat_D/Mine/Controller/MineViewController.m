@@ -8,6 +8,7 @@
 
 #import "MineViewController.h"
 #import "LoginViewController.h"
+#import "MyInfoController.h"
 
 @interface MineViewController ()<UITableViewDelegate,UITableViewDataSource>
 
@@ -133,7 +134,7 @@
 - (void)configSectionOneView:(UIView *)backView{
     
     UIImageView *headImage = [[UIImageView alloc]init];
-    headImage.backgroundColor = [UIColor purpleColor];
+    headImage.image = [UIImage imageNamed:DefaultHeadImageName_Message];
     headImage.layer.cornerRadius = 5;
     [backView addSubview:headImage];
     [headImage mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -212,7 +213,11 @@
     
     switch (indexPath.section) {
         case 0:
-            
+        {
+            MyInfoController *infoCtrl = [[MyInfoController alloc]init];
+            self.tabBarController.tabBar.hidden = YES;
+            [self.navigationController pushViewController:infoCtrl animated:YES];
+        }
             break;
         case 1:
             

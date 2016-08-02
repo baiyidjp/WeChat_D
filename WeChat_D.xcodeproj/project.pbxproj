@@ -46,6 +46,8 @@
 		A2C512C01D41F8FA00D84829 /* NewFriendCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A2C512BE1D41F8FA00D84829 /* NewFriendCell.m */; };
 		A2C512C11D41F8FA00D84829 /* NewFriendCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A2C512BF1D41F8FA00D84829 /* NewFriendCell.xib */; };
 		A2C512C41D42090700D84829 /* AgreeFriendViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A2C512C31D42090700D84829 /* AgreeFriendViewController.m */; };
+		A2DA92501D50B42E000077ED /* QRCodeManger.m in Sources */ = {isa = PBXBuildFile; fileRef = A2DA924F1D50B42E000077ED /* QRCodeManger.m */; };
+		A2DA92531D50B6FE000077ED /* MyInfoController.m in Sources */ = {isa = PBXBuildFile; fileRef = A2DA92521D50B6FE000077ED /* MyInfoController.m */; };
 		EEA7B39501F1EDAA38FBFDB0 /* libPods-WeChat_D.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 77912E4F30617DE482F6A3C6 /* libPods-WeChat_D.a */; };
 		F53EC6711D3E636900027A24 /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F53EC66D1D3E636900027A24 /* libcrypto.a */; };
 		F53EC6721D3E636900027A24 /* libcurl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F53EC66E1D3E636900027A24 /* libcurl.a */; };
@@ -426,6 +428,10 @@
 		A2C512BF1D41F8FA00D84829 /* NewFriendCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NewFriendCell.xib; sourceTree = "<group>"; };
 		A2C512C21D42090700D84829 /* AgreeFriendViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AgreeFriendViewController.h; sourceTree = "<group>"; };
 		A2C512C31D42090700D84829 /* AgreeFriendViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AgreeFriendViewController.m; sourceTree = "<group>"; };
+		A2DA924E1D50B42E000077ED /* QRCodeManger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QRCodeManger.h; sourceTree = "<group>"; };
+		A2DA924F1D50B42E000077ED /* QRCodeManger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QRCodeManger.m; sourceTree = "<group>"; };
+		A2DA92511D50B6FE000077ED /* MyInfoController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyInfoController.h; sourceTree = "<group>"; };
+		A2DA92521D50B6FE000077ED /* MyInfoController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyInfoController.m; sourceTree = "<group>"; };
 		A9B6923DCF73CFE0F0DA477B /* Pods-WeChat_D.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WeChat_D.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WeChat_D/Pods-WeChat_D.debug.xcconfig"; sourceTree = "<group>"; };
 		CC02DEDA828486EE35A2D3B8 /* Pods-WeChat_D.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WeChat_D.release.xcconfig"; path = "Pods/Target Support Files/Pods-WeChat_D/Pods-WeChat_D.release.xcconfig"; sourceTree = "<group>"; };
 		F53EC6451D3E636900027A24 /* EMCallLocalView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMCallLocalView.h; sourceTree = "<group>"; };
@@ -895,6 +901,8 @@
 				A2C512B61D41BB9A00D84829 /* VoiceLib */,
 				A297B7391D2F8E5A003C9276 /* UIColor+Extension.h */,
 				A297B73A1D2F8E5A003C9276 /* UIColor+Extension.m */,
+				A2DA924E1D50B42E000077ED /* QRCodeManger.h */,
+				A2DA924F1D50B42E000077ED /* QRCodeManger.m */,
 				A297B73B1D2F8E5A003C9276 /* UIView+Toast.h */,
 				A297B73C1D2F8E5A003C9276 /* UIView+Toast.m */,
 				A2088B3C1D3C6EC200C73446 /* PublicMethod.h */,
@@ -972,6 +980,8 @@
 				A297B7461D2F8E5A003C9276 /* MineViewController.m */,
 				F5CF83D91D39C3EB000CC9F5 /* LoginViewController.h */,
 				F5CF83DA1D39C3EB000CC9F5 /* LoginViewController.m */,
+				A2DA92511D50B6FE000077ED /* MyInfoController.h */,
+				A2DA92521D50B6FE000077ED /* MyInfoController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -1994,6 +2004,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A25AAB5C1D48652500DBBBE5 /* GroupViewController.m in Sources */,
+				A2DA92501D50B42E000077ED /* QRCodeManger.m in Sources */,
 				A297B75D1D2F8E5A003C9276 /* MainTabbarController.m in Sources */,
 				A25AAB691D48B1D900DBBBE5 /* CreatGroupModel.m in Sources */,
 				A21B62971D38DA1700F0E727 /* WeChatTableViewCell.m in Sources */,
@@ -2006,6 +2017,7 @@
 				A21B62931D38D9BD00F0E727 /* WeChatListModel.m in Sources */,
 				A297B75A1D2F8E5A003C9276 /* ContactsViewController.m in Sources */,
 				A297B70A1D2F8E14003C9276 /* AppDelegate.m in Sources */,
+				A2DA92531D50B6FE000077ED /* MyInfoController.m in Sources */,
 				F5CB8B641D3F0533002663F8 /* AddFriendController.m in Sources */,
 				A21137E01D4A21BD00CB6EF7 /* UIViewController+BackButtonHandler.m in Sources */,
 				A25AAB5F1D4882C800DBBBE5 /* ListView.m in Sources */,
