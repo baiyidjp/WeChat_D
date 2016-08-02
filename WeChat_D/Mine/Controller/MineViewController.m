@@ -220,13 +220,44 @@
         }
             break;
         case 1:
-            
+        {
+            switch (indexPath.row) {
+                case 0:
+                {
+                    [self.view makeToast:@"相册"];
+                }
+                    break;
+                case 1:
+                {
+                    [self.view makeToast:@"收藏"];
+                }
+                    break;
+                case 2:
+                {
+                    [self.view makeToast:@"钱包"];
+                }
+                    break;
+                case 3:
+                {
+                    [self.view makeToast:@"卡包"];
+                }
+                    break;
+
+                default:
+                    break;
+            }
+        }
             break;
         case 2:
-            
+        {
+            [self.view makeToast:@"表情"];
+        }
             break;
         case 3:
-            
+        {
+            [self.view makeToast:@"设置"];
+        }
+
             break;
         case 4:
             [self logout];
