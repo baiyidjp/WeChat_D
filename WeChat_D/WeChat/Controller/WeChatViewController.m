@@ -12,6 +12,7 @@
 #import "WeChatTableViewCell.h"
 #import "ListView.h"
 #import "GroupViewController.h"
+#import "AddFriendController.h"
 
 @interface WeChatViewController ()<UISearchBarDelegate,UITableViewDelegate,UITableViewDataSource>
 /**
@@ -209,7 +210,10 @@
         }
             break;
         case 1:{
-            [self.view makeToast:@"点击添加朋友"];
+            AddFriendController *friendCtrl = [[AddFriendController alloc]init];
+            self.tabBarController.tabBar.hidden = YES;
+            [self.navigationController pushViewController:friendCtrl animated:YES];
+
         }
             break;
         case 2:{
