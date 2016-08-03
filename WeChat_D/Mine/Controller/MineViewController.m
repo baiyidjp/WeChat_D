@@ -44,13 +44,19 @@
 #pragma mark 登陆成功的通知
 - (void)loginChange{
     
-    nameLabel.text = [EMClient sharedClient].currentUsername;
+    NSString *locationName = [[NSUserDefaults standardUserDefaults] objectForKey:[EMClient sharedClient].currentUsername];
+    if (locationName) {
+        nameLabel.text = locationName;
+    }else{
+        nameLabel.text = [EMClient sharedClient].currentUsername;
+    }
 }
 #pragma mark 改变名字 的通知
 - (void)changeName:(NSNotification *)notification{
 
     NSDictionary *dict = notification.userInfo;
     nameLabel.text = [dict objectForKey:CHANGEINFO_KEY];
+    [[NSUserDefaults standardUserDefaults] setObject:nameLabel.text forKey:[EMClient sharedClient].currentUsername];
 }
 #pragma mark  登录 / 登出
 - (void)login{
@@ -151,7 +157,13 @@
     }];
     
     nameLabel = [[UILabel alloc]init];
-    nameLabel.text = [EMClient sharedClient].currentUsername;
+    NSString *locationName = [[NSUserDefaults standardUserDefaults] objectForKey:[EMClient sharedClient].currentUsername];
+    if (locationName) {
+        nameLabel.text = locationName;
+    }else{
+        nameLabel.text = [EMClient sharedClient].currentUsername;
+    }
+
     nameLabel.font = FONTSIZE(15);
     [backView addSubview:nameLabel];
     [nameLabel mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -277,6 +289,7 @@
 - (void)dealloc{
     
     [JP_NotificationCenter removeObserver:self name:LOGINCHANGE object:nil];
+    [JP_NotificationCenter removeObserver:self name:CHANGENAMESUCCESS object:nil];
 }
 
 @end

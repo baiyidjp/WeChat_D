@@ -13,6 +13,7 @@
 #import "ListView.h"
 #import "GroupViewController.h"
 #import "AddFriendController.h"
+#import "ScanQRCodeController.h"
 
 @interface WeChatViewController ()<UISearchBarDelegate,UITableViewDelegate,UITableViewDataSource>
 /**
@@ -217,7 +218,9 @@
         }
             break;
         case 2:{
-            [self.view makeToast:@"点击扫一扫"];
+            ScanQRCodeController *QRCtrl = [[ScanQRCodeController alloc]init];
+            self.tabBarController.tabBar.hidden = YES;
+            [self.navigationController pushViewController:QRCtrl animated:YES];
         }
             break;
         case 3:{

@@ -339,6 +339,11 @@
 		F5CB8C6A1D447E6C002663F8 /* LaunchImage-700@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F5CB8C661D447E6C002663F8 /* LaunchImage-700@2x.png */; };
 		F5CB8C6B1D447E6C002663F8 /* LaunchImage@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F5CB8C671D447E6C002663F8 /* LaunchImage@2x.png */; };
 		F5CF83DB1D39C3EB000CC9F5 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F5CF83DA1D39C3EB000CC9F5 /* LoginViewController.m */; };
+		F5E2C5051D523BF7004260D1 /* ScanQRCodeController.m in Sources */ = {isa = PBXBuildFile; fileRef = F5E2C5041D523BF7004260D1 /* ScanQRCodeController.m */; };
+		F5E2C50A1D5241C9004260D1 /* qrcode_back@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F5E2C5061D5241C9004260D1 /* qrcode_back@2x.png */; };
+		F5E2C50B1D5241C9004260D1 /* qrcode_back@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = F5E2C5071D5241C9004260D1 /* qrcode_back@3x.png */; };
+		F5E2C50C1D5241C9004260D1 /* qrcode_border@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F5E2C5081D5241C9004260D1 /* qrcode_border@2x.png */; };
+		F5E2C50D1D5241C9004260D1 /* qrcode_border@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = F5E2C5091D5241C9004260D1 /* qrcode_border@3x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -781,6 +786,12 @@
 		F5CB8C671D447E6C002663F8 /* LaunchImage@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "LaunchImage@2x.png"; sourceTree = "<group>"; };
 		F5CF83D91D39C3EB000CC9F5 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		F5CF83DA1D39C3EB000CC9F5 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
+		F5E2C5031D523BF7004260D1 /* ScanQRCodeController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScanQRCodeController.h; sourceTree = "<group>"; };
+		F5E2C5041D523BF7004260D1 /* ScanQRCodeController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScanQRCodeController.m; sourceTree = "<group>"; };
+		F5E2C5061D5241C9004260D1 /* qrcode_back@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "qrcode_back@2x.png"; sourceTree = "<group>"; };
+		F5E2C5071D5241C9004260D1 /* qrcode_back@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "qrcode_back@3x.png"; sourceTree = "<group>"; };
+		F5E2C5081D5241C9004260D1 /* qrcode_border@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "qrcode_border@2x.png"; sourceTree = "<group>"; };
+		F5E2C5091D5241C9004260D1 /* qrcode_border@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "qrcode_border@3x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1093,6 +1104,8 @@
 				A297B7551D2F8E5A003C9276 /* WeChatViewController.m */,
 				A246952E1D34E77D00E32C30 /* ChatDetailViewController.h */,
 				A246952F1D34E77D00E32C30 /* ChatDetailViewController.m */,
+				F5E2C5031D523BF7004260D1 /* ScanQRCodeController.h */,
+				F5E2C5041D523BF7004260D1 /* ScanQRCodeController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -1280,6 +1293,10 @@
 		F5A130571D48FCAE00190C1B /* WeChatAdd */ = {
 			isa = PBXGroup;
 			children = (
+				F5E2C5061D5241C9004260D1 /* qrcode_back@2x.png */,
+				F5E2C5071D5241C9004260D1 /* qrcode_back@3x.png */,
+				F5E2C5081D5241C9004260D1 /* qrcode_border@2x.png */,
+				F5E2C5091D5241C9004260D1 /* qrcode_border@3x.png */,
 				F5A130581D48FCAE00190C1B /* barbuttonicon_add_30x30_@2x.png */,
 				F5A130591D48FCAE00190C1B /* barbuttonicon_add_30x30_@3x.png */,
 				F5A1305A1D48FCAE00190C1B /* contacts_add_friend_30x30_@2x.png */,
@@ -1777,8 +1794,10 @@
 				F5CB8C111D4477E0002663F8 /* ff_IconBottle_25x25_@1x.png in Resources */,
 				F5CB8BFD1D4477E0002663F8 /* ToolViewEmotion_35x35_@2x.png in Resources */,
 				F5A130FA1D48FE5A00190C1B /* SenderImageNodeBorder_57x52_@2x.png in Resources */,
+				F5E2C50D1D5241C9004260D1 /* qrcode_border@3x.png in Resources */,
 				F5A130721D48FCAE00190C1B /* contacts_add_scan_30x30_@2x.png in Resources */,
 				F5CB8C171D4477E0002663F8 /* ff_IconLocationService_25x25_@3x.png in Resources */,
+				F5E2C50C1D5241C9004260D1 /* qrcode_border@2x.png in Resources */,
 				F5CB8C041D4477E0002663F8 /* ToolViewInputVoiceHL_35x35_@3x.png in Resources */,
 				F5A1306D1D48FCAE00190C1B /* barbuttonicon_add_30x30_@3x.png in Resources */,
 				F5A130CC1D48FDFD00190C1B /* RecordingSignal005_38x100_@3x.png in Resources */,
@@ -1878,6 +1897,7 @@
 				F5CB8C251D4477E0002663F8 /* ff_IconStar_25x25_@1x.png in Resources */,
 				F5A1315A1D48FF0900190C1B /* sharemore_voiceinput_59x59_@2x.png in Resources */,
 				F5A131491D48FF0900190C1B /* sharemore_myaction_HL_12x12_@2x.png in Resources */,
+				F5E2C50B1D5241C9004260D1 /* qrcode_back@3x.png in Resources */,
 				F5A130D21D48FDFD00190C1B /* RecordingSignal008_38x100_@3x.png in Resources */,
 				F5CB8BF21D4477E0002663F8 /* Address_Icon_21x21_@2x.png in Resources */,
 				F5CB8B851D44722A002663F8 /* tabbar_mainframeHL_25x23_@2x.png in Resources */,
@@ -1943,6 +1963,7 @@
 				F5A131511D48FF0900190C1B /* sharemore_pic_59x59_@3x.png in Resources */,
 				F5CB8C181D4477E0002663F8 /* ff_IconQRCode_25x25_@1x.png in Resources */,
 				F5A131451D48FF0900190C1B /* sharemore_location_59x59_@3x.png in Resources */,
+				F5E2C50A1D5241C9004260D1 /* qrcode_back@2x.png in Resources */,
 				F5A130FC1D48FE5A00190C1B /* SenderImageNodeMask_56x50_@2x.png in Resources */,
 				F5A131471D48FF0900190C1B /* sharemore_multitalk_59x59_@3x.png in Resources */,
 				F5A130AA1D48FDFD00190C1B /* ReceiverImageNodeBorder_57x52_@2x.png in Resources */,
@@ -2102,6 +2123,7 @@
 				A2DA92531D50B6FE000077ED /* MyInfoController.m in Sources */,
 				F5CB8B641D3F0533002663F8 /* AddFriendController.m in Sources */,
 				A21137E01D4A21BD00CB6EF7 /* UIViewController+BackButtonHandler.m in Sources */,
+				F5E2C5051D523BF7004260D1 /* ScanQRCodeController.m in Sources */,
 				A25AAB5F1D4882C800DBBBE5 /* ListView.m in Sources */,
 				A2C512BC1D41BB9A00D84829 /* Mp3Recorder.m in Sources */,
 				A25AAB661D48B13A00DBBBE5 /* CreatGroupCell.m in Sources */,

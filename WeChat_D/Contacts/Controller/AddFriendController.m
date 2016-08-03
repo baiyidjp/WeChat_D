@@ -70,7 +70,10 @@
     }];
     [alertCtrl addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil]];
     [alertCtrl addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        
+        if ([currentName isEqualToString:self.friendNameText.text]) {
+            [self.view makeToast:@"不能添加自己为好友"];
+            return ;
+        }
         //添加好友
         [SVProgressHUD show];
         [[EMClient sharedClient].contactManager asyncAddContact:self.friendNameText.text message:[alertCtrl.textFields objectAtIndex:0].text  success:^{

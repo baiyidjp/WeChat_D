@@ -160,7 +160,9 @@
             {
                 MyQRCodeController *ctrl = [[MyQRCodeController alloc]init];
                 NSDictionary *addressdict = [[dataArray objectAtIndex:1] objectAtIndex:1];
+                NSDictionary *namedict = [[dataArray objectAtIndex:0] objectAtIndex:1];
                 ctrl.region = [addressdict objectForKey:CHANGEINFO_KEY];
+                ctrl.name = [namedict objectForKey:CHANGEINFO_KEY];
                 [self.navigationController pushViewController:ctrl animated:YES];
                 
             }

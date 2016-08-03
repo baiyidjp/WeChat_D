@@ -12,5 +12,8 @@
 
 /** 地区 */
 @property(nonatomic,strong) NSString *region;
+/** 名字 */
+@property(nonatomic,strong) NSString *name;
+
 
 @end

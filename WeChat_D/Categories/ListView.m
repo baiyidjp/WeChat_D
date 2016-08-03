@@ -97,7 +97,7 @@ static CGFloat kTableView_cell_textFont = 15;//cell字号
         lineView.backgroundColor = [UIColor whiteColor];
         [cell.contentView addSubview:lineView];
     }
-    
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
 }
 

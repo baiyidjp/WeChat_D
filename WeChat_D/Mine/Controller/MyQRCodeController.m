@@ -33,14 +33,24 @@
     
     CGSize imageSize = self.view.frame.size;
     //开启上下文
-    UIGraphicsBeginImageContext(imageSize);
+    UIGraphicsBeginImageContextWithOptions(imageSize, NO, 0.0);
     //获取当前的上下文
     CGContextRef contextRef = UIGraphicsGetCurrentContext();
+    //创建需要所截图的区域路径
+    UIBezierPath *path = [UIBezierPath bezierPathWithRect:whiteBackView.frame];
+//    //设置路径的宽和颜色
+//    CGContextSetLineWidth(contextRef, 1);
+//    [[UIColor blackColor] set];
+    //将路径添加到上下文中
+    CGContextAddPath(contextRef, path.CGPath);
+    //截取路径内的上下文
+    CGContextClip(contextRef);
+    //把控制器的view中的内容渲染到上下文中
     [self.view.layer renderInContext:contextRef];
+    //取出图片
     UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
-    UIImage *QRImg = [UIImage imageWithCGImage:CGImageCreateWithImageInRect(image.CGImage, whiteBackView.frame) scale:1.0 orientation:UIImageOrientationUp];
     UIGraphicsEndImageContext();
-    UIImageWriteToSavedPhotosAlbum(QRImg, self, @selector(image:didFinishSavingWithError:contextInfo:), nil);
+    UIImageWriteToSavedPhotosAlbum(image, self, @selector(image:didFinishSavingWithError:contextInfo:), nil);
 
 }
 
@@ -72,7 +82,7 @@
     }];
     
     UILabel *nameLabel = [[UILabel alloc]init];
-    nameLabel.text = [EMClient sharedClient].currentUsername;
+    nameLabel.text = self.name;
     [whiteBackView addSubview:nameLabel];
     [nameLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(headImage.mas_right).with.offset(KMARGIN);
@@ -110,8 +120,8 @@
     }];
     
     UIImageView *qRImage = [[UIImageView alloc]init];
-    UIImage *logoImage = [UIImage imageNamed:DefaultHeadImageName_Message];
-    qRImage.image = [[QRCodeManger shareInstance] getQRCodeImageWithImputMessage:nameLabel.text logoImage:nil];
+//    UIImage *logoImage = [UIImage imageNamed:DefaultHeadImageName_Message];
+    qRImage.image = [[QRCodeManger shareInstance] getQRCodeImageWithImputMessage:[NSString stringWithFormat:@"%@:%@",ADDFRIEND,[EMClient sharedClient].currentUsername] logoImage:nil];
     [whiteBackView addSubview:qRImage];
     [qRImage mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(headImage.mas_left);

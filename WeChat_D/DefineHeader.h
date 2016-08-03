@@ -64,6 +64,8 @@
 #define CITYCHOOSESUCCESS   @"CityChooseSuccess"
 //修改名字成功
 #define CHANGENAMESUCCESS   @"ChangeNameSuccess"
+//添加好友的二维码字符串前缀
+#define ADDFRIEND           @"addFriend"
 //高效打印
 #ifdef DEBUG
 #define NSLog(...) NSLog(@"%s 第%d行 \n %@\n",__func__,__LINE__,[NSString stringWithFormat:__VA_ARGS__])
