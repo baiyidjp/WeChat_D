@@ -77,10 +77,10 @@
     
     NSInteger line_num = 4;//一行放几个图片
     NSInteger row_num = 2;//一共几行
-    CGFloat left_padding = ScaleValueW(2*KMARGIN);//左右间距
     CGFloat top_padding = ScaleValueH(KMARGIN);//上下间距
-    CGFloat button_padding = ScaleValueW(2*KMARGIN);//图片之间的间距
-    CGFloat buttonW_H = (self.frame.size.width - (line_num+1)*left_padding)/line_num;//图片的宽高
+    CGFloat buttonW_H = 60;//图片的宽高
+    CGFloat line_padding = (self.frame.size.width - 4*buttonW_H)/5.0;//图片的左右间距
+    CGFloat left_padding = line_padding;//初始左间距
     NSInteger count = self.dataArray.count;//总数
     
     for (int i = 0; i < count; i++) {
@@ -90,15 +90,17 @@
         MoreViewButtonType type = i;
         itemBtn.tag = type;
         [itemBtn addTarget:self action:@selector(clickItemBtn:) forControlEvents:UIControlEventTouchUpInside];
+        [itemBtn setBackgroundImage:[UIImage imageNamed:@"sharemore_other_60x60_"] forState:UIControlStateNormal];
+        [itemBtn setBackgroundImage:[UIImage imageNamed:@"sharemore_other_HL_60x60_"] forState:UIControlStateHighlighted];
         [itemBtn setImage:[UIImage imageNamed:[dict objectForKey:@"imageName"]] forState:UIControlStateNormal];
         [self.scrollView addSubview:itemBtn];
         
         NSInteger pageNum = i/(line_num*row_num);//计算当前图片应该在第几页显示  超过line_row行后会另起一页
         CGFloat row_left = i%line_num +line_num*pageNum;//当前图片在第几列
         CGFloat row_top = i/line_num - pageNum*row_num;//当前图片在第几行
-        left_padding = ScaleValueW(2*KMARGIN)+ScaleValueW(pageNum*2*KMARGIN);
+        left_padding = line_padding+pageNum*line_padding;
 
-        CGFloat left = left_padding + row_left*(buttonW_H+button_padding);//计算X
+        CGFloat left = left_padding + row_left*(buttonW_H+line_padding);//计算X
         CGFloat top = top_padding + (self.scrollView.frame.size.height/2)*row_top;//计算Y
         [itemBtn mas_makeConstraints:^(MASConstraintMaker *make) {
             make.width.height.equalTo(@(buttonW_H));

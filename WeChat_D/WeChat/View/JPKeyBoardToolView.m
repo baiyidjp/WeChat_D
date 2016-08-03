@@ -46,6 +46,10 @@
  */
 @property(nonatomic,strong)AddMoreView *addMoreView;
 /**
+ *  加号view的数据
+ */
+@property(nonatomic,strong)NSMutableArray *addMoreData;
+/**
  *  表情View
  */
 @property(nonatomic,strong)FaceView *faceView;
@@ -226,19 +230,37 @@
 }
 
 #pragma mark 懒加载功能view
+- (NSMutableArray *)addMoreData{
+    
+    if (!_addMoreData) {
+        _addMoreData = [NSMutableArray array];
+        NSDictionary *dict1 = @{@"title":@"照片",@"imageName":@"sharemore_pic_59x59_"};
+        NSDictionary *dict2 = @{@"title":@"拍摄",@"imageName":@"sharemore_video_59x59_"};
+        NSDictionary *dict3 = @{@"title":@"小视频",@"imageName":@"sharemore_sight_60x60_"};
+        NSDictionary *dict4 = @{@"title":@"语音聊天",@"imageName":@"sharemore_multitalk_59x59_"};
+        NSDictionary *dict5 = @{@"title":@"红包",@"imageName":@"sharemore_pic_59x59_"};
+        NSDictionary *dict6 = @{@"title":@"个人名片",@"imageName":@"sharemore_friendcard_59x59_"};
+        NSDictionary *dict7 = @{@"title":@"位置",@"imageName":@"sharemore_location_59x59_"};
+        NSDictionary *dict8 = @{@"title":@"收藏",@"imageName":@"sharemore_myfav_59x59_"};
+        NSDictionary *dict9 = @{@"title":@"语音输入",@"imageName":@"sharemore_voiceinput_59x59_"};
+        [_addMoreData addObject:dict1];
+        [_addMoreData addObject:dict2];
+        [_addMoreData addObject:dict3];
+        [_addMoreData addObject:dict4];
+        [_addMoreData addObject:dict5];
+        [_addMoreData addObject:dict6];
+        [_addMoreData addObject:dict7];
+        [_addMoreData addObject:dict8];
+        [_addMoreData addObject:dict9];
+    }
+    return _addMoreData;
+}
+
 - (AddMoreView *)addMoreView{
     
     if (!_addMoreView) {
-        NSMutableArray *arr = [NSMutableArray array];
-        for (int i = 0; i < 6; i++) {
-            NSDictionary *dict1 = @{@"title":@"拍摄",@"imageName":@"chat_bar_icons_camera"};
-            NSDictionary *dict2 = @{@"title":@"照片",@"imageName":@"chat_bar_icons_pic"};
-            NSDictionary *dict3 = @{@"title":@"位置",@"imageName":@"chat_bar_icons_location"};
-            [arr addObject:dict1];
-            [arr addObject:dict2];
-            [arr addObject:dict3];
-        }
-        _addMoreView = [[AddMoreView alloc]initWithFrame:CGRectMake(0, self.superViewHeight, self.frame.size.width, KFACEVIEW_H) data:[arr copy]];
+        
+        _addMoreView = [[AddMoreView alloc]initWithFrame:CGRectMake(0, self.superViewHeight, self.frame.size.width, KFACEVIEW_H) data:[self.addMoreData copy]];
         _addMoreView.delegate = self;
         _addMoreView.backgroundColor = self.backgroundColor;
     }
@@ -420,17 +442,18 @@
      MoreViewButtonType_Collect,//收藏
      */
     switch (type) {
-        case MoreViewButtonType_Camera:{
+            
+        case MoreViewButtonType_Photo:{
             UIImagePickerController *pickerC = [[UIImagePickerController alloc] init];
             pickerC.delegate = self;
-            pickerC.sourceType = UIImagePickerControllerSourceTypeCamera;
             pickerC.editing = NO;
             [self.rootViewController presentViewController:pickerC animated:YES completion:nil];
         }
             break;
-        case MoreViewButtonType_Photo:{
+        case MoreViewButtonType_Camera:{
             UIImagePickerController *pickerC = [[UIImagePickerController alloc] init];
             pickerC.delegate = self;
+            pickerC.sourceType = UIImagePickerControllerSourceTypeCamera;
             pickerC.editing = NO;
             [self.rootViewController presentViewController:pickerC animated:YES completion:nil];
         }

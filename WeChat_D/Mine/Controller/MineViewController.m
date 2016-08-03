@@ -38,6 +38,7 @@
     [self configTableView];
     
     [JP_NotificationCenter addObserver:self selector:@selector(loginChange) name:LOGINCHANGE object:nil];
+    [JP_NotificationCenter addObserver:self selector:@selector(changeName:) name:CHANGENAMESUCCESS object:nil];
 }
 
 #pragma mark 登陆成功的通知
@@ -45,7 +46,12 @@
     
     nameLabel.text = [EMClient sharedClient].currentUsername;
 }
+#pragma mark 改变名字 的通知
+- (void)changeName:(NSNotification *)notification{
 
+    NSDictionary *dict = notification.userInfo;
+    nameLabel.text = [dict objectForKey:CHANGEINFO_KEY];
+}
 #pragma mark  登录 / 登出
 - (void)login{
 

@@ -38,7 +38,7 @@
     CGContextRef contextRef = UIGraphicsGetCurrentContext();
     [self.view.layer renderInContext:contextRef];
     UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
-    UIImage *QRImg = [UIImage imageWithCGImage:CGImageCreateWithImageInRect(image.CGImage, whiteBackView.frame)];
+    UIImage *QRImg = [UIImage imageWithCGImage:CGImageCreateWithImageInRect(image.CGImage, whiteBackView.frame) scale:1.0 orientation:UIImageOrientationUp];
     UIGraphicsEndImageContext();
     UIImageWriteToSavedPhotosAlbum(QRImg, self, @selector(image:didFinishSavingWithError:contextInfo:), nil);
 

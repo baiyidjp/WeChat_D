@@ -9,9 +9,9 @@
 #import "MyInfoController.h"
 #import "FirstViewController.h"
 #import "MyQRCodeController.h"
+#import "ChangeNameController.h"
 
 #define INFOARRAY @"infoArray"
-#define DESCTITLE @"desctitle"
 #define TITLE     @"title"
 @interface MyInfoController ()<UITableViewDelegate,UITableViewDataSource>
 
@@ -31,6 +31,7 @@
     [self configTableView];
     
     [JP_NotificationCenter addObserver:self selector:@selector(chooseCity:) name:CITYCHOOSESUCCESS object:nil];
+    [JP_NotificationCenter addObserver:self selector:@selector(changeName:) name:CHANGENAMESUCCESS object:nil];
 }
 
 - (void)configTableView{
@@ -49,14 +50,14 @@
     if (infoArr.count) {
         [dataArray addObjectsFromArray:infoArr];
     }else{
-        NSDictionary *dict1 = [NSDictionary dictionaryWithObjects:@[@"头像",DefaultHeadImageName_Message] forKeys:@[TITLE,DESCTITLE]];
-        NSDictionary *dict2 = [NSDictionary dictionaryWithObjects:@[@"名字",[EMClient sharedClient].currentUsername] forKeys:@[TITLE,DESCTITLE]];
-        NSDictionary *dict3 = [NSDictionary dictionaryWithObjects:@[@"微信号",[EMClient sharedClient].currentUsername] forKeys:@[TITLE,DESCTITLE]];
-        NSDictionary *dict4 = [NSDictionary dictionaryWithObjects:@[@"我的二维码",@"setting_myQR_18x18_"] forKeys:@[TITLE,DESCTITLE]];
-        NSDictionary *dict5 = [NSDictionary dictionaryWithObjects:@[@"我的地址",@""] forKeys:@[TITLE,DESCTITLE]];
-        NSDictionary *dict6 = [NSDictionary dictionaryWithObjects:@[@"性别",@""] forKeys:@[TITLE,DESCTITLE]];
-        NSDictionary *dict7 = [NSDictionary dictionaryWithObjects:@[@"地区",@""] forKeys:@[TITLE,DESCTITLE]];
-        NSDictionary *dict8 = [NSDictionary dictionaryWithObjects:@[@"个性签名",@""] forKeys:@[TITLE,DESCTITLE]];
+        NSDictionary *dict1 = [NSDictionary dictionaryWithObjects:@[@"头像",DefaultHeadImageName_Message] forKeys:@[TITLE,CHANGEINFO_KEY]];
+        NSDictionary *dict2 = [NSDictionary dictionaryWithObjects:@[@"名字",[EMClient sharedClient].currentUsername] forKeys:@[TITLE,CHANGEINFO_KEY]];
+        NSDictionary *dict3 = [NSDictionary dictionaryWithObjects:@[@"微信号",[EMClient sharedClient].currentUsername] forKeys:@[TITLE,CHANGEINFO_KEY]];
+        NSDictionary *dict4 = [NSDictionary dictionaryWithObjects:@[@"我的二维码",@"setting_myQR_18x18_"] forKeys:@[TITLE,CHANGEINFO_KEY]];
+        NSDictionary *dict5 = [NSDictionary dictionaryWithObjects:@[@"我的地址",@""] forKeys:@[TITLE,CHANGEINFO_KEY]];
+        NSDictionary *dict6 = [NSDictionary dictionaryWithObjects:@[@"性别",@""] forKeys:@[TITLE,CHANGEINFO_KEY]];
+        NSDictionary *dict7 = [NSDictionary dictionaryWithObjects:@[@"地区",@""] forKeys:@[TITLE,CHANGEINFO_KEY]];
+        NSDictionary *dict8 = [NSDictionary dictionaryWithObjects:@[@"个性签名",@""] forKeys:@[TITLE,CHANGEINFO_KEY]];
         NSMutableArray *arr1 = [NSMutableArray arrayWithObjects:dict1,dict2,dict3,dict4,dict5, nil];
         NSMutableArray *arr2 = [NSMutableArray arrayWithObjects:dict6,dict7,dict8, nil];
         [dataArray addObject:arr1];
@@ -84,7 +85,7 @@
     if (indexPath.section == 0 && indexPath.row == 0) {
         
             UIImageView *headImage = [[UIImageView alloc]init];
-            headImage.image = [UIImage imageNamed:[dict objectForKey:DESCTITLE]];
+            headImage.image = [UIImage imageNamed:[dict objectForKey:CHANGEINFO_KEY]];
             [cell.contentView addSubview:headImage];
             [headImage mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.top.offset(KMARGIN/2);
@@ -93,7 +94,7 @@
             }];
         }else if (indexPath.section == 0 && indexPath.row == 3){
             UIImageView *QRImage = [[UIImageView alloc]init];
-            QRImage.image = [UIImage imageNamed:[dict objectForKey:DESCTITLE]];
+            QRImage.image = [UIImage imageNamed:[dict objectForKey:CHANGEINFO_KEY]];
             [cell.contentView addSubview:QRImage];
             [QRImage mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.centerY.equalTo(cell.contentView.mas_centerY);
@@ -105,7 +106,8 @@
             descLable.textColor = [UIColor colorWithHexString:@"888888"];
             descLable.font = FONTSIZE(14);
             descLable.numberOfLines = 2;
-            descLable.text = [dict objectForKey:DESCTITLE];
+            descLable.textAlignment = NSTextAlignmentRight;
+            descLable.text = [dict objectForKey:CHANGEINFO_KEY];
             [cell.contentView addSubview:descLable];
             descLable.preferredMaxLayoutWidth = ScaleValueW(200);
             [descLable mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -148,13 +150,17 @@
                 [self.view makeToast:@"更换头像"];
                 break;
             case 1:
-                [self.view makeToast:@"更改名字"];
+            {
+                ChangeNameController *ctrl = [[ChangeNameController alloc]init];
+                ctrl.name = [dict objectForKey:CHANGEINFO_KEY];
+                [self presentViewController:ctrl animated:YES completion:nil];
+            }
                 break;
             case 3:
             {
                 MyQRCodeController *ctrl = [[MyQRCodeController alloc]init];
                 NSDictionary *addressdict = [[dataArray objectAtIndex:1] objectAtIndex:1];
-                ctrl.region = [addressdict objectForKey:DESCTITLE];
+                ctrl.region = [addressdict objectForKey:CHANGEINFO_KEY];
                 [self.navigationController pushViewController:ctrl animated:YES];
                 
             }
@@ -193,9 +199,23 @@
     
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:1 inSection:1];
     NSDictionary *dict = notification.userInfo;
+    [self changeWithNotifationDict:dict indexPath:indexPath];
+}
+
+//改变名字 的通知
+- (void)changeName:(NSNotification *)notification{
+    
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:1 inSection:0];
+    NSDictionary *dict = notification.userInfo;
+    [self changeWithNotifationDict:dict indexPath:indexPath];
+}
+
+- (void)changeWithNotifationDict:(NSDictionary *)dict indexPath:(NSIndexPath *)indexPath{
+    
     NSMutableArray *arr = [NSMutableArray arrayWithArray:[dataArray objectAtIndex:indexPath.section]];
-    NSDictionary *dict7 = [NSDictionary dictionaryWithObjects:@[@"地区",[dict objectForKey:@"name"] ] forKeys:@[TITLE,DESCTITLE]];
-    [arr replaceObjectAtIndex:indexPath.row withObject:dict7];
+    NSDictionary *pastDict = [arr objectAtIndex:indexPath.row];
+    NSDictionary *nowDict = [NSDictionary dictionaryWithObjects:@[[pastDict objectForKey:TITLE],[dict objectForKey:CHANGEINFO_KEY] ] forKeys:@[TITLE,CHANGEINFO_KEY]];
+    [arr replaceObjectAtIndex:indexPath.row withObject:nowDict];
     [dataArray replaceObjectAtIndex:indexPath.section withObject:arr];
     [[NSUserDefaults standardUserDefaults] setObject:dataArray forKey:INFOARRAY];
     [myInfoTableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
@@ -204,5 +224,6 @@
 - (void)dealloc{
     
     [JP_NotificationCenter removeObserver:self name:CITYCHOOSESUCCESS object:nil];
+    [JP_NotificationCenter removeObserver:self name:CHANGENAMESUCCESS object:nil];
 }
 @end

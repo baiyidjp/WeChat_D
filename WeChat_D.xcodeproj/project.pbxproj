@@ -25,6 +25,7 @@
 		A25AAB631D4883DB00DBBBE5 /* kuang@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = A25AAB611D4883DB00DBBBE5 /* kuang@3x.png */; };
 		A25AAB661D48B13A00DBBBE5 /* CreatGroupCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A25AAB651D48B13A00DBBBE5 /* CreatGroupCell.m */; };
 		A25AAB691D48B1D900DBBBE5 /* CreatGroupModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A25AAB681D48B1D900DBBBE5 /* CreatGroupModel.m */; };
+		A28D8F5A1D51C3D00025464B /* ChangeNameController.m in Sources */ = {isa = PBXBuildFile; fileRef = A28D8F591D51C3D00025464B /* ChangeNameController.m */; };
 		A297B7071D2F8E14003C9276 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A297B7061D2F8E14003C9276 /* main.m */; };
 		A297B70A1D2F8E14003C9276 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A297B7091D2F8E14003C9276 /* AppDelegate.m */; };
 		A297B7121D2F8E14003C9276 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A297B7111D2F8E14003C9276 /* Assets.xcassets */; };
@@ -391,6 +392,8 @@
 		A25AAB651D48B13A00DBBBE5 /* CreatGroupCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreatGroupCell.m; sourceTree = "<group>"; };
 		A25AAB671D48B1D900DBBBE5 /* CreatGroupModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreatGroupModel.h; sourceTree = "<group>"; };
 		A25AAB681D48B1D900DBBBE5 /* CreatGroupModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreatGroupModel.m; sourceTree = "<group>"; };
+		A28D8F581D51C3D00025464B /* ChangeNameController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChangeNameController.h; sourceTree = "<group>"; };
+		A28D8F591D51C3D00025464B /* ChangeNameController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChangeNameController.m; sourceTree = "<group>"; };
 		A296C9151D473444008E5C13 /* JP_DefaultHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JP_DefaultHeader.h; sourceTree = "<group>"; };
 		A297B7021D2F8E14003C9276 /* WeChat_D.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WeChat_D.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A297B7061D2F8E14003C9276 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -1009,6 +1012,8 @@
 				A2DA92521D50B6FE000077ED /* MyInfoController.m */,
 				F5A131781D50E77800190C1B /* MyQRCodeController.h */,
 				F5A131791D50E77800190C1B /* MyQRCodeController.m */,
+				A28D8F581D51C3D00025464B /* ChangeNameController.h */,
+				A28D8F591D51C3D00025464B /* ChangeNameController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -2105,6 +2110,7 @@
 				F5A131751D50E0F500190C1B /* CityNameModel.m in Sources */,
 				A24695331D34EA7600E32C30 /* JPKeyBoardToolView.m in Sources */,
 				A297B7071D2F8E14003C9276 /* main.m in Sources */,
+				A28D8F5A1D51C3D00025464B /* ChangeNameController.m in Sources */,
 				A297B7591D2F8E5A003C9276 /* UIView+Toast.m in Sources */,
 				A2C435501D3608CF0097ECC1 /* AddMoreView.m in Sources */,
 				A21B62901D3893ED00F0E727 /* FaceViewModel.m in Sources */,

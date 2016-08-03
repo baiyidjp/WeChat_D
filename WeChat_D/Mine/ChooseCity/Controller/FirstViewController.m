@@ -51,7 +51,7 @@
             ctrl.cityName = model.name;
             [self.navigationController pushViewController:ctrl animated:YES];
         }else{
-            NSDictionary *dict = @{@"name":model.name};
+            NSDictionary *dict = @{CHANGEINFO_KEY:model.name};
             [[NSNotificationCenter defaultCenter]postNotificationName:CITYCHOOSESUCCESS object:nil userInfo:dict];
             [self.navigationController popViewControllerAnimated:YES];
         }

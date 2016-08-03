@@ -58,8 +58,12 @@
 #define GroupInviter        @"GroupInviter" //邀请者
 #define GroupInviterMessage @"GroupInviterMessage" //邀请信息
 
+//修改值所用key
+#define CHANGEINFO_KEY      @"descTitle"
 //城市选择成功
 #define CITYCHOOSESUCCESS   @"CityChooseSuccess"
+//修改名字成功
+#define CHANGENAMESUCCESS   @"ChangeNameSuccess"
 //高效打印
 #ifdef DEBUG
 #define NSLog(...) NSLog(@"%s 第%d行 \n %@\n",__func__,__LINE__,[NSString stringWithFormat:__VA_ARGS__])

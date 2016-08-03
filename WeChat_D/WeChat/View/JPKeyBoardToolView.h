@@ -41,6 +41,12 @@ typedef enum : NSUInteger {
 @property(nonatomic,assign) EMChatType chatType;
 
 @property(nonatomic,weak)id<JPKeyBoardToolViewDelegate> delegate;
+/**
+ *  结束编辑 键盘隐藏 点击对话cell的空白处键盘隐藏
+ */
 - (void)endEditing;
+/**
+ *  开始编辑 键盘弹出
+ */
 - (void)beginEditing;
 @end
