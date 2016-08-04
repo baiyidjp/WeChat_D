@@ -10,6 +10,8 @@
 #import "FirstViewController.h"
 #import "MyQRCodeController.h"
 #import "ChangeNameController.h"
+#import "ChangeSexController.h"
+#import "SignatureController.h"
 
 #define INFOARRAY @"infoArray"
 #define TITLE     @"title"
@@ -32,6 +34,8 @@
     
     [JP_NotificationCenter addObserver:self selector:@selector(chooseCity:) name:CITYCHOOSESUCCESS object:nil];
     [JP_NotificationCenter addObserver:self selector:@selector(changeName:) name:CHANGENAMESUCCESS object:nil];
+    [JP_NotificationCenter addObserver:self selector:@selector(changeSex:) name:CHANGESEXSUCCESS object:nil];
+    [JP_NotificationCenter addObserver:self selector:@selector(changeSign:) name:CHANGESIGNSUCCESS object:nil];
 }
 
 - (void)configTableView{
@@ -176,7 +180,11 @@
     }else{
         switch (indexPath.row) {
             case 0:
-                [self.view makeToast:@"更改性别"];
+            {
+                ChangeSexController *ctrl = [[ChangeSexController alloc]init];
+                ctrl.sex = [dict objectForKey:CHANGEINFO_KEY];
+                [self.navigationController pushViewController:ctrl animated:YES];
+            }
                 break;
             case 1:
             {
@@ -186,7 +194,11 @@
             }
                 break;
             case 2:
-                [self.view makeToast:@"个性签名"];
+            {
+                SignatureController *ctrl = [[SignatureController alloc]init];
+                ctrl.signText = [dict objectForKey:CHANGEINFO_KEY];
+                [self presentViewController:ctrl animated:YES completion:nil];
+            }
                 break;
             default:
                 break;
@@ -212,6 +224,21 @@
     [self changeWithNotifationDict:dict indexPath:indexPath];
 }
 
+//改变性别 的通知
+- (void)changeSex:(NSNotification *)notification{
+    
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:1];
+    NSDictionary *dict = notification.userInfo;
+    [self changeWithNotifationDict:dict indexPath:indexPath];
+}
+
+//改变个性签名
+- (void)changeSign:(NSNotification *)notification{
+    
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:2 inSection:1];
+    NSDictionary *dict = notification.userInfo;
+    [self changeWithNotifationDict:dict indexPath:indexPath];
+}
 - (void)changeWithNotifationDict:(NSDictionary *)dict indexPath:(NSIndexPath *)indexPath{
     
     NSMutableArray *arr = [NSMutableArray arrayWithArray:[dataArray objectAtIndex:indexPath.section]];
@@ -227,5 +254,7 @@
     
     [JP_NotificationCenter removeObserver:self name:CITYCHOOSESUCCESS object:nil];
     [JP_NotificationCenter removeObserver:self name:CHANGENAMESUCCESS object:nil];
+    [JP_NotificationCenter removeObserver:self name:CHANGESEXSUCCESS object:nil];
+    [JP_NotificationCenter removeObserver:self name:CHANGESIGNSUCCESS object:nil];
 }
 @end

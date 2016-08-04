@@ -66,6 +66,10 @@
 #define CHANGENAMESUCCESS   @"ChangeNameSuccess"
 //添加好友的二维码字符串前缀
 #define ADDFRIEND           @"addFriend"
+//改变性别
+#define CHANGESEXSUCCESS    @"ChangeSexSuccess"
+//个性签名
+#define CHANGESIGNSUCCESS   @"ChangeSignSuccess"
 //高效打印
 #ifdef DEBUG
 #define NSLog(...) NSLog(@"%s 第%d行 \n %@\n",__func__,__LINE__,[NSString stringWithFormat:__VA_ARGS__])

@@ -344,6 +344,11 @@
 		F5E2C50B1D5241C9004260D1 /* qrcode_back@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = F5E2C5071D5241C9004260D1 /* qrcode_back@3x.png */; };
 		F5E2C50C1D5241C9004260D1 /* qrcode_border@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F5E2C5081D5241C9004260D1 /* qrcode_border@2x.png */; };
 		F5E2C50D1D5241C9004260D1 /* qrcode_border@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = F5E2C5091D5241C9004260D1 /* qrcode_border@3x.png */; };
+		F5E2C5101D538348004260D1 /* ChangeSexController.m in Sources */ = {isa = PBXBuildFile; fileRef = F5E2C50F1D538348004260D1 /* ChangeSexController.m */; };
+		F5E2C5141D538663004260D1 /* watch-yo-checked_28x28_@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F5E2C5121D538663004260D1 /* watch-yo-checked_28x28_@2x.png */; };
+		F5E2C5151D538663004260D1 /* watch-yo-checked_28x28_@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = F5E2C5131D538663004260D1 /* watch-yo-checked_28x28_@3x.png */; };
+		F5E2C5191D538BCD004260D1 /* JPTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = F5E2C5181D538BCD004260D1 /* JPTextView.m */; };
+		F5E2C51C1D538DE3004260D1 /* SignatureController.m in Sources */ = {isa = PBXBuildFile; fileRef = F5E2C51B1D538DE3004260D1 /* SignatureController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -792,6 +797,14 @@
 		F5E2C5071D5241C9004260D1 /* qrcode_back@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "qrcode_back@3x.png"; sourceTree = "<group>"; };
 		F5E2C5081D5241C9004260D1 /* qrcode_border@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "qrcode_border@2x.png"; sourceTree = "<group>"; };
 		F5E2C5091D5241C9004260D1 /* qrcode_border@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "qrcode_border@3x.png"; sourceTree = "<group>"; };
+		F5E2C50E1D538348004260D1 /* ChangeSexController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChangeSexController.h; sourceTree = "<group>"; };
+		F5E2C50F1D538348004260D1 /* ChangeSexController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChangeSexController.m; sourceTree = "<group>"; };
+		F5E2C5121D538663004260D1 /* watch-yo-checked_28x28_@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "watch-yo-checked_28x28_@2x.png"; sourceTree = "<group>"; };
+		F5E2C5131D538663004260D1 /* watch-yo-checked_28x28_@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "watch-yo-checked_28x28_@3x.png"; sourceTree = "<group>"; };
+		F5E2C5171D538BCD004260D1 /* JPTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JPTextView.h; sourceTree = "<group>"; };
+		F5E2C5181D538BCD004260D1 /* JPTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JPTextView.m; sourceTree = "<group>"; };
+		F5E2C51A1D538DE3004260D1 /* SignatureController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignatureController.h; sourceTree = "<group>"; };
+		F5E2C51B1D538DE3004260D1 /* SignatureController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignatureController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1007,7 +1020,7 @@
 				F5A131631D50E0F500190C1B /* ChooseCity */,
 				A297B7441D2F8E5A003C9276 /* Controller */,
 				A297B7471D2F8E5A003C9276 /* Model */,
-				A297B7481D2F8E5A003C9276 /* View */,
+				F5E2C5161D538BCD004260D1 /* View */,
 			);
 			path = Mine;
 			sourceTree = "<group>";
@@ -1025,6 +1038,10 @@
 				F5A131791D50E77800190C1B /* MyQRCodeController.m */,
 				A28D8F581D51C3D00025464B /* ChangeNameController.h */,
 				A28D8F591D51C3D00025464B /* ChangeNameController.m */,
+				F5E2C50E1D538348004260D1 /* ChangeSexController.h */,
+				F5E2C50F1D538348004260D1 /* ChangeSexController.m */,
+				F5E2C51A1D538DE3004260D1 /* SignatureController.h */,
+				F5E2C51B1D538DE3004260D1 /* SignatureController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -1034,13 +1051,6 @@
 			children = (
 			);
 			path = Model;
-			sourceTree = "<group>";
-		};
-		A297B7481D2F8E5A003C9276 /* View */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = View;
 			sourceTree = "<group>";
 		};
 		A297B7491D2F8E5A003C9276 /* Discover */ = {
@@ -1155,6 +1165,7 @@
 		A297B7671D2FA192003C9276 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				F5E2C5111D538663004260D1 /* Mine */,
 				F5A131161D48FF0900190C1B /* KeyAdd */,
 				F5A130D31D48FE5A00190C1B /* Sender */,
 				F5A130801D48FDFD00190C1B /* Receive */,
@@ -1646,6 +1657,24 @@
 			path = Voice;
 			sourceTree = "<group>";
 		};
+		F5E2C5111D538663004260D1 /* Mine */ = {
+			isa = PBXGroup;
+			children = (
+				F5E2C5121D538663004260D1 /* watch-yo-checked_28x28_@2x.png */,
+				F5E2C5131D538663004260D1 /* watch-yo-checked_28x28_@3x.png */,
+			);
+			path = Mine;
+			sourceTree = "<group>";
+		};
+		F5E2C5161D538BCD004260D1 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				F5E2C5171D538BCD004260D1 /* JPTextView.h */,
+				F5E2C5181D538BCD004260D1 /* JPTextView.m */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1791,6 +1820,7 @@
 				F5A131021D48FE5A00190C1B /* SenderTextNodeBkgHL_69x52_@2x.png in Resources */,
 				F5CB8C681D447E6C002663F8 /* LaunchImage-700-568h@2x.png in Resources */,
 				F5CB8C261D4477E0002663F8 /* ff_IconWCO_25x25_@2x.png in Resources */,
+				F5E2C5141D538663004260D1 /* watch-yo-checked_28x28_@2x.png in Resources */,
 				F5CB8C111D4477E0002663F8 /* ff_IconBottle_25x25_@1x.png in Resources */,
 				F5CB8BFD1D4477E0002663F8 /* ToolViewEmotion_35x35_@2x.png in Resources */,
 				F5A130FA1D48FE5A00190C1B /* SenderImageNodeBorder_57x52_@2x.png in Resources */,
@@ -1950,6 +1980,7 @@
 				F5A131131D48FE5A00190C1B /* SentScreenSnipBtnHL_81x110_@2x.png in Resources */,
 				F5CB8C0E1D4477E0002663F8 /* Action_Moments_60x60_@3x.png in Resources */,
 				F5CB8B791D447229002663F8 /* tabbar_badge_30x30_@3x.png in Resources */,
+				F5E2C5151D538663004260D1 /* watch-yo-checked_28x28_@3x.png in Resources */,
 				F5A130B81D48FDFD00190C1B /* ReceiverVoiceNodePlaying001_12x17_@2x.png in Resources */,
 				F5CB8C491D4477E0002663F8 /* VoiceSearchLoading002_90x90_@2x.png in Resources */,
 				F5A130AD1D48FDFD00190C1B /* ReceiverTextNodeBkg_65x54_@2x.png in Resources */,
@@ -2106,6 +2137,7 @@
 				A25AAB5C1D48652500DBBBE5 /* GroupViewController.m in Sources */,
 				A2DA92501D50B42E000077ED /* QRCodeManger.m in Sources */,
 				A297B75D1D2F8E5A003C9276 /* MainTabbarController.m in Sources */,
+				F5E2C5191D538BCD004260D1 /* JPTextView.m in Sources */,
 				A25AAB691D48B1D900DBBBE5 /* CreatGroupModel.m in Sources */,
 				F5A131761D50E0F500190C1B /* JPTableViewDelegate.m in Sources */,
 				A21B62971D38DA1700F0E727 /* WeChatTableViewCell.m in Sources */,
@@ -2119,6 +2151,7 @@
 				A21B62931D38D9BD00F0E727 /* WeChatListModel.m in Sources */,
 				A297B75A1D2F8E5A003C9276 /* ContactsViewController.m in Sources */,
 				F5A131741D50E0F500190C1B /* ThirdViewController.m in Sources */,
+				F5E2C5101D538348004260D1 /* ChangeSexController.m in Sources */,
 				A297B70A1D2F8E14003C9276 /* AppDelegate.m in Sources */,
 				A2DA92531D50B6FE000077ED /* MyInfoController.m in Sources */,
 				F5CB8B641D3F0533002663F8 /* AddFriendController.m in Sources */,
@@ -2127,6 +2160,7 @@
 				A25AAB5F1D4882C800DBBBE5 /* ListView.m in Sources */,
 				A2C512BC1D41BB9A00D84829 /* Mp3Recorder.m in Sources */,
 				A25AAB661D48B13A00DBBBE5 /* CreatGroupCell.m in Sources */,
+				F5E2C51C1D538DE3004260D1 /* SignatureController.m in Sources */,
 				A21137DD1D49E53500CB6EF7 /* MyGroupListController.m in Sources */,
 				A2C512C01D41F8FA00D84829 /* NewFriendCell.m in Sources */,
 				F5A131751D50E0F500190C1B /* CityNameModel.m in Sources */,

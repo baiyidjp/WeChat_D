@@ -79,13 +79,14 @@
     [self.view addSubview:self.ChatTableView];
     
     UIBarButtonItem *right =  [[UIBarButtonItem alloc]initWithTitle:@"Delect" style:UIBarButtonItemStylePlain target:self action:@selector(delect)];
-    self.navigationItem.rightBarButtonItem = right;
     NSString *aConversationId = self.title;
     EMConversationType aConversationType = EMConversationTypeChat;
     if (self.groupID.length) {
         aConversationId = self.groupID;
         aConversationType = EMConversationTypeGroupChat;
+        right = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemCompose target:self action:@selector(delect)];
     }
+    self.navigationItem.rightBarButtonItem = right;
     EMConversation *conversation = [[EMClient sharedClient].chatManager getConversation:aConversationId type:aConversationType createIfNotExist:YES];
     if (self.groupID.length) {
         conversation.ext = [NSDictionary dictionaryWithObject:self.title forKey:GroupName];
@@ -107,23 +108,26 @@
 #pragma mark 删除当前会话的所有消息
 - (void)delect{
     
-    UIAlertController *alertCtrl = [UIAlertController alertControllerWithTitle:@"确定删除消息记录么?" message:nil preferredStyle:UIAlertControllerStyleAlert];
-    [alertCtrl addAction:[UIAlertAction actionWithTitle:@"删除" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
-        
-        //添加好友
-        [SVProgressHUD show];
-        [self.dataArray removeAllObjects];
-        BOOL isSuccess =  [self.conversation deleteAllMessages];
-        if (isSuccess) {
-            [SVProgressHUD showSuccessWithStatus:@"删除成功"];
-            [self.ChatTableView reloadData];
-        }else{
-            [SVProgressHUD showSuccessWithStatus:@"删除失败"];
-        }
-        
-    }]];
-    [alertCtrl addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:nil]];
-    [self presentViewController:alertCtrl animated:YES completion:nil];
+    if (self.groupID.length) {
+        [self.view makeToast:@"群组详情"];
+    }else{
+        UIAlertController *alertCtrl = [UIAlertController alertControllerWithTitle:@"确定删除消息记录么?" message:nil preferredStyle:UIAlertControllerStyleAlert];
+        [alertCtrl addAction:[UIAlertAction actionWithTitle:@"删除" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
+            
+            [SVProgressHUD show];
+            [self.dataArray removeAllObjects];
+            BOOL isSuccess =  [self.conversation deleteAllMessages];
+            if (isSuccess) {
+                [SVProgressHUD showSuccessWithStatus:@"删除成功"];
+                [self.ChatTableView reloadData];
+            }else{
+                [SVProgressHUD showSuccessWithStatus:@"删除失败"];
+            }
+            
+        }]];
+        [alertCtrl addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:nil]];
+        [self presentViewController:alertCtrl animated:YES completion:nil];
+    }
 
 }
 
