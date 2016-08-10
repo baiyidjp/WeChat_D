@@ -17,4 +17,6 @@
 @property(nonatomic,strong)UIView *bottomView;
 @property(nonatomic,strong)UIImageView *videoImage;
 @property(nonatomic,strong)UILabel *videoTime;
+/** block */
+@property(nonatomic,copy)void(^clickSelectBtnBlock)();
 @end

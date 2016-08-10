@@ -39,6 +39,7 @@
 #define SENDMESSAGESUCCESS @"sendMessageSuccess" //发送消息成功
 #define CREATGROUPSUCCESS @"CreatGroupSuccess" //创建群组成功
 #define RECEIVEGROUPINVITE @"ReceiveGroupInvite" //接到入群邀请
+#define SELECTPHOTO @"SelectPhoto" //选择图片的通知
 
 //define this constant if you want to use Masonry without the 'mas_' prefix
 //#define MAS_SHORTHAND

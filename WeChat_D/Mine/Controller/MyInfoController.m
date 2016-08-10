@@ -12,6 +12,7 @@
 #import "ChangeNameController.h"
 #import "ChangeSexController.h"
 #import "SignatureController.h"
+#import "MyAddressController.h"
 
 #define INFOARRAY @"infoArray"
 #define TITLE     @"title"
@@ -172,7 +173,10 @@
             }
                 break;
             case 4:
-                [self.view makeToast:@"收货地址"];
+            {
+                MyAddressController *ctrl = [[MyAddressController alloc]init];
+                [self.navigationController pushViewController:ctrl animated:YES];
+            }
                 break;
             default:
                 break;

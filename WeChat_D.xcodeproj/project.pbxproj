@@ -73,6 +73,9 @@
 		F53EC6881D3E644300027A24 /* libiconv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = F53EC6871D3E644300027A24 /* libiconv.tbd */; };
 		F55532A41D46542A00427192 /* MessageSendFail_28x28_@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F55532A21D46542A00427192 /* MessageSendFail_28x28_@2x.png */; };
 		F55532A51D46542A00427192 /* MessageSendFail_28x28_@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = F55532A31D46542A00427192 /* MessageSendFail_28x28_@3x.png */; };
+		F57C385E1D54E23D00022E5B /* GoodsAddressController.m in Sources */ = {isa = PBXBuildFile; fileRef = F57C385D1D54E23D00022E5B /* GoodsAddressController.m */; };
+		F57C38611D556D9000022E5B /* MyAddressController.m in Sources */ = {isa = PBXBuildFile; fileRef = F57C38601D556D9000022E5B /* MyAddressController.m */; };
+		F57C38631D5B7E4C00022E5B /* News_VideoBIG_31x31_@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F57C38621D5B7E4C00022E5B /* News_VideoBIG_31x31_@2x.png */; };
 		F5A130531D48FC8B00190C1B /* VoiceSearchBtn_90x90_@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F5A130511D48FC8B00190C1B /* VoiceSearchBtn_90x90_@2x.png */; };
 		F5A130541D48FC8B00190C1B /* VoiceSearchFeedback003_90x90_@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F5A130521D48FC8B00190C1B /* VoiceSearchFeedback003_90x90_@2x.png */; };
 		F5A130561D48FC9500190C1B /* VoiceSearchFeedback004_90x90_@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F5A130551D48FC9500190C1B /* VoiceSearchFeedback004_90x90_@2x.png */; };
@@ -530,6 +533,11 @@
 		F53EC6871D3E644300027A24 /* libiconv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libiconv.tbd; path = usr/lib/libiconv.tbd; sourceTree = SDKROOT; };
 		F55532A21D46542A00427192 /* MessageSendFail_28x28_@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "MessageSendFail_28x28_@2x.png"; sourceTree = "<group>"; };
 		F55532A31D46542A00427192 /* MessageSendFail_28x28_@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "MessageSendFail_28x28_@3x.png"; sourceTree = "<group>"; };
+		F57C385C1D54E23D00022E5B /* GoodsAddressController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GoodsAddressController.h; sourceTree = "<group>"; };
+		F57C385D1D54E23D00022E5B /* GoodsAddressController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GoodsAddressController.m; sourceTree = "<group>"; };
+		F57C385F1D556D9000022E5B /* MyAddressController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyAddressController.h; sourceTree = "<group>"; };
+		F57C38601D556D9000022E5B /* MyAddressController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyAddressController.m; sourceTree = "<group>"; };
+		F57C38621D5B7E4C00022E5B /* News_VideoBIG_31x31_@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "News_VideoBIG_31x31_@2x.png"; sourceTree = "<group>"; };
 		F5A130511D48FC8B00190C1B /* VoiceSearchBtn_90x90_@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "VoiceSearchBtn_90x90_@2x.png"; sourceTree = "<group>"; };
 		F5A130521D48FC8B00190C1B /* VoiceSearchFeedback003_90x90_@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "VoiceSearchFeedback003_90x90_@2x.png"; sourceTree = "<group>"; };
 		F5A130551D48FC9500190C1B /* VoiceSearchFeedback004_90x90_@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "VoiceSearchFeedback004_90x90_@2x.png"; sourceTree = "<group>"; };
@@ -900,6 +908,7 @@
 		A24BBE321D5B05620062DFC9 /* JPPhotoBrowser */ = {
 			isa = PBXGroup;
 			children = (
+				F57C38621D5B7E4C00022E5B /* News_VideoBIG_31x31_@2x.png */,
 				A24BBE331D5B058B0062DFC9 /* JPPhotoGroupListController.h */,
 				A24BBE341D5B058B0062DFC9 /* JPPhotoGroupListController.m */,
 				A24BBE3E1D5B1B230062DFC9 /* JPPhotoListController.h */,
@@ -1083,6 +1092,10 @@
 				F5E2C50F1D538348004260D1 /* ChangeSexController.m */,
 				F5E2C51A1D538DE3004260D1 /* SignatureController.h */,
 				F5E2C51B1D538DE3004260D1 /* SignatureController.m */,
+				F57C385C1D54E23D00022E5B /* GoodsAddressController.h */,
+				F57C385D1D54E23D00022E5B /* GoodsAddressController.m */,
+				F57C385F1D556D9000022E5B /* MyAddressController.h */,
+				F57C38601D556D9000022E5B /* MyAddressController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -1844,6 +1857,7 @@
 				F5A130C91D48FDFD00190C1B /* RecordingSignal004_38x100_@2x.png in Resources */,
 				F5CB8C131D4477E0002663F8 /* ff_IconBottle_25x25_@3x.png in Resources */,
 				F5CB8B7C1D447229002663F8 /* tabbar_contactsHL_26x22_@3x.png in Resources */,
+				F57C38631D5B7E4C00022E5B /* News_VideoBIG_31x31_@2x.png in Resources */,
 				F5CB8B831D44722A002663F8 /* tabbar_mainframe_25x23_@2x.png in Resources */,
 				F5CB8C2A1D4477E0002663F8 /* MoreGame_25x25_@2x.png in Resources */,
 				F5CB8B7D1D447229002663F8 /* tabbar_contactsHL_27x23_@2x.png in Resources */,
@@ -2189,6 +2203,7 @@
 				A2C512C41D42090700D84829 /* AgreeFriendViewController.m in Sources */,
 				A24695301D34E77D00E32C30 /* ChatDetailViewController.m in Sources */,
 				A297B75B1D2F8E5A003C9276 /* MineViewController.m in Sources */,
+				F57C385E1D54E23D00022E5B /* GoodsAddressController.m in Sources */,
 				F5A131731D50E0F500190C1B /* SecondViewController.m in Sources */,
 				A2088B3E1D3C6EC200C73446 /* PublicMethod.m in Sources */,
 				A21B62931D38D9BD00F0E727 /* WeChatListModel.m in Sources */,
@@ -2219,6 +2234,7 @@
 				A2C435501D3608CF0097ECC1 /* AddMoreView.m in Sources */,
 				A21B62901D3893ED00F0E727 /* FaceViewModel.m in Sources */,
 				F5A1317A1D50E77800190C1B /* MyQRCodeController.m in Sources */,
+				F57C38611D556D9000022E5B /* MyAddressController.m in Sources */,
 				F5CF83DB1D39C3EB000CC9F5 /* LoginViewController.m in Sources */,
 				A2C435531D363AB40097ECC1 /* FaceView.m in Sources */,
 				F5A131721D50E0F500190C1B /* FirstViewController.m in Sources */,
