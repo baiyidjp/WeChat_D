@@ -14,6 +14,7 @@
 #import "Mp3recorder.h"
 #import <Photos/Photos.h>
 #import <AssetsLibrary/AssetsLibrary.h>
+#import "JPPhotoGroupListController.h"
 
 #define BackColor [UIColor colorWithRed:204.0/255.0f green:204.0/255.0f blue:204.0/255.0f alpha:1.0f]
 @interface JPKeyBoardToolView ()<UITextViewDelegate,AddMoreViewDelegate,FaceViewDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate,Mp3RecorderDelegate>
@@ -444,10 +445,11 @@
     switch (type) {
             
         case MoreViewButtonType_Photo:{
-            UIImagePickerController *pickerC = [[UIImagePickerController alloc] init];
-            pickerC.delegate = self;
-            pickerC.editing = NO;
-            [self.rootViewController presentViewController:pickerC animated:YES completion:nil];
+            JPPhotoGroupListController *pickerC = [[JPPhotoGroupListController alloc] init];
+//            pickerC.delegate = self;
+//            pickerC.editing = NO;
+            UINavigationController *nav = [[UINavigationController alloc]initWithRootViewController:pickerC];
+            [self.rootViewController presentViewController:nav animated:YES completion:nil];
         }
             break;
         case MoreViewButtonType_Camera:{

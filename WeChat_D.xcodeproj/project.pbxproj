@@ -19,6 +19,13 @@
 		A21B62981D38DA1700F0E727 /* WeChatTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A21B62961D38DA1700F0E727 /* WeChatTableViewCell.xib */; };
 		A24695301D34E77D00E32C30 /* ChatDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A246952F1D34E77D00E32C30 /* ChatDetailViewController.m */; };
 		A24695331D34EA7600E32C30 /* JPKeyBoardToolView.m in Sources */ = {isa = PBXBuildFile; fileRef = A24695321D34EA7600E32C30 /* JPKeyBoardToolView.m */; };
+		A24BBE351D5B058B0062DFC9 /* JPPhotoGroupListController.m in Sources */ = {isa = PBXBuildFile; fileRef = A24BBE341D5B058B0062DFC9 /* JPPhotoGroupListController.m */; };
+		A24BBE381D5B05BD0062DFC9 /* JPPhotoGroupModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A24BBE371D5B05BD0062DFC9 /* JPPhotoGroupModel.m */; };
+		A24BBE3A1D5B06180062DFC9 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A24BBE391D5B06180062DFC9 /* AssetsLibrary.framework */; };
+		A24BBE3D1D5B0EB10062DFC9 /* JPPhotoGroupCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A24BBE3C1D5B0EB10062DFC9 /* JPPhotoGroupCell.m */; };
+		A24BBE401D5B1B230062DFC9 /* JPPhotoListController.m in Sources */ = {isa = PBXBuildFile; fileRef = A24BBE3F1D5B1B230062DFC9 /* JPPhotoListController.m */; };
+		A24BBE431D5B20E60062DFC9 /* JPPhotoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A24BBE421D5B20E60062DFC9 /* JPPhotoModel.m */; };
+		A24BBE461D5B23C00062DFC9 /* JPPhotoCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A24BBE451D5B23C00062DFC9 /* JPPhotoCollectionViewCell.m */; };
 		A25AAB5C1D48652500DBBBE5 /* GroupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A25AAB5B1D48652500DBBBE5 /* GroupViewController.m */; };
 		A25AAB5F1D4882C800DBBBE5 /* ListView.m in Sources */ = {isa = PBXBuildFile; fileRef = A25AAB5E1D4882C800DBBBE5 /* ListView.m */; };
 		A25AAB621D4883DB00DBBBE5 /* kuang@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A25AAB601D4883DB00DBBBE5 /* kuang@2x.png */; };
@@ -392,6 +399,19 @@
 		A246952F1D34E77D00E32C30 /* ChatDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatDetailViewController.m; sourceTree = "<group>"; };
 		A24695311D34EA7600E32C30 /* JPKeyBoardToolView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JPKeyBoardToolView.h; sourceTree = "<group>"; };
 		A24695321D34EA7600E32C30 /* JPKeyBoardToolView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JPKeyBoardToolView.m; sourceTree = "<group>"; };
+		A24BBE331D5B058B0062DFC9 /* JPPhotoGroupListController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JPPhotoGroupListController.h; sourceTree = "<group>"; };
+		A24BBE341D5B058B0062DFC9 /* JPPhotoGroupListController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JPPhotoGroupListController.m; sourceTree = "<group>"; };
+		A24BBE361D5B05BD0062DFC9 /* JPPhotoGroupModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JPPhotoGroupModel.h; sourceTree = "<group>"; };
+		A24BBE371D5B05BD0062DFC9 /* JPPhotoGroupModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JPPhotoGroupModel.m; sourceTree = "<group>"; };
+		A24BBE391D5B06180062DFC9 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
+		A24BBE3B1D5B0EB10062DFC9 /* JPPhotoGroupCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JPPhotoGroupCell.h; sourceTree = "<group>"; };
+		A24BBE3C1D5B0EB10062DFC9 /* JPPhotoGroupCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JPPhotoGroupCell.m; sourceTree = "<group>"; };
+		A24BBE3E1D5B1B230062DFC9 /* JPPhotoListController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JPPhotoListController.h; sourceTree = "<group>"; };
+		A24BBE3F1D5B1B230062DFC9 /* JPPhotoListController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JPPhotoListController.m; sourceTree = "<group>"; };
+		A24BBE411D5B20E60062DFC9 /* JPPhotoModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JPPhotoModel.h; sourceTree = "<group>"; };
+		A24BBE421D5B20E60062DFC9 /* JPPhotoModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JPPhotoModel.m; sourceTree = "<group>"; };
+		A24BBE441D5B23C00062DFC9 /* JPPhotoCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JPPhotoCollectionViewCell.h; sourceTree = "<group>"; };
+		A24BBE451D5B23C00062DFC9 /* JPPhotoCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JPPhotoCollectionViewCell.m; sourceTree = "<group>"; };
 		A25AAB5A1D48652400DBBBE5 /* GroupViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GroupViewController.h; sourceTree = "<group>"; };
 		A25AAB5B1D48652500DBBBE5 /* GroupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GroupViewController.m; sourceTree = "<group>"; };
 		A25AAB5D1D4882C800DBBBE5 /* ListView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ListView.h; sourceTree = "<group>"; };
@@ -812,6 +832,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A24BBE3A1D5B06180062DFC9 /* AssetsLibrary.framework in Frameworks */,
 				F53EC6881D3E644300027A24 /* libiconv.tbd in Frameworks */,
 				A2C512BB1D41BB9A00D84829 /* libmp3lame.a in Frameworks */,
 				F53EC6861D3E643C00027A24 /* libsqlite3.tbd in Frameworks */,
@@ -851,6 +872,7 @@
 		A12D7F57D4C2FA15BBD6C897 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				A24BBE391D5B06180062DFC9 /* AssetsLibrary.framework */,
 				F53EC6871D3E644300027A24 /* libiconv.tbd */,
 				F53EC6851D3E643C00027A24 /* libsqlite3.tbd */,
 				F53EC6831D3E643400027A24 /* libstdc++.6.0.9.tbd */,
@@ -873,6 +895,25 @@
 				A2088B411D3CA39100C73446 /* MessageTableViewCell.m */,
 			);
 			name = cells;
+			sourceTree = "<group>";
+		};
+		A24BBE321D5B05620062DFC9 /* JPPhotoBrowser */ = {
+			isa = PBXGroup;
+			children = (
+				A24BBE331D5B058B0062DFC9 /* JPPhotoGroupListController.h */,
+				A24BBE341D5B058B0062DFC9 /* JPPhotoGroupListController.m */,
+				A24BBE3E1D5B1B230062DFC9 /* JPPhotoListController.h */,
+				A24BBE3F1D5B1B230062DFC9 /* JPPhotoListController.m */,
+				A24BBE361D5B05BD0062DFC9 /* JPPhotoGroupModel.h */,
+				A24BBE371D5B05BD0062DFC9 /* JPPhotoGroupModel.m */,
+				A24BBE3B1D5B0EB10062DFC9 /* JPPhotoGroupCell.h */,
+				A24BBE3C1D5B0EB10062DFC9 /* JPPhotoGroupCell.m */,
+				A24BBE411D5B20E60062DFC9 /* JPPhotoModel.h */,
+				A24BBE421D5B20E60062DFC9 /* JPPhotoModel.m */,
+				A24BBE441D5B23C00062DFC9 /* JPPhotoCollectionViewCell.h */,
+				A24BBE451D5B23C00062DFC9 /* JPPhotoCollectionViewCell.m */,
+			);
+			path = JPPhotoBrowser;
 			sourceTree = "<group>";
 		};
 		A297B6F91D2F8E14003C9276 = {
@@ -1110,6 +1151,7 @@
 		A297B7531D2F8E5A003C9276 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				A24BBE321D5B05620062DFC9 /* JPPhotoBrowser */,
 				A297B7541D2F8E5A003C9276 /* WeChatViewController.h */,
 				A297B7551D2F8E5A003C9276 /* WeChatViewController.m */,
 				A246952E1D34E77D00E32C30 /* ChatDetailViewController.h */,
@@ -2134,6 +2176,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A24BBE351D5B058B0062DFC9 /* JPPhotoGroupListController.m in Sources */,
 				A25AAB5C1D48652500DBBBE5 /* GroupViewController.m in Sources */,
 				A2DA92501D50B42E000077ED /* QRCodeManger.m in Sources */,
 				A297B75D1D2F8E5A003C9276 /* MainTabbarController.m in Sources */,
@@ -2152,11 +2195,15 @@
 				A297B75A1D2F8E5A003C9276 /* ContactsViewController.m in Sources */,
 				F5A131741D50E0F500190C1B /* ThirdViewController.m in Sources */,
 				F5E2C5101D538348004260D1 /* ChangeSexController.m in Sources */,
+				A24BBE3D1D5B0EB10062DFC9 /* JPPhotoGroupCell.m in Sources */,
 				A297B70A1D2F8E14003C9276 /* AppDelegate.m in Sources */,
 				A2DA92531D50B6FE000077ED /* MyInfoController.m in Sources */,
+				A24BBE401D5B1B230062DFC9 /* JPPhotoListController.m in Sources */,
 				F5CB8B641D3F0533002663F8 /* AddFriendController.m in Sources */,
 				A21137E01D4A21BD00CB6EF7 /* UIViewController+BackButtonHandler.m in Sources */,
+				A24BBE431D5B20E60062DFC9 /* JPPhotoModel.m in Sources */,
 				F5E2C5051D523BF7004260D1 /* ScanQRCodeController.m in Sources */,
+				A24BBE381D5B05BD0062DFC9 /* JPPhotoGroupModel.m in Sources */,
 				A25AAB5F1D4882C800DBBBE5 /* ListView.m in Sources */,
 				A2C512BC1D41BB9A00D84829 /* Mp3Recorder.m in Sources */,
 				A25AAB661D48B13A00DBBBE5 /* CreatGroupCell.m in Sources */,
@@ -2166,6 +2213,7 @@
 				F5A131751D50E0F500190C1B /* CityNameModel.m in Sources */,
 				A24695331D34EA7600E32C30 /* JPKeyBoardToolView.m in Sources */,
 				A297B7071D2F8E14003C9276 /* main.m in Sources */,
+				A24BBE461D5B23C00062DFC9 /* JPPhotoCollectionViewCell.m in Sources */,
 				A28D8F5A1D51C3D00025464B /* ChangeNameController.m in Sources */,
 				A297B7591D2F8E5A003C9276 /* UIView+Toast.m in Sources */,
 				A2C435501D3608CF0097ECC1 /* AddMoreView.m in Sources */,

@@ -77,6 +77,11 @@
 #define NSLog(...)
 #endif
 
+//判断iOS版本
+#define IOS7_OR_LATER   ( [[[UIDevice currentDevice] systemVersion] compare:@"7.0"] != NSOrderedAscending )
+#define IOS8_OR_LATER   ( [[[UIDevice currentDevice] systemVersion] compare:@"8.0"] != NSOrderedAscending )
+#define IOS9_OR_LATER   ( [[[UIDevice currentDevice] systemVersion] compare:@"9.0"] != NSOrderedAscending )
+
 //默认头像
 #define DefaultHeadImageName_Message @"DefaultHead_48x48_"
 #define DefaultHeadImageName @"fts_default_headimage_36x36_"
