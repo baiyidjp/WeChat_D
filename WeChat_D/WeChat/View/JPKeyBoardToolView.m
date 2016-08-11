@@ -607,7 +607,7 @@
         }else{
             fulldata = UIImageJPEGRepresentation(showImage, 1.0);
         }
-        NSData *thumdata = UIImageJPEGRepresentation(showImage, 0.1);
+        NSData *thumdata = UIImageJPEGRepresentation(showImage, 1.0);
         EMImageMessageBody *body = [[EMImageMessageBody alloc]initWithData:fulldata displayName:@"image.png"];
 #warning 如果此处不对图片进行本地保存 并且对消息体的本地路径和本地尺寸进行赋值 那么发送方在当前聊天界面便无法显示当前图片 因为环信在发送消息时并没有给用户返回路径 所以需要自己设置路径 这是一大坑!!!
         NSString *thumlocaImagePath = [[NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES) lastObject] stringByAppendingPathComponent:[NSString stringWithFormat:@"thumimage_%@%zd.png",str,(NSInteger)idx]];
