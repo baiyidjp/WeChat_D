@@ -29,7 +29,7 @@
     
     if (!_photoImage) {
         _photoImage = [[UIImageView alloc]init];
-//        _photoImage.contentMode = UIViewContentModeRedraw;
+//        _photoImage.contentMode = UIViewContentModeLeft;
     }
     return _photoImage;
 }
@@ -72,9 +72,11 @@
     
     self.photoImage.image = photoModel.thumbImage;
     self.selectBtn.selected = photoModel.isSelect;
-    
+
     [self.photoImage mas_remakeConstraints:^(MASConstraintMaker *make) {
-        make.edges.equalTo(self.contentView);
+        make.centerY.equalTo(self.contentView);
+        make.centerX.equalTo(self.contentView);
+        make.size.mas_equalTo(self.bounds.size);
     }];
     [self.selectBtn mas_remakeConstraints:^(MASConstraintMaker *make) {
         make.top.offset(3);

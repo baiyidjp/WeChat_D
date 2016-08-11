@@ -40,6 +40,7 @@
 #define CREATGROUPSUCCESS @"CreatGroupSuccess" //创建群组成功
 #define RECEIVEGROUPINVITE @"ReceiveGroupInvite" //接到入群邀请
 #define SELECTPHOTO @"SelectPhoto" //选择图片的通知
+#define SELECTPHOTO_REFRESH @"SelectPhotoRefresh" //选择图片的通知刷新小图选中状态
 
 //define this constant if you want to use Masonry without the 'mas_' prefix
 //#define MAS_SHORTHAND

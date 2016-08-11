@@ -29,7 +29,7 @@
     return image;
 }
 
-- (UIImage *)originImage{
+- (UIImage *)fullScreenImage{
     UIImage *image = [UIImage imageWithCGImage:[[self.asset defaultRepresentation] fullScreenImage]];
     return image;
 }
@@ -39,6 +39,12 @@
     CGImageRef iref = [rep fullResolutionImage];
     
     return [UIImage imageWithCGImage:iref scale:[rep scale] orientation:(UIImageOrientation)[rep orientation]];
+}
+
+- (CGFloat)fullResolutionImageData{
+    
+    ALAssetRepresentation *rep = [self.asset defaultRepresentation];
+    return [rep size]/(1024*1024.0);
 }
 
 - (BOOL)isVideoType{

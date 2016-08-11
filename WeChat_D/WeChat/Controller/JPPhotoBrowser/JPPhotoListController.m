@@ -9,6 +9,7 @@
 #import "JPPhotoListController.h"
 #import "JPPhotoModel.h"
 #import "JPPhotoCollectionViewCell.h"
+#import "JPScreenPhotoController.h"
 
 #define ROW_COUNT 4
 #define PHOTOCELL_ID @"JPPhotoCollectionViewCell"
@@ -23,9 +24,12 @@
     UIButton *preViewBtn;
     UIButton *sendBtn;
     UILabel *countLabel;
+    NSInteger showImageCount;
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    showImageCount = KHEIGHT/((KWIDTH - 5*KMARGIN)/ROW_COUNT)*ROW_COUNT;
     
     UIButton *cancleBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 30, 30)];
     [cancleBtn setTitle:@"取消" forState:UIControlStateNormal];
@@ -39,6 +43,7 @@
     [self setCollectionView];
     [self getGroupPhotoData];
     [JP_NotificationCenter addObserver:self selector:@selector(selectPhoto:) name:SELECTPHOTO object:nil];
+    [JP_NotificationCenter addObserver:self selector:@selector(selectPhotoRefresh:) name:SELECTPHOTO_REFRESH object:nil];
 }
 
 - (void)selectPhoto:(NSNotification *)notification{
@@ -52,6 +57,12 @@
     [self changeBottomViewState];
 }
 
+- (void)selectPhotoRefresh:(NSNotification *)notification{
+    
+    NSDictionary *dict = notification.userInfo;
+    NSIndexPath *indexPath = [dict objectForKey:@"indexPath"];
+    [photoCollectionView reloadItemsAtIndexPaths:@[indexPath]];
+}
 - (void)clickCancleBtn{
     
     [self.navigationController dismissViewControllerAnimated:YES completion:nil];
@@ -92,6 +103,7 @@
     [preViewBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [preViewBtn setTitleColor:[UIColor colorWithWhite:0.438 alpha:1.000] forState:UIControlStateDisabled];
     [preViewBtn.titleLabel setFont:FONTSIZE(15)];
+    [preViewBtn addTarget:self action:@selector(preViewBtn) forControlEvents:UIControlEventTouchUpInside];
     preViewBtn.enabled = NO;
     [bottomView addSubview:preViewBtn];
     [preViewBtn mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -147,25 +159,47 @@
     return cell;
 }
 
+#pragma mark UICollectionViewDelegate
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
+    
+    JPScreenPhotoController *screenPhotoCtrl = [[JPScreenPhotoController alloc]init];
+    screenPhotoCtrl.selectPhotoCount = selectPhotoCount;
+    screenPhotoCtrl.photoDataArray = self.photoDataArray;
+    screenPhotoCtrl.currentIndexPath = indexPath;
+    [self.navigationController pushViewController:screenPhotoCtrl animated:YES];
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView{
+    
+}
+
 #pragma mark 获取当前组下的图片
 - (void)getGroupPhotoData{
     
-    
     [self.group enumerateAssetsWithOptions:NSEnumerationReverse usingBlock:^(ALAsset *result, NSUInteger index, BOOL *stop) {
-        if (result) {
-            JPPhotoModel *photoModel = [[JPPhotoModel alloc]init];
-            photoModel.asset = result;
-            [self.photoDataArray addObject:photoModel];
-        }else{
-            //刷新数据
-            [photoCollectionView reloadData];
-        }
+//        if (ABS((NSInteger)index - [self.group numberOfAssets]) > showImageCount) {
+//            *stop = YES;
+//            //刷新数据
+//            [photoCollectionView reloadData];
+//        }else{
+            if (result) {
+                NSInteger row = ABS((NSInteger)index - [self.group numberOfAssets]+1);
+                JPPhotoModel *photoModel = [[JPPhotoModel alloc]init];
+                photoModel.asset = result;
+                photoModel.indexPath = [NSIndexPath indexPathForRow:row inSection:0];
+                [self.photoDataArray addObject:photoModel];
+            }else{
+                //刷新数据
+                [photoCollectionView reloadData];
+            }
+//        }
     }];
 }
 
-#pragma mark 点击图片的回调
+#pragma mark 点击选中按钮的回调
 - (void)cellSelectWithIndexPath:(NSIndexPath *)indexPath{
     
+    NSLog(@"%zd",indexPath.item);
     JPPhotoModel *photoModel = [self.photoDataArray objectAtIndex:indexPath.item];
     photoModel.isSelect = !photoModel.isSelect;
     if (photoModel.isSelect && selectPhotoCount == 9) {
@@ -196,6 +230,23 @@
     }
 
 }
+
+#pragma mark 预览
+- (void)preViewBtn{
+    
+    NSMutableArray *preDataArray = [NSMutableArray array];
+    for (JPPhotoModel *photoModel in self.photoDataArray) {
+        if (photoModel.isSelect) {
+            [preDataArray addObject:photoModel];
+        }
+    }
+    JPScreenPhotoController *screenPhotoCtrl = [[JPScreenPhotoController alloc]init];
+    screenPhotoCtrl.selectPhotoCount = selectPhotoCount;
+    screenPhotoCtrl.photoDataArray = preDataArray;
+    screenPhotoCtrl.currentIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+    [self.navigationController pushViewController:screenPhotoCtrl animated:YES];
+}
+
 - (void)dealloc{
     
     [JP_NotificationCenter removeObserver:self name:SELECTPHOTO object:nil];

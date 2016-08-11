@@ -19,6 +19,8 @@
 		A21B62981D38DA1700F0E727 /* WeChatTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A21B62961D38DA1700F0E727 /* WeChatTableViewCell.xib */; };
 		A24695301D34E77D00E32C30 /* ChatDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A246952F1D34E77D00E32C30 /* ChatDetailViewController.m */; };
 		A24695331D34EA7600E32C30 /* JPKeyBoardToolView.m in Sources */ = {isa = PBXBuildFile; fileRef = A24695321D34EA7600E32C30 /* JPKeyBoardToolView.m */; };
+		A249DF8E1D5C1E22000206FF /* JPScreenPhotoController.m in Sources */ = {isa = PBXBuildFile; fileRef = A249DF8D1D5C1E22000206FF /* JPScreenPhotoController.m */; };
+		A249DF911D5C2D92000206FF /* JPPhotoCollectionLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = A249DF901D5C2D92000206FF /* JPPhotoCollectionLayout.m */; };
 		A24BBE351D5B058B0062DFC9 /* JPPhotoGroupListController.m in Sources */ = {isa = PBXBuildFile; fileRef = A24BBE341D5B058B0062DFC9 /* JPPhotoGroupListController.m */; };
 		A24BBE381D5B05BD0062DFC9 /* JPPhotoGroupModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A24BBE371D5B05BD0062DFC9 /* JPPhotoGroupModel.m */; };
 		A24BBE3A1D5B06180062DFC9 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A24BBE391D5B06180062DFC9 /* AssetsLibrary.framework */; };
@@ -402,6 +404,10 @@
 		A246952F1D34E77D00E32C30 /* ChatDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatDetailViewController.m; sourceTree = "<group>"; };
 		A24695311D34EA7600E32C30 /* JPKeyBoardToolView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JPKeyBoardToolView.h; sourceTree = "<group>"; };
 		A24695321D34EA7600E32C30 /* JPKeyBoardToolView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JPKeyBoardToolView.m; sourceTree = "<group>"; };
+		A249DF8C1D5C1E22000206FF /* JPScreenPhotoController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JPScreenPhotoController.h; sourceTree = "<group>"; };
+		A249DF8D1D5C1E22000206FF /* JPScreenPhotoController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JPScreenPhotoController.m; sourceTree = "<group>"; };
+		A249DF8F1D5C2D92000206FF /* JPPhotoCollectionLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JPPhotoCollectionLayout.h; sourceTree = "<group>"; };
+		A249DF901D5C2D92000206FF /* JPPhotoCollectionLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JPPhotoCollectionLayout.m; sourceTree = "<group>"; };
 		A24BBE331D5B058B0062DFC9 /* JPPhotoGroupListController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JPPhotoGroupListController.h; sourceTree = "<group>"; };
 		A24BBE341D5B058B0062DFC9 /* JPPhotoGroupListController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JPPhotoGroupListController.m; sourceTree = "<group>"; };
 		A24BBE361D5B05BD0062DFC9 /* JPPhotoGroupModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JPPhotoGroupModel.h; sourceTree = "<group>"; };
@@ -913,6 +919,8 @@
 				A24BBE341D5B058B0062DFC9 /* JPPhotoGroupListController.m */,
 				A24BBE3E1D5B1B230062DFC9 /* JPPhotoListController.h */,
 				A24BBE3F1D5B1B230062DFC9 /* JPPhotoListController.m */,
+				A249DF8C1D5C1E22000206FF /* JPScreenPhotoController.h */,
+				A249DF8D1D5C1E22000206FF /* JPScreenPhotoController.m */,
 				A24BBE361D5B05BD0062DFC9 /* JPPhotoGroupModel.h */,
 				A24BBE371D5B05BD0062DFC9 /* JPPhotoGroupModel.m */,
 				A24BBE3B1D5B0EB10062DFC9 /* JPPhotoGroupCell.h */,
@@ -921,6 +929,8 @@
 				A24BBE421D5B20E60062DFC9 /* JPPhotoModel.m */,
 				A24BBE441D5B23C00062DFC9 /* JPPhotoCollectionViewCell.h */,
 				A24BBE451D5B23C00062DFC9 /* JPPhotoCollectionViewCell.m */,
+				A249DF8F1D5C2D92000206FF /* JPPhotoCollectionLayout.h */,
+				A249DF901D5C2D92000206FF /* JPPhotoCollectionLayout.m */,
 			);
 			path = JPPhotoBrowser;
 			sourceTree = "<group>";
@@ -2197,6 +2207,7 @@
 				F5E2C5191D538BCD004260D1 /* JPTextView.m in Sources */,
 				A25AAB691D48B1D900DBBBE5 /* CreatGroupModel.m in Sources */,
 				F5A131761D50E0F500190C1B /* JPTableViewDelegate.m in Sources */,
+				A249DF8E1D5C1E22000206FF /* JPScreenPhotoController.m in Sources */,
 				A21B62971D38DA1700F0E727 /* WeChatTableViewCell.m in Sources */,
 				A297B7631D2F9622003C9276 /* BaseViewController.m in Sources */,
 				A297B75C1D2F8E5A003C9276 /* DiscoverViewController.m in Sources */,
@@ -2205,6 +2216,7 @@
 				A297B75B1D2F8E5A003C9276 /* MineViewController.m in Sources */,
 				F57C385E1D54E23D00022E5B /* GoodsAddressController.m in Sources */,
 				F5A131731D50E0F500190C1B /* SecondViewController.m in Sources */,
+				A249DF911D5C2D92000206FF /* JPPhotoCollectionLayout.m in Sources */,
 				A2088B3E1D3C6EC200C73446 /* PublicMethod.m in Sources */,
 				A21B62931D38D9BD00F0E727 /* WeChatListModel.m in Sources */,
 				A297B75A1D2F8E5A003C9276 /* ContactsViewController.m in Sources */,

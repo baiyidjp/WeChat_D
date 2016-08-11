@@ -23,8 +23,8 @@
 /**
  *  原图
  */
-- (UIImage *)originImage;
-- (UIImage *)fullResolutionImage;
+- (UIImage *)fullScreenImage;//适应屏幕的原图
+- (UIImage *)fullResolutionImage;//未作处理的原图
 /**
  *  获取是否是视频类型, Default = false
  */
@@ -33,8 +33,14 @@
  *  获取相册的URL
  */
 - (NSURL *)assetURL;
+- (CGFloat)fullResolutionImageData; //原图的大小
 /**
  *  是否被选中
  */
 @property(nonatomic,assign)BOOL isSelect;
+/**
+ *  是否显示原图
+ */
+@property(nonatomic,assign)BOOL isShowFullImage;
+@property(nonatomic,strong)NSIndexPath *indexPath;
 @end
