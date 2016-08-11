@@ -93,6 +93,7 @@
     [sendBtn setTitleColor:[UIColor greenColor] forState:UIControlStateNormal];
     [sendBtn setTitleColor:[UIColor colorWithRed:0.000 green:0.411 blue:0.000 alpha:1.000] forState:UIControlStateDisabled];
     [sendBtn.titleLabel setFont:FONTSIZE(15)];
+    [sendBtn addTarget:self action:@selector(sendPhoto) forControlEvents:UIControlEventTouchUpInside];
     sendBtn.enabled = self.selectPhotoCount;
     [bottomView addSubview:sendBtn];
     
@@ -149,6 +150,7 @@
     }
     [self changeBottomViewState];
 }
+
 
 #pragma mark 改变约束
 - (void)updateViewConstraints{
@@ -249,6 +251,19 @@
         fullImageLabel.textColor = [UIColor colorWithRed:0.5416 green:0.5416 blue:0.5416 alpha:1.0];
         dataLabel.hidden = YES;
     }
+}
+
+- (void)sendPhoto{
+    
+    NSMutableArray *dataArr = [NSMutableArray array];
+    for (JPPhotoModel *model in self.photoDataArray) {
+        if (model.isSelect) {
+            [dataArr addObject:model];
+        }
+    }
+    NSDictionary *dict = [NSDictionary dictionaryWithObject:dataArr forKey:@"sendPhoto"];
+    [JP_NotificationCenter postNotificationName:SENDPHOTO object:nil userInfo:dict];
+    [self.navigationController dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark UICollectionViewDataSource
