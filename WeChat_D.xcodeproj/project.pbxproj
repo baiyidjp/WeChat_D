@@ -78,6 +78,12 @@
 		F57C385E1D54E23D00022E5B /* GoodsAddressController.m in Sources */ = {isa = PBXBuildFile; fileRef = F57C385D1D54E23D00022E5B /* GoodsAddressController.m */; };
 		F57C38611D556D9000022E5B /* MyAddressController.m in Sources */ = {isa = PBXBuildFile; fileRef = F57C38601D556D9000022E5B /* MyAddressController.m */; };
 		F57C38631D5B7E4C00022E5B /* News_VideoBIG_31x31_@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F57C38621D5B7E4C00022E5B /* News_VideoBIG_31x31_@2x.png */; };
+		F57C38661D5CBB1100022E5B /* barbuttonicon_back_15x30_@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F57C38641D5CBB1100022E5B /* barbuttonicon_back_15x30_@2x.png */; };
+		F57C38671D5CBB1100022E5B /* barbuttonicon_back_15x30_@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = F57C38651D5CBB1100022E5B /* barbuttonicon_back_15x30_@3x.png */; };
+		F57C386A1D5CBC7000022E5B /* barbuttonicon_InfoMulti_30x30_@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F57C38681D5CBC7000022E5B /* barbuttonicon_InfoMulti_30x30_@2x.png */; };
+		F57C386B1D5CBC7000022E5B /* barbuttonicon_InfoMulti_30x30_@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = F57C38691D5CBC7000022E5B /* barbuttonicon_InfoMulti_30x30_@3x.png */; };
+		F57C386E1D5CBD4F00022E5B /* barbuttonicon_InfoSingle_30x30_@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F57C386C1D5CBD4F00022E5B /* barbuttonicon_InfoSingle_30x30_@2x.png */; };
+		F57C386F1D5CBD4F00022E5B /* barbuttonicon_InfoSingle_30x30_@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = F57C386D1D5CBD4F00022E5B /* barbuttonicon_InfoSingle_30x30_@3x.png */; };
 		F5A130531D48FC8B00190C1B /* VoiceSearchBtn_90x90_@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F5A130511D48FC8B00190C1B /* VoiceSearchBtn_90x90_@2x.png */; };
 		F5A130541D48FC8B00190C1B /* VoiceSearchFeedback003_90x90_@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F5A130521D48FC8B00190C1B /* VoiceSearchFeedback003_90x90_@2x.png */; };
 		F5A130561D48FC9500190C1B /* VoiceSearchFeedback004_90x90_@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F5A130551D48FC9500190C1B /* VoiceSearchFeedback004_90x90_@2x.png */; };
@@ -544,6 +550,12 @@
 		F57C385F1D556D9000022E5B /* MyAddressController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyAddressController.h; sourceTree = "<group>"; };
 		F57C38601D556D9000022E5B /* MyAddressController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyAddressController.m; sourceTree = "<group>"; };
 		F57C38621D5B7E4C00022E5B /* News_VideoBIG_31x31_@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "News_VideoBIG_31x31_@2x.png"; sourceTree = "<group>"; };
+		F57C38641D5CBB1100022E5B /* barbuttonicon_back_15x30_@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "barbuttonicon_back_15x30_@2x.png"; sourceTree = "<group>"; };
+		F57C38651D5CBB1100022E5B /* barbuttonicon_back_15x30_@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "barbuttonicon_back_15x30_@3x.png"; sourceTree = "<group>"; };
+		F57C38681D5CBC7000022E5B /* barbuttonicon_InfoMulti_30x30_@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "barbuttonicon_InfoMulti_30x30_@2x.png"; sourceTree = "<group>"; };
+		F57C38691D5CBC7000022E5B /* barbuttonicon_InfoMulti_30x30_@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "barbuttonicon_InfoMulti_30x30_@3x.png"; sourceTree = "<group>"; };
+		F57C386C1D5CBD4F00022E5B /* barbuttonicon_InfoSingle_30x30_@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "barbuttonicon_InfoSingle_30x30_@2x.png"; sourceTree = "<group>"; };
+		F57C386D1D5CBD4F00022E5B /* barbuttonicon_InfoSingle_30x30_@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "barbuttonicon_InfoSingle_30x30_@3x.png"; sourceTree = "<group>"; };
 		F5A130511D48FC8B00190C1B /* VoiceSearchBtn_90x90_@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "VoiceSearchBtn_90x90_@2x.png"; sourceTree = "<group>"; };
 		F5A130521D48FC8B00190C1B /* VoiceSearchFeedback003_90x90_@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "VoiceSearchFeedback003_90x90_@2x.png"; sourceTree = "<group>"; };
 		F5A130551D48FC9500190C1B /* VoiceSearchFeedback004_90x90_@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "VoiceSearchFeedback004_90x90_@2x.png"; sourceTree = "<group>"; };
@@ -914,6 +926,8 @@
 		A24BBE321D5B05620062DFC9 /* JPPhotoBrowser */ = {
 			isa = PBXGroup;
 			children = (
+				F57C38641D5CBB1100022E5B /* barbuttonicon_back_15x30_@2x.png */,
+				F57C38651D5CBB1100022E5B /* barbuttonicon_back_15x30_@3x.png */,
 				F57C38621D5B7E4C00022E5B /* News_VideoBIG_31x31_@2x.png */,
 				A24BBE331D5B058B0062DFC9 /* JPPhotoGroupListController.h */,
 				A24BBE341D5B058B0062DFC9 /* JPPhotoGroupListController.m */,
@@ -1369,6 +1383,10 @@
 		F5A130571D48FCAE00190C1B /* WeChatAdd */ = {
 			isa = PBXGroup;
 			children = (
+				F57C386C1D5CBD4F00022E5B /* barbuttonicon_InfoSingle_30x30_@2x.png */,
+				F57C386D1D5CBD4F00022E5B /* barbuttonicon_InfoSingle_30x30_@3x.png */,
+				F57C38681D5CBC7000022E5B /* barbuttonicon_InfoMulti_30x30_@2x.png */,
+				F57C38691D5CBC7000022E5B /* barbuttonicon_InfoMulti_30x30_@3x.png */,
 				F5E2C5061D5241C9004260D1 /* qrcode_back@2x.png */,
 				F5E2C5071D5241C9004260D1 /* qrcode_back@3x.png */,
 				F5E2C5081D5241C9004260D1 /* qrcode_border@2x.png */,
@@ -1857,6 +1875,7 @@
 				F5CB8B861D44722A002663F8 /* tabbar_me_22x22_@3x.png in Resources */,
 				F5A131541D48FF0900190C1B /* sharemore_sight_60x60_@2x.png in Resources */,
 				F5A1313F1D48FF0900190C1B /* sharemore_action_HL_12x12_@2x.png in Resources */,
+				F57C386A1D5CBC7000022E5B /* barbuttonicon_InfoMulti_30x30_@2x.png in Resources */,
 				F5CB8C341D4477E0002663F8 /* MoreSetting_25x25_@2x.png in Resources */,
 				F5A130F61D48FE5A00190C1B /* SenderAppNodeBkg_64x54_@2x.png in Resources */,
 				F5CB8B891D44722A002663F8 /* tabbar_meHL_23x23_@2x.png in Resources */,
@@ -1925,6 +1944,7 @@
 				F5CB8C271D4477E0002663F8 /* ff_IconWCO_25x25_@3x.png in Resources */,
 				F5A130F81D48FE5A00190C1B /* SenderAppNodeBkg_HL_64x54_@2x.png in Resources */,
 				F5A131041D48FE5A00190C1B /* SenderVoiceNodeBack_66x54_@3x.png in Resources */,
+				F57C38671D5CBB1100022E5B /* barbuttonicon_back_15x30_@3x.png in Resources */,
 				F5A131071D48FE5A00190C1B /* SenderVoiceNodePlaying001_11x16_@3x.png in Resources */,
 				F5CB8C0A1D4477E0002663F8 /* TypeSelectorBtn_Black_35x35_@3x.png in Resources */,
 				F5CB8C1F1D4477E0002663F8 /* ff_IconShowAlbum_25x25_@2x.png in Resources */,
@@ -1947,6 +1967,7 @@
 				F5A130AF1D48FDFD00190C1B /* ReceiverTextNodeBkg_69x52_@2x.png in Resources */,
 				F5CB8C151D4477E0002663F8 /* ff_IconLocationService_25x25_@1x.png in Resources */,
 				F5CB8B7B1D447229002663F8 /* tabbar_contacts_27x23_@2x.png in Resources */,
+				F57C386F1D5CBD4F00022E5B /* barbuttonicon_InfoSingle_30x30_@3x.png in Resources */,
 				F5CB8BFF1D4477E0002663F8 /* ToolViewEmotionHL_35x35_@2x.png in Resources */,
 				F5CB8BF61D4477E0002663F8 /* BootImage_320x480_@1x.png in Resources */,
 				F5A131421D48FF0900190C1B /* sharemore_fromapp_30x18_@2x.png in Resources */,
@@ -2005,6 +2026,7 @@
 				F5A131621D4CDC7900190C1B /* setting_myQR_18x18_@2x.png in Resources */,
 				F5CB8C4E1D4477E0002663F8 /* VoiceSearchLoading007_90x90_@2x.png in Resources */,
 				F5A130F51D48FE5A00190C1B /* SenderAppCardNodeBkg_HL_66x54_@2x.png in Resources */,
+				F57C386E1D5CBD4F00022E5B /* barbuttonicon_InfoSingle_30x30_@2x.png in Resources */,
 				F5CB8C3D1D4477E0002663F8 /* VoiceSearchFeedback012_90x90_@2x.png in Resources */,
 				F5A130C21D48FDFD00190C1B /* RecordingBkg_62x100_@3x.png in Resources */,
 				F5CB8C4A1D4477E0002663F8 /* VoiceSearchLoading003_90x90_@2x.png in Resources */,
@@ -2041,6 +2063,7 @@
 				F5A131571D48FF0900190C1B /* sharemore_video_59x59_@3x.png in Resources */,
 				A25AAB621D4883DB00DBBBE5 /* kuang@2x.png in Resources */,
 				A21B62981D38DA1700F0E727 /* WeChatTableViewCell.xib in Resources */,
+				F57C38661D5CBB1100022E5B /* barbuttonicon_back_15x30_@2x.png in Resources */,
 				F5CB8C1B1D4477E0002663F8 /* ff_IconShake_25x25_@1x.png in Resources */,
 				F5CB8C441D4477E0002663F8 /* VoiceSearchFeedback019_90x90_@2x.png in Resources */,
 				F5A131131D48FE5A00190C1B /* SentScreenSnipBtnHL_81x110_@2x.png in Resources */,
@@ -2077,6 +2100,7 @@
 				F5A1310E1D48FE5A00190C1B /* SenderVoiceNodePlaying_12x17_@2x.png in Resources */,
 				F5A1317C1D50F3C400190C1B /* Contact_Male_18x18_@2x.png in Resources */,
 				F5CB8C2D1D4477E0002663F8 /* MoreMyAlbum_25x25_@3x.png in Resources */,
+				F57C386B1D5CBC7000022E5B /* barbuttonicon_InfoMulti_30x30_@3x.png in Resources */,
 				F5CB8B8A1D44722A002663F8 /* tabbarBkg_5x49_@2x.png in Resources */,
 				F5A130FB1D48FE5A00190C1B /* SenderImageNodeBorder_57x52_@3x.png in Resources */,
 				F5CB8C071D4477E0002663F8 /* ToolViewKeyboardHL_35x35_@2x.png in Resources */,

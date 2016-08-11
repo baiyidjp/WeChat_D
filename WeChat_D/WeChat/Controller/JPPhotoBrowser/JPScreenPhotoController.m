@@ -73,7 +73,7 @@
     [self.view addSubview:topView];
     
     backBtn = [[UIButton alloc]init];
-    [backBtn setTitle:@"返回" forState:UIControlStateNormal];
+    [backBtn setBackgroundImage:[UIImage imageNamed:@"barbuttonicon_back_15x30_"] forState:UIControlStateNormal];
     [backBtn addTarget:self action:@selector(backToList) forControlEvents:UIControlEventTouchUpInside];
     [topView addSubview:backBtn];
     

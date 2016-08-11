@@ -444,11 +444,11 @@
                 
                 self.timeLabel.hidden = YES;
                 NSFileManager *fileManger = [NSFileManager defaultManager];
-                if ([fileManger fileExistsAtPath:model.image_mark]) {
-                    self.messsgeImage.image = [UIImage imageWithContentsOfFile:model.image_mark];;
-                }else{
+//                if ([fileManger fileExistsAtPath:model.image_mark]) {
+//                    self.messsgeImage.image = [UIImage imageWithContentsOfFile:model.image_mark];;
+//                }else{
                     [self.messsgeImage sd_setImageWithURL:[NSURL URLWithString:model.imageUrl] placeholderImage:[UIImage imageNamed:@"location"]];
-                }
+//                }
                 CGSize imageSize = model.thumbnailSize;
                 if (imageSize.width == 0) {
                     imageSize = CGSizeMake(150, 150);

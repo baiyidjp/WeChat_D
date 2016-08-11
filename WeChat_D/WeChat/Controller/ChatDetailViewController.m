@@ -78,15 +78,22 @@
     [self.view addSubview:self.toolView];
     [self.view addSubview:self.ChatTableView];
     
-    UIBarButtonItem *right =  [[UIBarButtonItem alloc]initWithTitle:@"Delect" style:UIBarButtonItemStylePlain target:self action:@selector(delect)];
+    UIImage *groupInfoImage = [UIImage imageNamed:@"barbuttonicon_InfoSingle_30x30_"];
+    
     NSString *aConversationId = self.title;
     EMConversationType aConversationType = EMConversationTypeChat;
     if (self.groupID.length) {
         aConversationId = self.groupID;
         aConversationType = EMConversationTypeGroupChat;
-        right = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemCompose target:self action:@selector(delect)];
+        //添加 加号
+        groupInfoImage = [UIImage imageNamed:@"barbuttonicon_InfoMulti_30x30_"];
     }
+    UIButton *groupInfoBtn = [[UIButton alloc] initWithFrame:CGRectMake(KMARGIN, 0, 30, 30)];
+    [groupInfoBtn setBackgroundImage:groupInfoImage forState:UIControlStateNormal];
+    [groupInfoBtn addTarget:self action:@selector(delect) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *right = [[UIBarButtonItem alloc]initWithCustomView:groupInfoBtn];
     self.navigationItem.rightBarButtonItem = right;
+    
     EMConversation *conversation = [[EMClient sharedClient].chatManager getConversation:aConversationId type:aConversationType createIfNotExist:YES];
     if (self.groupID.length) {
         conversation.ext = [NSDictionary dictionaryWithObject:self.title forKey:GroupName];
