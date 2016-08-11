@@ -47,6 +47,25 @@
     return [rep size]/(1024*1024.0);
 }
 
+- (NSData *)fullResolutData{
+    
+    ALAssetRepresentation *assetRep = [self.asset defaultRepresentation];
+    NSUInteger size = [assetRep size];
+    uint8_t *buff = malloc(size);
+    
+    NSError *err = nil;
+    NSUInteger gotByteCount = [assetRep getBytes:buff fromOffset:0 length:size error:&err];
+    
+    if (gotByteCount) {
+        if (err) {
+            free(buff);
+            return nil;
+        }
+    }
+    
+    return [NSData dataWithBytesNoCopy:buff length:size freeWhenDone:YES];
+}
+
 - (BOOL)isVideoType{
     NSString *type = [self.asset valueForProperty:ALAssetPropertyType];
     //媒体类型是视频

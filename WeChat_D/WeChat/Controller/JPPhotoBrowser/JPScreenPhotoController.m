@@ -238,6 +238,8 @@
 - (void)clickRound:(UIButton *)btn{
 
     btn.selected = !btn.selected;
+    JPPhotoModel *photoModel = [self.photoDataArray objectAtIndex:currentCount];
+    photoModel.isShowFullImage = btn.selected;
     if (btn.selected) {
         [roundBtn setBackgroundColor:[UIColor greenColor]];
         fullImageLabel.textColor = [UIColor whiteColor];

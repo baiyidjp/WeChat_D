@@ -25,6 +25,7 @@
  */
 - (UIImage *)fullScreenImage;//适应屏幕的原图
 - (UIImage *)fullResolutionImage;//未作处理的原图
+- (NSData *)fullResolutData;//原图的二进制数据
 /**
  *  获取是否是视频类型, Default = false
  */

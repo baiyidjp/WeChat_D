@@ -15,6 +15,7 @@
 #import <Photos/Photos.h>
 #import <AssetsLibrary/AssetsLibrary.h>
 #import "JPPhotoGroupListController.h"
+#import "JPPhotoModel.h"
 
 #define BackColor [UIColor colorWithRed:204.0/255.0f green:204.0/255.0f blue:204.0/255.0f alpha:1.0f]
 @interface JPKeyBoardToolView ()<UITextViewDelegate,AddMoreViewDelegate,FaceViewDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate,Mp3RecorderDelegate>
@@ -108,7 +109,8 @@
 #pragma mark 添加键盘出现与消失的通知
     [JP_NotificationCenter addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
     [JP_NotificationCenter addObserver:self selector:@selector(keyboardWillChangeFrame:) name:UIKeyboardWillChangeFrameNotification object:nil];
-    
+    //发送图片的通知
+    [JP_NotificationCenter addObserver:self selector:@selector(sendImageMessage:) name:SENDPHOTO object:nil];
     [self setNeedsUpdateConstraints];
     [self updateConstraintsIfNeeded];
     [self layoutIfNeeded];
@@ -433,8 +435,8 @@
     MoreViewButtonType type = index;
     NSLog(@"点击 %zd",type);
     /*
-     MoreViewButtonType_Camera,//拍摄
      MoreViewButtonType_Photo,//照片
+     MoreViewButtonType_Camera,//拍摄
      MoreViewButtonType_Location,//位置
      MoreViewButtonType_Video,//视频
      MoreViewButtonType_VoiceChat,//语音聊天
@@ -586,6 +588,42 @@
     return YES;
 }
 
+#pragma mark  发送图片的通知
+- (void)sendImageMessage:(NSNotification *)notifacation{
+    
+    NSDictionary *dict = notifacation.userInfo;
+    NSArray *photoArr = [dict objectForKey:@"sendPhoto"];
+    [photoArr enumerateObjectsUsingBlock:^(JPPhotoModel *photoModel, NSUInteger idx, BOOL * _Nonnull stop) {
+        
+        UIImage *showImage = photoModel.fullScreenImage;
+
+        NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+        formatter.dateFormat = @"yyyyMMddHHmmss";
+        NSString *str = [formatter stringFromDate:[NSDate date]];
+        
+        NSData *fulldata = nil;
+        if (photoModel.isShowFullImage) {
+            fulldata = photoModel.fullResolutData;
+        }else{
+            fulldata = UIImageJPEGRepresentation(showImage, 1.0);
+        }
+        NSData *thumdata = UIImageJPEGRepresentation(showImage, 0.1);
+        EMImageMessageBody *body = [[EMImageMessageBody alloc]initWithData:fulldata displayName:@"image.png"];
+#warning 如果此处不对图片进行本地保存 并且对消息体的本地路径和本地尺寸进行赋值 那么发送方在当前聊天界面便无法显示当前图片 因为环信在发送消息时并没有给用户返回路径 所以需要自己设置路径 这是一大坑!!!
+        NSString *thumlocaImagePath = [[NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES) lastObject] stringByAppendingPathComponent:[NSString stringWithFormat:@"thumimage_%@%zd.png",str,(NSInteger)idx]];
+        body.thumbnailLocalPath = thumlocaImagePath;
+        body.thumbnailSize = [UIImage imageWithData:thumdata].size;
+        body.compressRatio = 1.0;
+        [thumdata writeToFile:thumlocaImagePath atomically:YES];
+        NSString *from = [[EMClient sharedClient] currentUsername];
+        //生成Message
+        EMMessage *emmessage = [[EMMessage alloc]initWithConversationID:self.toUser from:from to:self.toUser body:body ext:nil];
+        //发送消息
+        [self sendMessageWithMessage:emmessage];
+
+    }];
+}
+
 #pragma mark UIImagePickerControllerDelegate
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info{
     //组装消息模型
@@ -599,7 +637,7 @@
     NSData *thumdata = UIImageJPEGRepresentation(orgImage, 0.1);
     EMImageMessageBody *body = [[EMImageMessageBody alloc]initWithData:data displayName:@"image.png"];
 #warning 如果此处不对图片进行本地保存 并且对消息体的本地路径和本地尺寸进行赋值 那么发送方在当前聊天界面便无法显示当前图片 因为环信在发送消息时并没有给用户返回路径 所以需要自己设置路径 这是一大坑!!!
-    NSString *thumlocaImagePath = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject] stringByAppendingPathComponent:[NSString stringWithFormat:@"thumimage_%@.png",str]];
+    NSString *thumlocaImagePath = [[NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES) lastObject] stringByAppendingPathComponent:[NSString stringWithFormat:@"thumimage_%@.png",str]];
     body.thumbnailLocalPath = thumlocaImagePath;
     body.thumbnailSize = [UIImage imageWithData:thumdata].size;
     body.compressRatio = 1.0;
@@ -625,6 +663,7 @@
 - (void)dealloc{
     [JP_NotificationCenter removeObserver:self name:UIKeyboardWillHideNotification object:nil];
     [JP_NotificationCenter removeObserver:self name:UIKeyboardWillChangeFrameNotification object:nil];
+    [JP_NotificationCenter removeObserver:self name:SENDPHOTO object:nil];
 }
 
 #pragma mark 结束编辑状态

@@ -117,6 +117,7 @@
     [sendBtn setTitleColor:[UIColor colorWithRed:0.000 green:0.411 blue:0.000 alpha:1.000] forState:UIControlStateDisabled];
     [sendBtn.titleLabel setFont:FONTSIZE(15)];
     sendBtn.enabled = NO;
+    [sendBtn addTarget:self action:@selector(sendPhoto) forControlEvents:UIControlEventTouchUpInside];
     [bottomView addSubview:sendBtn];
     [sendBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.right.offset(-KMARGIN);
@@ -247,8 +248,22 @@
     [self.navigationController pushViewController:screenPhotoCtrl animated:YES];
 }
 
+- (void)sendPhoto{
+    
+    NSMutableArray *dataArr = [NSMutableArray array];
+    for (JPPhotoModel *model in self.photoDataArray) {
+        if (model.isSelect) {
+            [dataArr addObject:model];
+        }
+    }
+    NSDictionary *dict = [NSDictionary dictionaryWithObject:dataArr forKey:@"sendPhoto"];
+    [JP_NotificationCenter postNotificationName:SENDPHOTO object:nil userInfo:dict];
+    [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+}
+
 - (void)dealloc{
     
     [JP_NotificationCenter removeObserver:self name:SELECTPHOTO object:nil];
+    [JP_NotificationCenter removeObserver:self name:SELECTPHOTO_REFRESH object:nil];
 }
 @end
