@@ -49,6 +49,10 @@
  *  发送失败显示
  */
 @property(nonatomic,strong)UIButton *sendFiledBtn;
+/**
+ *  发送状态的View
+ */
+@property(nonatomic,strong)UIActivityIndicatorView *sendStateView;
 @end
 
 @implementation MessageTableViewCell
@@ -87,8 +91,8 @@
     if (tap.state == UIGestureRecognizerStateEnded) {
         CGPoint tapPoint = [tap locationInView:self.contentView];
         if (CGRectContainsPoint(self.backImgaeView.frame, tapPoint)) {
-            if ([self.delegate respondsToSelector:@selector(messageCellTappedMessage:MessageModel:)]) {
-                [self.delegate messageCellTappedMessage:self MessageModel:self.model];
+            if ([self.delegate respondsToSelector:@selector(messageCellTappedMessage:tapView:MessageModel:)]) {
+                UIView *tapView = nil;
                 switch (self.model.messageType) {
                     case MessageType_Voice:
                     {
@@ -102,13 +106,20 @@
                         }
                         
                         self.voiceUnread.hidden = YES;
-
+                        
                     }
                         break;
+                    case MessageType_Text:
                         
+                        break;
+                    case MessageType_Picture:
+                        tapView = self.messsgeImage;
+                        break;
                     default:
                         break;
                 }
+
+                [self.delegate messageCellTappedMessage:self tapView:tapView MessageModel:self.model];
             }
         }else if (CGRectContainsPoint(self.headerView.frame, tapPoint)) {
             if ([self.delegate respondsToSelector:@selector(messageCellTappedHead:)]) {
@@ -208,6 +219,14 @@
         [_sendFiledBtn addTarget:self action:@selector(reSendMessage) forControlEvents:UIControlEventTouchUpInside];
     }
     return _sendFiledBtn;
+}
+
+- (UIActivityIndicatorView *)sendStateView{
+    
+    if (!_sendStateView) {
+        _sendStateView = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+    }
+    return _sendStateView;
 }
 
 - (UILabel *)messageFromName{
@@ -350,12 +369,34 @@
                 break;
         }
         self.backImgaeView.image = [self backImage:[UIImage imageNamed:@"message_sender_background_normal"]];
-        self.sendFiledBtn.hidden = model.sendSuccess == EMMessageStatusSuccessed ? YES:NO;
+        switch (model.sendSuccess) {
+            case EMMessageStatusDelivering:
+                [self.sendStateView startAnimating];
+                self.sendFiledBtn.hidden = YES;
+                break;
+            case EMMessageStatusSuccessed:
+                [self.sendStateView stopAnimating];
+                self.sendFiledBtn.hidden = YES;
+                break;
+            case EMMessageStatusFailed:
+                [self.sendStateView stopAnimating];
+                self.sendFiledBtn.hidden = NO;
+                break;
+                
+            default:
+                break;
+        }
         [self.contentView addSubview:self.sendFiledBtn];
+        [self.contentView addSubview:self.sendStateView];
         [self.sendFiledBtn mas_remakeConstraints:^(MASConstraintMaker *make) {
             make.centerY.equalTo(self.backImgaeView.mas_centerY);
             make.right.equalTo(self.backImgaeView.mas_left).with.offset(-KMARGIN/2);
         }];
+        [self.sendStateView mas_remakeConstraints:^(MASConstraintMaker *make) {
+            make.centerY.equalTo(self.backImgaeView.mas_centerY);
+            make.right.equalTo(self.backImgaeView.mas_left).with.offset(-KMARGIN/2);
+        }];
+        
         
     }else{//判断是朋友发
         [self.headerView mas_remakeConstraints:^(MASConstraintMaker *make) {
@@ -447,6 +488,7 @@
 //                if ([fileManger fileExistsAtPath:model.image_mark]) {
 //                    self.messsgeImage.image = [UIImage imageWithContentsOfFile:model.image_mark];;
 //                }else{
+                    [self.messsgeImage setShowActivityIndicatorView:YES];
                     [self.messsgeImage sd_setImageWithURL:[NSURL URLWithString:model.imageUrl] placeholderImage:[UIImage imageNamed:@"location"]];
 //                }
                 CGSize imageSize = model.thumbnailSize;

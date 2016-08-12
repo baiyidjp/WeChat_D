@@ -14,6 +14,7 @@
 #import "MessageModel.h"
 #import "UIViewController+BackButtonHandler.h"
 #import "WeChatViewController.h"
+#import "JPBigImageView.h"
 
 @interface ChatDetailViewController ()<UITableViewDelegate,UITableViewDataSource,JPKeyBoardToolViewDelegate,UIScrollViewDelegate,MessageTableViewCellDelegate>
 /**
@@ -40,7 +41,7 @@
 @property(nonatomic,strong) Mp3Recorder *mp3Recorder;
 /** MessCell 用来停止播放语音 */
 @property(nonatomic,strong) MessageTableViewCell *voiceMessageCell;
-
+@property(nonatomic,strong)JPBigImageView *bigImageView;
 @end
 
 @implementation ChatDetailViewController
@@ -192,23 +193,21 @@
 
 #pragma mark 发送消息
 - (void)didSendMessageOfFaceView:(JPKeyBoardToolView *)toolView message:(EMMessage *)emmessage{
-    if (emmessage.body.type == EMMessageBodyTypeText) {
-        [SVProgressHUD show];
+
+    [self.dataArray addObject:emmessage];
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:self.dataArray.count-1 inSection:0];
+    [self.ChatTableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+    if (self.dataArray.count) {
+        [self.ChatTableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
     }
     [[EMClient sharedClient].chatManager asyncSendMessage:emmessage progress:^(int progress) {
-        [SVProgressHUD showProgress:progress/100.0 status:[NSString stringWithFormat:@"发送中 %d%%",progress]];
     } completion:^(EMMessage *message, EMError *error) {
         if (!error) {
             [SVProgressHUD showSuccessWithStatus:@"发送成功"];
-            NSLog(@"消息发送状态 成功%zd",message.status);
+            [self.ChatTableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
         }else{
             [SVProgressHUD showSuccessWithStatus:@"发送失败"];
-            NSLog(@"消息发送状态 失败%zd",message.status);
-        }
-        [self.dataArray addObject:message];
-        [self.ChatTableView reloadData];
-        if (self.dataArray.count) {
-            [self.ChatTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:self.dataArray.count-1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+            [self.ChatTableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
         }
     }];
 }
@@ -216,24 +215,22 @@
 - (void)resendMessageWith:(MessageTableViewCell *)messageCell indexPath:(NSIndexPath *)indexPath{
     
     EMMessage *emmessage = [self.dataArray objectAtIndex:indexPath.row];// 拿到要重新发送的消息
-    if (emmessage.body.type == EMMessageBodyTypeText) {
-        [SVProgressHUD show];
+
+    [self.dataArray removeObject:emmessage];//移除发送失败的那条消息 也就是我们上面拿到的那一条
+    [self.dataArray addObject:emmessage];//添加已经重新发送的消息
+    NSIndexPath *newindexPath = [NSIndexPath indexPathForRow:self.dataArray.count-1 inSection:0];
+    [self.ChatTableView insertRowsAtIndexPaths:@[newindexPath] withRowAnimation:UITableViewRowAnimationFade];
+    if (self.dataArray.count) {
+        [self.ChatTableView scrollToRowAtIndexPath:newindexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
     }
     [[EMClient sharedClient].chatManager asyncResendMessage:emmessage progress:^(int progress) {
-        [SVProgressHUD showProgress:progress/100.0 status:[NSString stringWithFormat:@"发送中 %d%%",progress]];
     } completion:^(EMMessage *message, EMError *error) {
         if (!error) {
             [SVProgressHUD showSuccessWithStatus:@"发送成功"];
-            NSLog(@"消息发送状态 成功%zd",message.status);
+            [self.ChatTableView reloadRowsAtIndexPaths:@[newindexPath] withRowAnimation:UITableViewRowAnimationFade];
         }else{
             [SVProgressHUD showSuccessWithStatus:@"发送失败"];
-            NSLog(@"消息发送状态 失败%zd",message.status);
-        }
-        [self.dataArray removeObject:emmessage];//移除发送失败的那条消息 也就是我们上面拿到的那一条
-        [self.dataArray addObject:message];//添加已经重新发送成功的消息
-        [self.ChatTableView reloadData];
-        if (self.dataArray.count) {
-            [self.ChatTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:self.dataArray.count-1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+            [self.ChatTableView reloadRowsAtIndexPaths:@[newindexPath] withRowAnimation:UITableViewRowAnimationFade];
         }
     }];
 
@@ -294,14 +291,34 @@
     
     [self.view makeToast:@"点击头像未处理"];
 }
-- (void)messageCellTappedMessage:(MessageTableViewCell *)messageCell MessageModel:(MessageModel *)messageModel{
+- (void)messageCellTappedMessage:(MessageTableViewCell *)messageCell tapView:(UIView *)tapView MessageModel:(MessageModel *)messageModel{
     
     switch (messageModel.messageType) {
         case MessageType_Text:
             [self.view makeToast:@"点击文字未处理"];
             break;
-        case MessageType_Picture:
-            [self.view makeToast:@"点击图片未处理"];
+        case MessageType_Picture:{
+            CGRect tapViewFrame = [tapView convertRect:tapView.bounds toView:nil];
+            NSLog(@"点击的图片的frame %@",NSStringFromCGRect(tapViewFrame));
+            self.bigImageView = [[JPBigImageView alloc]initWithFrame:tapViewFrame];
+            self.bigImageView.bigImage_Url = messageModel.bigImage_Url;
+//            UIImageView *tapImage = (UIImageView *)tapView;
+//            self.bigImageView.showImage = tapImage.image;
+            UIWindow *window = [UIApplication sharedApplication].keyWindow;
+            [window addSubview:self.bigImageView];
+            WEAK_SELF(weakSelf);
+            [UIView animateWithDuration:0.3 animations:^{
+                weakSelf.bigImageView.frame = window.bounds;
+            }];
+            [self.bigImageView setClickViewHidden:^{
+                [UIView animateWithDuration:0.3 animations:^{
+                    weakSelf.bigImageView.frame = tapViewFrame;
+                } completion:^(BOOL finished) {
+                    [weakSelf.bigImageView removeFromSuperview];
+                    weakSelf.bigImageView = nil;
+                }];
+            }];
+        }
             break;
 
         case MessageType_Voice:{

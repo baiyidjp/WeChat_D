@@ -26,9 +26,10 @@ typedef enum : NSUInteger {
 @property(nonatomic,copy)NSString *messagetext;
 @property(nonatomic,copy)NSString *imageUrl;
 @property(nonatomic,copy)NSString *image_mark;
+@property(nonatomic,copy)NSString *bigImage_Url;
 /** 缩略图的尺寸 */
 @property(nonatomic,assign) CGSize thumbnailSize;
-
+@property(nonatomic,strong) UIImage *friendImage;
 /** 语音是否已读 */
 @property(nonatomic,assign) BOOL voiceIsListen;
 /**

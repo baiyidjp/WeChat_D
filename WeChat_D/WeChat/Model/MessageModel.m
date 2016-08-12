@@ -56,6 +56,7 @@
             EMImageMessageBody *imageBody = (EMImageMessageBody *)_messageBody;
             self.imageUrl = imageBody.thumbnailRemotePath;//缩略图的服务器路径
             self.image_mark = imageBody.thumbnailLocalPath;//缩略图的本地路径
+            self.bigImage_Url = imageBody.remotePath;
 #warning 在此处判断是否存在本地图片 存在则直接拿本地图片size 不存在则通过SD异步下载之后 回到主线程拿到size
             NSFileManager *fileManger = [NSFileManager defaultManager];
             if ([fileManger fileExistsAtPath:self.image_mark]) {
