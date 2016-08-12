@@ -200,6 +200,7 @@
     if (self.dataArray.count) {
         [self.ChatTableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
     }
+    
     [[EMClient sharedClient].chatManager asyncSendMessage:emmessage progress:^(int progress) {
     } completion:^(EMMessage *message, EMError *error) {
         if (!error) {
@@ -217,12 +218,14 @@
     EMMessage *emmessage = [self.dataArray objectAtIndex:indexPath.row];// 拿到要重新发送的消息
 
     [self.dataArray removeObject:emmessage];//移除发送失败的那条消息 也就是我们上面拿到的那一条
+    [self.ChatTableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
     [self.dataArray addObject:emmessage];//添加已经重新发送的消息
     NSIndexPath *newindexPath = [NSIndexPath indexPathForRow:self.dataArray.count-1 inSection:0];
     [self.ChatTableView insertRowsAtIndexPaths:@[newindexPath] withRowAnimation:UITableViewRowAnimationFade];
     if (self.dataArray.count) {
         [self.ChatTableView scrollToRowAtIndexPath:newindexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
     }
+    
     [[EMClient sharedClient].chatManager asyncResendMessage:emmessage progress:^(int progress) {
     } completion:^(EMMessage *message, EMError *error) {
         if (!error) {
@@ -241,7 +244,8 @@
     NSArray *messages = [notification.userInfo objectForKey:@"Message"];
     [self.dataArray addObjectsFromArray:messages];
     [self.reciveMessageArray addObjectsFromArray:messages];
-    [self.ChatTableView reloadData];
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:self.dataArray.count-1 inSection:0];
+    [self.ChatTableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
     if (self.dataArray.count) {
         [self.ChatTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:self.dataArray.count-1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
     }
@@ -307,10 +311,10 @@
             
             WEAK_SELF(weakSelf);
             [[SDWebImageManager sharedManager] downloadImageWithURL:[NSURL URLWithString:messageModel.bigImage_Url] options:SDWebImageRetryFailed progress:nil completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
-                if (finished) {
+                [SVProgressHUD dismiss];
+                if (!error) {
                     //下载是异步下载 一定要回到主线程赋值
                     dispatch_async(dispatch_get_main_queue(), ^{
-                        [SVProgressHUD dismiss];
                         self.bigImageView = [[JPBigImageView alloc]initWithFrame:window.bounds showImage:image initialFrame:tapViewFrame];
                         self.bigImageView.alpha = 0.0;
                         [window addSubview:self.bigImageView];
@@ -327,6 +331,8 @@
                         }];
                     });
         
+                }else{
+                    [self.view makeToast:@"加载失败"];
                 }
             }];
         }

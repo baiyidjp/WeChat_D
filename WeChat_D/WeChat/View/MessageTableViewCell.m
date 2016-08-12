@@ -334,15 +334,7 @@
                 //图片消息
                 self.timeLabel.hidden = YES;
                 [self.backImgaeView addSubview:self.messsgeImage];
-                NSFileManager *fileManger = [NSFileManager defaultManager];
-#warning 因为发送方发送消息的时候 环信没有返回网络路径 而重新进入聊天界面后确是从网络加载的图片 好坑 所以我们要先判断 是否存在本地图片 也就是发送时我们自己存下的那个本地路径 若有就加载 没有再去网络加载
-                if ([fileManger fileExistsAtPath:model.image_mark]) {
-                    self.messsgeImage.image = [UIImage imageWithContentsOfFile:model.image_mark];;
-                }else{
-                    [self.messsgeImage sd_setImageWithURL:[NSURL URLWithString:model.imageUrl] placeholderImage:[UIImage imageNamed:@"location"]];
-                }
-#warning 关于图片的size问题 坑了好久 本地的size可以直接拿到 没问题 但是从网络下载的size 由于SDWebImage是异步下载 我们无法再当前主线程直接拿到size 若直接用[self.messsgeImage.image.size] 赋值的话size一直是(60 ,60) 所以无法正常显示图片 然后想到使用SD的下载方法中有一个下载完成的回调 所以想着在回调中直接拿到image的size 虽然拿到了 但是无法进行赋值 因为我们在进行布局和计算cell高度的时候 image还在异步下载呢 到时size一直是zero 最后我将计算size的方法放到model中 这样便解决了size的问题
-                
+
                 CGSize imageSize = model.thumbnailSize;
                 if (imageSize.width == 0) {
                     imageSize = CGSizeMake(150, 150);
@@ -354,8 +346,17 @@
                     }else{
                         make.size.mas_equalTo(imageSize);
                     }
-
+                    
                 }];
+                NSFileManager *fileManger = [NSFileManager defaultManager];
+#warning 因为发送方发送消息的时候 环信没有返回网络路径 而重新进入聊天界面后确是从网络加载的图片 好坑 所以我们要先判断 是否存在本地图片 也就是发送时我们自己存下的那个本地路径 若有就加载 没有再去网络加载
+                if ([fileManger fileExistsAtPath:model.image_mark]) {
+                    self.messsgeImage.image = [UIImage imageWithContentsOfFile:model.image_mark];;
+                }else{
+                    [self.messsgeImage setShowActivityIndicatorView:YES];
+                    [self.messsgeImage sd_setImageWithURL:[NSURL URLWithString:model.imageUrl] placeholderImage:[UIImage imageNamed:@"location"]];
+                }
+
                 [self.backImgaeView mas_remakeConstraints:^(MASConstraintMaker *make) {
                     make.top.equalTo(self.headerView.mas_top);
                     make.right.equalTo(self.headerView.mas_left).with.offset(-KMARGIN/2);
@@ -395,6 +396,7 @@
         [self.sendStateView mas_remakeConstraints:^(MASConstraintMaker *make) {
             make.centerY.equalTo(self.backImgaeView.mas_centerY);
             make.right.equalTo(self.backImgaeView.mas_left).with.offset(-KMARGIN/2);
+            make.size.mas_equalTo(CGSizeMake(30, 30));
         }];
         
         
@@ -484,29 +486,27 @@
             case MessageType_Picture:{
                 
                 self.timeLabel.hidden = YES;
-                NSFileManager *fileManger = [NSFileManager defaultManager];
-//                if ([fileManger fileExistsAtPath:model.image_mark]) {
-//                    self.messsgeImage.image = [UIImage imageWithContentsOfFile:model.image_mark];;
-//                }else{
-                    [self.messsgeImage setShowActivityIndicatorView:YES];
-                    [self.messsgeImage sd_setImageWithURL:[NSURL URLWithString:model.imageUrl] placeholderImage:[UIImage imageNamed:@"location"]];
-//                }
+                
                 CGSize imageSize = model.thumbnailSize;
                 if (imageSize.width == 0) {
                     imageSize = CGSizeMake(150, 150);
                 }
-
+                
                 NSLog(@"%f",imageSize.width);
                 [self.backImgaeView addSubview:self.messsgeImage];
                 [self.messsgeImage mas_remakeConstraints:^(MASConstraintMaker *make) {
                     make.edges.mas_equalTo(self.backImgaeView).insets(UIEdgeInsetsMake(KMARGIN, 3.0/2*KMARGIN, KMARGIN, 3.0/2*KMARGIN));
                     make.size.mas_equalTo(CGSizeMake(ImageDefaultSizeWH, ImageDefaultSizeWH/imageSize.width * imageSize.height));
                 }];
+
+                [self.messsgeImage setShowActivityIndicatorView:YES];
+                [self.messsgeImage sd_setImageWithURL:[NSURL URLWithString:model.imageUrl] placeholderImage:[UIImage imageNamed:@"location"]];
+
                 [self.backImgaeView mas_remakeConstraints:^(MASConstraintMaker *make) {
-                    make.top.equalTo(self.headerView.mas_top).with.offset(name_backImage_padding);
-                    make.left.equalTo(self.headerView.mas_right).with.offset(KMARGIN/2);
-                    make.right.equalTo(self.messsgeImage.mas_right).with.offset(3.0/2*KMARGIN);
-                    make.bottom.equalTo(self.messsgeImage.mas_bottom).with.offset(KMARGIN);
+                make.top.equalTo(self.headerView.mas_top).with.offset(name_backImage_padding);
+                make.left.equalTo(self.headerView.mas_right).with.offset(KMARGIN/2);
+                make.right.equalTo(self.messsgeImage.mas_right).with.offset(3.0/2*KMARGIN);
+                make.bottom.equalTo(self.messsgeImage.mas_bottom).with.offset(KMARGIN);
                 }];
             }
                 break;
@@ -518,6 +518,7 @@
         self.backImgaeView.image = [self backImage:[UIImage imageNamed:@"message_receiver_background_normal"]];
         self.sendFiledBtn.hidden = model.sendSuccess == EMMessageStatusSuccessed ? YES:NO;
         [self.contentView addSubview:self.sendFiledBtn];
+        self.sendStateView.hidden = YES;
         [self.sendFiledBtn mas_remakeConstraints:^(MASConstraintMaker *make) {
             make.centerY.equalTo(self.backImgaeView.mas_centerY);
             make.left.equalTo(self.backImgaeView.mas_right).with.offset(KMARGIN/2);

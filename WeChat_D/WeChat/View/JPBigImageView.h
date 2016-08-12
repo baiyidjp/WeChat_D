@@ -12,10 +12,8 @@
 
 - (instancetype)initWithFrame:(CGRect)frame showImage:(UIImage *)showImage initialFrame:(CGRect)initialFrame;
 
-@property(nonatomic,strong)UIImage *showImage;
 @property(nonatomic,copy)void(^clickViewHidden)();
 @property(nonatomic,strong)UIImageView *showImageView;
-@property(nonatomic,strong)NSString *bigImage_Url;
-@property(nonatomic,assign)BOOL isDownSuccess;
 @property(nonatomic,assign)CGRect initialFrame;
+
 @end
