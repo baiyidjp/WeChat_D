@@ -298,25 +298,36 @@
             [self.view makeToast:@"点击文字未处理"];
             break;
         case MessageType_Picture:{
+            
+            [SVProgressHUD show];
+            UIWindow *window = [UIApplication sharedApplication].keyWindow;
+            
             CGRect tapViewFrame = [tapView convertRect:tapView.bounds toView:nil];
             NSLog(@"点击的图片的frame %@",NSStringFromCGRect(tapViewFrame));
-            self.bigImageView = [[JPBigImageView alloc]initWithFrame:tapViewFrame];
-            self.bigImageView.bigImage_Url = messageModel.bigImage_Url;
-//            UIImageView *tapImage = (UIImageView *)tapView;
-//            self.bigImageView.showImage = tapImage.image;
-            UIWindow *window = [UIApplication sharedApplication].keyWindow;
-            [window addSubview:self.bigImageView];
+            
             WEAK_SELF(weakSelf);
-            [UIView animateWithDuration:0.3 animations:^{
-                weakSelf.bigImageView.frame = window.bounds;
-            }];
-            [self.bigImageView setClickViewHidden:^{
-                [UIView animateWithDuration:0.3 animations:^{
-                    weakSelf.bigImageView.frame = tapViewFrame;
-                } completion:^(BOOL finished) {
-                    [weakSelf.bigImageView removeFromSuperview];
-                    weakSelf.bigImageView = nil;
-                }];
+            [[SDWebImageManager sharedManager] downloadImageWithURL:[NSURL URLWithString:messageModel.bigImage_Url] options:SDWebImageRetryFailed progress:nil completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
+                if (finished) {
+                    //下载是异步下载 一定要回到主线程赋值
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        [SVProgressHUD dismiss];
+                        self.bigImageView = [[JPBigImageView alloc]initWithFrame:window.bounds showImage:image initialFrame:tapViewFrame];
+                        self.bigImageView.alpha = 0.0;
+                        [window addSubview:self.bigImageView];
+                        [UIView animateWithDuration:0.5 animations:^{
+                            weakSelf.bigImageView.alpha = 1.0;
+                        }];
+                        [self.bigImageView setClickViewHidden:^{
+                            [UIView animateWithDuration:0.5 animations:^{
+                                weakSelf.bigImageView.alpha = 0.0;
+                            } completion:^(BOOL finished) {
+                                [weakSelf.bigImageView removeFromSuperview];
+                                weakSelf.bigImageView = nil;
+                            }];
+                        }];
+                    });
+        
+                }
             }];
         }
             break;
