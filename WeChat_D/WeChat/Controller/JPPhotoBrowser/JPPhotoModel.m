@@ -8,46 +8,76 @@
 
 #import "JPPhotoModel.h"
 
+#define itemWH (KWIDTH - (4+1)*KMARGIN/2)/4
+#define screenScale [UIScreen mainScreen].scale
+
+static PHImageManager *imageManager = nil;
+
 @implementation JPPhotoModel
 
-- (UIImage *)thumbImage{
-    //在ios9上，用thumbnail方法取得的缩略图显示出来不清晰，所以用aspectRatioThumbnail
-    if (IOS9_OR_LATER) {
-        return [UIImage imageWithCGImage:[self.asset aspectRatioThumbnail]];
-    } else {
-        return [UIImage imageWithCGImage:[self.asset thumbnail]];
-    }
++ (PHImageManager *)sharedPHImageManager{
     
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        imageManager = [[PHImageManager alloc] init];
+    });
+    return imageManager;
 }
 
-- (UIImage *)compressionImage{
-    UIImage *fullScreenImage = [UIImage imageWithCGImage:[[self.asset defaultRepresentation] fullScreenImage]];
-    NSData *data2 = UIImageJPEGRepresentation(fullScreenImage, 0.1);
-    UIImage *image = [UIImage imageWithData:data2];
-    fullScreenImage = nil;
-    data2 = nil;
-    return image;
+
+- (UIImage *)JPThumbImage{
+    
+    __block UIImage *resultImage;
+    if (IOS8_OR_LATER) {
+        [[JPPhotoModel sharedPHImageManager] requestImageForAsset:self.phAsset
+                                                            targetSize:CGSizeMake(itemWH*screenScale, itemWH*screenScale)
+                                                           contentMode:PHImageContentModeAspectFill
+                                                               options:nil
+                                                         resultHandler:^(UIImage *result, NSDictionary *info) {
+                                                             resultImage = result;
+                                                         }];
+
+    } else {
+        resultImage = [UIImage imageWithCGImage:[self.asset aspectRatioThumbnail]];
+    }
+    return resultImage;
 }
 
-- (UIImage *)fullScreenImage{
-    UIImage *image = [UIImage imageWithCGImage:[[self.asset defaultRepresentation] fullScreenImage]];
-    return image;
+
+- (UIImage *)JPFullScreenImage{
+    __block UIImage *resultImage;
+    if (IOS8_OR_LATER) {
+        PHImageRequestOptions *imageRequestOptions = [[PHImageRequestOptions alloc] init];
+        imageRequestOptions.synchronous = YES;
+        imageRequestOptions.deliveryMode = PHImageRequestOptionsDeliveryModeHighQualityFormat;
+        [[JPPhotoModel sharedPHImageManager] requestImageForAsset:self.phAsset
+                                                       targetSize:CGSizeMake(KWIDTH*screenScale, KHEIGHT*screenScale)
+                                                      contentMode:PHImageContentModeAspectFill
+                                                          options:imageRequestOptions
+                                                    resultHandler:^(UIImage *result, NSDictionary *info) {
+                                                        resultImage = result;
+                                                    }];
+        
+    } else {
+        resultImage = [UIImage imageWithCGImage:[[self.asset defaultRepresentation] fullScreenImage]];
+    }
+    return resultImage;
 }
 
-- (UIImage *)fullResolutionImage{
+- (UIImage *)JPFullResolutionImage{
     ALAssetRepresentation *rep = [self.asset defaultRepresentation];
     CGImageRef iref = [rep fullResolutionImage];
     
     return [UIImage imageWithCGImage:iref scale:[rep scale] orientation:(UIImageOrientation)[rep orientation]];
 }
 
-- (CGFloat)fullResolutionImageData{
+- (CGFloat)JPFullResolutionImageData{
     
     ALAssetRepresentation *rep = [self.asset defaultRepresentation];
     return [rep size]/(1024*1024.0);
 }
 
-- (NSData *)fullResolutData{
+- (NSData *)JPFullResolutData{
     
     ALAssetRepresentation *assetRep = [self.asset defaultRepresentation];
     NSUInteger size = [assetRep size];

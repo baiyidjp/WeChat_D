@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <AssetsLibrary/AssetsLibrary.h>
+#import <Photos/PHCollection.h>
 
 @interface JPPhotoGroupModel : NSObject
 
@@ -32,5 +33,8 @@
 @property (nonatomic , copy) NSString *type;
 
 @property (nonatomic , strong) ALAssetsGroup *group;
+/** PHotoKit group */
+@property(nonatomic,strong) PHAssetCollection *assetCollection;
+
 
 @end

@@ -27,5 +27,7 @@
 #import "PublicMethod.h"
 #import "SVProgressHUD.h"
 #import "EMSDK.h"
+#import <AssetsLibrary/AssetsLibrary.h>
+#import <Photos/Photos.h>
 
 #endif

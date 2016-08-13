@@ -9,6 +9,10 @@
 #import "BaseViewController.h"
 #import <AssetsLibrary/AssetsLibrary.h>
 
+@class JPPhotoGroupModel;
 @interface JPPhotoListController : BaseViewController
 @property (nonatomic , strong) ALAssetsGroup *group;
+/** name */
+@property(nonatomic,strong) JPPhotoGroupModel *groupModel;
+
 @end

@@ -70,7 +70,7 @@
     
     _photoModel = photoModel;
     
-    self.photoImage.image = photoModel.thumbImage;
+    self.photoImage.image = photoModel.JPThumbImage;
     self.selectBtn.selected = photoModel.isSelect;
 
     [self.photoImage mas_remakeConstraints:^(MASConstraintMaker *make) {

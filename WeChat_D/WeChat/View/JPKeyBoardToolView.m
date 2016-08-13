@@ -595,7 +595,7 @@
     NSArray *photoArr = [dict objectForKey:@"sendPhoto"];
     [photoArr enumerateObjectsUsingBlock:^(JPPhotoModel *photoModel, NSUInteger idx, BOOL * _Nonnull stop) {
         
-        UIImage *showImage = photoModel.fullScreenImage;
+        UIImage *showImage = photoModel.JPFullScreenImage;
 
         NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
         formatter.dateFormat = @"yyyyMMddHHmmss";
@@ -603,7 +603,7 @@
         
         NSData *fulldata = nil;
         if (photoModel.isShowFullImage) {
-            fulldata = photoModel.fullResolutData;
+            fulldata = photoModel.JPFullResolutData;
         }else{
             fulldata = UIImageJPEGRepresentation(showImage, 1.0);
         }

@@ -76,6 +76,8 @@
 		F53EC6881D3E644300027A24 /* libiconv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = F53EC6871D3E644300027A24 /* libiconv.tbd */; };
 		F55532A41D46542A00427192 /* MessageSendFail_28x28_@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F55532A21D46542A00427192 /* MessageSendFail_28x28_@2x.png */; };
 		F55532A51D46542A00427192 /* MessageSendFail_28x28_@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = F55532A31D46542A00427192 /* MessageSendFail_28x28_@3x.png */; };
+		F566E9B31D5F24B5004A203B /* JPPhotoManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F566E9B21D5F24B5004A203B /* JPPhotoManager.m */; };
+		F566E9B51D5F253F004A203B /* Photos.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F566E9B41D5F253F004A203B /* Photos.framework */; };
 		F57C385E1D54E23D00022E5B /* GoodsAddressController.m in Sources */ = {isa = PBXBuildFile; fileRef = F57C385D1D54E23D00022E5B /* GoodsAddressController.m */; };
 		F57C38611D556D9000022E5B /* MyAddressController.m in Sources */ = {isa = PBXBuildFile; fileRef = F57C38601D556D9000022E5B /* MyAddressController.m */; };
 		F57C38631D5B7E4C00022E5B /* News_VideoBIG_31x31_@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F57C38621D5B7E4C00022E5B /* News_VideoBIG_31x31_@2x.png */; };
@@ -368,6 +370,8 @@
 		F5E2C5151D538663004260D1 /* watch-yo-checked_28x28_@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = F5E2C5131D538663004260D1 /* watch-yo-checked_28x28_@3x.png */; };
 		F5E2C5191D538BCD004260D1 /* JPTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = F5E2C5181D538BCD004260D1 /* JPTextView.m */; };
 		F5E2C51C1D538DE3004260D1 /* SignatureController.m in Sources */ = {isa = PBXBuildFile; fileRef = F5E2C51B1D538DE3004260D1 /* SignatureController.m */; };
+		F5E919291D5F40B300AB487A /* JPALAssetLibraryManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F5E919281D5F40B300AB487A /* JPALAssetLibraryManager.m */; };
+		F5E9192C1D5F40C300AB487A /* JPPhotoKitManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F5E9192B1D5F40C300AB487A /* JPPhotoKitManager.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -548,6 +552,9 @@
 		F53EC6871D3E644300027A24 /* libiconv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libiconv.tbd; path = usr/lib/libiconv.tbd; sourceTree = SDKROOT; };
 		F55532A21D46542A00427192 /* MessageSendFail_28x28_@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "MessageSendFail_28x28_@2x.png"; sourceTree = "<group>"; };
 		F55532A31D46542A00427192 /* MessageSendFail_28x28_@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "MessageSendFail_28x28_@3x.png"; sourceTree = "<group>"; };
+		F566E9B11D5F24B5004A203B /* JPPhotoManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JPPhotoManager.h; sourceTree = "<group>"; };
+		F566E9B21D5F24B5004A203B /* JPPhotoManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JPPhotoManager.m; sourceTree = "<group>"; };
+		F566E9B41D5F253F004A203B /* Photos.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Photos.framework; path = System/Library/Frameworks/Photos.framework; sourceTree = SDKROOT; };
 		F57C385C1D54E23D00022E5B /* GoodsAddressController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GoodsAddressController.h; sourceTree = "<group>"; };
 		F57C385D1D54E23D00022E5B /* GoodsAddressController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GoodsAddressController.m; sourceTree = "<group>"; };
 		F57C385F1D556D9000022E5B /* MyAddressController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyAddressController.h; sourceTree = "<group>"; };
@@ -854,6 +861,10 @@
 		F5E2C5181D538BCD004260D1 /* JPTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JPTextView.m; sourceTree = "<group>"; };
 		F5E2C51A1D538DE3004260D1 /* SignatureController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignatureController.h; sourceTree = "<group>"; };
 		F5E2C51B1D538DE3004260D1 /* SignatureController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignatureController.m; sourceTree = "<group>"; };
+		F5E919271D5F40B300AB487A /* JPALAssetLibraryManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JPALAssetLibraryManager.h; sourceTree = "<group>"; };
+		F5E919281D5F40B300AB487A /* JPALAssetLibraryManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JPALAssetLibraryManager.m; sourceTree = "<group>"; };
+		F5E9192A1D5F40C300AB487A /* JPPhotoKitManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JPPhotoKitManager.h; sourceTree = "<group>"; };
+		F5E9192B1D5F40C300AB487A /* JPPhotoKitManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JPPhotoKitManager.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -861,6 +872,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F566E9B51D5F253F004A203B /* Photos.framework in Frameworks */,
 				A24BBE3A1D5B06180062DFC9 /* AssetsLibrary.framework in Frameworks */,
 				F53EC6881D3E644300027A24 /* libiconv.tbd in Frameworks */,
 				A2C512BB1D41BB9A00D84829 /* libmp3lame.a in Frameworks */,
@@ -901,6 +913,7 @@
 		A12D7F57D4C2FA15BBD6C897 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				F566E9B41D5F253F004A203B /* Photos.framework */,
 				A24BBE391D5B06180062DFC9 /* AssetsLibrary.framework */,
 				F53EC6871D3E644300027A24 /* libiconv.tbd */,
 				F53EC6851D3E643C00027A24 /* libsqlite3.tbd */,
@@ -948,6 +961,12 @@
 				A24BBE451D5B23C00062DFC9 /* JPPhotoCollectionViewCell.m */,
 				A249DF8F1D5C2D92000206FF /* JPPhotoCollectionLayout.h */,
 				A249DF901D5C2D92000206FF /* JPPhotoCollectionLayout.m */,
+				F566E9B11D5F24B5004A203B /* JPPhotoManager.h */,
+				F566E9B21D5F24B5004A203B /* JPPhotoManager.m */,
+				F5E9192A1D5F40C300AB487A /* JPPhotoKitManager.h */,
+				F5E9192B1D5F40C300AB487A /* JPPhotoKitManager.m */,
+				F5E919271D5F40B300AB487A /* JPALAssetLibraryManager.h */,
+				F5E919281D5F40B300AB487A /* JPALAssetLibraryManager.m */,
 			);
 			path = JPPhotoBrowser;
 			sourceTree = "<group>";
@@ -2230,10 +2249,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				A24BBE351D5B058B0062DFC9 /* JPPhotoGroupListController.m in Sources */,
+				F5E9192C1D5F40C300AB487A /* JPPhotoKitManager.m in Sources */,
 				A25AAB5C1D48652500DBBBE5 /* GroupViewController.m in Sources */,
 				A2DA92501D50B42E000077ED /* QRCodeManger.m in Sources */,
 				A297B75D1D2F8E5A003C9276 /* MainTabbarController.m in Sources */,
 				F5E2C5191D538BCD004260D1 /* JPTextView.m in Sources */,
+				F5E919291D5F40B300AB487A /* JPALAssetLibraryManager.m in Sources */,
 				A25AAB691D48B1D900DBBBE5 /* CreatGroupModel.m in Sources */,
 				F5A131761D50E0F500190C1B /* JPTableViewDelegate.m in Sources */,
 				A249DF8E1D5C1E22000206FF /* JPScreenPhotoController.m in Sources */,
@@ -2261,6 +2282,7 @@
 				F5E2C5051D523BF7004260D1 /* ScanQRCodeController.m in Sources */,
 				A24BBE381D5B05BD0062DFC9 /* JPPhotoGroupModel.m in Sources */,
 				A25AAB5F1D4882C800DBBBE5 /* ListView.m in Sources */,
+				F566E9B31D5F24B5004A203B /* JPPhotoManager.m in Sources */,
 				A2C512BC1D41BB9A00D84829 /* Mp3Recorder.m in Sources */,
 				A25AAB661D48B13A00DBBBE5 /* CreatGroupCell.m in Sources */,
 				F5E2C51C1D538DE3004260D1 /* SignatureController.m in Sources */,

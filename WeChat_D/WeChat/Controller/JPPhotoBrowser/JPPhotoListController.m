@@ -10,6 +10,7 @@
 #import "JPPhotoModel.h"
 #import "JPPhotoCollectionViewCell.h"
 #import "JPScreenPhotoController.h"
+#import "JPPhotoManager.h"
 
 #define ROW_COUNT 4
 #define PHOTOCELL_ID @"JPPhotoCollectionViewCell"
@@ -41,7 +42,12 @@
     self.navigationItem.rightBarButtonItem = item;
     
     [self setCollectionView];
-    [self getGroupPhotoData];
+    
+    [[JPPhotoManager sharedPhotoManager] getPhotoListWithModel:self.groupModel Block:^(NSArray *photoList) {
+        [self.photoDataArray addObjectsFromArray:photoList];
+        [photoCollectionView reloadData];
+    }];
+    
     [JP_NotificationCenter addObserver:self selector:@selector(selectPhoto:) name:SELECTPHOTO object:nil];
     [JP_NotificationCenter addObserver:self selector:@selector(selectPhotoRefresh:) name:SELECTPHOTO_REFRESH object:nil];
 }
@@ -175,27 +181,27 @@
 }
 
 #pragma mark 获取当前组下的图片
-- (void)getGroupPhotoData{
-    
-    [self.group enumerateAssetsWithOptions:NSEnumerationReverse usingBlock:^(ALAsset *result, NSUInteger index, BOOL *stop) {
-//        if (ABS((NSInteger)index - [self.group numberOfAssets]) > showImageCount) {
-//            *stop = YES;
-//            //刷新数据
-//            [photoCollectionView reloadData];
-//        }else{
-            if (result) {
-                NSInteger row = ABS((NSInteger)index - [self.group numberOfAssets]+1);
-                JPPhotoModel *photoModel = [[JPPhotoModel alloc]init];
-                photoModel.asset = result;
-                photoModel.indexPath = [NSIndexPath indexPathForRow:row inSection:0];
-                [self.photoDataArray addObject:photoModel];
-            }else{
-                //刷新数据
-                [photoCollectionView reloadData];
-            }
-//        }
-    }];
-}
+//- (void)getGroupPhotoData{
+//    
+//    [self.group enumerateAssetsWithOptions:NSEnumerationReverse usingBlock:^(ALAsset *result, NSUInteger index, BOOL *stop) {
+////        if (ABS((NSInteger)index - [self.group numberOfAssets]) > showImageCount) {
+////            *stop = YES;
+////            //刷新数据
+////            [photoCollectionView reloadData];
+////        }else{
+//            if (result) {
+//                NSInteger row = ABS((NSInteger)index - [self.group numberOfAssets]+1);
+//                JPPhotoModel *photoModel = [[JPPhotoModel alloc]init];
+//                photoModel.asset = result;
+//                photoModel.indexPath = [NSIndexPath indexPathForRow:row inSection:0];
+//                [self.photoDataArray addObject:photoModel];
+//            }else{
+//                //刷新数据
+//                [photoCollectionView reloadData];
+//            }
+////        }
+//    }];
+//}
 
 #pragma mark 点击选中按钮的回调
 - (void)cellSelectWithIndexPath:(NSIndexPath *)indexPath{
