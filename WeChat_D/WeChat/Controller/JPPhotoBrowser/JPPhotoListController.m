@@ -32,7 +32,7 @@
     
     showImageCount = KHEIGHT/((KWIDTH - 5*KMARGIN)/ROW_COUNT)*ROW_COUNT;
     
-    UIButton *cancleBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 30, 30)];
+    UIButton *cancleBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 32, 32)];
     [cancleBtn setTitle:@"取消" forState:UIControlStateNormal];
     [cancleBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [cancleBtn.titleLabel setFont:FONTSIZE(15)];

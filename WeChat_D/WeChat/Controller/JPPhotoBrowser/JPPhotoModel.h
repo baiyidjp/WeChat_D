@@ -8,6 +8,10 @@
 
 #import <Foundation/Foundation.h>
 
+typedef void(^GetThumbImageBlock)(UIImage *thumbImage);
+typedef void(^GetFullScreenImageBlock)(UIImage *fullScreenImage);
+typedef void(^GetFullResolutDataBlock)(NSData *fullResolutData);
+typedef void(^GetFullResolutDataSizeBlock)(CGFloat fullResolutDataSize);
 
 @interface JPPhotoModel : NSObject
 
@@ -18,16 +22,28 @@
 @property(nonatomic,strong) PHAsset *phAsset;
 
 /**
- *  缩略图
+ *  获取缩略图
  */
-- (UIImage *)JPThumbImage;
+- (void)JPThumbImageWithBlock:(GetThumbImageBlock)GetThumbImageBlock;
+/** 保存获取到的缩略图 */
+@property(nonatomic,strong) UIImage *thumbImage;
+
 /**
- *  原图
+ *  获取屏幕大小的原图
  */
-- (UIImage *)JPFullScreenImage;//适应屏幕的原图
+- (void)JPFullScreenImageWithBlock:(GetFullScreenImageBlock)GetFullScreenImageBlock;//适应屏幕的原图
+/** 保存获取到原图 */
+@property(nonatomic,strong) UIImage *fullScreenImage;
+
 - (UIImage *)JPFullResolutionImage;//未作处理的原图
-- (NSData *)JPFullResolutData;//原图的二进制数据
-- (CGFloat)JPFullResolutionImageData; //原图的大小
+- (void)JPFullResolutDataWithBlock:(GetFullResolutDataBlock)GetFullResolutDataBlock;//原图的二进制数据
+/** 保存获取的data */
+@property(nonatomic,strong) NSData *fullResolutData;
+
+- (void)JPFullResolutionDataSizeWithBlock:(GetFullResolutDataSizeBlock)GetFullResolutDataSizeBlock; //原图的大小
+/** 保存获取到图片的大小 */
+@property(nonatomic,assign) CGFloat fullResolutDataSize;
+
 /**
  *  获取是否是视频类型, Default = false
  */

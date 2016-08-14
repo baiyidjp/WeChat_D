@@ -278,7 +278,9 @@
     JPPhotoModel *photoModel = [self.photoDataArray objectAtIndex:indexPath.item];
     UIImageView *photoImage = [[UIImageView alloc]init];
     photoImage.contentMode = UIViewContentModeScaleAspectFit;
-    photoImage.image = photoModel.JPFullScreenImage;
+    [photoModel JPFullScreenImageWithBlock:^(UIImage *fullScreenImage) {
+        photoImage.image = fullScreenImage;
+    }];
     [cell.contentView addSubview:photoImage];
     [photoImage mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(cell.contentView);
@@ -287,7 +289,10 @@
     }];
     selectBtn.selected = photoModel.isSelect;
     selectBtn.hidden = photoModel.isVideoType;
-    dataLabel.text = [NSString stringWithFormat:@"(%.1fM)",photoModel.JPFullResolutionImageData];
+    [photoModel JPFullResolutionDataSizeWithBlock:^(CGFloat fullResolutDataSize) {
+        NSLog(@"%f",fullResolutDataSize);
+        dataLabel.text = [NSString stringWithFormat:@"(%.1fM)",fullResolutDataSize];
+    }];
     return cell;
 }
 

@@ -595,15 +595,28 @@
     NSArray *photoArr = [dict objectForKey:@"sendPhoto"];
     [photoArr enumerateObjectsUsingBlock:^(JPPhotoModel *photoModel, NSUInteger idx, BOOL * _Nonnull stop) {
         
-        UIImage *showImage = photoModel.JPFullScreenImage;
+        __block UIImage *showImage;
+        if (photoModel.thumbImage) {
+            showImage = photoModel.thumbImage;
+        }else{
+            [photoModel JPFullScreenImageWithBlock:^(UIImage *fullScreenImage) {
+                showImage = fullScreenImage;
+            }];
+        }
 
         NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
         formatter.dateFormat = @"yyyyMMddHHmmss";
         NSString *str = [formatter stringFromDate:[NSDate date]];
         
-        NSData *fulldata = nil;
+        __block NSData *fulldata;
         if (photoModel.isShowFullImage) {
-            fulldata = photoModel.JPFullResolutData;
+            if (photoModel.fullResolutData) {
+                fulldata = photoModel.fullResolutData;
+            }else{
+                [photoModel JPFullResolutDataWithBlock:^(NSData *fullResolutData) {
+                    fulldata = fullResolutData;
+                }];
+            }
         }else{
             fulldata = UIImageJPEGRepresentation(showImage, 1.0);
         }

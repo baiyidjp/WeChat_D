@@ -26,7 +26,7 @@ static JPPhotoManager *photoManger = nil;
 
 - (void)getPhotoGroupWithBlock:(GroupArrBlock)GroupArrBlock{
     
-    if (IOS8_OR_LATER) {
+    if (IOS_VERSION_8_OR_LATER) {
         [[JPPhotoKitManager sharedPhotoKitManager] PHGetPhotoGroupArrayWithBlock:^(NSArray *groupArray) {
             if (GroupArrBlock) {
                 GroupArrBlock(groupArray);
@@ -43,7 +43,7 @@ static JPPhotoManager *photoManger = nil;
 
 - (void)getPhotoListWithModel:(JPPhotoGroupModel *)groupModel Block:(PhotoListBlock)PhotoListBlock{
     
-    if (IOS8_OR_LATER) {
+    if (IOS_VERSION_8_OR_LATER) {
             [[JPPhotoKitManager sharedPhotoKitManager] PHGetPhotoListWithModel:groupModel Block:^(NSArray *photoList) {
                 if (PhotoListBlock) {
                     PhotoListBlock(photoList);

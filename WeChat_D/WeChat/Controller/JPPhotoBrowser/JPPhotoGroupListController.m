@@ -28,7 +28,7 @@
     
     self.title = @"照片";
     
-    UIButton *cancleBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 30, 30)];
+    UIButton *cancleBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 32, 32)];
     [cancleBtn setTitle:@"取消" forState:UIControlStateNormal];
     [cancleBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [cancleBtn.titleLabel setFont:FONTSIZE(15)];
@@ -53,7 +53,7 @@
     
     //获取相册列表
     [[JPPhotoManager sharedPhotoManager] getPhotoGroupWithBlock:^(NSArray *groupArray) {
-        [self.groupDataArray removeAllObjects];
+        
         [self.groupDataArray addObjectsFromArray:groupArray];
         [groupTableView reloadData];
     }];
