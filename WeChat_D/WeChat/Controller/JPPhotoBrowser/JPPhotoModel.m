@@ -8,9 +8,6 @@
 
 #import "JPPhotoModel.h"
 
-#define itemWH (KWIDTH - (4+1)*KMARGIN/2)/4
-#define screenScale [UIScreen mainScreen].scale
-
 static PHImageManager *imageManager = nil;
 
 @implementation JPPhotoModel
@@ -30,7 +27,8 @@ static PHImageManager *imageManager = nil;
     if (GetThumbImageBlock && self.thumbImage) {
         GetThumbImageBlock(self.thumbImage);
     }
-
+    CGFloat itemWH = (KWIDTH - (4+1)*KMARGIN/2)/4;
+    CGFloat screenScale = [UIScreen mainScreen].scale;
     if (IOS_VERSION_8_OR_LATER) {
         [[JPPhotoModel sharedPHImageManager] requestImageForAsset:self.phAsset
                                                             targetSize:CGSizeMake(itemWH*screenScale, itemWH*screenScale)
@@ -38,7 +36,6 @@ static PHImageManager *imageManager = nil;
                                                                options:nil
                                                          resultHandler:^(UIImage *result, NSDictionary *info) {
                                                              self.thumbImage = result;
-                                                             NSLog(@"缩略图info->%@",info);
                                                              if (GetThumbImageBlock) {
                                                                  GetThumbImageBlock(result);
                                                              }
@@ -55,6 +52,20 @@ static PHImageManager *imageManager = nil;
     
 }
 
+/*
+ PHImageFileOrientationKey = 0;
+ PHImageFileSandboxExtensionTokenKey = "19fff0b45bbf129ad15d8a2aeac8000f5718ea1d;00000000;00000000;000000000000001a;com.apple.app-sandbox.read;00000001;01000004;0000000002c7e0a3;/users/dong/library/developer/coresimulator/devices/7c36c643-3d47-4894-9284-43d7c0d4d244/data/media/dcim/100apple/img_0004.jpg";
+ PHImageFileURLKey = "file:///Users/dong/Library/Developer/CoreSimulator/Devices/7C36C643-3D47-4894-9284-43D7C0D4D244/data/Media/DCIM/100APPLE/IMG_0004.JPG";
+ PHImageFileUTIKey = "public.jpeg";
+ PHImageResultDeliveredImageFormatKey = 9999;
+ PHImageResultIsDegradedKey = 0;
+ PHImageResultIsInCloudKey = 0;
+ PHImageResultIsPlaceholderKey = 0;
+ PHImageResultOptimizedForSharing = 0;
+ PHImageResultRequestIDKey = 10;
+ PHImageResultWantedImageFormatKey = 4035;
+ 
+ */
 
 - (void)JPFullScreenImageWithBlock:(GetFullScreenImageBlock)GetFullScreenImageBlock{
 #warning 先从缓存中取出  后续处理  .. . ... ..
@@ -69,20 +80,6 @@ static PHImageManager *imageManager = nil;
                                                               options:nil
                                                         resultHandler:^(UIImage *result, NSDictionary *info) {
                                                             NSLog(@"%@",info);
-                                                            /*
-                                                             PHImageFileOrientationKey = 0;
-                                                             PHImageFileSandboxExtensionTokenKey = "19fff0b45bbf129ad15d8a2aeac8000f5718ea1d;00000000;00000000;000000000000001a;com.apple.app-sandbox.read;00000001;01000004;0000000002c7e0a3;/users/dong/library/developer/coresimulator/devices/7c36c643-3d47-4894-9284-43d7c0d4d244/data/media/dcim/100apple/img_0004.jpg";
-                                                             PHImageFileURLKey = "file:///Users/dong/Library/Developer/CoreSimulator/Devices/7C36C643-3D47-4894-9284-43D7C0D4D244/data/Media/DCIM/100APPLE/IMG_0004.JPG";
-                                                             PHImageFileUTIKey = "public.jpeg";
-                                                             PHImageResultDeliveredImageFormatKey = 9999;
-                                                             PHImageResultIsDegradedKey = 0;
-                                                             PHImageResultIsInCloudKey = 0;
-                                                             PHImageResultIsPlaceholderKey = 0;
-                                                             PHImageResultOptimizedForSharing = 0;
-                                                             PHImageResultRequestIDKey = 10;
-                                                             PHImageResultWantedImageFormatKey = 4035;
-                                                             
-                                                             */
                                                             self.fullScreenImage = result;
                                                             if (GetFullScreenImageBlock) {
                                                                 GetFullScreenImageBlock(result);
@@ -197,5 +194,12 @@ static PHImageManager *imageManager = nil;
     return [[self.asset defaultRepresentation] url];
 }
 
+- (NSString *)videoTime{
+    
+    NSInteger time = (NSInteger)self.phAsset.duration;
+    NSInteger minute = time / 60;
+    CGFloat second = time % 60;
+    return [NSString stringWithFormat:@"%zd:%.2f",minute,second];
+}
 
 @end

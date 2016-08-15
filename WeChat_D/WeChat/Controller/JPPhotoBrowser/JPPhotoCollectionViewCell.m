@@ -21,6 +21,7 @@
         [self.contentView addSubview:self.selectBtn];
         [self.contentView addSubview:self.bottomView];
         [self.contentView addSubview:self.videoImage];
+        [self.contentView addSubview:self.videoTime];
     }
     return self;
 }
@@ -29,7 +30,10 @@
     
     if (!_photoImage) {
         _photoImage = [[UIImageView alloc]init];
-//        _photoImage.contentMode = UIViewContentModeLeft;
+        [_photoImage setContentScaleFactor:[[UIScreen mainScreen] scale]];
+        _photoImage.contentMode =  UIViewContentModeScaleAspectFill;
+        _photoImage.autoresizingMask = UIViewAutoresizingFlexibleHeight;
+        _photoImage.clipsToBounds  = YES;
     }
     return _photoImage;
 }
@@ -66,6 +70,16 @@
     return _videoImage;
 }
 
+- (UILabel *)videoTime{
+    
+    if (!_videoTime) {
+        _videoTime = [[UILabel alloc]init];
+        _videoTime.textColor = [UIColor whiteColor];
+        _videoTime.font = FONTSIZE(10);
+    }
+    return _videoTime;
+}
+
 - (void)setPhotoModel:(JPPhotoModel *)photoModel{
     
     _photoModel = photoModel;
@@ -98,6 +112,12 @@
         make.centerY.equalTo(self.bottomView.mas_centerY);
         make.left.offset(KMARGIN/2);
         make.size.mas_equalTo(CGSizeMake(15, 15));
+    }];
+    
+    self.videoTime.hidden = !photoModel.isVideoType;
+    [self.videoTime mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(self.bottomView.mas_centerY);
+        make.right.offset(-KMARGIN/2);
     }];
 }
 

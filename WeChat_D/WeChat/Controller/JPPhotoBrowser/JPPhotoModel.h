@@ -35,12 +35,15 @@ typedef void(^GetFullResolutDataSizeBlock)(CGFloat fullResolutDataSize);
 /** 保存获取到原图 */
 @property(nonatomic,strong) UIImage *fullScreenImage;
 
-- (UIImage *)JPFullResolutionImage;//未作处理的原图
-- (void)JPFullResolutDataWithBlock:(GetFullResolutDataBlock)GetFullResolutDataBlock;//原图的二进制数据
+- (UIImage *)JPFullResolutionImage;//未作处理的原图(由于不需要没有写方法)
+
+/** 原图的二进制数据 */
+- (void)JPFullResolutDataWithBlock:(GetFullResolutDataBlock)GetFullResolutDataBlock;
 /** 保存获取的data */
 @property(nonatomic,strong) NSData *fullResolutData;
 
-- (void)JPFullResolutionDataSizeWithBlock:(GetFullResolutDataSizeBlock)GetFullResolutDataSizeBlock; //原图的大小
+/** 获取到图片的大小(2.6M ... ) */
+- (void)JPFullResolutionDataSizeWithBlock:(GetFullResolutDataSizeBlock)GetFullResolutDataSizeBlock;
 /** 保存获取到图片的大小 */
 @property(nonatomic,assign) CGFloat fullResolutDataSize;
 
@@ -57,9 +60,14 @@ typedef void(^GetFullResolutDataSizeBlock)(CGFloat fullResolutDataSize);
  */
 @property(nonatomic,assign)BOOL isSelect;
 /**
- *  是否显示原图
+ *  是否显示原图(后续发送的时候判断是否发送原图)
  */
 @property(nonatomic,assign)BOOL isShowFullImage;
+/**
+ *  获取视频的时长
+ */
+- (NSString *)videoTime;
 
 @property(nonatomic,strong)NSIndexPath *indexPath;
+
 @end

@@ -27,6 +27,10 @@
     
     if (!_thumbImage) {
         _thumbImage = [[UIImageView alloc]init];
+        [_thumbImage setContentScaleFactor:[[UIScreen mainScreen] scale]];
+        _thumbImage.contentMode =  UIViewContentModeScaleAspectFill;
+        _thumbImage.autoresizingMask = UIViewAutoresizingFlexibleHeight;
+        _thumbImage.clipsToBounds  = YES;
     }
     return _thumbImage;
 }
