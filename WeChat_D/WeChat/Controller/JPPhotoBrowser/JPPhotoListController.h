@@ -11,7 +11,7 @@
 
 @class JPPhotoGroupModel;
 @interface JPPhotoListController : BaseViewController
-@property (nonatomic , strong) ALAssetsGroup *group;
+
 /** name */
 @property(nonatomic,strong) JPPhotoGroupModel *groupModel;
 

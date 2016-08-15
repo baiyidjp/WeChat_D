@@ -242,7 +242,12 @@
     btn.selected = !btn.selected;
     JPPhotoModel *photoModel = [self.photoDataArray objectAtIndex:currentCount];
     photoModel.isShowFullImage = btn.selected;
-    if (btn.selected) {
+    [self roundBtnSelected:YES];
+}
+
+- (void)roundBtnSelected:(BOOL)selected{
+    
+    if (selected) {
         [roundBtn setBackgroundColor:[UIColor greenColor]];
         fullImageLabel.textColor = [UIColor whiteColor];
         dataLabel.hidden = NO;
@@ -251,6 +256,8 @@
         fullImageLabel.textColor = [UIColor colorWithRed:0.5416 green:0.5416 blue:0.5416 alpha:1.0];
         dataLabel.hidden = YES;
     }
+    
+    
 }
 
 - (void)sendPhoto{
@@ -289,6 +296,7 @@
     }];
     selectBtn.selected = photoModel.isSelect;
     selectBtn.hidden = photoModel.isVideoType;
+    [self roundBtnSelected:photoModel.isShowFullImage];
     [photoModel JPFullResolutionDataSizeWithBlock:^(CGFloat fullResolutDataSize) {
         NSLog(@"%f",fullResolutDataSize);
         dataLabel.text = [NSString stringWithFormat:@"(%.1fM)",fullResolutDataSize];
