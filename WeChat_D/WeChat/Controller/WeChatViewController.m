@@ -52,6 +52,7 @@
  *  列表的数据
  */
 @property(nonatomic,strong)NSMutableArray *listDataArray;
+
 @end
 
 @implementation WeChatViewController
@@ -483,6 +484,7 @@
     [self.weChatTableView reloadData];
 
 }
+
 
 - (void)dealloc{
     

@@ -16,6 +16,7 @@
 #import "WeChatViewController.h"
 #import "JPBigImageView.h"
 
+static int message_count = 20;
 @interface ChatDetailViewController ()<UITableViewDelegate,UITableViewDataSource,JPKeyBoardToolViewDelegate,UIScrollViewDelegate,MessageTableViewCellDelegate>
 /**
  *  聊天界面
@@ -41,7 +42,18 @@
 @property(nonatomic,strong) Mp3Recorder *mp3Recorder;
 /** MessCell 用来停止播放语音 */
 @property(nonatomic,strong) MessageTableViewCell *voiceMessageCell;
+/**
+ *  点击图片放大
+ */
 @property(nonatomic,strong)JPBigImageView *bigImageView;
+/**
+ *  下拉刷新控件
+ */
+@property(nonatomic,strong)UIView *topRefreshView;
+@property(nonatomic,strong)UIActivityIndicatorView *topIndicatorView;
+@property(nonatomic,strong)UILabel *refreshLabel;
+@property (strong, nonatomic) UIPanGestureRecognizer *pan;
+
 @end
 
 @implementation ChatDetailViewController
@@ -63,6 +75,21 @@
     return _reciveMessageArray;
 }
 
+- (void)SetrefreshControl{
+    
+    self.topRefreshView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, KWIDTH, KNAVHEIGHT)];
+    self.topIndicatorView   = [[UIActivityIndicatorView alloc] initWithFrame:CGRectMake(KWIDTH/2-50, KNAVHEIGHT/2-KMARGIN, 2*KMARGIN, 2*KMARGIN)];
+    self.topIndicatorView.color = [UIColor whiteColor];
+    self.topIndicatorView.hidesWhenStopped = NO;
+    [self.topRefreshView addSubview:self.topIndicatorView];
+    self.refreshLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(self.topIndicatorView.frame)+KMARGIN, KNAVHEIGHT/2-KMARGIN, KWIDTH/2, 2*KMARGIN)];
+    self.refreshLabel.text = @"下拉获取消息";
+    self.refreshLabel.textColor = [UIColor whiteColor];
+    self.refreshLabel.font = FONTSIZE(15);
+    [self.topRefreshView addSubview:self.refreshLabel];
+
+}
+
 //重写返回事件
 - (BOOL)navigationShouldPopOnBackButton{
     for (UIViewController *ctrl in self.navigationController.viewControllers) {
@@ -78,6 +105,8 @@
     self.view.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:self.toolView];
     [self.view addSubview:self.ChatTableView];
+    
+    [self SetrefreshControl];
     
     UIImage *groupInfoImage = [UIImage imageNamed:@"barbuttonicon_InfoSingle_30x30_"];
     
@@ -101,7 +130,7 @@
     }
     self.conversation = conversation;
     [conversation markAllMessagesAsRead];
-    NSArray *messages = [conversation loadMoreMessagesFromId:nil limit:20 direction:EMMessageSearchDirectionUp];
+    NSArray *messages = [conversation loadMoreMessagesFromId:nil limit:message_count direction:EMMessageSearchDirectionUp];
     [self.dataArray addObjectsFromArray:messages];
     
     if (self.dataArray.count) {
@@ -143,12 +172,16 @@
     
     if (!_ChatTableView) {
         _ChatTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, KNAVHEIGHT, KWIDTH, KHEIGHT-KNAVHEIGHT-KTOOLVIEW_MINH) style:UITableViewStylePlain];
+        _ChatTableView.contentInset = UIEdgeInsetsMake(-KNAVHEIGHT, 0, 0, 0);
         _ChatTableView.delegate = self;
         _ChatTableView.dataSource = self;
         [_ChatTableView registerClass:[MessageTableViewCell class] forCellReuseIdentifier:@"MessageTableViewCell"];
         _ChatTableView.tableFooterView = [[UIView alloc]init];
         _ChatTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         _ChatTableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"location"]];
+        [_ChatTableView addObserver:self forKeyPath:@"contentOffset" options:NSKeyValueObservingOptionNew context:nil];
+        self.pan = _ChatTableView.panGestureRecognizer;
+        [self.pan addObserver:self forKeyPath:@"state" options:NSKeyValueObservingOptionNew context:nil];
     }
     return _ChatTableView;
 }
@@ -271,6 +304,16 @@
     return cell;
 }
 
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
+    
+    return self.topRefreshView;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+    
+    return KNAVHEIGHT;
+}
+
 //- (void)scrollViewDidScroll:(UIScrollView *)scrollView{
 //    
 //    CGFloat panTranslationY = [scrollView.panGestureRecognizer translationInView:self.ChatTableView].y;//在tableVIEW的移动的坐标
@@ -376,9 +419,66 @@
 
 }
 
+#pragma mark KVO监听
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context {
+    
+    if ([keyPath isEqualToString:@"contentOffset"]) {
+        
+        CGPoint contentOffset = [[change valueForKey:NSKeyValueChangeNewKey] CGPointValue];
+        if (contentOffset.y < 0) {
+            
+            self.refreshLabel.text = @"松开立即刷新";
+        }
+        
+    }else if ([keyPath isEqualToString:@"state"]){
+        
+        UIPanGestureRecognizer *tableViewPan = (UIPanGestureRecognizer *)object;
+        if (tableViewPan.state == UIGestureRecognizerStateEnded && self.ChatTableView.contentOffset.y < 0) {
+            [self beginRefresh];
+        }
+    }
+}
+
+- (void)beginRefresh{
+    
+    if ([self.topIndicatorView isAnimating]) {
+        return;
+    }
+    [self.topIndicatorView startAnimating];
+    self.refreshLabel.text = @"正在刷新数据";
+    [UIView animateWithDuration:0.3 animations:^{
+        self.ChatTableView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0);
+    }];
+
+    NSArray *messages = [self.conversation loadMoreMessagesFromId:[[self.dataArray objectAtIndex:0] messageId] limit:message_count direction:EMMessageSearchDirectionUp];
+
+    [self.dataArray insertObjects:messages atIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, [messages count])]];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self.ChatTableView reloadData];
+        [self endRefresh];
+        if (messages.count) {
+            [self.ChatTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:messages.count-1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:NO];
+        }else{
+            [self.view makeToast:@"历史消息都被你加载完了,还想干嘛"];
+        }
+    });
+
+}
+
+- (void)endRefresh{
+    
+    [self.topIndicatorView stopAnimating];
+    self.refreshLabel.text = @"下拉获取消息";
+    [UIView animateWithDuration:0.3 animations:^{
+        self.ChatTableView.contentInset = UIEdgeInsetsMake(-KNAVHEIGHT, 0, 0, 0);
+    }];
+}
+
 - (void)dealloc{
     
     [JP_NotificationCenter removeObserver:self name:RECEIVEMESSAGES object:nil];
+    [self.ChatTableView removeObserver:self forKeyPath:@"contentOffset" context:nil];
+    [self.pan removeObserver:self forKeyPath:@"state"];
 }
 
 - (void)viewWillDisappear:(BOOL)animated{

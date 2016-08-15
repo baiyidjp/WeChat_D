@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
@@ -47,7 +48,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7VP-Qb-AJe">
-                        <rect key="frame" x="49" y="0.0" width="20" height="20"/>
+                        <rect key="frame" x="48" y="0.0" width="20" height="20"/>
                         <color key="backgroundColor" red="1" green="0.066928750539999998" blue="0.1024481411" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="20" id="gD9-fz-qUn"/>
@@ -63,7 +64,7 @@
                     <constraint firstAttribute="trailingMargin" secondItem="z0i-dc-5dJ" secondAttribute="trailing" constant="10" id="5aX-Nj-2MS"/>
                     <constraint firstItem="Axm-nh-l5e" firstAttribute="centerY" secondItem="FBB-b1-eGQ" secondAttribute="centerY" constant="10" id="64F-e9-HXv"/>
                     <constraint firstAttribute="bottomMargin" secondItem="FBB-b1-eGQ" secondAttribute="bottom" id="BZo-Q4-6Qk"/>
-                    <constraint firstItem="7VP-Qb-AJe" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" constant="-128.5" id="CNn-So-Nve"/>
+                    <constraint firstItem="7VP-Qb-AJe" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="58" id="CNn-So-Nve"/>
                     <constraint firstItem="FBB-b1-eGQ" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="EKJ-Fp-aHk"/>
                     <constraint firstItem="Axm-nh-l5e" firstAttribute="leading" secondItem="FBB-b1-eGQ" secondAttribute="trailing" constant="10" id="MEr-mf-Svf"/>
                     <constraint firstAttribute="trailingMargin" secondItem="btW-Zv-Krb" secondAttribute="trailing" constant="10" id="OiJ-jq-S1N"/>
@@ -76,7 +77,7 @@
                     <constraint firstItem="btW-Zv-Krb" firstAttribute="leading" secondItem="FBB-b1-eGQ" secondAttribute="trailing" constant="10" id="jvh-l1-G62"/>
                     <constraint firstItem="FBB-b1-eGQ" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" id="lqe-aK-QQn"/>
                     <constraint firstItem="Axm-nh-l5e" firstAttribute="top" secondItem="btW-Zv-Krb" secondAttribute="bottom" constant="5" id="wge-pC-Ob1"/>
-                    <constraint firstItem="7VP-Qb-AJe" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" constant="-24.5" id="xNX-g6-Z2n"/>
+                    <constraint firstItem="7VP-Qb-AJe" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="xNX-g6-Z2n"/>
                 </constraints>
                 <variation key="default">
                     <mask key="constraints">
