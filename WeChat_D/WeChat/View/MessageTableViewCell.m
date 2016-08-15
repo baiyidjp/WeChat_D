@@ -516,13 +516,7 @@
         }
         
         self.backImgaeView.image = [self backImage:[UIImage imageNamed:@"message_receiver_background_normal"]];
-        self.sendFiledBtn.hidden = model.sendSuccess == EMMessageStatusSuccessed ? YES:NO;
-        [self.contentView addSubview:self.sendFiledBtn];
         self.sendStateView.hidden = YES;
-        [self.sendFiledBtn mas_remakeConstraints:^(MASConstraintMaker *make) {
-            make.centerY.equalTo(self.backImgaeView.mas_centerY);
-            make.left.equalTo(self.backImgaeView.mas_right).with.offset(KMARGIN/2);
-        }];
     }
 }
 
