@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+typedef void(^ReturnBigImageBlock)(UIImage *bigImage);
+
 typedef enum : NSUInteger {
     MessageType_Text,
     MessageType_Voice,
@@ -71,4 +73,20 @@ typedef enum : NSUInteger {
  *  消息发送者名字
  */
 @property(nonatomic,copy)NSString *messageFromName;
+/**
+ *  头像URL
+ */
+@property(nonatomic,copy)NSString *headerImageUrl;
+/**
+ *  展位图(头像图片)
+ */
+- (UIImage *)placeholderHeaderImage;
+/**
+ *  展位图(消息图片)
+ */
+- (UIImage *)placeholderImage;
+/**
+ *  获取大图
+ */
+- (void)getBigImageWithBlock:(ReturnBigImageBlock)returnBigImageBlock;
 @end

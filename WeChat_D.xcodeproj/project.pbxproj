@@ -34,6 +34,7 @@
 		A25AAB631D4883DB00DBBBE5 /* kuang@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = A25AAB611D4883DB00DBBBE5 /* kuang@3x.png */; };
 		A25AAB661D48B13A00DBBBE5 /* CreatGroupCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A25AAB651D48B13A00DBBBE5 /* CreatGroupCell.m */; };
 		A25AAB691D48B1D900DBBBE5 /* CreatGroupModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A25AAB681D48B1D900DBBBE5 /* CreatGroupModel.m */; };
+		A28319DE1D62D98300047020 /* imageDownloadFail@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A28319DD1D62D98300047020 /* imageDownloadFail@2x.png */; };
 		A28D8F5A1D51C3D00025464B /* ChangeNameController.m in Sources */ = {isa = PBXBuildFile; fileRef = A28D8F591D51C3D00025464B /* ChangeNameController.m */; };
 		A297B7071D2F8E14003C9276 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A297B7061D2F8E14003C9276 /* main.m */; };
 		A297B70A1D2F8E14003C9276 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A297B7091D2F8E14003C9276 /* AppDelegate.m */; };
@@ -442,6 +443,7 @@
 		A25AAB651D48B13A00DBBBE5 /* CreatGroupCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreatGroupCell.m; sourceTree = "<group>"; };
 		A25AAB671D48B1D900DBBBE5 /* CreatGroupModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreatGroupModel.h; sourceTree = "<group>"; };
 		A25AAB681D48B1D900DBBBE5 /* CreatGroupModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreatGroupModel.m; sourceTree = "<group>"; };
+		A28319DD1D62D98300047020 /* imageDownloadFail@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "imageDownloadFail@2x.png"; sourceTree = "<group>"; };
 		A28D8F581D51C3D00025464B /* ChangeNameController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChangeNameController.h; sourceTree = "<group>"; };
 		A28D8F591D51C3D00025464B /* ChangeNameController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChangeNameController.m; sourceTree = "<group>"; };
 		A296C9151D473444008E5C13 /* JP_DefaultHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JP_DefaultHeader.h; sourceTree = "<group>"; };
@@ -1490,6 +1492,7 @@
 		F5A130D31D48FE5A00190C1B /* Sender */ = {
 			isa = PBXGroup;
 			children = (
+				A28319DD1D62D98300047020 /* imageDownloadFail@2x.png */,
 				F5A130D41D48FE5A00190C1B /* SenderAppCardNodeBkg_66x54_@2x.png */,
 				F5A130D51D48FE5A00190C1B /* SenderAppCardNodeBkg_HL_66x54_@2x.png */,
 				F5A130D61D48FE5A00190C1B /* SenderAppNodeBkg_64x54_@2x.png */,
@@ -2125,6 +2128,7 @@
 				F5A1317C1D50F3C400190C1B /* Contact_Male_18x18_@2x.png in Resources */,
 				F5CB8C2D1D4477E0002663F8 /* MoreMyAlbum_25x25_@3x.png in Resources */,
 				F57C386B1D5CBC7000022E5B /* barbuttonicon_InfoMulti_30x30_@3x.png in Resources */,
+				A28319DE1D62D98300047020 /* imageDownloadFail@2x.png in Resources */,
 				F5CB8B8A1D44722A002663F8 /* tabbarBkg_5x49_@2x.png in Resources */,
 				F5A130FB1D48FE5A00190C1B /* SenderImageNodeBorder_57x52_@3x.png in Resources */,
 				F5CB8C071D4477E0002663F8 /* ToolViewKeyboardHL_35x35_@2x.png in Resources */,

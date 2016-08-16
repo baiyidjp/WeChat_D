@@ -239,10 +239,13 @@
 
 - (void)clickRound:(UIButton *)btn{
 
-    btn.selected = !btn.selected;
     JPPhotoModel *photoModel = [self.photoDataArray objectAtIndex:currentCount];
-    photoModel.isShowFullImage = btn.selected;
-    [self roundBtnSelected:YES];
+    photoModel.isShowFullImage = !photoModel.isShowFullImage;
+    //选择原图按钮时 判断是否选中此图片 未选中的话直接选中
+    if (photoModel.isShowFullImage && !photoModel.isSelect) {
+        [self clickSelectBtn];
+    }
+    [self roundBtnSelected:photoModel.isShowFullImage];
 }
 
 - (void)roundBtnSelected:(BOOL)selected{

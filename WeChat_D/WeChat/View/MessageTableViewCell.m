@@ -275,7 +275,7 @@
             make.top.offset(KMARGIN);
             make.size.mas_equalTo(CGSizeMake(48, 48));
         }];
-        self.headerView.image = [UIImage imageNamed:DefaultHeadImageName_Message];
+        [self.headerView sd_setImageWithURL:[NSURL URLWithString:model.headerImageUrl] placeholderImage:model.placeholderHeaderImage];
         self.headerView.backgroundColor = [UIColor whiteColor];
         //判断消息类型
         switch (model.messageType) {
@@ -354,7 +354,11 @@
                     self.messsgeImage.image = [UIImage imageWithContentsOfFile:model.image_mark];;
                 }else{
                     [self.messsgeImage setShowActivityIndicatorView:YES];
-                    [self.messsgeImage sd_setImageWithURL:[NSURL URLWithString:model.imageUrl] placeholderImage:[UIImage imageNamed:@"location"]];
+                    if (model.imageUrl.length) {
+                        [self.messsgeImage sd_setImageWithURL:[NSURL URLWithString:model.imageUrl] placeholderImage:model.placeholderImage];
+                    }else{
+                        [self.messsgeImage sd_setImageWithURL:[NSURL URLWithString:model.bigImage_Url] placeholderImage:model.placeholderImage];
+                    }
                 }
 
                 [self.backImgaeView mas_remakeConstraints:^(MASConstraintMaker *make) {
@@ -371,6 +375,10 @@
         }
         self.backImgaeView.image = [self backImage:[UIImage imageNamed:@"message_sender_background_normal"]];
         switch (model.sendSuccess) {
+            case EMMessageStatusPending:
+                [self.sendStateView startAnimating];
+                self.sendFiledBtn.hidden = YES;
+                break;
             case EMMessageStatusDelivering:
                 [self.sendStateView startAnimating];
                 self.sendFiledBtn.hidden = YES;
@@ -406,7 +414,7 @@
             make.top.offset(KMARGIN);
             make.size.mas_equalTo(CGSizeMake(48, 48));
         }];
-        self.headerView.image = [UIImage imageNamed:DefaultHeadImageName_Message];
+        [self.headerView sd_setImageWithURL:[NSURL URLWithString:model.headerImageUrl] placeholderImage:model.placeholderHeaderImage];
         self.headerView.backgroundColor = [UIColor redColor];
         CGFloat name_backImage_padding = 0.0; //为了让聊天的背景图片布局时 在不同的聊天中有一个参考距离
         switch (model.chatType) {
@@ -500,7 +508,7 @@
                 }];
 
                 [self.messsgeImage setShowActivityIndicatorView:YES];
-                [self.messsgeImage sd_setImageWithURL:[NSURL URLWithString:model.imageUrl] placeholderImage:[UIImage imageNamed:@"location"]];
+                [self.messsgeImage sd_setImageWithURL:[NSURL URLWithString:model.imageUrl] placeholderImage:model.placeholderImage];
 
                 [self.backImgaeView mas_remakeConstraints:^(MASConstraintMaker *make) {
                 make.top.equalTo(self.headerView.mas_top).with.offset(name_backImage_padding);

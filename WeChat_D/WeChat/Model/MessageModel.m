@@ -21,8 +21,10 @@
     _messageBody = emmessage.body;
     if (emmessage.direction == EMMessageDirectionSend) {
         self.isMineMessage = YES;
+        self.headerImageUrl = SENDERHEADERIMAGE_URL;
     }else{
         self.isMineMessage = NO;
+        self.headerImageUrl = FRIENDHEADERIMAGE_URL;
     }
     
     switch (emmessage.body.type) {
@@ -67,4 +69,38 @@
     }
 }
 
+- (UIImage *)placeholderImage{
+    
+    UIImage *image = [UIImage imageNamed:@"imageDownloadFail"];
+    return image;
+}
+
+- (UIImage *)placeholderHeaderImage{
+    
+    UIImage *image = [UIImage imageNamed:DefaultHeadImageName_Message];
+    return image;
+}
+
+- (void)getBigImageWithBlock:(ReturnBigImageBlock)returnBigImageBlock{
+    
+    [[SDWebImageManager sharedManager] downloadImageWithURL:[NSURL URLWithString:self.bigImage_Url] options:SDWebImageRetryFailed progress:nil completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
+        [SVProgressHUD dismiss];
+        if (!error) {
+            //下载是异步下载 一定要回到主线程赋值
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if (returnBigImageBlock) {
+                    returnBigImageBlock(image);
+                }
+            });
+            
+        }else{
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if (returnBigImageBlock) {
+                    returnBigImageBlock(nil);
+                }
+            });
+        }
+    }];
+
+}
 @end

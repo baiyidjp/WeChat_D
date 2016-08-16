@@ -89,4 +89,8 @@
 //默认头像
 #define DefaultHeadImageName_Message @"DefaultHead_48x48_"
 #define DefaultHeadImageName @"fts_default_headimage_36x36_"
+//发送者头像URL
+#define SENDERHEADERIMAGE_URL @"http://b172.photo.store.qq.com/psb?/V12dZnwM1Kwq9s/rj82ComjlEoju*l96fzI6u*q8t0bN*1oXbml7TcS0dM!/b/dKwAAAAAAAAA&bo=OASgBRAKjAcFCSI!&rf=viewer_4"
+//朋友头像URL
+#define FRIENDHEADERIMAGE_URL @"http://ww1.sinaimg.cn/crop.0.0.1080.1080.1024/006cxmWbjw8evactf4t2ij30u00u0jtj.jpg"
 #endif /* DefineHeader_h */

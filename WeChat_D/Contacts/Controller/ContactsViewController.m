@@ -118,6 +118,7 @@
     [JP_NotificationCenter addObserver:self selector:@selector(autoLogin) name:AUTOLOGINSUCCESS object:nil];
     [JP_NotificationCenter addObserver:self selector:@selector(newFriendRequest:) name:NEWFRIENDREQUEST object:nil];
     [JP_NotificationCenter addObserver:self selector:@selector(newFriendRequestResult) name:NEWFRIENDREQUESTRESULT object:nil];
+    [self getContactListFromServer];
 }
 
 #pragma mark 登陆成功的通知

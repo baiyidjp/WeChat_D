@@ -213,7 +213,7 @@
 }
 
 - (NSString *)mp3Path {
-    NSString *mp3Path = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject] stringByAppendingPathComponent:@"voiceCache"];
+    NSString *mp3Path = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) firstObject] stringByAppendingPathComponent:@"voiceCache"];
     if (![[NSFileManager defaultManager] fileExistsAtPath:mp3Path]) {
         [[NSFileManager defaultManager] createDirectoryAtPath:mp3Path withIntermediateDirectories:YES attributes:nil error:nil];
     }

@@ -17,12 +17,18 @@
 @implementation MineViewController
 {
     UITableView *mineTableView;
-    NSArray *dataArray;
+    NSMutableArray *dataArray;
     UILabel *nameLabel;
+    CGFloat cacheSize;
 }
 - (void)viewWillAppear:(BOOL)animated{
     
     [super viewWillAppear:animated];
+    if (mineTableView) {
+        [self getSizeWithCacheData];
+        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:3];
+        [mineTableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+    }
     self.tabBarController.tabBar.hidden = NO;
     
 }
@@ -34,7 +40,8 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
-
+    
+    [self getSizeWithCacheData];
     [self configTableView];
     
     [JP_NotificationCenter addObserver:self selector:@selector(loginChange) name:LOGINCHANGE object:nil];
@@ -96,13 +103,14 @@
     [mineTableView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.edges.equalTo(self.view);
     }];
-    
-    dataArray = @[@[@{@"imageName":@"MoreMyAlbum_25x25_",@"title":@"相册"},
+    dataArray = [NSMutableArray array];
+    NSArray *infoArr = @[@[@{@"imageName":@"MoreMyAlbum_25x25_",@"title":@"相册"},
                     @{@"imageName":@"MoreMyFavorites_25x25_",@"title":@"收藏"},
                     @{@"imageName":@"MoreMyBankCard_25x25_",@"title":@"钱包"},
                     @{@"imageName":@"MyCardPackageIcon_25x25_",@"title":@"卡包"}],
                 @[@{@"imageName":@"MoreExpressionShops_25x25_",@"title":@"表情"}],
-                @[@{@"imageName":@"MoreSetting_25x25_",@"title":@"设置"}]];
+                @[@{@"imageName":@"MoreSetting_25x25_",@"title":[NSString stringWithFormat:@"设置(先写成清除缓存)-%.1fM",cacheSize]}]];
+    [dataArray addObjectsFromArray:infoArr];
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
@@ -274,6 +282,7 @@
         case 3:
         {
             [self.view makeToast:@"设置"];
+            [self clearCaches];
         }
 
             break;
@@ -284,6 +293,63 @@
         default:
             break;
     }
+}
+
+#pragma mark 获取缓存大小
+-(void)getSizeWithCacheData {
+    NSString *cachPath = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory,NSUserDomainMask, YES) objectAtIndex:0];
+    
+    NSArray *files = [[NSFileManager defaultManager] subpathsAtPath:cachPath];
+    
+    long long sum = 0;
+    for (NSString *fileName in files) {
+        NSString *filePath = [cachPath stringByAppendingPathComponent:fileName];
+        
+        NSDictionary *attribute = [[NSFileManager defaultManager] attributesOfItemAtPath:filePath error:nil];
+        
+        long long size = [attribute fileSize];
+        
+        sum += size;
+    }
+    cacheSize = sum/(1024*1024.0);;
+    NSArray *newArr = @[@{@"imageName":@"MoreSetting_25x25_",@"title":[NSString stringWithFormat:@"设置(先写成清除缓存)-%.1fM",cacheSize]}];
+    [dataArray replaceObjectAtIndex:2 withObject:newArr];
+}
+
+- (void)clearCaches{
+    
+    UIAlertController *alertCtrl = [UIAlertController alertControllerWithTitle:@"温馨提示" message:@"确定清楚缓存么" preferredStyle:UIAlertControllerStyleAlert];
+    [alertCtrl addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
+        
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
+                       , ^{
+                           NSString *cachPath = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory,NSUserDomainMask, YES) objectAtIndex:0];
+                           
+                           NSArray *files = [[NSFileManager defaultManager] subpathsAtPath:cachPath];
+                           NSLog(@"files :%lu",(unsigned long)[files count]);
+                           for (NSString *p in files) {
+                               NSError *error;
+                               NSString *path = [cachPath stringByAppendingPathComponent:p];
+                               if ([[NSFileManager defaultManager] fileExistsAtPath:path]) {
+                                   [[NSFileManager defaultManager] removeItemAtPath:path error:&error];
+                               }
+                           }
+                           [self performSelectorOnMainThread:@selector(clearCacheSuccess) withObject:nil waitUntilDone:YES];
+                       });
+        
+    }]];
+    [alertCtrl addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil]];
+    [self presentViewController:alertCtrl animated:YES completion:nil];
+
+}
+
+//缓存清除成功
+-(void)clearCacheSuccess {
+    
+    [self getSizeWithCacheData];
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:3];
+    [mineTableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+    [SVProgressHUD showSuccessWithStatus:@"清除成功"];
 }
 
 - (void)dealloc{
