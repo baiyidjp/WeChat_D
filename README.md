@@ -1,7 +1,8 @@
 # WeChat_D
 仿写微信   
    
-  最近项目不紧 工作之余 仿写微信iOS端  其实初衷只是为了仿写微信的聊天界面   代码不足之处(可能有的地方比较乱，自己并不是大神)请多多指教
+  最近项目不紧 工作之余 仿写微信iOS端  其实初衷只是为了仿写微信的聊天界面   代码不足之处(可能有的地方比较乱，自己并不是大神)请多多指教   
+  图片在最下面   
 
 2016.8.17晚  目前已完成功能如下（能看到的功能 小的功能我自己可能都没印象咯）      
    
@@ -36,5 +37,13 @@
        6.6 自定义下拉加载历史消息的控件   
        6.7 实现删除全部消息记录   
        6.8 实现实时聊天
-    
+        
+       
+   ![image](http://ww1.sinaimg.cn/mw690/80888a28jw1f6x2lcnio2g20ab0iftnr.gif)   
+   ![image](http://ww4.sinaimg.cn/mw690/80888a28jw1f6x2laphoig20ab0ifb1w.gif)   
+   ![image](http://ww3.sinaimg.cn/mw690/80888a28jw1f6x2l7krwlg20ab0ifb29.gif)   
+   ![image](http://ww1.sinaimg.cn/mw690/80888a28jw1f6x2l38neyg20ai0ia4qv.gif)   
+   ![image](http://ww1.sinaimg.cn/mw690/80888a28jw1f6x2ltce9vg20ab0ifu0y.gif)   
+   ![image](http://ww4.sinaimg.cn/mw690/80888a28jw1f6x2lkhsf3g20ab0ifnpe.gif)    
+   
 
