@@ -148,6 +148,10 @@
     
     if (!_headerView) {
         _headerView = [[UIImageView alloc]init];
+        [_headerView setContentScaleFactor:[[UIScreen mainScreen] scale]];
+        _headerView.contentMode =  UIViewContentModeScaleAspectFill;
+        _headerView.autoresizingMask = UIViewAutoresizingFlexibleHeight;
+        _headerView.clipsToBounds  = YES;
     }
     return _headerView;
 }
@@ -224,7 +228,7 @@
 - (UIActivityIndicatorView *)sendStateView{
     
     if (!_sendStateView) {
-        _sendStateView = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+        _sendStateView = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
     }
     return _sendStateView;
 }
@@ -321,7 +325,7 @@
                     make.right.offset(-KMARGIN);
                     make.size.mas_equalTo(CGSizeMake(20, 20));
                 }];
-                self.timeLabel.hidden = NO;
+                self.timeLabel.hidden = model.sendSuccess == EMMessageStatusSuccessed ? NO : YES;
                 self.timeLabel.text = [NSString stringWithFormat:@"%d s",model.voiceTime];
                 [self.timeLabel mas_remakeConstraints:^(MASConstraintMaker *make) {
                     make.centerY.equalTo(self.backImgaeView.mas_centerY);
@@ -404,7 +408,7 @@
         [self.sendStateView mas_remakeConstraints:^(MASConstraintMaker *make) {
             make.centerY.equalTo(self.backImgaeView.mas_centerY);
             make.right.equalTo(self.backImgaeView.mas_left).with.offset(-KMARGIN/2);
-            make.size.mas_equalTo(CGSizeMake(30, 30));
+            make.size.mas_equalTo(CGSizeMake(20, 20));
         }];
         
         

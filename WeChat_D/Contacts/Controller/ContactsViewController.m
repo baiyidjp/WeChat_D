@@ -201,7 +201,12 @@
             break;
         case 1:
             cell.textLabel.text = [self.dataArray objectAtIndex:indexPath.row];
-            cell.imageView.image = [UIImage imageNamed:DefaultHeadImageName];
+            [cell.imageView sd_setImageWithURL:[NSURL URLWithString:FRIENDHEADERIMAGE_URL] placeholderImage:[UIImage imageNamed:DefaultHeadImageName]];
+            cell.imageView.layer.cornerRadius = 5;
+            [cell.imageView setContentScaleFactor:[[UIScreen mainScreen] scale]];
+            cell.imageView.contentMode =  UIViewContentModeScaleAspectFill;
+            cell.imageView.autoresizingMask = UIViewAutoresizingFlexibleHeight;
+            cell.imageView.clipsToBounds  = YES;
             break;
         default:
             break;
@@ -335,6 +340,23 @@
         [self.dataArray addObjectsFromArray:[[EMClient sharedClient].contactManager getContactsFromDB]];
         [self.contactTableView reloadData];
     }];
+}
+
+#pragma mark UISearchDelegate
+- (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar{
+    
+    searchBar.showsCancelButton = YES;
+    UIButton *canceLBtn = [searchBar valueForKey:@"cancelButton"];
+    [canceLBtn setTitle:@"取消" forState:UIControlStateNormal];
+    [canceLBtn setTitleColor:[UIColor colorWithRed:28.9/255.0 green:187.0/255.0 blue:3.5/255.0 alpha:1.0] forState:UIControlStateNormal];
+    
+    return YES;
+}
+
+- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar{
+    
+    searchBar.showsCancelButton = NO;
+    [searchBar resignFirstResponder];
 }
 
 - (void)dealloc{

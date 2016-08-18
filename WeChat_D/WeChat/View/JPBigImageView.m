@@ -26,6 +26,23 @@
         [UIView animateWithDuration:0.5 animations:^{
             self.showImageView.frame = CGRectMake(0, imageY, self.frame.size.width, imageH);
         }];
+        self.saveBtn = [[UIButton alloc]init];
+        self.saveBtn.backgroundColor = [UIColor blackColor];
+        [self.saveBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        self.saveBtn.layer.cornerRadius = 5;
+        self.saveBtn.layer.borderColor = [UIColor whiteColor].CGColor;
+        self.saveBtn.layer.borderWidth = 1;
+        self.saveBtn.layer.masksToBounds = YES;
+        [self.saveBtn.titleLabel setFont:FONTSIZE(15)];
+        [self.saveBtn setTitle:@"保存" forState:UIControlStateNormal];
+        [self.saveBtn addTarget:self action:@selector(saveBtnSelected) forControlEvents:UIControlEventTouchUpInside];
+        [self addSubview:self.saveBtn];
+        [self.saveBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.bottom.offset(-2*KMARGIN);
+            make.right.offset(-2*KMARGIN);
+            make.size.mas_equalTo(CGSizeMake(50, 30));
+        }];
+        
     }
     return self;
 }
@@ -47,5 +64,19 @@
         self.clickViewHidden();
     }
 }
+
+- (void)saveBtnSelected{
+    
+    UIImageWriteToSavedPhotosAlbum(self.showImageView.image, self, @selector(image:didFinishSavingWithError:contextInfo:), nil);
+    
+}
+
+- (void)image:(UIImage *)image didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo{
+    
+    if (!error) {
+        [SVProgressHUD showSuccessWithStatus:@"已保存到系统相册"];
+    }
+}
+
 
 @end

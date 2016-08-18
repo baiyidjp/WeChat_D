@@ -113,7 +113,7 @@
     
     searchBarTop = KNAVHEIGHT;
     UISearchBar *searchBar = [[UISearchBar alloc]init];
-    searchBar.backgroundColor = [UIColor colorWithHexString:@"f4f4f4"];
+    searchBar.backgroundColor = [UIColor colorWithRed:0.779 green:0.779 blue:0.779 alpha:1.0];
     searchBar.placeholder = @"搜索";
     searchBar.delegate = self;
     [self.view addSubview:searchBar];
@@ -125,20 +125,6 @@
     [self.topStatusView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.left.right.offset(0);
         make.height.equalTo(@20);
-    }];
-    
-    self.cancleBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [self.cancleBtn setTitle:@"取消" forState:UIControlStateNormal];
-    [self.cancleBtn.titleLabel setFont:FONTSIZE(15)];
-    [self.cancleBtn setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
-    [self.cancleBtn setBackgroundColor:searchBar.barTintColor];
-    [self.cancleBtn addTarget:self action:@selector(clickCancelBtn) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:self.cancleBtn];
-    [self.cancleBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.offset(20);
-        make.right.equalTo(self.topStatusView.mas_right);
-        make.height.equalTo(@44);
-        make.width.equalTo(@44);
     }];
     
     self.weChatTableView = [[UITableView alloc]init];
@@ -240,11 +226,8 @@
         make.left.offset(0);
         make.top.offset(searchBarTop);
         make.height.equalTo(@44);
-        if (searchBarTop == 20) {
-            make.right.offset(-44);
-        }else{
-            make.right.offset(0);
-        }
+        make.right.offset(0);
+
     }];
     
     [self.weChatTableView mas_updateConstraints:^(MASConstraintMaker *make) {
@@ -269,6 +252,11 @@
     return UIStatusBarStyleLightContent;
 }
 - (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar{
+    
+    searchBar.showsCancelButton = YES;
+    UIButton *canceLBtn = [searchBar valueForKey:@"cancelButton"];
+    [canceLBtn setTitle:@"取消" forState:UIControlStateNormal];
+    [canceLBtn setTitleColor:[UIColor colorWithRed:28.9/255.0 green:187.0/255.0 blue:3.5/255.0 alpha:1.0] forState:UIControlStateNormal];
     
     searchBarTop = 20;
     //告诉某个view需要更新约束
@@ -298,10 +286,9 @@
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar{
 }                     // called when keyboard search button pressed
-
-
-//点击取消按钮
-- (void)clickCancelBtn{
+- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar{
+    
+    searchBar.showsCancelButton = NO;
     searchBarTop = KNAVHEIGHT;
     [self.searchBar resignFirstResponder];
     //告诉某个view需要更新约束
@@ -317,7 +304,6 @@
 
 - (void)isHidden:(BOOL)hidden{
     
-    self.cancleBtn.hidden = hidden;
     self.topStatusView.hidden = hidden;
     self.navigationController.navigationBar.hidden = !hidden;
     self.weChatTableView.hidden = !hidden;

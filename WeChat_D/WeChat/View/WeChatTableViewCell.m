@@ -26,6 +26,10 @@
     // Initialization code
     self.unreadCount.layer.cornerRadius = 10;
     self.unreadCount.layer.masksToBounds = YES;
+    [self.headImage setContentScaleFactor:[[UIScreen mainScreen] scale]];
+    self.headImage.contentMode =  UIViewContentModeScaleAspectFill;
+    self.headImage.autoresizingMask = UIViewAutoresizingFlexibleHeight;
+    self.headImage.clipsToBounds  = YES;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

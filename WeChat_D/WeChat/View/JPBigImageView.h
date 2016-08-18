@@ -15,5 +15,6 @@
 @property(nonatomic,copy)void(^clickViewHidden)();
 @property(nonatomic,strong)UIImageView *showImageView;
 @property(nonatomic,assign)CGRect initialFrame;
+@property(nonatomic,strong)UIButton *saveBtn;
 
 @end

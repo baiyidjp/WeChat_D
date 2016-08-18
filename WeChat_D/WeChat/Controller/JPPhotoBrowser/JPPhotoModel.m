@@ -98,13 +98,6 @@ static PHImageManager *imageManager = nil;
 
 }
 
-- (UIImage *)JPFullResolutionImage{
-    ALAssetRepresentation *rep = [self.asset defaultRepresentation];
-    CGImageRef iref = [rep fullResolutionImage];
-    
-    return [UIImage imageWithCGImage:iref scale:[rep scale] orientation:(UIImageOrientation)[rep orientation]];
-}
-
 - (void)JPFullResolutionDataSizeWithBlock:(GetFullResolutDataSizeBlock)GetFullResolutDataSizeBlock{
     if (GetFullResolutDataSizeBlock && self.fullResolutDataSize) {
         GetFullResolutDataSizeBlock(self.fullResolutDataSize);

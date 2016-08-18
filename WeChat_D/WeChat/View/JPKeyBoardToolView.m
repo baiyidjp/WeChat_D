@@ -596,19 +596,16 @@
     [photoArr enumerateObjectsUsingBlock:^(JPPhotoModel *photoModel, NSUInteger idx, BOOL * _Nonnull stop) {
         
         __block UIImage *showImage;
-        if (photoModel.thumbImage) {
-            showImage = photoModel.thumbImage;
+        __block NSData *fulldata;
+        if (photoModel.fullScreenImage) {
+            showImage =photoModel.fullScreenImage;
         }else{
             [photoModel JPFullScreenImageWithBlock:^(UIImage *fullScreenImage) {
                 showImage = fullScreenImage;
             }];
         }
-
-        NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-        formatter.dateFormat = @"yyyyMMddHHmmss";
-        NSString *str = [formatter stringFromDate:[NSDate date]];
+        fulldata = UIImageJPEGRepresentation(showImage, 1.0);
         
-        __block NSData *fulldata;
         if (photoModel.isShowFullImage) {
             if (photoModel.fullResolutData) {
                 fulldata = photoModel.fullResolutData;
@@ -617,9 +614,12 @@
                     fulldata = fullResolutData;
                 }];
             }
-        }else{
-            fulldata = UIImageJPEGRepresentation(showImage, 1.0);
         }
+
+        NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+        formatter.dateFormat = @"yyyyMMddHHmmss";
+        NSString *str = [formatter stringFromDate:[NSDate date]];
+        
         NSData *thumdata = UIImageJPEGRepresentation(showImage, 1.0);
         EMImageMessageBody *body = [[EMImageMessageBody alloc]initWithData:fulldata displayName:@"image.png"];
 #warning 如果此处不对图片进行本地保存 并且对消息体的本地路径和本地尺寸进行赋值 那么发送方在当前聊天界面便无法显示当前图片 因为环信在发送消息时并没有给用户返回路径 所以需要自己设置路径 这是一大坑!!!
@@ -745,7 +745,7 @@
     
     NSInteger progress = [self.mp3Recorder updateMeters];
     NSLog(@"%zd",progress);
-    if (progress < 40) {
+    if (progress <= 40) {
         self.recordImage.image = [UIImage imageNamed:[NSString stringWithFormat:@"VoiceSearchLoading0%.2zd_90x90_",progress/4+1]];
     }else if(progress > 40 && progress < 120){
         self.recordImage.image = [UIImage imageNamed:@"VoiceSearchLoading010_90x90_"];

@@ -126,4 +126,21 @@
     return @"退群";
 }
 
+#pragma mark UISearchDelegate
+- (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar{
+    
+    searchBar.showsCancelButton = YES;
+    UIButton *canceLBtn = [searchBar valueForKey:@"cancelButton"];
+    [canceLBtn setTitle:@"取消" forState:UIControlStateNormal];
+    [canceLBtn setTitleColor:[UIColor colorWithRed:28.9/255.0 green:187.0/255.0 blue:3.5/255.0 alpha:1.0] forState:UIControlStateNormal];
+    
+    return YES;
+}
+
+- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar{
+    
+    searchBar.showsCancelButton = NO;
+    [searchBar resignFirstResponder];
+}
+
 @end

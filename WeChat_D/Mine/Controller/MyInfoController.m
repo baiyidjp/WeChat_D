@@ -90,7 +90,12 @@
     if (indexPath.section == 0 && indexPath.row == 0) {
         
             UIImageView *headImage = [[UIImageView alloc]init];
-            headImage.image = [UIImage imageNamed:[dict objectForKey:CHANGEINFO_KEY]];
+            [headImage sd_setImageWithURL:[NSURL URLWithString:SENDERHEADERIMAGE_URL] placeholderImage:[UIImage imageNamed:DefaultHeadImageName_Message]];
+            headImage.layer.cornerRadius = 5;
+            [headImage setContentScaleFactor:[[UIScreen mainScreen] scale]];
+            headImage.contentMode =  UIViewContentModeScaleAspectFill;
+            headImage.autoresizingMask = UIViewAutoresizingFlexibleHeight;
+            headImage.clipsToBounds  = YES;
             [cell.contentView addSubview:headImage];
             [headImage mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.top.offset(KMARGIN/2);

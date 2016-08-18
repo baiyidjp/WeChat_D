@@ -12,6 +12,7 @@ typedef void(^GetThumbImageBlock)(UIImage *thumbImage);
 typedef void(^GetFullScreenImageBlock)(UIImage *fullScreenImage);
 typedef void(^GetFullResolutDataBlock)(NSData *fullResolutData);
 typedef void(^GetFullResolutDataSizeBlock)(CGFloat fullResolutDataSize);
+typedef void(^GetFullScreenImageDataBlock)(NSData *fullScreenImageData);
 
 @interface JPPhotoModel : NSObject
 
@@ -35,7 +36,10 @@ typedef void(^GetFullResolutDataSizeBlock)(CGFloat fullResolutDataSize);
 /** 保存获取到原图 */
 @property(nonatomic,strong) UIImage *fullScreenImage;
 
-- (UIImage *)JPFullResolutionImage;//未作处理的原图(由于不需要没有写方法)
+/** 屏幕大小的原图的二进制数据 */
+- (void)JPFullScreenImageDataWithBlock:(GetFullScreenImageDataBlock)GetFullScreenImageDataBlock;
+/** 保存获取的data */
+@property(nonatomic,strong) NSData *fullScreenImageData;
 
 /** 原图的二进制数据 */
 - (void)JPFullResolutDataWithBlock:(GetFullResolutDataBlock)GetFullResolutDataBlock;

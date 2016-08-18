@@ -277,8 +277,12 @@ static int message_count = 20;
     NSArray *messages = [notification.userInfo objectForKey:@"Message"];
     [self.dataArray addObjectsFromArray:messages];
     [self.reciveMessageArray addObjectsFromArray:messages];
-    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:self.dataArray.count-1 inSection:0];
-    [self.ChatTableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+    NSMutableArray *indexPaths = [NSMutableArray arrayWithCapacity:messages.count];
+    for (NSInteger i = 0; i < messages.count; i++) {
+        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:self.dataArray.count-i-1 inSection:0];
+        [indexPaths addObject:indexPath];
+    }
+    [self.ChatTableView insertRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationFade];
     if (self.dataArray.count) {
         [self.ChatTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:self.dataArray.count-1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
     }
