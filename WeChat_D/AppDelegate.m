@@ -39,7 +39,6 @@
     //判断是否自动登录
     BOOL isAutoLogin = [EMClient sharedClient].isAutoLogin;
     if (isAutoLogin){
-        [JP_NotificationCenter postNotificationName:LOGINCHANGE object:@YES];
         MainTabbarController *mainController = [[MainTabbarController alloc]init];
         self.window.rootViewController = mainController;
         [self.window makeKeyAndVisible];
@@ -47,7 +46,6 @@
     }
     else
     {
-        [JP_NotificationCenter postNotificationName:LOGINCHANGE object:@NO];
         LoginViewController *mainController = [[LoginViewController alloc]init];
         self.window.rootViewController = mainController;
         [self.window makeKeyAndVisible];

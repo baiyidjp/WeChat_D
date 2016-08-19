@@ -11,6 +11,8 @@
 #import "ChatDetailViewController.h"
 #import "AgreeFriendViewController.h"
 #import "MyGroupListController.h"
+#import "JPTextChangeToPinYinManager.h"
+#import "FriendListModel.h"
 
 #define CellID @"contactTableViewCell"
 
@@ -27,6 +29,8 @@
 @property(nonatomic,strong) NSMutableArray *newFriendDataArray;
 /** 新好友个数 */
 @property(nonatomic,strong)UILabel *friendUnreadLabel;
+/** 好友分组名(A-Z) */
+@property(nonatomic,strong)NSMutableArray *friendSectionNameArray;
 @end
 
 @implementation ContactsViewController
@@ -51,6 +55,14 @@
         
     }
     return _dataArray;
+}
+
+- (NSMutableArray *)friendSectionNameArray{
+    
+    if (!_friendSectionNameArray) {
+        _friendSectionNameArray = [NSMutableArray array];
+    }
+    return _friendSectionNameArray;
 }
 
 - (NSMutableArray *)newFriendDataArray{
@@ -109,8 +121,9 @@
     self.contactTableView.tableFooterView = [[UIView alloc]init];
     [self.view addSubview:self.contactTableView];
     [self.contactTableView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.right.bottom.offset(0);
+        make.left.right.offset(0);
         make.top.equalTo(self.searchBar.mas_bottom);
+        make.bottom.offset(-KTABBARHEIGHT);
     }];
     [JP_NotificationCenter addObserver:self selector:@selector(loginChange) name:LOGINCHANGE object:nil];
     [JP_NotificationCenter addObserver:self selector:@selector(delectFriend) name:DELECTFRIENDSUEESS object:nil];
@@ -118,7 +131,6 @@
     [JP_NotificationCenter addObserver:self selector:@selector(autoLogin) name:AUTOLOGINSUCCESS object:nil];
     [JP_NotificationCenter addObserver:self selector:@selector(newFriendRequest:) name:NEWFRIENDREQUEST object:nil];
     [JP_NotificationCenter addObserver:self selector:@selector(newFriendRequestResult) name:NEWFRIENDREQUESTRESULT object:nil];
-    
 }
 
 #pragma mark 登陆成功的通知
@@ -173,43 +185,60 @@
 #pragma mark 代理/数据源
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
     
-    return 2;
+    return self.dataArray.count+1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    if (section == 1) {
-        return self.dataArray.count;
+    if (section == 0) {
+        return self.topDataArray.count;
     }
-    return self.topDataArray.count;
+    FriendListModel *model = [self.dataArray objectAtIndex:section-1];
+    return model.sectionArr.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellID];
+    
     if (cell.contentView.subviews.count) {
         for (UIView *view in cell.contentView.subviews) {
             [view removeFromSuperview];
         }
     }
-    switch (indexPath.section) {
-        case 0:
-            [self configSectionView:cell.contentView data:[self.topDataArray objectAtIndex:indexPath.row]];
+    
+    UIImageView *image = [[UIImageView alloc]init];
+    [image setContentScaleFactor:[[UIScreen mainScreen] scale]];
+    image.contentMode =  UIViewContentModeScaleAspectFill;
+    image.autoresizingMask = UIViewAutoresizingFlexibleHeight;
+    image.clipsToBounds  = YES;
+    [cell.contentView addSubview:image];
+    [image mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.offset(KMARGIN*3/2);
+        make.centerY.equalTo(cell.contentView);
+        make.size.mas_equalTo(CGSizeMake(36, 36));
+    }];
+    
+    UILabel *title = [[UILabel alloc]init];
+    title.font = FONTSIZE(15);
+    [cell.contentView addSubview:title];
+    [title mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(image.mas_right).with.offset(KMARGIN*3/2);
+        make.centerY.equalTo(cell.contentView);
+    }];
+    
+    if (indexPath.section == 0) {
+        
+        image.image = [UIImage imageNamed:[[self.topDataArray objectAtIndex:indexPath.row] objectForKey:@"imageName"]];
+        title.text = [[self.topDataArray objectAtIndex:indexPath.row] objectForKey:@"title"];
+        
             if (indexPath.row == 0) {
-                
                 [cell.contentView addSubview:self.friendUnreadLabel];
             }
-            break;
-        case 1:
-            cell.textLabel.text = [self.dataArray objectAtIndex:indexPath.row];
-            [cell.imageView sd_setImageWithURL:[NSURL URLWithString:FRIENDHEADERIMAGE_URL] placeholderImage:[UIImage imageNamed:DefaultHeadImageName]];
-            cell.imageView.layer.cornerRadius = 5;
-            [cell.imageView setContentScaleFactor:[[UIScreen mainScreen] scale]];
-            cell.imageView.contentMode =  UIViewContentModeScaleAspectFill;
-            cell.imageView.autoresizingMask = UIViewAutoresizingFlexibleHeight;
-            cell.imageView.clipsToBounds  = YES;
-            break;
-        default:
-            break;
+    }else{
+        FriendListModel *sectionModel = [self.dataArray objectAtIndex:indexPath.section-1];
+        FriendListModel *model = [sectionModel.sectionArr objectAtIndex:indexPath.row];
+        title.text = model.name;
+        [image sd_setImageWithURL:[NSURL URLWithString:FRIENDHEADERIMAGE_URL] placeholderImage:[UIImage imageNamed:DefaultHeadImageName]];
     }
     cell.selectionStyle = UITableViewCellAccessoryNone;
     return cell;
@@ -244,27 +273,19 @@
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
     
-    if (section == 1) {
-        return @"好友列表";
+    if (section == 0) {
+        return nil;
     }
-    return nil;
+    FriendListModel *sectionModel = [self.dataArray objectAtIndex:section-1];
+    return sectionModel.name;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
-    if (section == 1) {
-        return 3*KMARGIN;
+    if (section == 0) {
+        return 0;
     }
-    return 0;
+    return 3*KMARGIN;
 }
-
-- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
-    
-    if (section == 1) {
-        return 2*KMARGIN;
-    }
-    return 0;
-}
-
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
     if (indexPath.section == 0) {
@@ -280,9 +301,11 @@
         }else{
             return;
         }
-    }else if (indexPath.section == 1){
+    }else{
+        FriendListModel *sectionModel = [self.dataArray objectAtIndex:indexPath.section-1];
+        FriendListModel *model = [sectionModel.sectionArr objectAtIndex:indexPath.row];
         ChatDetailViewController *chatCtrl = [[ChatDetailViewController alloc]init];
-        chatCtrl.title = [self.dataArray objectAtIndex:indexPath.row];
+        chatCtrl.title = model.name;
         self.tabBarController.tabBar.hidden = YES;
         [self.navigationController pushViewController:chatCtrl animated:YES];
     }
@@ -290,10 +313,13 @@
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath{
     [SVProgressHUD show];
-    [[EMClient sharedClient].contactManager asyncDeleteContact:[self.dataArray objectAtIndex:indexPath.row] success:^{
+    FriendListModel *sectionModel = [self.dataArray objectAtIndex:indexPath.section-1];
+    FriendListModel *model = [sectionModel.sectionArr objectAtIndex:indexPath.row];
+    [[EMClient sharedClient].contactManager asyncDeleteContact:model.name success:^{
         [SVProgressHUD showSuccessWithStatus:@"删除成功"];
-        [self.dataArray removeObjectAtIndex:indexPath.row];
-        [self.contactTableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+//        [self.dataArray removeObjectAtIndex:indexPath.row];
+//        [self.contactTableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+        [self getContactListFromServer];
     } failure:^(EMError *aError) {
         [SVProgressHUD showSuccessWithStatus:@"删除失败"];
     }];
@@ -302,6 +328,15 @@
 #pragma mark titleForDeleteConfirmationButtonForRowAtIndexPath
 - (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath{
     return @"删除";
+}
+
+#pragma mark 返回每组标题索引 右边
+-(NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView{
+    NSMutableArray *indexs=[[NSMutableArray alloc]init];
+    for(FriendListModel *model in self.dataArray){
+        [indexs addObject:model.name];
+    }
+    return indexs;
 }
 
 #pragma mark 从服务器获取好友列表
@@ -328,18 +363,62 @@
         self.friendUnreadLabel.hidden = YES;
         self.tabBarItem.badgeValue = nil;
     }
-    
-    //获取刷新后的好友列表
+    //移除所有的好友信息
     [self.dataArray removeAllObjects];
+    
     //从服务器获取所有的好友列表
     [[EMClient sharedClient].contactManager asyncGetContactsFromServer:^(NSArray *aList) {
-        [self.dataArray addObjectsFromArray:aList];
-        [self.contactTableView reloadData];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.dataArray addObjectsFromArray:[self getSectionNameArrayWithFriendData:aList]];
+            [self.contactTableView reloadData];
+        });
     } failure:^(EMError *aError) {
         //若获取失败则从本地获取好友列表
-        [self.dataArray addObjectsFromArray:[[EMClient sharedClient].contactManager getContactsFromDB]];
+        NSArray *aList = [[EMClient sharedClient].contactManager getContactsFromDB];
+        [self.dataArray addObjectsFromArray:[self getSectionNameArrayWithFriendData:aList]];
         [self.contactTableView reloadData];
     }];
+}
+
+- (NSArray *)getSectionNameArrayWithFriendData:(NSArray *)aList{
+    
+    //索引的 数组
+    //返回系统的规则索引 A-Z #
+    UILocalizedIndexedCollation *indexCollation = [UILocalizedIndexedCollation currentCollation];
+    NSArray *sectionTitles = [indexCollation sectionTitles];
+    NSInteger highSection = [sectionTitles count];
+    NSMutableArray *sectionModelArr = [NSMutableArray arrayWithCapacity:highSection];
+    for (int i = 0; i < highSection; i++) {
+        FriendListModel *sectionModel = [[FriendListModel alloc]init];
+        [sectionModelArr addObject:sectionModel];
+    }
+    
+    for (NSString *name in aList) {
+        NSString *pinYinStr = [JPTextChangeToPinYinManager getPinYinFromText:name];
+        //取出拼音的第一个字母
+        NSString *firstLetter = [pinYinStr substringToIndex:1];
+        NSLog(@"昵称转换为拼音---%@ 首字母---%@",pinYinStr,firstLetter);
+        for (NSInteger i = 0; i < sectionModelArr.count; i++) {
+            NSString *letter = [sectionTitles objectAtIndex:i];
+            FriendListModel *sectionModel = [sectionModelArr objectAtIndex:i];
+            NSMutableArray *sectionArr = [NSMutableArray arrayWithArray:sectionModel.sectionArr];
+            if ([letter isEqualToString:firstLetter]) {
+                FriendListModel *model = [[FriendListModel alloc]init];
+                model.name = name;
+                [sectionArr addObject:model];
+                sectionModel.name = letter;
+                sectionModel.sectionArr = [sectionArr copy];
+                break ;
+            }
+        }
+    }
+    for (NSInteger i = [sectionModelArr count] - 1; i >= 0; i--) {
+        FriendListModel *model = [sectionModelArr objectAtIndex:i];
+        if ([model.sectionArr count] == 0) {
+            [sectionModelArr removeObjectAtIndex:i];
+        }
+    }
+    return [sectionModelArr copy];
 }
 
 #pragma mark UISearchDelegate

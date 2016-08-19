@@ -36,6 +36,8 @@
 		A25AAB691D48B1D900DBBBE5 /* CreatGroupModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A25AAB681D48B1D900DBBBE5 /* CreatGroupModel.m */; };
 		A28319DE1D62D98300047020 /* imageDownloadFail@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A28319DD1D62D98300047020 /* imageDownloadFail@2x.png */; };
 		A28D8F5A1D51C3D00025464B /* ChangeNameController.m in Sources */ = {isa = PBXBuildFile; fileRef = A28D8F591D51C3D00025464B /* ChangeNameController.m */; };
+		A28EADEE1D655309003087DA /* JPTextChangeToPinYinManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A28EADED1D655309003087DA /* JPTextChangeToPinYinManager.m */; };
+		A28EADF11D655BE6003087DA /* FriendListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A28EADF01D655BE6003087DA /* FriendListModel.m */; };
 		A297B7071D2F8E14003C9276 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A297B7061D2F8E14003C9276 /* main.m */; };
 		A297B70A1D2F8E14003C9276 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A297B7091D2F8E14003C9276 /* AppDelegate.m */; };
 		A297B7121D2F8E14003C9276 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A297B7111D2F8E14003C9276 /* Assets.xcassets */; };
@@ -446,6 +448,10 @@
 		A28319DD1D62D98300047020 /* imageDownloadFail@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "imageDownloadFail@2x.png"; sourceTree = "<group>"; };
 		A28D8F581D51C3D00025464B /* ChangeNameController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChangeNameController.h; sourceTree = "<group>"; };
 		A28D8F591D51C3D00025464B /* ChangeNameController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChangeNameController.m; sourceTree = "<group>"; };
+		A28EADEC1D655309003087DA /* JPTextChangeToPinYinManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JPTextChangeToPinYinManager.h; sourceTree = "<group>"; };
+		A28EADED1D655309003087DA /* JPTextChangeToPinYinManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JPTextChangeToPinYinManager.m; sourceTree = "<group>"; };
+		A28EADEF1D655BE6003087DA /* FriendListModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FriendListModel.h; sourceTree = "<group>"; };
+		A28EADF01D655BE6003087DA /* FriendListModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FriendListModel.m; sourceTree = "<group>"; };
 		A296C9151D473444008E5C13 /* JP_DefaultHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JP_DefaultHeader.h; sourceTree = "<group>"; };
 		A297B7021D2F8E14003C9276 /* WeChat_D.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WeChat_D.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A297B7061D2F8E14003C9276 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -1056,6 +1062,8 @@
 				A297B73C1D2F8E5A003C9276 /* UIView+Toast.m */,
 				A2088B3C1D3C6EC200C73446 /* PublicMethod.h */,
 				A2088B3D1D3C6EC200C73446 /* PublicMethod.m */,
+				A28EADEC1D655309003087DA /* JPTextChangeToPinYinManager.h */,
+				A28EADED1D655309003087DA /* JPTextChangeToPinYinManager.m */,
 				A25AAB5D1D4882C800DBBBE5 /* ListView.h */,
 				A25AAB5E1D4882C800DBBBE5 /* ListView.m */,
 				A21137DE1D4A21BD00CB6EF7 /* UIViewController+BackButtonHandler.h */,
@@ -1096,6 +1104,8 @@
 			children = (
 				A25AAB671D48B1D900DBBBE5 /* CreatGroupModel.h */,
 				A25AAB681D48B1D900DBBBE5 /* CreatGroupModel.m */,
+				A28EADEF1D655BE6003087DA /* FriendListModel.h */,
+				A28EADF01D655BE6003087DA /* FriendListModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -2269,9 +2279,11 @@
 				A24695301D34E77D00E32C30 /* ChatDetailViewController.m in Sources */,
 				A297B75B1D2F8E5A003C9276 /* MineViewController.m in Sources */,
 				F57C385E1D54E23D00022E5B /* GoodsAddressController.m in Sources */,
+				A28EADEE1D655309003087DA /* JPTextChangeToPinYinManager.m in Sources */,
 				F5A131731D50E0F500190C1B /* SecondViewController.m in Sources */,
 				A249DF911D5C2D92000206FF /* JPPhotoCollectionLayout.m in Sources */,
 				A2088B3E1D3C6EC200C73446 /* PublicMethod.m in Sources */,
+				A28EADF11D655BE6003087DA /* FriendListModel.m in Sources */,
 				A21B62931D38D9BD00F0E727 /* WeChatListModel.m in Sources */,
 				A297B75A1D2F8E5A003C9276 /* ContactsViewController.m in Sources */,
 				F5A131741D50E0F500190C1B /* ThirdViewController.m in Sources */,

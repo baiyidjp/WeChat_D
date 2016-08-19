@@ -110,7 +110,7 @@
             [[EMClient sharedClient] asyncLoginWithUsername:userTextFiled.text password:passWordTextFiled.text success:^{
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [SVProgressHUD showSuccessWithStatus:@"登录成功"];
-                    [JP_NotificationCenter postNotificationName:LOGINCHANGE object:nil];
+                    
                     //设置是否自动登录
                     [[EMClient sharedClient].options setIsAutoLogin:YES];
                     //保存当前登录账号
@@ -123,7 +123,7 @@
                         }else{
                             [self dismissViewControllerAnimated:YES completion:nil];
                         }
-
+                        [JP_NotificationCenter postNotificationName:LOGINCHANGE object:nil];
                     });
                 });
             } failure:^(EMError *aError) {

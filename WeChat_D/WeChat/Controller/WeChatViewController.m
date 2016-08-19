@@ -14,6 +14,7 @@
 #import "GroupViewController.h"
 #import "AddFriendController.h"
 #import "ScanQRCodeController.h"
+#import "LoginViewController.h"
 
 @interface WeChatViewController ()<UISearchBarDelegate,UITableViewDelegate,UITableViewDataSource>
 /**
@@ -100,7 +101,15 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
+    
+    //判断是否自动登录
+    BOOL isAutoLogin = [EMClient sharedClient].isAutoLogin;
+    if (!isAutoLogin){
+        LoginViewController *login = [[LoginViewController alloc]init];
+        self.tabBarController.tabBar.hidden = YES;
+        [self presentViewController:login animated:YES completion:nil];
+    }
+    
     //登陆成功通知
     [JP_NotificationCenter addObserver:self selector:@selector(loginSuccess) name:LOGINCHANGE object:nil];
     [JP_NotificationCenter addObserver:self selector:@selector(autoLoginSuccess) name:AUTOLOGINSUCCESS object:nil];
