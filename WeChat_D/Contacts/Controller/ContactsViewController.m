@@ -13,6 +13,7 @@
 #import "MyGroupListController.h"
 #import "JPTextChangeToPinYinManager.h"
 #import "FriendListModel.h"
+#import "FriendListTableViewCell.h"
 
 #define CellID @"contactTableViewCell"
 
@@ -117,7 +118,7 @@
     self.contactTableView = [[UITableView alloc]init];
     self.contactTableView.delegate = self;
     self.contactTableView.dataSource = self;
-    [self.contactTableView registerClass:[UITableViewCell class] forCellReuseIdentifier:CellID];
+    [self.contactTableView registerClass:[FriendListTableViewCell class] forCellReuseIdentifier:CellID];
     self.contactTableView.tableFooterView = [[UIView alloc]init];
     [self.view addSubview:self.contactTableView];
     [self.contactTableView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -198,7 +199,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellID];
+    FriendListTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellID];
     
     if (cell.contentView.subviews.count) {
         for (UIView *view in cell.contentView.subviews) {
@@ -312,22 +313,23 @@
 }
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath{
-    [SVProgressHUD show];
-    FriendListModel *sectionModel = [self.dataArray objectAtIndex:indexPath.section-1];
-    FriendListModel *model = [sectionModel.sectionArr objectAtIndex:indexPath.row];
-    [[EMClient sharedClient].contactManager asyncDeleteContact:model.name success:^{
-        [SVProgressHUD showSuccessWithStatus:@"删除成功"];
-//        [self.dataArray removeObjectAtIndex:indexPath.row];
-//        [self.contactTableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
-        [self getContactListFromServer];
-    } failure:^(EMError *aError) {
-        [SVProgressHUD showSuccessWithStatus:@"删除失败"];
-    }];
+    [self.view makeToast:@"由于没有自己的服务器,修改之后无法保存,未作处理"];
+//    [SVProgressHUD show];
+//    FriendListModel *sectionModel = [self.dataArray objectAtIndex:indexPath.section-1];
+//    FriendListModel *model = [sectionModel.sectionArr objectAtIndex:indexPath.row];
+//    [[EMClient sharedClient].contactManager asyncDeleteContact:model.name success:^{
+//        [SVProgressHUD showSuccessWithStatus:@"删除成功"];
+////        [self.dataArray removeObjectAtIndex:indexPath.row];
+////        [self.contactTableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+//        [self getContactListFromServer];
+//    } failure:^(EMError *aError) {
+//        [SVProgressHUD showSuccessWithStatus:@"删除失败"];
+//    }];
     
 }
 #pragma mark titleForDeleteConfirmationButtonForRowAtIndexPath
 - (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return @"删除";
+    return @"备注";
 }
 
 #pragma mark 返回每组标题索引 右边

@@ -63,6 +63,7 @@
 		A2DA92501D50B42E000077ED /* QRCodeManger.m in Sources */ = {isa = PBXBuildFile; fileRef = A2DA924F1D50B42E000077ED /* QRCodeManger.m */; };
 		A2DA92531D50B6FE000077ED /* MyInfoController.m in Sources */ = {isa = PBXBuildFile; fileRef = A2DA92521D50B6FE000077ED /* MyInfoController.m */; };
 		EEA7B39501F1EDAA38FBFDB0 /* libPods-WeChat_D.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 77912E4F30617DE482F6A3C6 /* libPods-WeChat_D.a */; };
+		F53DEC8E1D673D6C004B009E /* FriendListTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F53DEC8D1D673D6C004B009E /* FriendListTableViewCell.m */; };
 		F53EC6711D3E636900027A24 /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F53EC66D1D3E636900027A24 /* libcrypto.a */; };
 		F53EC6721D3E636900027A24 /* libcurl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F53EC66E1D3E636900027A24 /* libcurl.a */; };
 		F53EC6731D3E636900027A24 /* libssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F53EC66F1D3E636900027A24 /* libssl.a */; };
@@ -506,6 +507,8 @@
 		A2DA92521D50B6FE000077ED /* MyInfoController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyInfoController.m; sourceTree = "<group>"; };
 		A9B6923DCF73CFE0F0DA477B /* Pods-WeChat_D.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WeChat_D.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WeChat_D/Pods-WeChat_D.debug.xcconfig"; sourceTree = "<group>"; };
 		CC02DEDA828486EE35A2D3B8 /* Pods-WeChat_D.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WeChat_D.release.xcconfig"; path = "Pods/Target Support Files/Pods-WeChat_D/Pods-WeChat_D.release.xcconfig"; sourceTree = "<group>"; };
+		F53DEC8C1D673D6C004B009E /* FriendListTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FriendListTableViewCell.h; sourceTree = "<group>"; };
+		F53DEC8D1D673D6C004B009E /* FriendListTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FriendListTableViewCell.m; sourceTree = "<group>"; };
 		F53EC6451D3E636900027A24 /* EMCallLocalView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMCallLocalView.h; sourceTree = "<group>"; };
 		F53EC6461D3E636900027A24 /* EMCallManagerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMCallManagerDelegate.h; sourceTree = "<group>"; };
 		F53EC6471D3E636900027A24 /* EMCallRemoteView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMCallRemoteView.h; sourceTree = "<group>"; };
@@ -1118,6 +1121,8 @@
 				A2C512BF1D41F8FA00D84829 /* NewFriendCell.xib */,
 				A25AAB641D48B13A00DBBBE5 /* CreatGroupCell.h */,
 				A25AAB651D48B13A00DBBBE5 /* CreatGroupCell.m */,
+				F53DEC8C1D673D6C004B009E /* FriendListTableViewCell.h */,
+				F53DEC8D1D673D6C004B009E /* FriendListTableViewCell.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -2321,6 +2326,7 @@
 				A2088B421D3CA39100C73446 /* MessageTableViewCell.m in Sources */,
 				A297B75E1D2F8E5A003C9276 /* WeChatViewController.m in Sources */,
 				A297B7581D2F8E5A003C9276 /* UIColor+Extension.m in Sources */,
+				F53DEC8E1D673D6C004B009E /* FriendListTableViewCell.m in Sources */,
 				A2088B451D3CACFA00C73446 /* MessageModel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -16,8 +16,8 @@ typedef void(^PHPhotoListBlock)(NSArray *photoList);
 
 + (JPPhotoKitManager *)sharedPhotoKitManager;
 
-
 - (void)PHGetPhotoGroupArrayWithBlock:(PHGroupArrBlock)PHGroupArrBlock;
+
 - (void)PHGetPhotoListWithModel:(JPPhotoGroupModel *)groupModel Block:(PHPhotoListBlock)PHPhotoListBlock;
 
 

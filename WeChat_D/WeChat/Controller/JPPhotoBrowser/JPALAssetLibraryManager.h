@@ -17,6 +17,7 @@ typedef void(^ALPhotoListBlock)(NSArray *photoList);
 + (JPALAssetLibraryManager *)sharedAlAssetLibraryManager;
 
 - (void)ALGetPhotoGroupArrayWithBlock:(ALGroupArrBlock)ALGroupArrBlock;
+
 - (void)ALGetPhotoListWithModel:(JPPhotoGroupModel *)groupModel Block:(ALPhotoListBlock)ALPhotoListBlock;
 
 @end
