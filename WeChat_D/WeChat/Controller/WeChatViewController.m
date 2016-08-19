@@ -114,7 +114,7 @@
     [JP_NotificationCenter addObserver:self selector:@selector(loginSuccess) name:LOGINCHANGE object:nil];
     [JP_NotificationCenter addObserver:self selector:@selector(autoLoginSuccess) name:AUTOLOGINSUCCESS object:nil];
     [JP_NotificationCenter addObserver:self selector:@selector(netWorkState:) name:NETWORKSTATE object:nil];
-    [JP_NotificationCenter addObserver:self selector:@selector(reciveMessage) name:RECEIVEMESSAGES object:nil];
+    [JP_NotificationCenter addObserver:self selector:@selector(reciveMessage:) name:RECEIVEMESSAGES object:nil];
     [JP_NotificationCenter addObserver:self selector:@selector(addFriendNoti:) name:ADDFRIENDSUCCESS object:nil];
     [JP_NotificationCenter addObserver:self selector:@selector(delectFriendNoti) name:DELECTFRIENDSUEESS object:nil];
     [JP_NotificationCenter addObserver:self selector:@selector(creatGroupSuccess:) name:CREATGROUPSUCCESS object:nil];
@@ -327,9 +327,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
     WeChatTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"weChatTableView"];
-    EMConversation *conversation = [self.dataArray objectAtIndex:indexPath.row];
-    WeChatListModel *model = [[WeChatListModel alloc]init];
-    model.conversation = conversation;
+    WeChatListModel *model = [self.dataArray objectAtIndex:indexPath.row];
     cell.model = model;
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
@@ -338,14 +336,14 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
     ChatDetailViewController *chatVC = [[ChatDetailViewController alloc]init];
-    EMConversation *conversation = [self.dataArray objectAtIndex:indexPath.row];
-    switch (conversation.type) {
+    WeChatListModel *model = [self.dataArray objectAtIndex:indexPath.row];
+    switch (model.conversationType) {
         case EMConversationTypeChat:
-            chatVC.title = conversation.conversationId;
+            chatVC.title = model.conversationID;
             break;
         case EMConversationTypeGroupChat:
-            chatVC.title = [conversation.ext objectForKey:GroupName];
-            chatVC.groupID = conversation.conversationId;
+            chatVC.title = [model.conversation.ext objectForKey:GroupName];
+            chatVC.groupID = model.conversationID;
             break;
         default:
             break;
@@ -362,8 +360,8 @@
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath{
     [SVProgressHUD show];
-    EMConversation *conversation = [self.dataArray objectAtIndex:indexPath.row];
-    if ([[EMClient sharedClient].chatManager deleteConversation:conversation.conversationId deleteMessages:NO]){
+    WeChatListModel *model = [self.dataArray objectAtIndex:indexPath.row];
+    if ([[EMClient sharedClient].chatManager deleteConversation:model.conversationID deleteMessages:NO]){
         [SVProgressHUD showSuccessWithStatus:@"删除成功"];
         [self.dataArray removeObjectAtIndex:indexPath.row];
         [self.weChatTableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
@@ -399,9 +397,73 @@
     }
 }
 #pragma mark  接收到新消息
-- (void)reciveMessage{
+- (void)reciveMessage:(NSNotification *)notification{
+    
+    NSMutableArray *consations = [NSMutableArray arrayWithCapacity:self.dataArray.count];
+    for (WeChatListModel *oldModel in self.dataArray) {
+        [consations addObject:oldModel.conversation.conversationId];
+    }
+    
+    NSArray *messages = [notification.userInfo objectForKey:@"Message"];
+    for (EMMessage *message in messages)
+    {
+        EMConversationType consationType;
+        if (message.chatType == EMChatTypeChat) {
+            consationType = EMConversationTypeChat;
+        }else if (message.chatType == EMChatTypeGroupChat){
+            consationType = EMConversationTypeGroupChat;
+        }
+        NSString *userName = message.from;
+        EMConversation *newConversation = [[EMClient sharedClient].chatManager getConversation:userName type:consationType createIfNotExist:YES];
+        //检测当前会话列表是否包含新建的会话
+        if ([consations containsObject:newConversation.conversationId])
+        {
+            for (NSInteger i = 0; i < consations.count; i++)
+            {
+                WeChatListModel *model = [self.dataArray objectAtIndex:i];
+                if ([newConversation.conversationId isEqualToString:model.conversationID])
+                {
+                    NSIndexPath *indexPathF = [NSIndexPath indexPathForRow:i inSection:0];
+                    NSIndexPath *indexPathT = [NSIndexPath indexPathForRow:0 inSection:0];
+                    EMConversation *conversation = model.conversation;
+                    NSInteger unreadConut = model.unreadMessagesCount;
+                    BOOL isAppendSuccess = [model.conversation appendMessage:message];
+                    if (isAppendSuccess)
+                    {
+                        model.conversation = conversation;
+                        model.unreadMessagesCount = unreadConut+1;
+                        [self.weChatTableView reloadRowsAtIndexPaths:@[indexPathF] withRowAnimation:UITableViewRowAnimationFade];
+                        if (i)
+                        {
+                            [self.weChatTableView moveRowAtIndexPath:indexPathF toIndexPath:indexPathT];
+                        }
+                    }else
+                    {
+                        [self.view makeToast:@"接收消息失败"];
+                    }
+                }
 
-    [self getAllConversations];
+            }
+            
+        }else
+        {
+            WeChatListModel *newModel = [[WeChatListModel alloc]init];
+            newModel.conversation = newConversation;
+            [self.dataArray insertObject:newModel atIndex:0];
+            NSIndexPath *indexPathT = [NSIndexPath indexPathForRow:0 inSection:0];
+            [self.weChatTableView insertRowsAtIndexPaths:@[indexPathT] withRowAnimation:UITableViewRowAnimationFade];
+            [self.weChatTableView reloadRowsAtIndexPaths:@[indexPathT] withRowAnimation:UITableViewRowAnimationFade];
+        }
+    }
+    NSInteger badge = [self.tabBarItem.badgeValue integerValue];
+    self.tabBarItem.badgeValue = [NSString stringWithFormat:@"%zd",badge+messages.count];
+    if ([self.tabBarItem.badgeValue integerValue]) {
+        if ([self.tabBarItem.badgeValue integerValue] > 99) {
+            self.tabBarItem.badgeValue = @"99+";
+        }
+    }else{
+        self.tabBarItem.badgeValue = nil;
+    }
 }
 
 #pragma mark 添加好友成功 A加B A收到的代理发通知
@@ -461,10 +523,14 @@
     
     [self.dataArray removeAllObjects];
     NSArray *convers = [[EMClient sharedClient].chatManager getAllConversations];
-    [self.dataArray addObjectsFromArray:convers];
     NSInteger unreadCount = 0;//取出各个会话的未读消息数
     NSInteger unreadAllCount = 0;//全部会话的未读消息数
-    for (EMConversation *conversation in convers) {
+    for (NSInteger i = convers.count-1; i >=0; i--)
+    {
+        EMConversation *conversation = [convers objectAtIndex:i];
+        WeChatListModel *model = [[WeChatListModel alloc]init];
+        model.conversation = conversation;
+        [self.dataArray addObject:model];
         unreadCount = conversation.unreadMessagesCount;
         unreadAllCount += unreadCount;
     }
@@ -476,8 +542,27 @@
     }else{
         self.tabBarItem.badgeValue = nil;
     }
-    [self.weChatTableView reloadData];
 
+    //对拿到的会话列表按照时间 重新排序
+    for (NSInteger i = 0; i < self.dataArray.count; i++)
+    {
+        WeChatListModel *maxtimeModel = [self.dataArray objectAtIndex:i];
+        long long maxtime = maxtimeModel.conversation.latestMessage.timestamp;
+        for (NSInteger j = 1+i; j < self.dataArray.count; j++)
+        {
+            WeChatListModel *model = [self.dataArray objectAtIndex:j];
+            long long time = model.conversation.latestMessage.timestamp;
+            if (time > maxtime)
+            {
+                WeChatListModel *currentMaxModel = [self.dataArray objectAtIndex:i];
+                [self.dataArray replaceObjectAtIndex:i withObject:model];
+                [self.dataArray replaceObjectAtIndex:j withObject:currentMaxModel];
+                maxtime = model.conversation.latestMessage.timestamp;
+            }
+        }
+        
+    }
+    [self.weChatTableView reloadData];
 }
 
 

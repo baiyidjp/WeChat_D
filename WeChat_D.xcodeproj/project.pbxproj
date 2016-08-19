@@ -2471,7 +2471,7 @@
 					"$(PROJECT_DIR)/WeChat_D/HyphenateSDK/lib",
 					"$(PROJECT_DIR)/WeChat_D/Categories/VoiceLib",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.dong.WeChat-D";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.dong.WeChat-DDDD";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 			};
@@ -2495,7 +2495,7 @@
 					"$(PROJECT_DIR)/WeChat_D/HyphenateSDK/lib",
 					"$(PROJECT_DIR)/WeChat_D/Categories/VoiceLib",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.dong.WeChat-D";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.dong.WeChat-DDDD";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 			};

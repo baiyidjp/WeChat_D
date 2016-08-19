@@ -363,18 +363,19 @@
         self.friendUnreadLabel.hidden = YES;
         self.tabBarItem.badgeValue = nil;
     }
-    //移除所有的好友信息
-    [self.dataArray removeAllObjects];
-    
     //从服务器获取所有的好友列表
     [[EMClient sharedClient].contactManager asyncGetContactsFromServer:^(NSArray *aList) {
         dispatch_async(dispatch_get_main_queue(), ^{
+            //移除所有的好友信息 防止多个异步线程的回调
+            [self.dataArray removeAllObjects];
             [self.dataArray addObjectsFromArray:[self getSectionNameArrayWithFriendData:aList]];
             [self.contactTableView reloadData];
         });
     } failure:^(EMError *aError) {
         //若获取失败则从本地获取好友列表
         NSArray *aList = [[EMClient sharedClient].contactManager getContactsFromDB];
+        //移除所有的好友信息
+        [self.dataArray removeAllObjects];
         [self.dataArray addObjectsFromArray:[self getSectionNameArrayWithFriendData:aList]];
         [self.contactTableView reloadData];
     }];
