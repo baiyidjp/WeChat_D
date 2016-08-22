@@ -98,6 +98,40 @@ static PHImageManager *imageManager = nil;
 
 }
 
+- (void)JPFullScreenImageDataWithBlock:(GetFullScreenImageDataBlock)GetFullScreenImageDataBlock{
+    
+#warning 先从缓存中取出  后续处理  .. . ... ..
+    if (GetFullScreenImageDataBlock && self.fullScreenImageData) {
+        GetFullScreenImageDataBlock(self.fullScreenImageData);
+    }else{
+        if (IOS_VERSION_8_OR_LATER) {
+            
+            [[JPPhotoModel sharedPHImageManager] requestImageForAsset:self.phAsset
+                                                           targetSize:CGSizeMake(KWIDTH, KHEIGHT)
+                                                          contentMode:PHImageContentModeAspectFill
+                                                              options:nil
+                                                        resultHandler:^(UIImage *result, NSDictionary *info) {
+                                                            NSLog(@"%@",info);
+                                                            BOOL downloadFinined = ![[info objectForKey:PHImageCancelledKey] boolValue] && ![info objectForKey:PHImageErrorKey] && ![[info objectForKey:PHImageResultIsDegradedKey] boolValue];
+                                                            if (downloadFinined) {                                                                
+                                                                self.fullScreenImageData = UIImageJPEGRepresentation(result, 0.3);
+                                                                if (GetFullScreenImageDataBlock) {
+                                                                    GetFullScreenImageDataBlock(self.fullScreenImageData);
+                                                                }
+                                                            }
+                                                        }];
+            
+        } else {
+            UIImage *fullImage = [UIImage imageWithCGImage:[[self.asset defaultRepresentation] fullScreenImage]];
+            self.fullScreenImageData = UIImagePNGRepresentation(fullImage);
+            if (GetFullScreenImageDataBlock) {
+                GetFullScreenImageDataBlock(self.fullScreenImageData);
+            }
+            
+        }
+    }
+}
+
 - (void)JPFullResolutionDataSizeWithBlock:(GetFullResolutDataSizeBlock)GetFullResolutDataSizeBlock{
     if (GetFullResolutDataSizeBlock && self.fullResolutDataSize) {
         GetFullResolutDataSizeBlock(self.fullResolutDataSize);

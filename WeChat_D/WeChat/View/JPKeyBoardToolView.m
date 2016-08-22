@@ -593,48 +593,65 @@
     
     NSDictionary *dict = notifacation.userInfo;
     NSArray *photoArr = [dict objectForKey:@"sendPhoto"];
-    [photoArr enumerateObjectsUsingBlock:^(JPPhotoModel *photoModel, NSUInteger idx, BOOL * _Nonnull stop) {
+    for (NSInteger idx = 0; idx < photoArr.count; idx++) {
+        JPPhotoModel *photoModel = [photoArr objectAtIndex:idx];
+//        __block UIImage *showImage;
+//        __block NSData *fulldata;
+//        if (photoModel.fullScreenImage) {
+//            showImage =photoModel.fullScreenImage;
+//        }else{
+//            [photoModel JPFullScreenImageWithBlock:^(UIImage *fullScreenImage) {
+//                showImage = fullScreenImage;
+//            }];
+//        }
+//        fulldata = UIImageJPEGRepresentation(showImage, 1.0);
         
-        __block UIImage *showImage;
-        __block NSData *fulldata;
-        if (photoModel.fullScreenImage) {
-            showImage =photoModel.fullScreenImage;
+        WEAK_SELF(weakSelf);
+        if (photoModel.isShowFullImage) {
+            
+            [photoModel JPFullScreenImageDataWithBlock:^(NSData *fullScreenImageData) {
+                
+                [photoModel JPFullResolutDataWithBlock:^(NSData *fullResolutData) {
+                    [weakSelf photoListSendImageWithThumdata:fullScreenImageData fullImageData:fullResolutData idx:idx];
+                }];
+        }];
+            
         }else{
-            [photoModel JPFullScreenImageWithBlock:^(UIImage *fullScreenImage) {
-                showImage = fullScreenImage;
+            
+            [photoModel JPFullScreenImageDataWithBlock:^(NSData *fullScreenImageData) {
+                [weakSelf photoListSendImageWithThumdata:fullScreenImageData fullImageData:nil idx:idx];
             }];
         }
-        fulldata = UIImageJPEGRepresentation(showImage, 1.0);
         
-        if (photoModel.isShowFullImage) {
-            if (photoModel.fullResolutData) {
-                fulldata = photoModel.fullResolutData;
-            }else{
-                [photoModel JPFullResolutDataWithBlock:^(NSData *fullResolutData) {
-                    fulldata = fullResolutData;
-                }];
-            }
-        }
+        
+    }
+}
 
-        NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-        formatter.dateFormat = @"yyyyMMddHHmmss";
-        NSString *str = [formatter stringFromDate:[NSDate date]];
-        
-        NSData *thumdata = UIImageJPEGRepresentation(showImage, 1.0);
-        EMImageMessageBody *body = [[EMImageMessageBody alloc]initWithData:fulldata displayName:@"image.png"];
+- (void)photoListSendImageWithThumdata:(NSData *)thumdata fullImageData:(NSData *)fulldata idx:(NSInteger)idx{
+    
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    formatter.dateFormat = @"yyyyMMddHHmmss";
+    NSString *str = [formatter stringFromDate:[NSDate date]];
+    
+    if (!fulldata && !thumdata) {
+        return;
+    }
+    
+    if (!fulldata) {
+        fulldata = thumdata;
+    }
+    EMImageMessageBody *body = [[EMImageMessageBody alloc]initWithData:fulldata displayName:@"image.png"];
 #warning 如果此处不对图片进行本地保存 并且对消息体的本地路径和本地尺寸进行赋值 那么发送方在当前聊天界面便无法显示当前图片 因为环信在发送消息时并没有给用户返回路径 所以需要自己设置路径 这是一大坑!!!
-        NSString *thumlocaImagePath = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject] stringByAppendingPathComponent:[NSString stringWithFormat:@"thumimage_%@%zd.png",str,(NSInteger)idx]];
-        body.thumbnailLocalPath = thumlocaImagePath;
-        body.thumbnailSize = [UIImage imageWithData:thumdata].size;
-        body.compressRatio = 1.0;
-        [thumdata writeToFile:thumlocaImagePath atomically:YES];
-        NSString *from = [[EMClient sharedClient] currentUsername];
-        //生成Message
-        EMMessage *emmessage = [[EMMessage alloc]initWithConversationID:self.toUser from:from to:self.toUser body:body ext:nil];
-        //发送消息
-        [self sendMessageWithMessage:emmessage];
-
-    }];
+    NSString *thumlocaImagePath = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject] stringByAppendingPathComponent:[NSString stringWithFormat:@"thumimage_%@%zd.png",str,idx]];
+    body.thumbnailLocalPath = thumlocaImagePath;
+    body.thumbnailSize = [UIImage imageWithData:thumdata].size;
+    body.compressRatio = 1.0;
+    [thumdata writeToFile:thumlocaImagePath atomically:YES];
+    NSString *from = [[EMClient sharedClient] currentUsername];
+    //生成Message
+    EMMessage *emmessage = [[EMMessage alloc]initWithConversationID:self.toUser from:from to:self.toUser body:body ext:nil];
+    //发送消息
+    [self sendMessageWithMessage:emmessage];
 }
 
 #pragma mark UIImagePickerControllerDelegate

@@ -341,15 +341,11 @@
 
                 CGSize imageSize = model.thumbnailSize;
                 if (imageSize.width == 0) {
-                    imageSize = CGSizeMake(150, 150);
+                    imageSize = CGSizeMake(ImageDefaultSizeWH, ImageDefaultSizeWH);
                 }
                 [self.messsgeImage mas_remakeConstraints:^(MASConstraintMaker *make) {
                     make.edges.mas_equalTo(self.backImgaeView).insets(UIEdgeInsetsMake(KMARGIN, 3.0/2*KMARGIN, KMARGIN, 3.0/2*KMARGIN));
-                    if (imageSize.width > ImageDefaultSizeWH) {
-                        make.size.mas_equalTo(CGSizeMake(ImageDefaultSizeWH, ImageDefaultSizeWH/imageSize.width * imageSize.height));
-                    }else{
-                        make.size.mas_equalTo(imageSize);
-                    }
+                    make.size.mas_equalTo(CGSizeMake(ImageDefaultSizeWH, ImageDefaultSizeWH/imageSize.width * imageSize.height));
                     
                 }];
                 NSFileManager *fileManger = [NSFileManager defaultManager];
@@ -501,7 +497,7 @@
                 
                 CGSize imageSize = model.thumbnailSize;
                 if (imageSize.width == 0) {
-                    imageSize = CGSizeMake(150, 150);
+                    imageSize = CGSizeMake(ImageDefaultSizeWH, ImageDefaultSizeWH);
                 }
                 
                 NSLog(@"%f",imageSize.width);

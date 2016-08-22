@@ -34,10 +34,6 @@ static int message_count = 20;
  *  当前会话
  */
 @property(nonatomic,strong)EMConversation *conversation;
-/**
- *  当前会话接收到的消息集合
- */
-@property(nonatomic,strong)NSMutableArray *reciveMessageArray;
 /** 播放语音 */
 @property(nonatomic,strong) Mp3Recorder *mp3Recorder;
 /** MessCell 用来停止播放语音 */
@@ -67,14 +63,6 @@ static int message_count = 20;
     return _dataArray;
 }
 
-- (NSMutableArray *)reciveMessageArray{
-    
-    if (!_reciveMessageArray) {
-        _reciveMessageArray = [NSMutableArray array];
-    }
-    return _reciveMessageArray;
-}
-
 - (void)SetrefreshControl{
     
     self.topRefreshView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, KWIDTH, KNAVHEIGHT)];
@@ -94,6 +82,11 @@ static int message_count = 20;
 - (BOOL)navigationShouldPopOnBackButton{
     for (UIViewController *ctrl in self.navigationController.viewControllers) {
         if ([ctrl isKindOfClass:[WeChatViewController class]]) {
+            //判断当前会话是否为空，若符合则删除该会话
+            EMMessage *message = [self.conversation latestMessage];
+            if (message == nil) {
+                [[EMClient sharedClient].chatManager deleteConversation:self.conversation.conversationId deleteMessages:NO];
+            }
             [self.navigationController popToViewController:ctrl animated:YES];
         }
     }
@@ -236,13 +229,15 @@ static int message_count = 20;
     
     [[EMClient sharedClient].chatManager asyncSendMessage:emmessage progress:^(int progress) {
     } completion:^(EMMessage *message, EMError *error) {
-        if (!error) {
-            [SVProgressHUD showSuccessWithStatus:@"发送成功"];
-            [self.ChatTableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-        }else{
-            [SVProgressHUD showSuccessWithStatus:@"发送失败"];
-            [self.ChatTableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-        }
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (!error) {
+                [SVProgressHUD showSuccessWithStatus:@"发送成功"];
+                [self.ChatTableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+            }else{
+                [SVProgressHUD showSuccessWithStatus:@"发送失败"];
+                [self.ChatTableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+            }
+        });
     }];
 }
 #pragma mark 重发消息
@@ -276,7 +271,6 @@ static int message_count = 20;
     
     NSArray *messages = [notification.userInfo objectForKey:@"Message"];
     [self.dataArray addObjectsFromArray:messages];
-    [self.reciveMessageArray addObjectsFromArray:messages];
     NSMutableArray *indexPaths = [NSMutableArray arrayWithCapacity:messages.count];
     for (NSInteger i = 0; i < messages.count; i++) {
         NSIndexPath *indexPath = [NSIndexPath indexPathForRow:self.dataArray.count-i-1 inSection:0];
@@ -482,9 +476,8 @@ static int message_count = 20;
 - (void)viewWillDisappear:(BOOL)animated{
     
     [super viewWillDisappear:animated];
-    for (EMMessage *emmessage in self.reciveMessageArray) {
-        [self.conversation markMessageAsReadWithId:emmessage.messageId];
-    }
+    //离开页面将所有的消息设置为已读
+    [self.conversation markAllMessagesAsRead];
     [self.voiceMessageCell viewBack];//处理正在播放时候 离开聊天界面的问题
 }
 
