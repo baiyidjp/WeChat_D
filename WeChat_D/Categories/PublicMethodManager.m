@@ -6,9 +6,26 @@
 //  Copyright © 2016年 dongjiangpeng. All rights reserved.
 //
 
-#import "PublicMethod.h"
+#import "PublicMethodManager.h"
 
-@implementation PublicMethod
+static PublicMethodManager *publicManager = nil;
+
+@interface PublicMethodManager ()
+
+@end
+
+@implementation PublicMethodManager
+
++ (instancetype)sharedPublicManager{
+
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        if (publicManager == nil) {
+            publicManager = [[PublicMethodManager alloc]init];
+        }
+    });
+    return publicManager;
+}
 
 + (NSAttributedString *)emojiWithText:(NSString *)text{
     

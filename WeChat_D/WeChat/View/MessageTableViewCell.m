@@ -288,7 +288,7 @@
                 self.timeLabel.hidden = YES;
                 [self.backImgaeView addSubview:self.messageText];
                 //换行设置
-                self.messageText.attributedText = [PublicMethod emojiWithText:model.messagetext];
+                self.messageText.attributedText = [PublicMethodManager emojiWithText:model.messagetext];
                 self.messageText.preferredMaxLayoutWidth = KWIDTH/5*3;
                 [self.messageText mas_remakeConstraints:^(MASConstraintMaker *make) {
                     make.edges.mas_equalTo(self.backImgaeView).insets(UIEdgeInsetsMake(KMARGIN, 3.0/2*KMARGIN, KMARGIN, 3.0/2*KMARGIN));
@@ -440,7 +440,7 @@
                 self.timeLabel.hidden = YES;
                 [self.backImgaeView addSubview:self.messageText];
                 //换行设置
-                self.messageText.attributedText = [PublicMethod emojiWithText:model.messagetext];
+                self.messageText.attributedText = [PublicMethodManager emojiWithText:model.messagetext];
                 self.messageText.preferredMaxLayoutWidth = KWIDTH/5*3;
                 [self.messageText mas_remakeConstraints:^(MASConstraintMaker *make) {
                     make.edges.mas_equalTo(self.backImgaeView).insets(UIEdgeInsetsMake(KMARGIN, 3.0/2*KMARGIN, KMARGIN, 3.0/2*KMARGIN));

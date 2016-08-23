@@ -8,7 +8,9 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
-@interface PublicMethod : NSObject
+@interface PublicMethodManager : NSObject
+
++ (instancetype)sharedPublicManager;
 
 /**
  *  将表情文字转换为表情

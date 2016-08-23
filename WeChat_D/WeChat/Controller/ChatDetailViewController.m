@@ -80,13 +80,13 @@ static int message_count = 20;
 
 //重写返回事件
 - (BOOL)navigationShouldPopOnBackButton{
+    //判断当前会话是否为空，若符合则删除该会话
+    EMMessage *message = [self.conversation latestMessage];
+    if (message == nil) {
+        [[EMClient sharedClient].chatManager deleteConversation:self.conversation.conversationId deleteMessages:NO];
+    }
     for (UIViewController *ctrl in self.navigationController.viewControllers) {
         if ([ctrl isKindOfClass:[WeChatViewController class]]) {
-            //判断当前会话是否为空，若符合则删除该会话
-            EMMessage *message = [self.conversation latestMessage];
-            if (message == nil) {
-                [[EMClient sharedClient].chatManager deleteConversation:self.conversation.conversationId deleteMessages:NO];
-            }
             [self.navigationController popToViewController:ctrl animated:YES];
         }
     }

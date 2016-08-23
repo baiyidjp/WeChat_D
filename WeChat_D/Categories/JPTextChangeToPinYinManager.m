@@ -5828,13 +5828,6 @@ char pinyinFirstLet(unsigned short hanzi) {
     return manager;
 }
 
-+ (NSArray *)getLetterOrderArrayWith:(NSArray *)oriArray{
-    
-    NSMutableArray *newArray = [NSMutableArray array];
-    
-    return [newArray copy];
-}
-
 + (NSString *)getPinYinFromText:(NSString *)text{
     
     if(!text || ![text length]) return nil;

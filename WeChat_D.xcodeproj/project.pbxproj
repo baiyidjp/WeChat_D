@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		A2088B3E1D3C6EC200C73446 /* PublicMethod.m in Sources */ = {isa = PBXBuildFile; fileRef = A2088B3D1D3C6EC200C73446 /* PublicMethod.m */; };
+		A2088B3E1D3C6EC200C73446 /* PublicMethodManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A2088B3D1D3C6EC200C73446 /* PublicMethodManager.m */; };
 		A2088B421D3CA39100C73446 /* MessageTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A2088B411D3CA39100C73446 /* MessageTableViewCell.m */; };
 		A2088B451D3CACFA00C73446 /* MessageModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A2088B441D3CACFA00C73446 /* MessageModel.m */; };
 		A21137DD1D49E53500CB6EF7 /* MyGroupListController.m in Sources */ = {isa = PBXBuildFile; fileRef = A21137DC1D49E53500CB6EF7 /* MyGroupListController.m */; };
@@ -59,7 +59,6 @@
 		A2C512C01D41F8FA00D84829 /* NewFriendCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A2C512BE1D41F8FA00D84829 /* NewFriendCell.m */; };
 		A2C512C11D41F8FA00D84829 /* NewFriendCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A2C512BF1D41F8FA00D84829 /* NewFriendCell.xib */; };
 		A2C512C41D42090700D84829 /* AgreeFriendViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A2C512C31D42090700D84829 /* AgreeFriendViewController.m */; };
-		A2CB7D7A1D5D7F140090714C /* JPBigImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = A2CB7D791D5D7F140090714C /* JPBigImageView.m */; };
 		A2DA92501D50B42E000077ED /* QRCodeManger.m in Sources */ = {isa = PBXBuildFile; fileRef = A2DA924F1D50B42E000077ED /* QRCodeManger.m */; };
 		A2DA92531D50B6FE000077ED /* MyInfoController.m in Sources */ = {isa = PBXBuildFile; fileRef = A2DA92521D50B6FE000077ED /* MyInfoController.m */; };
 		EEA7B39501F1EDAA38FBFDB0 /* libPods-WeChat_D.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 77912E4F30617DE482F6A3C6 /* libPods-WeChat_D.a */; };
@@ -233,6 +232,7 @@
 		F5A131771D50E0F500190C1B /* zh_CN.json in Resources */ = {isa = PBXBuildFile; fileRef = F5A131711D50E0F500190C1B /* zh_CN.json */; };
 		F5A1317A1D50E77800190C1B /* MyQRCodeController.m in Sources */ = {isa = PBXBuildFile; fileRef = F5A131791D50E77800190C1B /* MyQRCodeController.m */; };
 		F5A1317C1D50F3C400190C1B /* Contact_Male_18x18_@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F5A1317B1D50F3C400190C1B /* Contact_Male_18x18_@2x.png */; };
+		F5C944901D6C287F000E7199 /* JPBigImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = F5C9448F1D6C287F000E7199 /* JPBigImageView.m */; };
 		F5CB8B641D3F0533002663F8 /* AddFriendController.m in Sources */ = {isa = PBXBuildFile; fileRef = F5CB8B631D3F0533002663F8 /* AddFriendController.m */; };
 		F5CB8B781D447229002663F8 /* tabbar_badge_30x30_@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F5CB8B651D447229002663F8 /* tabbar_badge_30x30_@2x.png */; };
 		F5CB8B791D447229002663F8 /* tabbar_badge_30x30_@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = F5CB8B661D447229002663F8 /* tabbar_badge_30x30_@3x.png */; };
@@ -397,8 +397,8 @@
 
 /* Begin PBXFileReference section */
 		77912E4F30617DE482F6A3C6 /* libPods-WeChat_D.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-WeChat_D.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		A2088B3C1D3C6EC200C73446 /* PublicMethod.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PublicMethod.h; sourceTree = "<group>"; };
-		A2088B3D1D3C6EC200C73446 /* PublicMethod.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PublicMethod.m; sourceTree = "<group>"; };
+		A2088B3C1D3C6EC200C73446 /* PublicMethodManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PublicMethodManager.h; sourceTree = "<group>"; };
+		A2088B3D1D3C6EC200C73446 /* PublicMethodManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PublicMethodManager.m; sourceTree = "<group>"; };
 		A2088B401D3CA39100C73446 /* MessageTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageTableViewCell.h; sourceTree = "<group>"; };
 		A2088B411D3CA39100C73446 /* MessageTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageTableViewCell.m; sourceTree = "<group>"; };
 		A2088B431D3CACFA00C73446 /* MessageModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageModel.h; sourceTree = "<group>"; };
@@ -499,8 +499,6 @@
 		A2C512BF1D41F8FA00D84829 /* NewFriendCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NewFriendCell.xib; sourceTree = "<group>"; };
 		A2C512C21D42090700D84829 /* AgreeFriendViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AgreeFriendViewController.h; sourceTree = "<group>"; };
 		A2C512C31D42090700D84829 /* AgreeFriendViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AgreeFriendViewController.m; sourceTree = "<group>"; };
-		A2CB7D781D5D7F140090714C /* JPBigImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JPBigImageView.h; sourceTree = "<group>"; };
-		A2CB7D791D5D7F140090714C /* JPBigImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JPBigImageView.m; sourceTree = "<group>"; };
 		A2DA924E1D50B42E000077ED /* QRCodeManger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QRCodeManger.h; sourceTree = "<group>"; };
 		A2DA924F1D50B42E000077ED /* QRCodeManger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QRCodeManger.m; sourceTree = "<group>"; };
 		A2DA92511D50B6FE000077ED /* MyInfoController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyInfoController.h; sourceTree = "<group>"; };
@@ -725,6 +723,8 @@
 		F5A131781D50E77800190C1B /* MyQRCodeController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyQRCodeController.h; sourceTree = "<group>"; };
 		F5A131791D50E77800190C1B /* MyQRCodeController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyQRCodeController.m; sourceTree = "<group>"; };
 		F5A1317B1D50F3C400190C1B /* Contact_Male_18x18_@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Contact_Male_18x18_@2x.png"; sourceTree = "<group>"; };
+		F5C9448E1D6C287F000E7199 /* JPBigImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JPBigImageView.h; sourceTree = "<group>"; };
+		F5C9448F1D6C287F000E7199 /* JPBigImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JPBigImageView.m; sourceTree = "<group>"; };
 		F5CB8B621D3F0533002663F8 /* AddFriendController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddFriendController.h; sourceTree = "<group>"; };
 		F5CB8B631D3F0533002663F8 /* AddFriendController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddFriendController.m; sourceTree = "<group>"; };
 		F5CB8B651D447229002663F8 /* tabbar_badge_30x30_@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tabbar_badge_30x30_@2x.png"; sourceTree = "<group>"; };
@@ -1063,10 +1063,12 @@
 				A2DA924F1D50B42E000077ED /* QRCodeManger.m */,
 				A297B73B1D2F8E5A003C9276 /* UIView+Toast.h */,
 				A297B73C1D2F8E5A003C9276 /* UIView+Toast.m */,
-				A2088B3C1D3C6EC200C73446 /* PublicMethod.h */,
-				A2088B3D1D3C6EC200C73446 /* PublicMethod.m */,
+				A2088B3C1D3C6EC200C73446 /* PublicMethodManager.h */,
+				A2088B3D1D3C6EC200C73446 /* PublicMethodManager.m */,
 				A28EADEC1D655309003087DA /* JPTextChangeToPinYinManager.h */,
 				A28EADED1D655309003087DA /* JPTextChangeToPinYinManager.m */,
+				F5C9448E1D6C287F000E7199 /* JPBigImageView.h */,
+				F5C9448F1D6C287F000E7199 /* JPBigImageView.m */,
 				A25AAB5D1D4882C800DBBBE5 /* ListView.h */,
 				A25AAB5E1D4882C800DBBBE5 /* ListView.m */,
 				A21137DE1D4A21BD00CB6EF7 /* UIViewController+BackButtonHandler.h */,
@@ -1261,8 +1263,6 @@
 				A2C4354F1D3608CF0097ECC1 /* AddMoreView.m */,
 				A2C435511D363AB40097ECC1 /* FaceView.h */,
 				A2C435521D363AB40097ECC1 /* FaceView.m */,
-				A2CB7D781D5D7F140090714C /* JPBigImageView.h */,
-				A2CB7D791D5D7F140090714C /* JPBigImageView.m */,
 				A21B62941D38DA1700F0E727 /* WeChatTableViewCell.h */,
 				A21B62951D38DA1700F0E727 /* WeChatTableViewCell.m */,
 				A21B62961D38DA1700F0E727 /* WeChatTableViewCell.xib */,
@@ -2286,8 +2286,9 @@
 				F57C385E1D54E23D00022E5B /* GoodsAddressController.m in Sources */,
 				A28EADEE1D655309003087DA /* JPTextChangeToPinYinManager.m in Sources */,
 				F5A131731D50E0F500190C1B /* SecondViewController.m in Sources */,
+				F5C944901D6C287F000E7199 /* JPBigImageView.m in Sources */,
 				A249DF911D5C2D92000206FF /* JPPhotoCollectionLayout.m in Sources */,
-				A2088B3E1D3C6EC200C73446 /* PublicMethod.m in Sources */,
+				A2088B3E1D3C6EC200C73446 /* PublicMethodManager.m in Sources */,
 				A28EADF11D655BE6003087DA /* FriendListModel.m in Sources */,
 				A21B62931D38D9BD00F0E727 /* WeChatListModel.m in Sources */,
 				A297B75A1D2F8E5A003C9276 /* ContactsViewController.m in Sources */,
@@ -2316,7 +2317,6 @@
 				A28D8F5A1D51C3D00025464B /* ChangeNameController.m in Sources */,
 				A297B7591D2F8E5A003C9276 /* UIView+Toast.m in Sources */,
 				A2C435501D3608CF0097ECC1 /* AddMoreView.m in Sources */,
-				A2CB7D7A1D5D7F140090714C /* JPBigImageView.m in Sources */,
 				A21B62901D3893ED00F0E727 /* FaceViewModel.m in Sources */,
 				F5A1317A1D50E77800190C1B /* MyQRCodeController.m in Sources */,
 				F57C38611D556D9000022E5B /* MyAddressController.m in Sources */,
@@ -2477,7 +2477,7 @@
 					"$(PROJECT_DIR)/WeChat_D/HyphenateSDK/lib",
 					"$(PROJECT_DIR)/WeChat_D/Categories/VoiceLib",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.dong.WeChat-DDDD";
+				PRODUCT_BUNDLE_IDENTIFIER = com.dong.WeChat;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 			};
@@ -2501,7 +2501,7 @@
 					"$(PROJECT_DIR)/WeChat_D/HyphenateSDK/lib",
 					"$(PROJECT_DIR)/WeChat_D/Categories/VoiceLib",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.dong.WeChat-DDDD";
+				PRODUCT_BUNDLE_IDENTIFIER = com.dong.WeChat;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 			};
