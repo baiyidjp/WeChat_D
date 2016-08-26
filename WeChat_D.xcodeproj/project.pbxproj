@@ -61,6 +61,10 @@
 		A2C512C41D42090700D84829 /* AgreeFriendViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A2C512C31D42090700D84829 /* AgreeFriendViewController.m */; };
 		A2DA92501D50B42E000077ED /* QRCodeManger.m in Sources */ = {isa = PBXBuildFile; fileRef = A2DA924F1D50B42E000077ED /* QRCodeManger.m */; };
 		A2DA92531D50B6FE000077ED /* MyInfoController.m in Sources */ = {isa = PBXBuildFile; fileRef = A2DA92521D50B6FE000077ED /* MyInfoController.m */; };
+		A2E4B8741D70284200D344EF /* AddressListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A2E4B8721D70284200D344EF /* AddressListCell.m */; };
+		A2E4B8751D70284200D344EF /* AddressListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A2E4B8731D70284200D344EF /* AddressListCell.xib */; };
+		A2E4B8781D702D2100D344EF /* AddressCellModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A2E4B8771D702D2100D344EF /* AddressCellModel.m */; };
+		A2E4B87B1D7038BE00D344EF /* EditAddressController.m in Sources */ = {isa = PBXBuildFile; fileRef = A2E4B87A1D7038BE00D344EF /* EditAddressController.m */; };
 		EEA7B39501F1EDAA38FBFDB0 /* libPods-WeChat_D.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 77912E4F30617DE482F6A3C6 /* libPods-WeChat_D.a */; };
 		F53DEC8E1D673D6C004B009E /* FriendListTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F53DEC8D1D673D6C004B009E /* FriendListTableViewCell.m */; };
 		F53EC6711D3E636900027A24 /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F53EC66D1D3E636900027A24 /* libcrypto.a */; };
@@ -503,6 +507,13 @@
 		A2DA924F1D50B42E000077ED /* QRCodeManger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QRCodeManger.m; sourceTree = "<group>"; };
 		A2DA92511D50B6FE000077ED /* MyInfoController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyInfoController.h; sourceTree = "<group>"; };
 		A2DA92521D50B6FE000077ED /* MyInfoController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyInfoController.m; sourceTree = "<group>"; };
+		A2E4B8711D70284200D344EF /* AddressListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddressListCell.h; sourceTree = "<group>"; };
+		A2E4B8721D70284200D344EF /* AddressListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddressListCell.m; sourceTree = "<group>"; };
+		A2E4B8731D70284200D344EF /* AddressListCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddressListCell.xib; sourceTree = "<group>"; };
+		A2E4B8761D702D2100D344EF /* AddressCellModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddressCellModel.h; sourceTree = "<group>"; };
+		A2E4B8771D702D2100D344EF /* AddressCellModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddressCellModel.m; sourceTree = "<group>"; };
+		A2E4B8791D7038BE00D344EF /* EditAddressController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditAddressController.h; sourceTree = "<group>"; };
+		A2E4B87A1D7038BE00D344EF /* EditAddressController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditAddressController.m; sourceTree = "<group>"; };
 		A9B6923DCF73CFE0F0DA477B /* Pods-WeChat_D.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WeChat_D.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WeChat_D/Pods-WeChat_D.debug.xcconfig"; sourceTree = "<group>"; };
 		CC02DEDA828486EE35A2D3B8 /* Pods-WeChat_D.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WeChat_D.release.xcconfig"; path = "Pods/Target Support Files/Pods-WeChat_D/Pods-WeChat_D.release.xcconfig"; sourceTree = "<group>"; };
 		F53DEC8C1D673D6C004B009E /* FriendListTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FriendListTableViewCell.h; sourceTree = "<group>"; };
@@ -1161,6 +1172,8 @@
 				F57C385D1D54E23D00022E5B /* GoodsAddressController.m */,
 				F57C385F1D556D9000022E5B /* MyAddressController.h */,
 				F57C38601D556D9000022E5B /* MyAddressController.m */,
+				A2E4B8791D7038BE00D344EF /* EditAddressController.h */,
+				A2E4B87A1D7038BE00D344EF /* EditAddressController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -1168,6 +1181,8 @@
 		A297B7471D2F8E5A003C9276 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				A2E4B8761D702D2100D344EF /* AddressCellModel.h */,
+				A2E4B8771D702D2100D344EF /* AddressCellModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1796,6 +1811,9 @@
 			children = (
 				F5E2C5171D538BCD004260D1 /* JPTextView.h */,
 				F5E2C5181D538BCD004260D1 /* JPTextView.m */,
+				A2E4B8711D70284200D344EF /* AddressListCell.h */,
+				A2E4B8721D70284200D344EF /* AddressListCell.m */,
+				A2E4B8731D70284200D344EF /* AddressListCell.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1935,6 +1953,7 @@
 				F5CB8C371D4477E0002663F8 /* VoiceSearchFeedback006_90x90_@2x.png in Resources */,
 				F5A130561D48FC9500190C1B /* VoiceSearchFeedback004_90x90_@2x.png in Resources */,
 				F5CB8C401D4477E0002663F8 /* VoiceSearchFeedback015_90x90_@2x.png in Resources */,
+				A2E4B8751D70284200D344EF /* AddressListCell.xib in Resources */,
 				F5A131401D48FF0900190C1B /* sharemore_friendcard_59x59_@2x.png in Resources */,
 				F5A1307A1D48FCAE00190C1B /* FriendsSendsPicturesSelectIcon_27x27_@2x.png in Resources */,
 				F5A1314C1D48FF0900190C1B /* sharemore_other_60x60_@2x.png in Resources */,
@@ -2275,6 +2294,7 @@
 				F5E2C5191D538BCD004260D1 /* JPTextView.m in Sources */,
 				F5E919291D5F40B300AB487A /* JPALAssetLibraryManager.m in Sources */,
 				A25AAB691D48B1D900DBBBE5 /* CreatGroupModel.m in Sources */,
+				A2E4B8741D70284200D344EF /* AddressListCell.m in Sources */,
 				F5A131761D50E0F500190C1B /* JPTableViewDelegate.m in Sources */,
 				A249DF8E1D5C1E22000206FF /* JPScreenPhotoController.m in Sources */,
 				A21B62971D38DA1700F0E727 /* WeChatTableViewCell.m in Sources */,
@@ -2300,6 +2320,7 @@
 				A24BBE401D5B1B230062DFC9 /* JPPhotoListController.m in Sources */,
 				F5CB8B641D3F0533002663F8 /* AddFriendController.m in Sources */,
 				A21137E01D4A21BD00CB6EF7 /* UIViewController+BackButtonHandler.m in Sources */,
+				A2E4B87B1D7038BE00D344EF /* EditAddressController.m in Sources */,
 				A24BBE431D5B20E60062DFC9 /* JPPhotoModel.m in Sources */,
 				F5E2C5051D523BF7004260D1 /* ScanQRCodeController.m in Sources */,
 				A24BBE381D5B05BD0062DFC9 /* JPPhotoGroupModel.m in Sources */,
@@ -2309,6 +2330,7 @@
 				A25AAB661D48B13A00DBBBE5 /* CreatGroupCell.m in Sources */,
 				F5E2C51C1D538DE3004260D1 /* SignatureController.m in Sources */,
 				A21137DD1D49E53500CB6EF7 /* MyGroupListController.m in Sources */,
+				A2E4B8781D702D2100D344EF /* AddressCellModel.m in Sources */,
 				A2C512C01D41F8FA00D84829 /* NewFriendCell.m in Sources */,
 				F5A131751D50E0F500190C1B /* CityNameModel.m in Sources */,
 				A24695331D34EA7600E32C30 /* JPKeyBoardToolView.m in Sources */,

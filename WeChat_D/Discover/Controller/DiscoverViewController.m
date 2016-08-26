@@ -7,6 +7,7 @@
 //
 
 #import "DiscoverViewController.h"
+#import "ScanQRCodeController.h"
 
 @interface DiscoverViewController ()<UITableViewDelegate,UITableViewDataSource>
 
@@ -112,6 +113,56 @@
         return KMARGIN;
     }
     return 2*KMARGIN;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+
+    switch (indexPath.section) {
+        case 0:
+        {
+            switch (indexPath.row) {
+                case 0:
+                    //朋友圈
+                    break;
+                case 1:
+                    //附近的人
+                    break;
+                case 2:
+                    //摇一摇
+                    break;
+                    
+                default:
+                    break;
+            }
+        }
+            break;
+        case 1:
+        {
+            //扫一扫
+            ScanQRCodeController *QRCtrl = [[ScanQRCodeController alloc]init];
+            self.tabBarController.tabBar.hidden = YES;
+            [self.navigationController pushViewController:QRCtrl animated:YES];
+        }
+            break;
+        case 2:
+        {
+            switch (indexPath.row) {
+                case 0:
+                    //购物
+                    break;
+                case 1:
+                    //游戏
+                    break;
+                    
+                default:
+                    break;
+            }
+        }
+            break;
+            
+        default:
+            break;
+    }
 }
 
 @end

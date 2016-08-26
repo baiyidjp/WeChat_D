@@ -73,6 +73,8 @@
 #define CHANGESEXSUCCESS    @"ChangeSexSuccess"
 //个性签名
 #define CHANGESIGNSUCCESS   @"ChangeSignSuccess"
+//存储地址的key
+#define ADDRESSSAVEKEY      @"AddressSaveKey"
 //高效打印
 #ifdef DEBUG
 #define NSLog(...) NSLog(@"%s 第%d行 \n %@\n",__func__,__LINE__,[NSString stringWithFormat:__VA_ARGS__])
