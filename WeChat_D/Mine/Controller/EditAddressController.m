@@ -8,13 +8,14 @@
 
 #import "EditAddressController.h"
 #import "JPTextView.h"
+#import "AddressCellModel.h"
 
 #define TOP_PADDING 10
 #define LABEL_TOP 20
 #define BOTTOM_PADDING 8
 #define CELLVIEW_H 50
 
-@interface EditAddressController ()<UITextViewDelegate>
+@interface EditAddressController ()<UITextViewDelegate,UITextFieldDelegate>
 
 @property(nonatomic,strong)UIButton *doneBtn;
 @property(nonatomic,strong)NSMutableArray *textArray;
@@ -112,6 +113,21 @@
         make.left.right.offset(0);
         make.height.equalTo(@(CELLVIEW_H));
     }];
+    
+    if (self.addressModel) {
+        
+        UITextField *textField0 = [self.textArray objectAtIndex:0];
+        UITextField *textField1 = [self.textArray objectAtIndex:1];
+        UITextField *textField2 = [self.textArray objectAtIndex:2];
+        UITextView *textView = [self.textArray objectAtIndex:3];
+        UITextField *textField4 = [self.textArray objectAtIndex:4];
+        
+        textField0.text = self.addressModel.name;
+        textField1.text = self.addressModel.photoNum;
+        textField2.text = self.addressModel.city;
+        textView.text = self.addressModel.address;
+        textField4.text = self.addressModel.emsNum;
+    }
 }
 
 - (void)clickBackBtn{
@@ -126,6 +142,45 @@
 
 - (void)clickDoneBtn{
     
+    
+    UITextField *textField0 = [self.textArray objectAtIndex:0];
+    UITextField *textField1 = [self.textArray objectAtIndex:1];
+    UITextField *textField2 = [self.textArray objectAtIndex:2];
+    UITextView *textView = [self.textArray objectAtIndex:3];
+    UITextField *textField4 = [self.textArray objectAtIndex:4];
+
+    
+    if (self.addressModel) {
+        NSArray *addArr = [[NSUserDefaults standardUserDefaults] objectForKey:ADDRESSSAVEKEY];
+        NSMutableArray *addresslist = [NSMutableArray arrayWithArray:addArr];
+        if ([addresslist containsObject:self.addressModel]) {
+            [addresslist removeObject:self.addressModel];
+        }
+        self.addressModel.name = textField0.text;
+        self.addressModel.photoNum = textField1.text;
+        self.addressModel.city = textField2.text;
+        self.addressModel.address = textView.text;
+        self.addressModel.emsNum = textField4.text;
+        NSMutableDictionary *addressDict = [self.addressModel mj_keyValues];
+        [addresslist insertObject:[addressDict copy] atIndex:0];
+        [[NSUserDefaults standardUserDefaults] setObject:[addresslist copy] forKey:ADDRESSSAVEKEY];
+
+        
+    }else{
+        
+        NSArray *addArr = [[NSUserDefaults standardUserDefaults] objectForKey:ADDRESSSAVEKEY];
+        NSMutableArray *addresslist = [NSMutableArray arrayWithArray:addArr];
+        AddressCellModel *addModel = [[AddressCellModel alloc]init];
+        addModel.name = textField0.text;
+        addModel.photoNum = textField1.text;
+        addModel.city = textField2.text;
+        addModel.address = textView.text;
+        addModel.emsNum = textField4.text;
+        NSMutableDictionary *addressDict = [addModel mj_keyValues];
+        [addresslist insertObject:[addressDict copy] atIndex:0];
+        [[NSUserDefaults standardUserDefaults] setObject:[addresslist copy] forKey:ADDRESSSAVEKEY];
+    }
+
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
@@ -163,6 +218,7 @@
         textView.textColor = [UIColor colorWithHexString:@"888888"];
         textView.delegate = self;//设置代理
         textView.placeholder = placeholder;
+        textView.placeLabel.hidden = self.addressModel ? YES : NO;
         textView.wordNum = 300;
         textView.fontNum = 13;
         [backView addSubview:textView];
@@ -177,6 +233,7 @@
         UITextField *textField = [[UITextField alloc]init];
         [textField setPlaceholder:placeholder];
         textField.font = FONTSIZE(13);
+        textField.delegate = self;
         textField.textColor = [UIColor colorWithHexString:@"888888"];
         textField.textAlignment = NSTextAlignmentLeft; //水平左对齐
         textField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;  //垂直居中
@@ -197,6 +254,33 @@
     
     
     return backView;
+}
+
+- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text{
+    
+    NSLog(@"1");
+    [self checkTextEditState];
+    return YES;
+}
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string{
+    NSLog(@"2");
+    [self checkTextEditState];
+    return YES;
+}
+
+- (void)checkTextEditState{
+    
+    UITextField *textField0 = [self.textArray objectAtIndex:0];
+    UITextField *textField1 = [self.textArray objectAtIndex:1];
+    UITextField *textField2 = [self.textArray objectAtIndex:2];
+    UITextView *textView = [self.textArray objectAtIndex:3];
+    UITextField *textField4 = [self.textArray objectAtIndex:4];
+    if (textField0.text.length && textField1.text.length && textField2.text.length && textView.text.length && textField4.text.length) {
+        self.doneBtn.enabled = YES;
+    }else{
+        self.doneBtn.enabled = NO;
+    }
 }
 
 @end

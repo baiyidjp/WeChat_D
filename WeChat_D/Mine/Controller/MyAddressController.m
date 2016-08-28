@@ -26,12 +26,20 @@
         
         NSArray *addArr = [[NSUserDefaults standardUserDefaults] objectForKey:ADDRESSSAVEKEY];
         if (addArr) {
-            _dataArray = addArr;
+            _dataArray = [AddressCellModel mj_objectArrayWithKeyValuesArray:addArr];
         }else{
             _dataArray = [[NSArray alloc]init];
         }
     }
     return _dataArray;
+}
+
+- (void)viewWillAppear:(BOOL)animated{
+    
+    [super viewWillAppear:animated];
+    if (self.addressListView) {
+        [self.addressListView reloadData];
+    }
 }
 
 - (void)viewDidLoad {
@@ -100,13 +108,16 @@
             [self presentViewController:editContro animated:YES completion:nil];
         }
     }
-    EditAddressController *editContro = [[EditAddressController alloc]init];
-    [self presentViewController:editContro animated:YES completion:nil];
+   
 }
 
 - (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath{
     
     NSLog(@"点击进去编辑界面");
+    AddressCellModel *model = [self.dataArray objectAtIndex:indexPath.row];
+    EditAddressController *editContro = [[EditAddressController alloc]init];
+    editContro.addressModel = model;
+    [self presentViewController:editContro animated:YES completion:nil];
 }
 
 @end

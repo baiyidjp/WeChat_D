@@ -8,6 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
+@class AddressCellModel;
 @interface EditAddressController : BaseViewController
+
+/** model */
+@property(nonatomic,strong) AddressCellModel *addressModel;
 
 @end
