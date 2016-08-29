@@ -66,7 +66,7 @@
         make.centerY.equalTo(topBackView.mas_centerY).with.offset(KMARGIN);
     }];
     UILabel *titleL = [[UILabel alloc]init];
-    titleL.text = @"修改地址";
+    titleL.text = self.addressModel ? @"编辑地址" : @"新增地址";
     titleL.textColor = [UIColor whiteColor];
     [topBackView addSubview:titleL];
     [titleL mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -153,8 +153,8 @@
     if (self.addressModel) {
         NSArray *addArr = [[NSUserDefaults standardUserDefaults] objectForKey:ADDRESSSAVEKEY];
         NSMutableArray *addresslist = [NSMutableArray arrayWithArray:addArr];
-        if ([addresslist containsObject:self.addressModel]) {
-            [addresslist removeObject:self.addressModel];
+        if ([addresslist containsObject:[self.addressModel mj_keyValues]]) {
+            [addresslist removeObject:[self.addressModel mj_keyValues]];
         }
         self.addressModel.name = textField0.text;
         self.addressModel.photoNum = textField1.text;
@@ -257,14 +257,13 @@
 }
 
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text{
-    
-    NSLog(@"1");
+
     [self checkTextEditState];
     return YES;
 }
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string{
-    NSLog(@"2");
+
     [self checkTextEditState];
     return YES;
 }

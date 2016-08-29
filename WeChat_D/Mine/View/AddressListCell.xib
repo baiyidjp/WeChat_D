@@ -16,13 +16,13 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FGE-Rw-54I">
-                        <rect key="frame" x="8" y="8" width="576" height="20"/>
+                        <rect key="frame" x="23" y="8" width="553" height="20"/>
                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f5s-Fi-OxJ">
-                        <rect key="frame" x="8" y="33" width="576" height="18"/>
+                        <rect key="frame" x="23" y="33" width="553" height="18"/>
                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                         <color key="textColor" red="0.46033653846153844" green="0.46033653846153844" blue="0.46033653846153844" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
@@ -30,11 +30,11 @@
                 </subviews>
                 <constraints>
                     <constraint firstItem="FGE-Rw-54I" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" id="MO0-P3-PW5"/>
-                    <constraint firstAttribute="trailingMargin" secondItem="FGE-Rw-54I" secondAttribute="trailing" constant="-8" id="Mko-3Y-vvu"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="FGE-Rw-54I" secondAttribute="trailing" id="Mko-3Y-vvu"/>
                     <constraint firstItem="f5s-Fi-OxJ" firstAttribute="bottom" secondItem="H2p-sc-9uM" secondAttribute="bottomMargin" id="sjj-ac-yfE"/>
-                    <constraint firstAttribute="trailingMargin" secondItem="f5s-Fi-OxJ" secondAttribute="trailing" constant="-8" id="txB-2u-el5"/>
-                    <constraint firstItem="f5s-Fi-OxJ" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="xPb-wv-7Qc"/>
-                    <constraint firstItem="FGE-Rw-54I" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="zzn-Qs-YTQ"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="f5s-Fi-OxJ" secondAttribute="trailing" id="txB-2u-el5"/>
+                    <constraint firstItem="f5s-Fi-OxJ" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="15" id="xPb-wv-7Qc"/>
+                    <constraint firstItem="FGE-Rw-54I" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="15" id="zzn-Qs-YTQ"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>

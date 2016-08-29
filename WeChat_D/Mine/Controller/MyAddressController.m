@@ -13,23 +13,18 @@
 
 @interface MyAddressController ()<UITableViewDelegate,UITableViewDataSource>
 
-@property(nonatomic,strong)NSArray *dataArray;
+@property(nonatomic,strong)NSMutableArray *dataArray;
 @property(nonatomic,strong)UITableView *addressListView;
 
 @end
 
 @implementation MyAddressController
 
-- (NSArray *)dataArray{
+- (NSMutableArray *)dataArray{
     
     if (!_dataArray) {
         
-        NSArray *addArr = [[NSUserDefaults standardUserDefaults] objectForKey:ADDRESSSAVEKEY];
-        if (addArr) {
-            _dataArray = [AddressCellModel mj_objectArrayWithKeyValuesArray:addArr];
-        }else{
-            _dataArray = [[NSArray alloc]init];
-        }
+        _dataArray = [NSMutableArray array];
     }
     return _dataArray;
 }
@@ -38,6 +33,10 @@
     
     [super viewWillAppear:animated];
     if (self.addressListView) {
+        NSArray *addArr = [[NSUserDefaults standardUserDefaults] objectForKey:ADDRESSSAVEKEY];
+        if (addArr) {
+            self.dataArray = [AddressCellModel mj_objectArrayWithKeyValuesArray:addArr];
+        }
         [self.addressListView reloadData];
     }
 }
@@ -59,37 +58,26 @@
     [self.view addSubview:self.addressListView];
 }
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    
-    return self.dataArray.count ? 2 : 1;
-}
-
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     
-    if (self.dataArray.count) {
-        if (section == 0) {
-            return self.dataArray.count;
-        }
-    }
-    return 1;
+    return self.dataArray.count+1;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    if (self.dataArray.count) {
-        if (indexPath.section == 0) {
-            
-            AddressListCell *cell = [tableView dequeueReusableCellWithIdentifier:@"AddressListCell"];
-            AddressCellModel *model = [self.dataArray objectAtIndex:indexPath.row];
-            cell.nameLabel.text = model.name;
-            cell.addressLabel.text = [NSString stringWithFormat:@"%@%@",model.city,model.address];
-            cell.selectionStyle = UITableViewCellSelectionStyleNone;
-            return cell;
-        }
+    if (indexPath.row == self.dataArray.count) {
+        
+        UITableViewCell *cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"addCell"];
+        cell.textLabel.text = @"  新增地址";
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        return cell;
     }
-    UITableViewCell *cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"addCell"];
-    cell.textLabel.text = @"  新增地址";;
-    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    
+    AddressListCell *cell = [tableView dequeueReusableCellWithIdentifier:@"AddressListCell"];
+    AddressCellModel *model = [self.dataArray objectAtIndex:indexPath.row];
+    cell.nameLabel.text = model.name;
+    cell.addressLabel.text = [NSString stringWithFormat:@"%@%@",model.city,model.address];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
 }
@@ -101,12 +89,9 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    if (self.dataArray.count) {
-        if (indexPath.section == 1) {
-         
-            EditAddressController *editContro = [[EditAddressController alloc]init];
-            [self presentViewController:editContro animated:YES completion:nil];
-        }
+    if (indexPath.row == self.dataArray.count) {
+        EditAddressController *editContro = [[EditAddressController alloc]init];
+        [self presentViewController:editContro animated:YES completion:nil];
     }
    
 }
@@ -118,6 +103,19 @@
     EditAddressController *editContro = [[EditAddressController alloc]init];
     editContro.addressModel = model;
     [self presentViewController:editContro animated:YES completion:nil];
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath{
+
+    [self.dataArray removeObjectAtIndex:indexPath.row];
+    [self.addressListView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+    NSMutableArray *arr = [AddressCellModel mj_keyValuesArrayWithObjectArray:self.dataArray];
+    [[NSUserDefaults standardUserDefaults] setObject:[arr copy] forKey:ADDRESSSAVEKEY];
+    
+}
+#pragma mark titleForDeleteConfirmationButtonForRowAtIndexPath
+- (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath{
+    return @"删除";
 }
 
 @end
