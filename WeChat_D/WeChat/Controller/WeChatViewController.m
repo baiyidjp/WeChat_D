@@ -429,27 +429,19 @@
     
     NSMutableArray *consations = [NSMutableArray arrayWithCapacity:self.dataArray.count];
     for (WeChatListModel *oldModel in self.dataArray) {
-        [consations addObject:oldModel.conversation.conversationId];
+        [consations addObject:oldModel.conversation.latestMessage.messageId];
     }
     
     NSArray *messages = [notification.userInfo objectForKey:@"Message"];
     for (EMMessage *message in messages)
     {
-        EMConversationType consationType;
-        if (message.chatType == EMChatTypeChat) {
-            consationType = EMConversationTypeChat;
-        }else if (message.chatType == EMChatTypeGroupChat){
-            consationType = EMConversationTypeGroupChat;
-        }
-        NSString *userName = message.from;
-        EMConversation *newConversation = [[EMClient sharedClient].chatManager getConversation:userName type:consationType createIfNotExist:YES];
         //检测当前会话列表是否包含新建的会话
-        if ([consations containsObject:newConversation.conversationId])
+        if ([consations containsObject:message.messageId])
         {
             for (NSInteger i = 0; i < consations.count; i++)
             {
                 WeChatListModel *model = [self.dataArray objectAtIndex:i];
-                if ([newConversation.conversationId isEqualToString:model.conversationID])
+                if ([message.messageId isEqual:model.conversation.latestMessage.messageId])
                 {
                     NSIndexPath *indexPathF = [NSIndexPath indexPathForRow:i inSection:0];
                     NSIndexPath *indexPathT = [NSIndexPath indexPathForRow:0 inSection:0];
@@ -476,11 +468,19 @@
         }else
         {
             WeChatListModel *newModel = [[WeChatListModel alloc]init];
-            newModel.conversation = newConversation;
-            [self.dataArray insertObject:newModel atIndex:0];
-            NSIndexPath *indexPathT = [NSIndexPath indexPathForRow:0 inSection:0];
-            [self.weChatTableView insertRowsAtIndexPaths:@[indexPathT] withRowAnimation:UITableViewRowAnimationFade];
-            [self.weChatTableView reloadRowsAtIndexPaths:@[indexPathT] withRowAnimation:UITableViewRowAnimationFade];
+            
+            if (message.chatType == EMChatTypeChat)
+            {
+                EMConversation *newConversation = [[EMClient sharedClient].chatManager getConversation:message.from type:EMConversationTypeChat createIfNotExist:YES];
+                newModel.conversation = newConversation;
+                [self.dataArray insertObject:newModel atIndex:0];
+                NSIndexPath *indexPathT = [NSIndexPath indexPathForRow:0 inSection:0];
+                [self.weChatTableView insertRowsAtIndexPaths:@[indexPathT] withRowAnimation:UITableViewRowAnimationFade];
+                [self.weChatTableView reloadRowsAtIndexPaths:@[indexPathT] withRowAnimation:UITableViewRowAnimationFade];
+            }else if (message.chatType == EMChatTypeGroupChat)
+            {
+                [self getAllConversations];
+            }
         }
     }
     NSInteger badge = [self.tabBarItem.badgeValue integerValue];
