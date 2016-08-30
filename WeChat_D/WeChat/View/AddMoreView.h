@@ -11,11 +11,11 @@
 typedef enum : NSUInteger {
     MoreViewButtonType_Photo,//照片
     MoreViewButtonType_Camera,//拍摄
-    MoreViewButtonType_Location,//位置
     MoreViewButtonType_SmallVideo,//小视频
     MoreViewButtonType_VoiceChat,//语音聊天
     MoreViewButtonType_RedBag,//红包
     MoreViewButtonType_MineCard,//个人名片
+    MoreViewButtonType_Location,//位置
     MoreViewButtonType_Collect,//收藏
     MoreViewButtonType_RecordInput,//语音输入
 } MoreViewButtonType;

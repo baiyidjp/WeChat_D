@@ -14,6 +14,7 @@ typedef enum : NSUInteger {
     MessageType_Text,
     MessageType_Voice,
     MessageType_Picture,
+    MessageType_Video,
 } MessageType;
 
 typedef enum : NSUInteger {
@@ -24,10 +25,21 @@ typedef enum : NSUInteger {
 
 @class EMMessage;
 @interface MessageModel : NSObject
-
+/**
+ *  文字
+ */
 @property(nonatomic,copy)NSString *messagetext;
+/**
+ *  缩略图的服务器路径
+ */
 @property(nonatomic,copy)NSString *imageUrl;
+/**
+ *  缩略图的本地路径
+ */
 @property(nonatomic,copy)NSString *image_mark;
+/**
+ *  大图的路径
+ */
 @property(nonatomic,copy)NSString *bigImage_Url;
 /** 缩略图的尺寸 */
 @property(nonatomic,assign) CGSize thumbnailSize;
@@ -39,13 +51,25 @@ typedef enum : NSUInteger {
  */
 @property(nonatomic,assign)int voiceTime;
 /**
- *  网络路径
+ *  voice网络路径
  */
 @property(nonatomic,copy)NSString *voicePath;
 /**
- *  本地路径
+ *  voice本地路径
  */
 @property(nonatomic,copy)NSString *voiceLocaPath;
+/**
+ *  video时间
+ */
+@property(nonatomic,assign)int videoTime;
+/**
+ *  video网络路径
+ */
+@property(nonatomic,copy)NSString *videoPath;
+/**
+ *  video本地路径
+ */
+@property(nonatomic,copy)NSString *videoLocaPath;
 /**
  *  是否本人发送
  */

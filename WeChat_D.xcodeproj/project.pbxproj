@@ -34,6 +34,10 @@
 		A25AAB631D4883DB00DBBBE5 /* kuang@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = A25AAB611D4883DB00DBBBE5 /* kuang@3x.png */; };
 		A25AAB661D48B13A00DBBBE5 /* CreatGroupCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A25AAB651D48B13A00DBBBE5 /* CreatGroupCell.m */; };
 		A25AAB691D48B1D900DBBBE5 /* CreatGroupModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A25AAB681D48B1D900DBBBE5 /* CreatGroupModel.m */; };
+		A26262611D754B0300B73126 /* AVKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A26262601D754B0300B73126 /* AVKit.framework */; };
+		A26262691D754B6200B73126 /* JPPlayVideoController.m in Sources */ = {isa = PBXBuildFile; fileRef = A26262641D754B6200B73126 /* JPPlayVideoController.m */; };
+		A262626A1D754B6200B73126 /* JPWXVideoController.m in Sources */ = {isa = PBXBuildFile; fileRef = A26262661D754B6200B73126 /* JPWXVideoController.m */; };
+		A262626B1D754B6200B73126 /* UIView+YYAdd.m in Sources */ = {isa = PBXBuildFile; fileRef = A26262681D754B6200B73126 /* UIView+YYAdd.m */; };
 		A28319DE1D62D98300047020 /* imageDownloadFail@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A28319DD1D62D98300047020 /* imageDownloadFail@2x.png */; };
 		A28D8F5A1D51C3D00025464B /* ChangeNameController.m in Sources */ = {isa = PBXBuildFile; fileRef = A28D8F591D51C3D00025464B /* ChangeNameController.m */; };
 		A28EADEE1D655309003087DA /* JPTextChangeToPinYinManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A28EADED1D655309003087DA /* JPTextChangeToPinYinManager.m */; };
@@ -450,6 +454,13 @@
 		A25AAB651D48B13A00DBBBE5 /* CreatGroupCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreatGroupCell.m; sourceTree = "<group>"; };
 		A25AAB671D48B1D900DBBBE5 /* CreatGroupModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreatGroupModel.h; sourceTree = "<group>"; };
 		A25AAB681D48B1D900DBBBE5 /* CreatGroupModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreatGroupModel.m; sourceTree = "<group>"; };
+		A26262601D754B0300B73126 /* AVKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVKit.framework; path = System/Library/Frameworks/AVKit.framework; sourceTree = SDKROOT; };
+		A26262641D754B6200B73126 /* JPPlayVideoController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JPPlayVideoController.m; sourceTree = "<group>"; };
+		A26262651D754B6200B73126 /* JPWXVideoController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JPWXVideoController.h; sourceTree = "<group>"; };
+		A26262661D754B6200B73126 /* JPWXVideoController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JPWXVideoController.m; sourceTree = "<group>"; };
+		A26262671D754B6200B73126 /* UIView+YYAdd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+YYAdd.h"; sourceTree = "<group>"; };
+		A26262681D754B6200B73126 /* UIView+YYAdd.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+YYAdd.m"; sourceTree = "<group>"; };
+		A262626C1D754F1B00B73126 /* JPPlayVideoController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JPPlayVideoController.h; sourceTree = "<group>"; };
 		A28319DD1D62D98300047020 /* imageDownloadFail@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "imageDownloadFail@2x.png"; sourceTree = "<group>"; };
 		A28D8F581D51C3D00025464B /* ChangeNameController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChangeNameController.h; sourceTree = "<group>"; };
 		A28D8F591D51C3D00025464B /* ChangeNameController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChangeNameController.m; sourceTree = "<group>"; };
@@ -894,8 +905,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F566E9B51D5F253F004A203B /* Photos.framework in Frameworks */,
+				A26262611D754B0300B73126 /* AVKit.framework in Frameworks */,
 				A24BBE3A1D5B06180062DFC9 /* AssetsLibrary.framework in Frameworks */,
+				F566E9B51D5F253F004A203B /* Photos.framework in Frameworks */,
 				F53EC6881D3E644300027A24 /* libiconv.tbd in Frameworks */,
 				A2C512BB1D41BB9A00D84829 /* libmp3lame.a in Frameworks */,
 				F53EC6861D3E643C00027A24 /* libsqlite3.tbd in Frameworks */,
@@ -935,6 +947,7 @@
 		A12D7F57D4C2FA15BBD6C897 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				A26262601D754B0300B73126 /* AVKit.framework */,
 				F566E9B41D5F253F004A203B /* Photos.framework */,
 				A24BBE391D5B06180062DFC9 /* AssetsLibrary.framework */,
 				F53EC6871D3E644300027A24 /* libiconv.tbd */,
@@ -991,6 +1004,19 @@
 				F5E919281D5F40B300AB487A /* JPALAssetLibraryManager.m */,
 			);
 			path = JPPhotoBrowser;
+			sourceTree = "<group>";
+		};
+		A26262621D754B6200B73126 /* JPSmallVideo */ = {
+			isa = PBXGroup;
+			children = (
+				A262626C1D754F1B00B73126 /* JPPlayVideoController.h */,
+				A26262641D754B6200B73126 /* JPPlayVideoController.m */,
+				A26262651D754B6200B73126 /* JPWXVideoController.h */,
+				A26262661D754B6200B73126 /* JPWXVideoController.m */,
+				A26262671D754B6200B73126 /* UIView+YYAdd.h */,
+				A26262681D754B6200B73126 /* UIView+YYAdd.m */,
+			);
+			path = JPSmallVideo;
 			sourceTree = "<group>";
 		};
 		A297B6F91D2F8E14003C9276 = {
@@ -1244,6 +1270,7 @@
 		A297B7531D2F8E5A003C9276 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				A26262621D754B6200B73126 /* JPSmallVideo */,
 				A24BBE321D5B05620062DFC9 /* JPPhotoBrowser */,
 				A297B7541D2F8E5A003C9276 /* WeChatViewController.h */,
 				A297B7551D2F8E5A003C9276 /* WeChatViewController.m */,
@@ -2298,6 +2325,7 @@
 				F5A131761D50E0F500190C1B /* JPTableViewDelegate.m in Sources */,
 				A249DF8E1D5C1E22000206FF /* JPScreenPhotoController.m in Sources */,
 				A21B62971D38DA1700F0E727 /* WeChatTableViewCell.m in Sources */,
+				A26262691D754B6200B73126 /* JPPlayVideoController.m in Sources */,
 				A297B7631D2F9622003C9276 /* BaseViewController.m in Sources */,
 				A297B75C1D2F8E5A003C9276 /* DiscoverViewController.m in Sources */,
 				A2C512C41D42090700D84829 /* AgreeFriendViewController.m in Sources */,
@@ -2306,6 +2334,7 @@
 				F57C385E1D54E23D00022E5B /* GoodsAddressController.m in Sources */,
 				A28EADEE1D655309003087DA /* JPTextChangeToPinYinManager.m in Sources */,
 				F5A131731D50E0F500190C1B /* SecondViewController.m in Sources */,
+				A262626B1D754B6200B73126 /* UIView+YYAdd.m in Sources */,
 				F5C944901D6C287F000E7199 /* JPBigImageView.m in Sources */,
 				A249DF911D5C2D92000206FF /* JPPhotoCollectionLayout.m in Sources */,
 				A2088B3E1D3C6EC200C73446 /* PublicMethodManager.m in Sources */,
@@ -2337,6 +2366,7 @@
 				A297B7071D2F8E14003C9276 /* main.m in Sources */,
 				A24BBE461D5B23C00062DFC9 /* JPPhotoCollectionViewCell.m in Sources */,
 				A28D8F5A1D51C3D00025464B /* ChangeNameController.m in Sources */,
+				A262626A1D754B6200B73126 /* JPWXVideoController.m in Sources */,
 				A297B7591D2F8E5A003C9276 /* UIView+Toast.m in Sources */,
 				A2C435501D3608CF0097ECC1 /* AddMoreView.m in Sources */,
 				A21B62901D3893ED00F0E727 /* FaceViewModel.m in Sources */,

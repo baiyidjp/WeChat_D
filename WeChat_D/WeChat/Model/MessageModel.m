@@ -63,7 +63,17 @@
             self.thumbnailSize = imageBody.size;
         }
             break;
-
+        case EMMessageBodyTypeVideo:{
+            EMVideoMessageBody *videoBody = (EMVideoMessageBody *)_messageBody;
+            self.messageType = MessageType_Video;
+            self.videoTime = videoBody.duration;
+            self.videoPath = videoBody.remotePath;
+            self.videoLocaPath = videoBody.localPath;
+            self.imageUrl = videoBody.thumbnailRemotePath;//缩略图的服务器路径
+            self.image_mark = videoBody.thumbnailLocalPath;//缩略图的本地路径
+            self.bigImage_Url = videoBody.remotePath;
+            self.thumbnailSize = videoBody.thumbnailSize;
+        }
         default:
             break;
     }

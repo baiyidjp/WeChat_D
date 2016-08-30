@@ -180,29 +180,6 @@
     
 }
 
-#pragma mark 获取当前组下的图片
-//- (void)getGroupPhotoData{
-//    
-//    [self.group enumerateAssetsWithOptions:NSEnumerationReverse usingBlock:^(ALAsset *result, NSUInteger index, BOOL *stop) {
-////        if (ABS((NSInteger)index - [self.group numberOfAssets]) > showImageCount) {
-////            *stop = YES;
-////            //刷新数据
-////            [photoCollectionView reloadData];
-////        }else{
-//            if (result) {
-//                NSInteger row = ABS((NSInteger)index - [self.group numberOfAssets]+1);
-//                JPPhotoModel *photoModel = [[JPPhotoModel alloc]init];
-//                photoModel.asset = result;
-//                photoModel.indexPath = [NSIndexPath indexPathForRow:row inSection:0];
-//                [self.photoDataArray addObject:photoModel];
-//            }else{
-//                //刷新数据
-//                [photoCollectionView reloadData];
-//            }
-////        }
-//    }];
-//}
-
 #pragma mark 点击选中按钮的回调
 - (void)cellSelectWithIndexPath:(NSIndexPath *)indexPath{
     

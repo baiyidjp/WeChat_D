@@ -16,6 +16,7 @@
 #import <AssetsLibrary/AssetsLibrary.h>
 #import "JPPhotoGroupListController.h"
 #import "JPPhotoModel.h"
+#import "JPWXVideoController.h"
 
 #define BackColor [UIColor colorWithRed:204.0/255.0f green:204.0/255.0f blue:204.0/255.0f alpha:1.0f]
 @interface JPKeyBoardToolView ()<UITextViewDelegate,AddMoreViewDelegate,FaceViewDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate,Mp3RecorderDelegate>
@@ -448,8 +449,6 @@
             
         case MoreViewButtonType_Photo:{
             JPPhotoGroupListController *pickerC = [[JPPhotoGroupListController alloc] init];
-//            pickerC.delegate = self;
-//            pickerC.editing = NO;
             UINavigationController *nav = [[UINavigationController alloc]initWithRootViewController:pickerC];
             [self.rootViewController presentViewController:nav animated:YES completion:nil];
         }
@@ -463,7 +462,12 @@
         }
             break;
         case MoreViewButtonType_SmallVideo:
-            
+        {
+            JPWXVideoController *ctrl = [[JPWXVideoController alloc]init];
+            ctrl.allTime = 10;
+            ctrl.minTime = 1.0;
+            [self.rootViewController presentViewController:ctrl animated:YES completion:nil];
+        }
             break;
         case MoreViewButtonType_VoiceChat:
             

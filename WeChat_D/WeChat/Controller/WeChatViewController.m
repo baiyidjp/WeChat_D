@@ -358,23 +358,51 @@
     return 68;
 }
 
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath{
-    [SVProgressHUD show];
-    WeChatListModel *model = [self.dataArray objectAtIndex:indexPath.row];
-    if ([[EMClient sharedClient].chatManager deleteConversation:model.conversationID deleteMessages:NO]){
-        [SVProgressHUD showSuccessWithStatus:@"删除成功"];
-        [self.dataArray removeObjectAtIndex:indexPath.row];
-        [self.weChatTableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
-    } else{
-        [SVProgressHUD showSuccessWithStatus:@"删除失败"];
-    };
-    
-}
-#pragma mark titleForDeleteConfirmationButtonForRowAtIndexPath
-- (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return @"删除";
-}
+//- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath{
+//    [SVProgressHUD show];
+//    WeChatListModel *model = [self.dataArray objectAtIndex:indexPath.row];
+//    if ([[EMClient sharedClient].chatManager deleteConversation:model.conversationID deleteMessages:NO]){
+//        [SVProgressHUD showSuccessWithStatus:@"删除成功"];
+//        [self.dataArray removeObjectAtIndex:indexPath.row];
+//        [self.weChatTableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+//    } else{
+//        [SVProgressHUD showSuccessWithStatus:@"删除失败"];
+//    };
+//    
+//}
+//#pragma mark titleForDeleteConfirmationButtonForRowAtIndexPath
+//- (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath{
+//    return @"删除";
+//}
 
+- (NSArray<UITableViewRowAction *> *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    UITableViewRowAction *readAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleNormal title:@"设置为已读" handler:^(UITableViewRowAction * _Nonnull action, NSIndexPath * _Nonnull indexPath) {
+        
+        WeChatListModel *model = [self.dataArray objectAtIndex:indexPath.row];
+        //将当前会话的消息全部设为已读
+        [model.conversation markAllMessagesAsRead];
+        //退出编辑状态
+        tableView.editing = NO;
+        [self getAllConversations];
+    }];
+    
+    UITableViewRowAction *deleteAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDestructive title:@"删除" handler:^(UITableViewRowAction * _Nonnull action, NSIndexPath * _Nonnull indexPath) {
+        
+        WeChatListModel *model = [self.dataArray objectAtIndex:indexPath.row];
+        if ([[EMClient sharedClient].chatManager deleteConversation:model.conversationID deleteMessages:NO]){
+            [SVProgressHUD showSuccessWithStatus:@"删除成功"];
+            [self.dataArray removeObjectAtIndex:indexPath.row];
+            [self.weChatTableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+            [self getAllConversations];
+        } else{
+            [SVProgressHUD showSuccessWithStatus:@"删除失败"];
+        };
+
+    }];
+    
+    return @[deleteAction, readAction];
+}
 
 #pragma mark 登录成功通知
 - (void)loginSuccess{
