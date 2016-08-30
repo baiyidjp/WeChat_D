@@ -107,6 +107,7 @@ static int message_count = 20;
     EMConversationType aConversationType = EMConversationTypeChat;
     if (self.groupID.length) {
         aConversationId = self.groupID;
+        NSLog(@"detail %@",self.groupID);
         aConversationType = EMConversationTypeGroupChat;
         //添加 加号
         groupInfoImage = [UIImage imageNamed:@"barbuttonicon_InfoMulti_30x30_"];
@@ -119,7 +120,7 @@ static int message_count = 20;
     
     EMConversation *conversation = [[EMClient sharedClient].chatManager getConversation:aConversationId type:aConversationType createIfNotExist:YES];
     if (self.groupID.length) {
-        conversation.ext = [NSDictionary dictionaryWithObject:self.title forKey:GroupName];
+        [[NSUserDefaults standardUserDefaults] setObject:self.title forKey:[NSString stringWithFormat:@"%@%@",GroupName,conversation.conversationId]];
     }
     self.conversation = conversation;
     [conversation markAllMessagesAsRead];

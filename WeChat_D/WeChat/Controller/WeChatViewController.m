@@ -342,7 +342,7 @@
             chatVC.title = model.conversationID;
             break;
         case EMConversationTypeGroupChat:
-            chatVC.title = [model.conversation.ext objectForKey:GroupName];
+            chatVC.title = model.name;
             chatVC.groupID = model.conversationID;
             break;
         default:
@@ -468,19 +468,19 @@
         }else
         {
             WeChatListModel *newModel = [[WeChatListModel alloc]init];
-            
+            EMConversation *newConversation;
             if (message.chatType == EMChatTypeChat)
             {
-                EMConversation *newConversation = [[EMClient sharedClient].chatManager getConversation:message.from type:EMConversationTypeChat createIfNotExist:YES];
-                newModel.conversation = newConversation;
-                [self.dataArray insertObject:newModel atIndex:0];
-                NSIndexPath *indexPathT = [NSIndexPath indexPathForRow:0 inSection:0];
-                [self.weChatTableView insertRowsAtIndexPaths:@[indexPathT] withRowAnimation:UITableViewRowAnimationFade];
-                [self.weChatTableView reloadRowsAtIndexPaths:@[indexPathT] withRowAnimation:UITableViewRowAnimationFade];
+                newConversation = [[EMClient sharedClient].chatManager getConversation:message.conversationId type:EMConversationTypeChat createIfNotExist:YES];
             }else if (message.chatType == EMChatTypeGroupChat)
             {
-                [self getAllConversations];
+                newConversation = [[EMClient sharedClient].chatManager getConversation:message.conversationId type:EMConversationTypeGroupChat createIfNotExist:YES];
             }
+            newModel.conversation = newConversation;
+            [self.dataArray insertObject:newModel atIndex:0];
+            NSIndexPath *indexPathT = [NSIndexPath indexPathForRow:0 inSection:0];
+            [self.weChatTableView insertRowsAtIndexPaths:@[indexPathT] withRowAnimation:UITableViewRowAnimationFade];
+            [self.weChatTableView reloadRowsAtIndexPaths:@[indexPathT] withRowAnimation:UITableViewRowAnimationFade];
         }
     }
     NSInteger badge = [self.tabBarItem.badgeValue integerValue];
@@ -517,8 +517,8 @@
     
     EMGroup *group = [notifacation.userInfo objectForKey:GroupValue];
     EMConversation *conversation = [[EMClient sharedClient].chatManager getConversation:group.groupId type:EMConversationTypeGroupChat createIfNotExist:YES];
-    conversation.ext = [NSDictionary dictionaryWithObject:group.subject forKey:GroupName];
-    [self getAllConversations];
+    NSLog(@"new %@",conversation.conversationId);
+    [[NSUserDefaults standardUserDefaults] setObject:group.subject forKey:[NSString stringWithFormat:@"%@%@",GroupName,conversation.conversationId]];
 }
 #pragma mark  接收到入群申请(自动同意加群)
 - (void)receiveGroupInvite:(NSNotification *)notification{
@@ -535,8 +535,13 @@
     } completion:^(EMMessage *message, EMError *error) {
         if (!error) {
             EMConversation *conversation = [[EMClient sharedClient].chatManager getConversation:group.groupId type:EMConversationTypeGroupChat createIfNotExist:YES];
-            conversation.ext = [NSDictionary dictionaryWithObject:group.subject forKey:GroupName];
-            [self getAllConversations];
+            [[NSUserDefaults standardUserDefaults] setObject:group.subject forKey:[NSString stringWithFormat:@"%@%@",GroupName,conversation.conversationId]];
+            WeChatListModel *newModel = [[WeChatListModel alloc]init];
+            newModel.conversation = conversation;
+            [self.dataArray insertObject:newModel atIndex:0];
+            NSIndexPath *indexPathT = [NSIndexPath indexPathForRow:0 inSection:0];
+            [self.weChatTableView insertRowsAtIndexPaths:@[indexPathT] withRowAnimation:UITableViewRowAnimationFade];
+            [self.weChatTableView reloadRowsAtIndexPaths:@[indexPathT] withRowAnimation:UITableViewRowAnimationFade];
         }
     }];
 }

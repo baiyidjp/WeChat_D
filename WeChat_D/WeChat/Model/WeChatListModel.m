@@ -25,7 +25,7 @@
         }
             break;
         case EMConversationTypeGroupChat:{
-            self.name = [conversation.ext objectForKey:GroupName];
+            self.name = [[NSUserDefaults standardUserDefaults] objectForKey:[NSString stringWithFormat:@"%@%@",GroupName,conversation.conversationId]];
             if ([emmessage.from isEqualToString:[[EMClient sharedClient] currentUsername]]) {
                 [self setChatModelWith:emmessage];
             }else{
