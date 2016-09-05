@@ -22,7 +22,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     
-    [self changeNav];
+//    [self changeNav];
     
     EMOptions *option = [EMOptions optionsWithAppkey:AppKey];
     option.apnsCertName = ApnsCertName;

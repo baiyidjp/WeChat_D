@@ -14,6 +14,7 @@
 #import "JPTextChangeToPinYinManager.h"
 #import "FriendListModel.h"
 #import "FriendListTableViewCell.h"
+#import "UIImage+Round.h"
 
 #define CellID @"contactTableViewCell"
 
@@ -38,7 +39,7 @@
 - (void)viewWillAppear:(BOOL)animated{
     
     [super viewWillAppear:animated];
-    self.tabBarController.tabBar.hidden = NO;
+//    self.tabBarController.tabBar.hidden = NO;
     
 }
 
@@ -179,7 +180,7 @@
 - (void)addFriend{
     
     AddFriendController *friendCtrl = [[AddFriendController alloc]init];
-    self.tabBarController.tabBar.hidden = YES;
+//    self.tabBarController.tabBar.hidden = YES;
     [self.navigationController pushViewController:friendCtrl animated:YES];
 }
 
@@ -207,29 +208,30 @@
         }
     }
     
-    UIImageView *image = [[UIImageView alloc]init];
-    [image setContentScaleFactor:[[UIScreen mainScreen] scale]];
-    image.contentMode =  UIViewContentModeScaleAspectFill;
-    image.autoresizingMask = UIViewAutoresizingFlexibleHeight;
-    image.clipsToBounds  = YES;
-    [cell.contentView addSubview:image];
-    [image mas_makeConstraints:^(MASConstraintMaker *make) {
+    UIImageView *headImageView = [[UIImageView alloc]init];
+    [headImageView setContentScaleFactor:[[UIScreen mainScreen] scale]];
+    headImageView.contentMode =  UIViewContentModeScaleAspectFill;
+    headImageView.autoresizingMask = UIViewAutoresizingFlexibleHeight;
+    headImageView.clipsToBounds  = YES;
+    [cell.contentView addSubview:headImageView];
+    [headImageView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.offset(KMARGIN*3/2);
         make.centerY.equalTo(cell.contentView);
         make.size.mas_equalTo(CGSizeMake(36, 36));
     }];
+    [headImageView layoutIfNeeded];
     
     UILabel *title = [[UILabel alloc]init];
     title.font = FONTSIZE(15);
     [cell.contentView addSubview:title];
     [title mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(image.mas_right).with.offset(KMARGIN*3/2);
+        make.left.equalTo(headImageView.mas_right).with.offset(KMARGIN*3/2);
         make.centerY.equalTo(cell.contentView);
     }];
     
     if (indexPath.section == 0) {
         
-        image.image = [UIImage imageNamed:[[self.topDataArray objectAtIndex:indexPath.row] objectForKey:@"imageName"]];
+        headImageView.image = [UIImage imageNamed:[[self.topDataArray objectAtIndex:indexPath.row] objectForKey:@"imageName"]];
         title.text = [[self.topDataArray objectAtIndex:indexPath.row] objectForKey:@"title"];
         
             if (indexPath.row == 0) {
@@ -239,7 +241,13 @@
         FriendListModel *sectionModel = [self.dataArray objectAtIndex:indexPath.section-1];
         FriendListModel *model = [sectionModel.sectionArr objectAtIndex:indexPath.row];
         title.text = model.name;
-        [image sd_setImageWithURL:[NSURL URLWithString:FRIENDHEADERIMAGE_URL] placeholderImage:[UIImage imageNamed:DefaultHeadImageName]];
+//        [headImageView sd_setImageWithURL:[NSURL URLWithString:FRIENDHEADERIMAGE_URL] placeholderImage:[UIImage imageNamed:DefaultHeadImageName]];
+        headImageView.image = [[UIImage imageNamed:DefaultHeadImageName] imageWithCornerRadius:headImageView.frame.size.width/2 size:headImageView.frame.size];
+        [[SDWebImageManager sharedManager] downloadImageWithURL:[NSURL URLWithString:FRIENDHEADERIMAGE_URL] options:SDWebImageRetryFailed progress:nil completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
+            if (image) {
+                headImageView.image = [image imageWithCornerRadius:headImageView.frame.size.width/2 size:headImageView.frame.size];
+            }
+        }];
     }
     cell.selectionStyle = UITableViewCellAccessoryNone;
     return cell;
@@ -297,7 +305,7 @@
         }else if (indexPath.row == 1){
             MyGroupListController *groupCtrl = [[MyGroupListController alloc]init];
             groupCtrl.title = @"我的群聊";
-            self.tabBarController.tabBar.hidden = YES;
+//            self.tabBarController.tabBar.hidden = YES;
             [self.navigationController pushViewController:groupCtrl animated:YES];
         }else{
             return;
@@ -307,7 +315,7 @@
         FriendListModel *model = [sectionModel.sectionArr objectAtIndex:indexPath.row];
         ChatDetailViewController *chatCtrl = [[ChatDetailViewController alloc]init];
         chatCtrl.title = model.name;
-        self.tabBarController.tabBar.hidden = YES;
+//        self.tabBarController.tabBar.hidden = YES;
         [self.navigationController pushViewController:chatCtrl animated:YES];
     }
 }

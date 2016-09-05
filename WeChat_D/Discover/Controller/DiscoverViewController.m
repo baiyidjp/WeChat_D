@@ -21,7 +21,7 @@
 - (void)viewWillAppear:(BOOL)animated{
     
     [super viewWillAppear:animated];
-    self.tabBarController.tabBar.hidden = NO;
+//    self.tabBarController.tabBar.hidden = NO;
     
 }
 
@@ -140,7 +140,7 @@
         {
             //扫一扫
             ScanQRCodeController *QRCtrl = [[ScanQRCodeController alloc]init];
-            self.tabBarController.tabBar.hidden = YES;
+//            self.tabBarController.tabBar.hidden = YES;
             [self.navigationController pushViewController:QRCtrl animated:YES];
         }
             break;

@@ -9,6 +9,7 @@
 #import "WeChatTableViewCell.h"
 #import "WeChatListModel.h"
 #import "MessageModel.h"
+#import "UIImage+Round.h"
 
 @interface WeChatTableViewCell ()
 @property (weak, nonatomic) IBOutlet UIImageView *headImage;
@@ -42,7 +43,14 @@
     
     _model = model;
     self.messageLabel.text = model.message;
-    [self.headImage sd_setImageWithURL:[NSURL URLWithString:model.imageUrl] placeholderImage:[UIImage imageNamed:DefaultHeadImageName_Message]];
+//    [self.headImage sd_setImageWithURL:[NSURL URLWithString:model.imageUrl] placeholderImage:[UIImage imageNamed:DefaultHeadImageName_Message]];
+    [self.headImage layoutIfNeeded];
+    self.headImage.image = [[UIImage imageNamed:DefaultHeadImageName_Message] imageWithCornerRadius:self.headImage.frame.size.width/2 size:self.headImage.frame.size];
+    [[SDWebImageManager sharedManager] downloadImageWithURL:[NSURL URLWithString:model.imageUrl] options:SDWebImageRetryFailed progress:nil completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
+        if (image) {
+            self.headImage.image = [image imageWithCornerRadius:self.headImage.frame.size.width/2 size:self.headImage.frame.size];
+        }
+    }];
     self.nameLable.text = model.name;
     self.timeLable.text = model.time;
     if (model.unreadMessagesCount) {

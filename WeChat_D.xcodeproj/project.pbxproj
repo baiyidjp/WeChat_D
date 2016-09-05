@@ -12,6 +12,7 @@
 		A2088B451D3CACFA00C73446 /* MessageModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A2088B441D3CACFA00C73446 /* MessageModel.m */; };
 		A21137DD1D49E53500CB6EF7 /* MyGroupListController.m in Sources */ = {isa = PBXBuildFile; fileRef = A21137DC1D49E53500CB6EF7 /* MyGroupListController.m */; };
 		A21137E01D4A21BD00CB6EF7 /* UIViewController+BackButtonHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = A21137DF1D4A21BD00CB6EF7 /* UIViewController+BackButtonHandler.m */; };
+		A213F1ED1D77B734003B97E0 /* UIImage+Round.m in Sources */ = {isa = PBXBuildFile; fileRef = A213F1EC1D77B734003B97E0 /* UIImage+Round.m */; };
 		A21B628D1D3891B300F0E727 /* face.plist in Resources */ = {isa = PBXBuildFile; fileRef = A21B628C1D3891B300F0E727 /* face.plist */; };
 		A21B62901D3893ED00F0E727 /* FaceViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A21B628F1D3893ED00F0E727 /* FaceViewModel.m */; };
 		A21B62931D38D9BD00F0E727 /* WeChatListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A21B62921D38D9BD00F0E727 /* WeChatListModel.m */; };
@@ -38,6 +39,7 @@
 		A26262691D754B6200B73126 /* JPPlayVideoController.m in Sources */ = {isa = PBXBuildFile; fileRef = A26262641D754B6200B73126 /* JPPlayVideoController.m */; };
 		A262626A1D754B6200B73126 /* JPWXVideoController.m in Sources */ = {isa = PBXBuildFile; fileRef = A26262661D754B6200B73126 /* JPWXVideoController.m */; };
 		A262626B1D754B6200B73126 /* UIView+YYAdd.m in Sources */ = {isa = PBXBuildFile; fileRef = A26262681D754B6200B73126 /* UIView+YYAdd.m */; };
+		A26F53D41D7D0D9300395060 /* JPNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = A26F53D31D7D0D9300395060 /* JPNavigationController.m */; };
 		A28319DE1D62D98300047020 /* imageDownloadFail@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A28319DD1D62D98300047020 /* imageDownloadFail@2x.png */; };
 		A28D8F5A1D51C3D00025464B /* ChangeNameController.m in Sources */ = {isa = PBXBuildFile; fileRef = A28D8F591D51C3D00025464B /* ChangeNameController.m */; };
 		A28EADEE1D655309003087DA /* JPTextChangeToPinYinManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A28EADED1D655309003087DA /* JPTextChangeToPinYinManager.m */; };
@@ -415,6 +417,8 @@
 		A21137DC1D49E53500CB6EF7 /* MyGroupListController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyGroupListController.m; sourceTree = "<group>"; };
 		A21137DE1D4A21BD00CB6EF7 /* UIViewController+BackButtonHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+BackButtonHandler.h"; sourceTree = "<group>"; };
 		A21137DF1D4A21BD00CB6EF7 /* UIViewController+BackButtonHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+BackButtonHandler.m"; sourceTree = "<group>"; };
+		A213F1EB1D77B734003B97E0 /* UIImage+Round.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Round.h"; sourceTree = "<group>"; };
+		A213F1EC1D77B734003B97E0 /* UIImage+Round.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Round.m"; sourceTree = "<group>"; };
 		A21B628C1D3891B300F0E727 /* face.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = face.plist; sourceTree = "<group>"; };
 		A21B628E1D3893ED00F0E727 /* FaceViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FaceViewModel.h; sourceTree = "<group>"; };
 		A21B628F1D3893ED00F0E727 /* FaceViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FaceViewModel.m; sourceTree = "<group>"; };
@@ -461,6 +465,8 @@
 		A26262671D754B6200B73126 /* UIView+YYAdd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+YYAdd.h"; sourceTree = "<group>"; };
 		A26262681D754B6200B73126 /* UIView+YYAdd.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+YYAdd.m"; sourceTree = "<group>"; };
 		A262626C1D754F1B00B73126 /* JPPlayVideoController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JPPlayVideoController.h; sourceTree = "<group>"; };
+		A26F53D21D7D0D9300395060 /* JPNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JPNavigationController.h; sourceTree = "<group>"; };
+		A26F53D31D7D0D9300395060 /* JPNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JPNavigationController.m; sourceTree = "<group>"; };
 		A28319DD1D62D98300047020 /* imageDownloadFail@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "imageDownloadFail@2x.png"; sourceTree = "<group>"; };
 		A28D8F581D51C3D00025464B /* ChangeNameController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChangeNameController.h; sourceTree = "<group>"; };
 		A28D8F591D51C3D00025464B /* ChangeNameController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChangeNameController.m; sourceTree = "<group>"; };
@@ -1108,6 +1114,10 @@
 				F5C9448F1D6C287F000E7199 /* JPBigImageView.m */,
 				A25AAB5D1D4882C800DBBBE5 /* ListView.h */,
 				A25AAB5E1D4882C800DBBBE5 /* ListView.m */,
+				A26F53D21D7D0D9300395060 /* JPNavigationController.h */,
+				A26F53D31D7D0D9300395060 /* JPNavigationController.m */,
+				A213F1EB1D77B734003B97E0 /* UIImage+Round.h */,
+				A213F1EC1D77B734003B97E0 /* UIImage+Round.m */,
 				A21137DE1D4A21BD00CB6EF7 /* UIViewController+BackButtonHandler.h */,
 				A21137DF1D4A21BD00CB6EF7 /* UIViewController+BackButtonHandler.m */,
 			);
@@ -2339,11 +2349,13 @@
 				A249DF911D5C2D92000206FF /* JPPhotoCollectionLayout.m in Sources */,
 				A2088B3E1D3C6EC200C73446 /* PublicMethodManager.m in Sources */,
 				A28EADF11D655BE6003087DA /* FriendListModel.m in Sources */,
+				A213F1ED1D77B734003B97E0 /* UIImage+Round.m in Sources */,
 				A21B62931D38D9BD00F0E727 /* WeChatListModel.m in Sources */,
 				A297B75A1D2F8E5A003C9276 /* ContactsViewController.m in Sources */,
 				F5A131741D50E0F500190C1B /* ThirdViewController.m in Sources */,
 				F5E2C5101D538348004260D1 /* ChangeSexController.m in Sources */,
 				A24BBE3D1D5B0EB10062DFC9 /* JPPhotoGroupCell.m in Sources */,
+				A26F53D41D7D0D9300395060 /* JPNavigationController.m in Sources */,
 				A297B70A1D2F8E14003C9276 /* AppDelegate.m in Sources */,
 				A2DA92531D50B6FE000077ED /* MyInfoController.m in Sources */,
 				A24BBE401D5B1B230062DFC9 /* JPPhotoListController.m in Sources */,

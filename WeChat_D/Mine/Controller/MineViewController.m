@@ -29,7 +29,7 @@
         NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:3];
         [mineTableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
     }
-    self.tabBarController.tabBar.hidden = NO;
+//    self.tabBarController.tabBar.hidden = NO;
     
 }
 
@@ -69,7 +69,7 @@
 - (void)login{
 
     LoginViewController *login = [[LoginViewController alloc]init];
-    self.tabBarController.tabBar.hidden = YES;
+//    self.tabBarController.tabBar.hidden = YES;
     [self presentViewController:login animated:YES completion:nil];
     
 }
@@ -245,7 +245,7 @@
         case 0:
         {
             MyInfoController *infoCtrl = [[MyInfoController alloc]init];
-            self.tabBarController.tabBar.hidden = YES;
+//            self.tabBarController.tabBar.hidden = YES;
             [self.navigationController pushViewController:infoCtrl animated:YES];
         }
             break;

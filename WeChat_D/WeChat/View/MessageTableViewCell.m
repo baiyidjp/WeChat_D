@@ -8,6 +8,7 @@
 
 #import "MessageTableViewCell.h"
 #import "MessageModel.h"
+#import "UIImage+Round.h"
 
 #define ImageDefaultSizeWH 150.0
 @interface MessageTableViewCell ()
@@ -279,8 +280,15 @@
             make.top.offset(KMARGIN);
             make.size.mas_equalTo(CGSizeMake(48, 48));
         }];
-        [self.headerView sd_setImageWithURL:[NSURL URLWithString:model.headerImageUrl] placeholderImage:model.placeholderHeaderImage];
-        self.headerView.backgroundColor = [UIColor whiteColor];
+//        [self.headerView sd_setImageWithURL:[NSURL URLWithString:model.headerImageUrl] placeholderImage:model.placeholderHeaderImage];
+//        self.headerView.backgroundColor = [UIColor whiteColor];
+        [self.headerView layoutIfNeeded];
+        self.headerView.image = [model.placeholderHeaderImage imageWithCornerRadius:self.headerView.frame.size.width/2 size:self.headerView.frame.size];
+        [[SDWebImageManager sharedManager] downloadImageWithURL:[NSURL URLWithString:model.headerImageUrl] options:SDWebImageRetryFailed progress:nil completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
+            if (image) {
+                self.headerView.image = [image imageWithCornerRadius:self.headerView.frame.size.width/2 size:self.headerView.frame.size];
+            }
+        }];
         //判断消息类型
         switch (model.messageType) {
             case MessageType_Text:{
@@ -414,8 +422,15 @@
             make.top.offset(KMARGIN);
             make.size.mas_equalTo(CGSizeMake(48, 48));
         }];
-        [self.headerView sd_setImageWithURL:[NSURL URLWithString:model.headerImageUrl] placeholderImage:model.placeholderHeaderImage];
-        self.headerView.backgroundColor = [UIColor redColor];
+//        [self.headerView sd_setImageWithURL:[NSURL URLWithString:model.headerImageUrl] placeholderImage:model.placeholderHeaderImage];
+//        self.headerView.backgroundColor = [UIColor whiteColor];
+        [self.headerView layoutIfNeeded];
+        self.headerView.image = [model.placeholderHeaderImage imageWithCornerRadius:self.headerView.frame.size.width/2 size:self.headerView.frame.size];
+        [[SDWebImageManager sharedManager] downloadImageWithURL:[NSURL URLWithString:model.headerImageUrl] options:SDWebImageRetryFailed progress:nil completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
+            if (image) {
+                self.headerView.image = [image imageWithCornerRadius:self.headerView.frame.size.width/2 size:self.headerView.frame.size];
+            }
+        }];
         CGFloat name_backImage_padding = 0.0; //为了让聊天的背景图片布局时 在不同的聊天中有一个参考距离
         switch (model.chatType) {
             case EMChatTypeChat:{

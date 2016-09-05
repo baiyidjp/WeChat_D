@@ -11,6 +11,7 @@
 #import "ContactsViewController.h"
 #import "DiscoverViewController.h"
 #import "MineViewController.h"
+#import "JPNavigationController.h"
 
 @interface MainTabbarController ()
 
@@ -44,7 +45,7 @@
     controller.tabBarItem.selectedImage = [[UIImage imageNamed:selectImageName] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     [controller.tabBarItem setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor colorWithHexString:@"000000"]} forState:UIControlStateSelected];
     [controller.tabBarItem setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor colorWithHexString:@"888888"]} forState:UIControlStateNormal];
-    UINavigationController *navCtrl = [[UINavigationController alloc]initWithRootViewController:controller];
+    JPNavigationController *navCtrl = [[JPNavigationController alloc]initWithRootViewController:controller];
     [self addChildViewController:navCtrl];
     
 }

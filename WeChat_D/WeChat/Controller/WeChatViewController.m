@@ -64,7 +64,7 @@
 - (void)viewWillAppear:(BOOL)animated{
     
     [super viewWillAppear:animated];
-    self.tabBarController.tabBar.hidden = NO;
+//    self.tabBarController.tabBar.hidden = NO;
     [self getAllConversations];
 }
 
@@ -106,7 +106,7 @@
     BOOL isAutoLogin = [EMClient sharedClient].isAutoLogin;
     if (!isAutoLogin){
         LoginViewController *login = [[LoginViewController alloc]init];
-        self.tabBarController.tabBar.hidden = YES;
+//        self.tabBarController.tabBar.hidden = YES;
         [self presentViewController:login animated:YES completion:nil];
     }
     
@@ -208,14 +208,14 @@
             break;
         case 1:{
             AddFriendController *friendCtrl = [[AddFriendController alloc]init];
-            self.tabBarController.tabBar.hidden = YES;
+//            self.tabBarController.tabBar.hidden = YES;
             [self.navigationController pushViewController:friendCtrl animated:YES];
 
         }
             break;
         case 2:{
             ScanQRCodeController *QRCtrl = [[ScanQRCodeController alloc]init];
-            self.tabBarController.tabBar.hidden = YES;
+//            self.tabBarController.tabBar.hidden = YES;
             [self.navigationController pushViewController:QRCtrl animated:YES];
         }
             break;
@@ -349,7 +349,7 @@
             break;
     }
 
-    self.tabBarController.tabBar.hidden = YES;
+//    self.tabBarController.tabBar.hidden = YES;
     [self.navigationController pushViewController:chatVC animated:YES];
 }
 
