@@ -31,13 +31,13 @@
 
 - (void)saveImage{
     
-    CGSize imageSize = self.view.frame.size;
+    CGSize imageSize = whiteBackView.frame.size;
     //开启上下文
     UIGraphicsBeginImageContextWithOptions(imageSize, NO, 0.0);
     //获取当前的上下文
     CGContextRef contextRef = UIGraphicsGetCurrentContext();
     //创建需要所截图的区域路径
-    UIBezierPath *path = [UIBezierPath bezierPathWithRect:whiteBackView.frame];
+    UIBezierPath *path = [UIBezierPath bezierPathWithRect:whiteBackView.bounds];
 //    //设置路径的宽和颜色
 //    CGContextSetLineWidth(contextRef, 1);
 //    [[UIColor blackColor] set];
@@ -46,7 +46,7 @@
     //截取路径内的上下文
     CGContextClip(contextRef);
     //把控制器的view中的内容渲染到上下文中
-    [self.view.layer renderInContext:contextRef];
+    [whiteBackView.layer renderInContext:contextRef];
     //取出图片
     UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();

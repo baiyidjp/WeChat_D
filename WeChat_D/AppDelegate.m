@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 #import "MainTabbarController.h"
 #import "LoginViewController.h"
+#import <Bugly/Bugly.h>
 
 #define AppKey @"djp7393#wechatdjp"
 #define ApnsCertName @"";
@@ -22,7 +23,8 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     
-//    [self changeNav];
+    //腾讯的崩溃调试
+    [Bugly startWithAppId:@"a1b5c76103"];
     
     EMOptions *option = [EMOptions optionsWithAppkey:AppKey];
     option.apnsCertName = ApnsCertName;

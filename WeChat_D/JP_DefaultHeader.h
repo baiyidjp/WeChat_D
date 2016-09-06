@@ -3,7 +3,6 @@
 #ifndef JP_DefaultHeader_h
 #define JP_DefaultHeader_h
 
-
 //1.获取屏幕宽度与高度
 //#define SCREEN_WIDTH   [UIScreen mainScreen].bounds.size.width
 //#define SCREENH_HEIGHT [UIScreen mainScreen].bounds.size.height

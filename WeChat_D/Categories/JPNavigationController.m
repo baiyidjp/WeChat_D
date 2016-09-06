@@ -38,7 +38,7 @@
     
 
     NSLog(@"%zd",self.childViewControllers.count);
-    //如果当前push进来是第一个控制器的话，（代表当前childViewCtrls里面是没有东西）我们就不要设置leftitem
+    //如果当前push进来是第一个控制器的话，（代表当前childViewCtrls里面是没有东西)
     if (self.childViewControllers.count) {
         //当前不是第一个子控制器，那么在push出去的时候隐藏底部的tabbar
         viewController.hidesBottomBarWhenPushed = YES;
